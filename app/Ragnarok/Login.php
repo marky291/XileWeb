@@ -26,6 +26,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property boolean $web_auth_token_enabled
  * @property int $last_unique_id
  * @property int $blocked_unique_id
+ *
+ * @property int $total_online
  */
 class Login extends Model
 {
@@ -48,4 +50,11 @@ class Login extends Model
      */
     protected $fillable = ['userid', 'user_pass', 'email', 'group_id', 'state', 'unban_time', 'expiration_time', 'logincount', 'lastlogin', 'last_ip', 'birthdate', 'character_slots', 'pincode', 'pincode_change', 'vip_time', 'old_group', 'web_auth_token', 'web_auth_token_enabled', 'last_unique_id', 'blocked_unique_id'];
 
+    /**
+     * Total Online
+     */
+    public function getTotalOnlineAttribute()
+    {
+        return $this->query()->where('state', '=', 1)->count();
+    }
 }
