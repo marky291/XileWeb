@@ -8,10 +8,10 @@
     @endif
 
     <section class="landing">
-        <div class="grid grid-cols-5 gap-4">
-            <div class="col-span-3 pt-20 pb-4 pl-20 pr-6">
+        <div class="grid grid-cols-6 gap-4 mx-auto">
+            <div class="col-span-3 col-start-2 pt-20 pb-4 pr-6">
                 <div class="mr-36">
-                    <h1 style="font-size:2.8em;">XileRetro <br><small class="font-normal">A Ragnarok Online Private Server</small></h1>
+                    <h1 style="font-size:2.8em;">XileRetro! <br><small class="font-normal">A Ragnarok Online Private Server</small></h1>
                     <p>
                         Welcome to XileRetro, we are a team of developers with dedication
                         and love for the mechanics that drive Xile and the skills behind it.
@@ -29,7 +29,7 @@
                     <div class="flex flex-col my-10 quick-links">
                         <button class="flex items-center text-left btn btn-primary">
                             <svg class="w-4 h-4 mr-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg>
-                            <span>Register your in game account</span>
+                            <span>Register your Master Account</span>
                         </button>
                         <button class="flex items-center mt-4 text-left btn btn-primary">
                             <svg class="w-4 h-4 mr-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg>
@@ -46,7 +46,7 @@
                 </div>
             </div>
             <div class="grid col-span-2">
-                <div class="feature-bg-img" style="background-size:contain;">
+                <div class="feature-bg-img" class="bg-no-repeat bg-contain">
                     <div style="margin-left:-13%">
                         <img src="images/castle/castle_1.png" alt="Landing image" class="flex items-center justify-center rounded-full w-36 h-36">
                         <img src="images/castle/castle_2.png" alt="Landing image" class="flex items-center justify-center rounded-full w-36 h-36">
@@ -57,7 +57,7 @@
         </div>
     </section>
 
-    <section id="important-links" class="p-20">
+    <section id="important-links" class="container py-10 mx-auto">
         <h2>Important Links</h2>
         <div class="grid grid-cols-4 col-gap-16">
             <div class="col-span-1">
@@ -87,7 +87,11 @@
         </div>
     </section>
 
-    <section id="steps2play" class="p-20" style="">
+    <div class="container mx-auto">
+        <hr class="default">
+    </div>
+
+    <section id="steps2play" class="container pt-5 pb-20 mx-auto" style="">
         <h2>Let's get you in game!</h2>
         <div class="grid grid-cols-2">
             <div class="col-span-1">
@@ -151,21 +155,17 @@
             </div>
             <div class="col-span-1">
 				<h3>Step 2.</h3>
-				<h4>Download and install with Zip Extraction.</h4>
+				<h4>Download and install with Lite Installer.</h4>
 				<div class="grid grid-cols-5">
 					<div class="col-span-1">
 						<i class="fas fa-file-archive step2-icon"></i>
 					</div>
 					<div class="col-span-4">
-						<button class="flex items-center w-full mb-4 text-left btn btn-secondary">
-							<span>Download Zip from Mediafire (2.1GB)</span>
-						</button>
-						<button class="flex items-center w-full mb-4 text-left btn btn-secondary">
-							<span>Download Zip from Google Drive (2.6GB)</span>
-						</button>
-						<button class="flex items-center w-full mb-4 text-left btn btn-secondary">
-							<span>Download Zip from Mega Upload (1.8GB)</span>
-						</button>
+                        @foreach(config('downloads.lite') as $item)
+                            <button class="flex items-center w-full mb-4 text-left btn {{ $item['bttn'] }}">
+                                <a class="text-gray-700 no-underline" href="{{ $item['link'] }}">{{ $item['name'] }}</a>
+                            </button>
+                        @endforeach
 					</div>
 				</div>
 
@@ -175,15 +175,11 @@
 						<i class="fas fa-compact-disc step2-icon"></i>
 					</div>
 					<div class="col-span-4">
-						<button class="flex items-center w-full mb-4 text-left btn btn-primary">
-							<span>Download Zip from Mediafire (2.1GB)</span>
-						</button>
-						<button class="flex items-center w-full mb-4 text-left btn btn-secondary">
-							<span>Download Zip from Google Drive (2.6GB)</span>
-						</button>
-						<button class="flex items-center w-full mb-4 text-left btn btn-secondary">
-							<span>Download Zip from Mega Upload (1.8GB)</span>
-						</button>
+						@foreach(config('downloads.full') as $item)
+                            <button class="flex items-center w-full mb-4 text-left btn {{ $item['bttn'] }}">
+                                <a href="{{ $item['link'] }}">{{ $item['name'] }}</a>
+                            </button>
+                        @endforeach
 					</div>
 				</div>
 
@@ -191,7 +187,7 @@
         </div>
     </section>
 
-	<section id="communities" class="p-20">
+	{{-- <section id="communities" class="p-20">
         <h2>Community</h2>
 
         <div id="platforms" class="mb-8">
@@ -205,9 +201,9 @@
                     <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fxileretro&tabs=timeline&width=340&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=661838800646818" width="100%" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
-        <div id="loading-screens" class="mb-8">
+        {{-- <div id="loading-screens" class="mb-8">
             <h3>Loading Screens</h3>
             <h4>Imagery created by talented players</h4>
             <div class="grid grid-cols-4 col-gap-4">
@@ -224,7 +220,7 @@
                     <img style="margin:0 auto 0 auto" class="loading-screen" src="/images/loading/loading16@2x.png" alt="">
                 </div>
             </div>
-        </div>
+        </div> --}}
 
         {{-- <div id="streams" class="mb-8">
             <div class="grid grid-cols-2 gap-8">

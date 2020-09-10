@@ -6,12 +6,16 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
 
-#footer .content {
-    border-top: #4c273b solid;
-    background: #723a59;
+#footer {
+    background: #f4f5f7;
 }
 #footer .copyright {
-    background: #4c273b;
+    border-top: 1px solid #DFE1E5;
+}
+
+hr.default {
+    height: 1px;
+    background: #DFE1E5;
 }
 
 .btn {
@@ -89,10 +93,6 @@ section.landing .feature-bg-img {
     background:linear-gradient(to right, brown 50%, white 50%);
 }
 
-
-#steps2play {
-    background: #f4f5f78a;
-}
 #steps2play-top-border {
     height:50px;
     background:#f4f5f78a;

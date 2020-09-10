@@ -30,35 +30,69 @@
         @yield('content')
 
         <footer id="footer" class="shadow-inner">
-            <div class="px-20 pt-5 pb-20 content">
-                <img src="/images/logo.png" alt="XileRetro Logo" class="w-1/3">
-                <div class="grid grid-cols-2">
-                    <div class="grid grid-cols-2 col-span-1 col-gap-6">
-                        <ul>
-                            <li><a class="text-white no-underline hover:underline" href="#top">Home</a></li>
-                            <li><a class="text-white no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Server_Rules">Rulebook</a></li>
-                            <li><a class="text-white no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Server_Information#Staff">The Staff</a></li>
-                            <li><a class="text-white no-underline hover:underline" href="#download">Download</a></li>
-                            <li><a class="text-white no-underline hover:underline" href="#register">Register</a></li>
-                        </ul>
-                        <ul>
-                            <li><a class="text-white no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Server_Information">Server Features</a></li>
-                            <li><a class="text-white no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=General_Customs">Modified Official</a></li>
-                            <li><a class="text-white no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Updates_Changelog">Updates & Changelog</a></li>
-                            <li><a class="text-white no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Newbie_Center">Newbie Center</a></li>
-                            <li><a class="text-white no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Events">Events</a></li>
-                        </ul>
+            <div class="container grid grid-cols-2 col-gap-1 pt-5 mx-auto pb-15 content">
+                <div class="col-span-1">
+                    {{-- <img src="/images/logo.png" alt="XileRetro Logo" class="w-1/2"> --}}
+                    <div class="grid grid-cols-2">
+                        <h2>Navigate</h2>
+                        <div class="grid grid-cols-2 col-span-2 col-gap-6">
+                            <ul>
+                                <li><a class="no-underline hover:underline" href="#top">Home</a></li>
+                                <li><a class="no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Server_Rules">Rulebook</a></li>
+                                <li><a class="no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Server_Information#Staff">The Staff</a></li>
+                                <li><a class="no-underline hover:underline" href="#download">Download</a></li>
+                                <li><a class="no-underline hover:underline" href="#register">Register</a></li>
+                            </ul>
+                            <ul>
+                                <li><a class="no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Server_Information">Server Features</a></li>
+                                <li><a class="no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=General_Customs">Modified Official</a></li>
+                                <li><a class="no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Updates_Changelog">Updates & Changelog</a></li>
+                                <li><a class="no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Newbie_Center">Newbie Center</a></li>
+                                <li><a class="no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Events">Events</a></li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="col-span-1"></div>
+
+                    <div class="flex items-center p-0 mt-8 status">
+                        <p class="my-0 ml-0 mr-6 text-5xl text-green-500">Server is Online!</p>
+                        <p class="px-2 text-sm text-gray-700 bg-gray-300 rounded">371</p>
+                    </div>
+                    <p class="m-0">No errors to report</p>
+
+                </div>
+                <div class="col-span-1">
+                    <h2>Community Loaders</h2>
+                    <div class="grid grid-cols-3 screenshots">
+                        <img class="col-span-1" src="images/loading/loading00.png" alt="Created by our players">
+                        <img class="col-span-1" src="images/loading/loading06.png" alt="Created by our players">
+                        <img class="col-span-1" src="images/loading/loading08.png" alt="Created by our players">
+                    </div>
+                    <div>
+                        <h2>Get in Touch</h2>
+                        <div class="grid grid-cols-3 col-gap-3">
+                            <div class="flex items-center col-span-1">
+                                <i class="mr-2 text-4xl text-blue-600 fab fa-facebook-square"></i>
+                                <p class="m-0">Facebook</p>
+                            </div>
+                            <div class="flex items-center col-span-1">
+                                <i class="mr-2 text-4xl text-indigo-600 fab fa-discord"></i>
+                                <p class="m-0">Discord</p>
+                            </div>
+                            <div class="flex items-center col-span-1">
+                                <i class="mr-2 text-4xl text-blue-500 fab fa-facebook-messenger"></i>
+                                <p class="m-0">Messenger</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="grid grid-cols-3 px-20 pt-8 pb-10 shadow-inner copyright">
-                <div class="flex items-center col-span-2">
-                    <i class="mr-4 text-5xl text-gray-300 far fa-heart"></i>
-                    <p class="text-gray-300">A thank you to all our players who support and show commitment<br>to making a server that's great for everyone.</p>
+            <div class="container grid grid-cols-3 pt-8 pb-10 mx-auto copyright">
+                <div class="flex items-center col-span-2 text-gray-700">
+                    <i class="mr-4 text-5xl far fa-heart"></i>
+                    <p>A thank you to all our players who support and show commitment<br>to making a server that's great for everyone.</p>
                 </div>
                 <div class="flex items-end justify-end col-span-1 text-right">
-                    <p class="text-gray-300">Website design and coding by Mark Hester<br>(Co-Owner of XileRetro)</p>
+                    <p>Website design and coding by Mark Hester<br>(Co-Owner of XileRetro)</p>
                 </div>
             </div>
         </footer>
