@@ -8,8 +8,8 @@
     @endif
 
     <section class="landing">
-        <div class="grid grid-cols-6 gap-4 mx-auto">
-            <div class="col-span-3 col-start-2 pt-20 pb-4 pr-6">
+        <div class="container grid grid-cols-5 gap-4 mx-auto">
+            <div class="col-span-3 pt-20 pb-4 pr-6">
                 <div class="mr-36">
                     <h1 style="font-size:2.8em;">XileRetro! <br><small class="font-normal">A Ragnarok Online Private Server</small></h1>
                     <p>
@@ -29,7 +29,7 @@
                     <div class="flex flex-col my-10 quick-links">
                         <button class="flex items-center text-left btn btn-primary">
                             <svg class="w-4 h-4 mr-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg>
-                            <span>Register your Master Account</span>
+                            <span>Create a Ragnarok Account</span>
                         </button>
                         <button class="flex items-center mt-4 text-left btn btn-primary">
                             <svg class="w-4 h-4 mr-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg>
@@ -59,30 +59,46 @@
 
     <section id="important-links" class="container py-10 mx-auto">
         <h2>Important Links</h2>
-        <div class="grid grid-cols-4 col-gap-16">
+        <div class="grid grid-cols-4 col-gap-8">
             <div class="col-span-1">
-                <div class="mb-6 border border-gray-200 rounded">
-                    <img class="object-cover w-full rounded h-44" style="margin:0" src="https://swall.teahub.io/photos/small/99-999290_ragnarok-online-valkyrie.jpg" alt="Server information Image">
-                </div>
-                <h3 style="font-size: 1.5em" class="mt-8 half-border">Server<br> Information &<br>Wiki</h3>
+                <a href="https://wiki.xileretro.net/">
+                    <div class="p-4 rounded-md hover:shadow-lg">
+                        <div class="mb-6 border border-gray-200 rounded">
+                            <img class="object-cover w-full rounded h-44" style="margin:0" src="https://swall.teahub.io/photos/small/99-999290_ragnarok-online-valkyrie.jpg" alt="Server information Image">
+                        </div>
+                        <h3 style="font-size: 1.5em" class="mt-8 half-border">Server<br> Information &<br>Wiki</h3>
+                    </div>
+                </a>
             </div>
             <div class="col-span-1">
-                <div class="mb-6 border border-gray-200 rounded">
-                    <img class="object-cover w-full rounded h-44" style="margin:0" src="https://swall.teahub.io/photos/small/99-998493_ragnarok-online-artwork-anime-games-mmorpg-ragnarok-online.jpg" alt="Server information Image">
-                </div>
-                <h3 style="font-size: 1.5em" class="mt-8 half-border">Donation<br>Guides & <br>Rewards</h3>
+                <a href="https://wiki.xileretro.net/index.php?title=Newbie_Center#Starter_Package_.5BShow.2FHide.5D">
+                    <div class="p-4 rounded-md hover:shadow-lg">
+                        <div class="mb-6 border border-gray-200 rounded">
+                            <img class="object-cover w-full rounded h-44" style="margin:0" src="https://swall.teahub.io/photos/small/99-998493_ragnarok-online-artwork-anime-games-mmorpg-ragnarok-online.jpg" alt="Server information Image">
+                        </div>
+                        <h3 style="font-size: 1.5em" class="mt-8 half-border">Starter<br>Packages & <br>Guides</h3>
+                    </div>
+                </a>
             </div>
             <div class="col-span-1">
-                <div class="mb-6 border border-gray-200 rounded">
-                    <img class="object-cover w-full rounded h-44" style="margin:0" src="https://swall.teahub.io/photos/small/99-994510_photo-wallpaper-forest-flower-grass-elf-art-girl.jpg" alt="Server information Image">
-                </div>
-                <h3 style="font-size: 1.5em" class="mt-8 half-border">Leveling<br>Areas & <br>Getting Started</h3>
+                <a href="https://wiki.xileretro.net/index.php?title=Leveling_Spots">
+                    <div class="p-4 rounded-md hover:shadow-lg">
+                        <div class="mb-6 border border-gray-200 rounded">
+                            <img class="object-cover w-full rounded h-44" style="margin:0" src="https://swall.teahub.io/photos/small/99-994510_photo-wallpaper-forest-flower-grass-elf-art-girl.jpg" alt="Server information Image">
+                        </div>
+                        <h3 style="font-size: 1.5em" class="mt-8 half-border">Leveling<br>Areas & <br>Progression</h3>
+                    </div>
+                </a>
             </div>
             <div class="col-span-1">
-                <div class="mb-6 border border-gray-200 rounded">
-                    <img class="object-cover w-full rounded h-44" style="margin:0" src="https://www.teahub.io/photos/full/28-281786_ragnarok-online-ragnarok-online-wallpapers-1920.jpg" alt="Server information Image">
-                </div>
-                <h3 style="font-size: 1.5em" class="mt-8 half-border">Custom<br> Instances &<br> Quests</h3>
+                <a href="https://wiki.xileretro.net/index.php?title=Donation">
+                    <div class="p-4 rounded-md hover:shadow-lg">
+                        <div class="mb-6 border border-gray-200 rounded">
+                            <img class="object-cover w-full rounded h-44" style="margin:0" src="https://www.teahub.io/photos/full/28-281786_ragnarok-online-ragnarok-online-wallpapers-1920.jpg" alt="Server information Image">
+                        </div>
+                        <h3 style="font-size: 1.5em" class="mt-8 half-border">Donation<br> Help &<br> Rewards</h3>
+                    </div>
+                </a>
             </div>
         </div>
     </section>
@@ -92,17 +108,18 @@
     </div>
 
     <section id="steps2play" class="container pt-5 pb-20 mx-auto" style="">
-        <h2>Let's get you in game!</h2>
         <div class="grid grid-cols-2">
             <div class="col-span-1">
+                @guest
+                <h2>Let's get you in game!</h2>
                 <h3>Step 1.</h3>
-                <h4>Register your Master Account</h4>
+                <h4>Register your Ragnarok Account</h4>
                 <form class="w-full max-w-lg" method="POST" action="/register">
                     @csrf
                     <div class="flex flex-wrap mb-6 -mx-3">
                         <div class="w-full px-3">
                             <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" for="grid-username">
-                                Master Account Name
+                                Account Name
                             </label>
                             <input name="username" class="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500 @error('username') border-red-500 @enderror" id="grid-username" value="{{ old('username') }}" type="text" placeholder="username" required autocomplete="name" autofocus>
                             @error('username')
@@ -115,7 +132,7 @@
                     <div class="flex flex-wrap mb-6 -mx-3">
                         <div class="w-full px-3">
                             <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" for="grid-email">
-                                Master Email Address
+                                Email Address
                             </label>
                             <input name="email" class="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500 @error('email') border-red-500 @enderror" id="grid-email" value="{{ old('email') }}" type="email" placeholder="account@xileretro.net" required autocomplete="email">
                             @error('email')
@@ -128,7 +145,7 @@
                     <div class="flex flex-wrap mb-6 -mx-3">
                         <div class="w-full px-3">
                             <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" for="grid-password">
-                                Master Password
+                                Password
                             </label>
                             <input name="password" class="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500 @error('password') border-red-500 @enderror" id="grid-password" type="password" placeholder="******************" required autocomplete="new-password">
                             @error('password')
@@ -141,20 +158,40 @@
                     <div class="flex flex-wrap mb-6 -mx-3">
                         <div class="w-full px-3">
                             <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" for="grid-password-confirm">
-                                Retype Password
+                                Password
                             </label>
                             <input name="password_confirmation" class="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password-confirm" type="password" placeholder="******************" required autocomplete="new-password">
                         </div>
                     </div>
 					<div class="flex justify-end">
                         <button class="flex items-center items-end text-left btn btn-primary">
-                            <span>Create my Master Account</span>
+                            <span>Create my Ragnarok Account</span>
                         </button>
                     </div>
                 </form>
+                @else
+                <div class="pr-28">
+                    <h2 class="mt-0">You are ready to login!</h4>
+                    <p>Open up your client and login with the username <b>{{ auth()->user()->username }}</b> and the password you used to create the account!</p>
+
+                    <hr>
+
+                    <h2>Get a Headstart</h4>
+                    <p>If you are new to XileRetro or would like a refresher, we highly recommend checking out the <a href="http://wiki.xileretro.net/index.php?title=Newbie_Center" target="_blank">Newbie Center Guide</a> for an awesome head start!</p>
+
+                    <hr>
+
+                    <button class="btn btn-secondary">Logout from Website</button>
+                </div>
+
+                @endguest
             </div>
             <div class="col-span-1">
-				<h3>Step 2.</h3>
+				@guest
+                <h3>Step 2.</h3>
+                @else
+                <h3>Grab a download</h3>
+                @endguest
 				<h4>Download and install with Lite Installer.</h4>
 				<div class="grid grid-cols-5">
 					<div class="col-span-1">
@@ -162,9 +199,11 @@
 					</div>
 					<div class="col-span-4">
                         @foreach(config('downloads.lite') as $item)
-                            <button class="flex items-center w-full mb-4 text-left btn {{ $item['bttn'] }}">
-                                <a class="text-gray-700 no-underline" href="{{ $item['link'] }}">{{ $item['name'] }}</a>
-                            </button>
+                            <a class="no-underline" href="{{ $item['link'] }}" target="_blank">
+                                <button class="flex items-center w-full mb-4 text-left btn {{ $item['bttn'] }}">
+                                    {{ $item['name'] }}
+                                </button>
+                            </a>
                         @endforeach
 					</div>
 				</div>
@@ -175,10 +214,12 @@
 						<i class="fas fa-compact-disc step2-icon"></i>
 					</div>
 					<div class="col-span-4">
-						@foreach(config('downloads.full') as $item)
-                            <button class="flex items-center w-full mb-4 text-left btn {{ $item['bttn'] }}">
-                                <a href="{{ $item['link'] }}">{{ $item['name'] }}</a>
-                            </button>
+                        @foreach(config('downloads.full') as $item)
+                            <a class="no-underline" href="{{ $item['link'] }}" target="_blank">
+                                <button class="flex items-center w-full mb-4 text-left btn {{ $item['bttn'] }}">
+                                    {{ $item['name'] }}
+                                </button>
+                            </a>
                         @endforeach
 					</div>
 				</div>

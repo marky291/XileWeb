@@ -70,18 +70,24 @@
                     <div>
                         <h2>Get in Touch</h2>
                         <div class="grid grid-cols-3 col-gap-3">
-                            <div class="flex items-center col-span-1">
-                                <i class="mr-2 text-4xl text-blue-600 fab fa-facebook-square"></i>
-                                <p class="m-0">Facebook</p>
-                            </div>
-                            <div class="flex items-center col-span-1">
-                                <i class="mr-2 text-4xl text-indigo-600 fab fa-discord"></i>
-                                <p class="m-0">Discord</p>
-                            </div>
-                            <div class="flex items-center col-span-1">
-                                <i class="mr-2 text-4xl text-blue-500 fab fa-facebook-messenger"></i>
-                                <p class="m-0">Messenger</p>
-                            </div>
+                            <a href="https://www.facebook.com/groups/XileRetro" class="no-underline hover:underline">
+                                <div class="flex items-center col-span-1">
+                                    <i class="mr-2 text-4xl text-blue-600 fab fa-facebook-square"></i>
+                                    <p class="m-0">Facebook Page</p>
+                                </div>
+                            </a>
+                            <a href="https://www.facebook.com/groups/1671355556362607" class="no-underline hover:underline">
+                                <div class="flex items-center col-span-1">
+                                    <i class="mr-2 text-4xl text-blue-500 fab fa-facebook-messenger"></i>
+                                    <p class="m-0">Facebook Group</p>
+                                </div>
+                            </a>
+                            <a href="discord.gg/hp7CS6k" class="no-underline hover:underline">
+                                <div class="flex items-center col-span-1">
+                                    <i class="mr-2 text-4xl text-indigo-600 fab fa-discord"></i>
+                                    <p class="m-0">Discord</p>
+                                </div>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -92,7 +98,7 @@
                     <p>A thank you to all our players who support and show commitment<br>to making a server that's great for everyone.</p>
                 </div>
                 <div class="flex items-end justify-end col-span-1 text-right">
-                    <p>Website design and coding by Mark Hester<br>(Co-Owner of XileRetro)</p>
+                    <p>Website design and coded by <a href="https://www.facebook.com/Marky291">Mark Hester</a><br>(Co-Owner of XileRetro)</p>
                 </div>
             </div>
         </footer>

@@ -5,36 +5,36 @@ return [
 
     'lite' => [
         [
-            'name' => 'Download Lite from Mediafire (524mb)',
-            'link' => 'http://www.mediafire.com/file/rpl5j5tnizppavz/Play-Lite.rar/file',
+            'name' => 'Download Lite from Mediafire (550mb)',
+            'link' => 'http://www.mediafire.com/file/6bbmkqsif3t0dc3/file',
             'bttn' => 'btn-secondary',
         ],
         [
-            'name' => 'Download Lite from Mega Upload (524mb)',
-            'link' => 'https://mega.nz/file/3b5zHIQK#8IHGw1r4h18qVX7hkr4JwddZUt_zNiux0VNNi6ALZhA',
+            'name' => 'Download Lite from Mega Upload (550mb)',
+            'link' => 'https://mega.nz/file/7eYTiYQa#u-6wtAi9sz6pptnmuQbnI2aned1w2hw0xhwTkJp3ry8',
             'bttn' => 'btn-secondary',
         ],
         [
-            'name' => 'Download Lite from Google Drive (524mb)',
-            'link' => 'https://drive.google.com/file/d/18Fhpyn43Sjqs1E1pIMTFejmKYFm1XRy6/view?usp=sharing',
+            'name' => 'Download Lite from Google Drive (550mb)',
+            'link' => 'https://drive.google.com/file/d/1euwj9ZY3qQgkvKzphpt8N41b6-X8n-Az/view?usp=sharing',
             'bttn' => 'btn-secondary',
         ],
     ],
 
     'full' => [
         [
-            'name' => 'Download Lite from Mega Upload (1.90gb)',
-            'link' => 'http://www.mediafire.com/file/gk54wu71ehiy9h2/Play.rar/file',
+            'name' => 'Download Full from Mega Upload (1.92gb)',
+            'link' => 'http://www.mediafire.com/file/xnwo3tw39tobaww/file',
             'bttn' => 'btn-secondary',
         ],
         [
-            'name' => 'Download Lite from Mega Upload (1.90gb)',
-            'link' => 'https://mega.nz/file/ie5V0QhD#rV7xUJHk19Uzj5xOcjNODX9SXDXBWEIPwHPOKQW6hGc',
+            'name' => 'Download Full from Mega Upload (1.92gb)',
+            'link' => 'https://mega.nz/file/zaIHUAIY#8Q7eohNpS-gGuwOK2edizEx9IVfuYN64IekDtVRPfZM',
             'bttn' => 'btn-secondary',
         ],
         [
-            'name' => 'Download Lite from Google Drive (1.90gb)',
-            'link' => 'https://drive.google.com/file/d/1HnaZA2TtOb4krqz6-sWxhLBj8md89jlK/view?usp=sharing',
+            'name' => 'Download Full from Google Drive (1.92gb)',
+            'link' => 'https://drive.google.com/file/d/1ICvA9X8VySEE7awakg9i_5ze666JeHfZ/view?usp=sharing',
             'bttn' => 'btn-primary',
         ],
     ],

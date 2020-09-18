@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
-
 Auth::routes();
+
+Route::view('/', 'index');
+//Route::view('/account', 'account');
+
 
