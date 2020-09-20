@@ -7,11 +7,13 @@
         </div>
     @endif
 
-    <section class="landing">
+        {{ auth()->user() }}
+
+    <section class="shadow landing">
         <div class="container grid grid-cols-5 gap-4 mx-auto">
             <div class="col-span-3 pt-20 pb-4 pr-6">
                 <div class="mr-36">
-                    <h1 style="font-size:2.8em;">XileRetro! <br><small class="font-normal">A Ragnarok Online Private Server</small></h1>
+                    <h1 class="mb-6" style="font-size:2.8em;">XileRetro <br><small class="font-normal">A Ragnarok Online Private Server</small></h1>
                     <p>
                         Welcome to XileRetro, we are a team of developers with dedication
                         and love for the mechanics that drive Xile and the skills behind it.
@@ -38,15 +40,21 @@
                     </div>
                 </div>
                 <div class="flex items-center justify-between mt-4 text-5xl social-buttons">
-                    <i class="fas fa-angle-double-down"></i>
+                    <a href="">
+                        <i class="fas fa-angle-double-down"></i>
+                    </a>
                     <div class="flex flex-row">
-                        <div class="mr-6 socal-facebook"><i class="fab fa-facebook"></i></div>
-                        <div class="socal-discord"><i class="fab fa-discord"></i></div>
+                        <a href="">
+                            <div class="mr-6 socal-facebook"><i class="fab fa-facebook"></i></div>
+                        </a>
+                        <a href="">
+                            <div class="socal-discord"><i class="fab fa-discord"></i></div>
+                        </a>
                     </div>
                 </div>
             </div>
             <div class="grid col-span-2">
-                <div class="feature-bg-img" class="bg-no-repeat bg-contain">
+                <div class="bg-no-repeat bg-cover feature-bg-img">
                     <div style="margin-left:-13%">
                         <img src="images/castle/castle_1.png" alt="Landing image" class="flex items-center justify-center rounded-full w-36 h-36">
                         <img src="images/castle/castle_2.png" alt="Landing image" class="flex items-center justify-center rounded-full w-36 h-36">
@@ -111,15 +119,14 @@
         <div class="grid grid-cols-2">
             <div class="col-span-1">
                 @guest
-                <h2>Let's get you in game!</h2>
-                <h3>Step 1.</h3>
+                <h2 class="mt-0">Let's get you in game!</h2>
                 <h4>Register your Ragnarok Account</h4>
                 <form class="w-full max-w-lg" method="POST" action="/register">
                     @csrf
-                    <div class="flex flex-wrap mb-6 -mx-3">
+                    <div class="flex flex-wrap mb-2 -mx-3">
                         <div class="w-full px-3">
                             <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" for="grid-username">
-                                Account Name
+                                Username
                             </label>
                             <input name="username" class="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500 @error('username') border-red-500 @enderror" id="grid-username" value="{{ old('username') }}" type="text" placeholder="username" required autocomplete="name" autofocus>
                             @error('username')
@@ -129,7 +136,7 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="flex flex-wrap mb-6 -mx-3">
+                    <div class="flex flex-wrap mb-2 -mx-3">
                         <div class="w-full px-3">
                             <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" for="grid-email">
                                 Email Address
@@ -142,7 +149,7 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="flex flex-wrap mb-6 -mx-3">
+                    <div class="flex flex-wrap mb-2 -mx-3">
                         <div class="w-full px-3">
                             <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" for="grid-password">
                                 Password
@@ -155,43 +162,38 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="flex flex-wrap mb-6 -mx-3">
+                    <div class="flex flex-wrap mb-2 -mx-3">
                         <div class="w-full px-3">
                             <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" for="grid-password-confirm">
-                                Password
+                                Confirm Password
                             </label>
                             <input name="password_confirmation" class="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password-confirm" type="password" placeholder="******************" required autocomplete="new-password">
                         </div>
                     </div>
-					<div class="flex justify-end">
-                        <button class="flex items-center items-end text-left btn btn-primary">
-                            <span>Create my Ragnarok Account</span>
+					<div class="flex justify-start mt-6">
+                        <button class="col-span-1 btn btn-primary">
+                            <span>Create New Account</span>
                         </button>
                     </div>
                 </form>
                 @else
                 <div class="pr-28">
-                    <h2 class="mt-0">You are ready to login!</h4>
-                    <p>Open up your client and login with the username <b>{{ auth()->user()->username }}</b> and the password you used to create the account!</p>
-
+                    <h2 class="mt-0">You are ready to log in game!</h4>
+                    <p>Open up your client and login with the username <b>{{ auth()->user()->userid }}</b> and the password you used to create the account!</p>
                     <hr>
-
                     <h2>Get a Headstart</h4>
                     <p>If you are new to XileRetro or would like a refresher, we highly recommend checking out the <a href="http://wiki.xileretro.net/index.php?title=Newbie_Center" target="_blank">Newbie Center Guide</a> for an awesome head start!</p>
-
                     <hr>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                        {{ csrf_field() }}
+                        <button class="btn btn-secondary" action="submit">Logout from Website</button>
+                    </form>
 
-                    <button class="btn btn-secondary">Logout from Website</button>
                 </div>
-
                 @endguest
             </div>
             <div class="col-span-1">
-				@guest
-                <h3>Step 2.</h3>
-                @else
-                <h3>Grab a download</h3>
-                @endguest
+                <h3>Grab a download.</h3>
 				<h4>Download and install with Lite Installer.</h4>
 				<div class="grid grid-cols-5">
 					<div class="col-span-1">

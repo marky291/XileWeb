@@ -2,7 +2,9 @@
 
 namespace App\Ragnarok;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 /**
  * @property int $account_id
@@ -29,8 +31,17 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $total_online
  */
-class Login extends Model
+class Login extends Authenticatable
 {
+    //use Notifiable;
+
+     /**
+     * The connection name for the model.
+     *
+     * @var string|null
+     */
+    protected $connection = 'main';
+
     /**
      * The table associated with the model.
      *
@@ -46,15 +57,33 @@ class Login extends Model
     protected $primaryKey = 'account_id';
 
     /**
-     * @var array
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
      */
-    protected $fillable = ['userid', 'user_pass', 'email', 'group_id', 'state', 'unban_time', 'expiration_time', 'logincount', 'lastlogin', 'last_ip', 'birthdate', 'character_slots', 'pincode', 'pincode_change', 'vip_time', 'old_group', 'web_auth_token', 'web_auth_token_enabled', 'last_unique_id', 'blocked_unique_id'];
+    public $timestamps = false;
 
     /**
-     * Total Online
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
      */
-    public function getTotalOnlineAttribute()
+    protected $hidden = ['user_pass'];
+
+    /**
+     * The attributes that should be fillable using forms.
+     *
+     * @var array
+     */
+    protected $fillable = ['userid', 'email', 'user_pass'];
+
+    /**
+     * Get the password for the user.
+     *
+     * @return string
+     */
+    public function getAuthPassword()
     {
-        return $this->query()->where('state', '=', 1)->count();
+        return $this->user_pass;
     }
 }

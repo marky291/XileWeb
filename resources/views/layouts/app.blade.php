@@ -23,9 +23,42 @@
 
     <div id="app" class="prose max-w-none">
 
-        <nav style="height:60px; background-color: #6e3755">
-            <a class="text-white" href="/">Home</a>
-        </nav>
+        <div style="background-color: #6e3755" class="shadow">
+            <div class="container mx-auto">
+                <nav class="flex flex-wrap items-center justify-between py-6 pt-7">
+                    <div class="flex-grow block w-full lg:flex lg:items-center lg:w-auto">
+                        <div class="lg:flex-grow">
+                        <a href="#responsive-header" class="block mt-4 mr-6 font-bold text-white no-underline border-b-2 lg:inline-block lg:mt-0 border-red-50">
+                            Home
+                        </a>
+                        <a href="#responsive-header" class="block mt-4 mr-6 text-white no-underline border-b-2 border-transparent lg:inline-block lg:mt-0">
+                            Donate
+                        </a>
+                        <a href="#responsive-header" class="block mt-4 mr-6 text-white no-underline border-b-2 border-transparent lg:inline-block lg:mt-0">
+                            Guides
+                        </a>
+                        <a href="#responsive-header" class="block mt-4 mr-6 text-white no-underline border-b-2 border-transparent lg:inline-block lg:mt-0">
+                            Packages
+                        </a>
+                        <a href="#responsive-header" class="block mt-4 mr-6 text-white no-underline border-b-2 border-transparent lg:inline-block lg:mt-0">
+                            Register
+                        </a>
+                        </div>
+                        <div class="">
+                            <a href="#" style="color: #6e3755;" class="inline-block px-4 py-2 mt-4 mr-4 text-sm leading-none text-white no-underline rounded hover:border hover:border-white lg:mt-0">
+                                <span class="mr-2">Account Login</span> <i class="fas fa-user"></i>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="#" style="color: #6e3755;" class="inline-block px-4 py-2 mt-4 text-sm leading-none text-white no-underline rounded hover:border hover:border-white lg:mt-0">
+                                <span class="mr-2">Download</span> <i class="fas fa-download"></i>
+                            </a>
+                        </div>
+
+                    </div>
+                </nav>
+            </div>
+        </div>
 
         @yield('content')
 

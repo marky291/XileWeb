@@ -40,7 +40,6 @@ hr.default {
 
 section.landing {
     background: url('../assets/landing-bg@2x.png');
-    background-size: contain;
 }
 section.landing .feature-bg-img {
     background: url('../assets/landing-img.png');
