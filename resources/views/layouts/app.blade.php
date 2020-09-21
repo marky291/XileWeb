@@ -28,29 +28,29 @@
                 <nav class="flex flex-wrap items-center justify-between py-6 pt-7">
                     <div class="flex-grow block w-full lg:flex lg:items-center lg:w-auto">
                         <div class="lg:flex-grow">
-                        <a href="#responsive-header" class="block mt-4 mr-6 font-bold text-white no-underline border-b-2 lg:inline-block lg:mt-0 border-red-50">
+                        <a href="{{ url('/') }}" class="block mt-4 mr-6 font-bold text-white no-underline border-b-2 lg:inline-block lg:mt-0 border-red-50">
                             Home
                         </a>
-                        <a href="#responsive-header" class="block mt-4 mr-6 text-white no-underline border-b-2 border-transparent lg:inline-block lg:mt-0">
+                        <a target="_blank" href="http://wiki.xileretro.net/index.php?title=Donation" class="block mt-4 mr-6 text-white no-underline border-b-2 border-transparent lg:inline-block lg:mt-0">
                             Donate
                         </a>
-                        <a href="#responsive-header" class="block mt-4 mr-6 text-white no-underline border-b-2 border-transparent lg:inline-block lg:mt-0">
+                        <a target="_blank" href="http://wiki.xileretro.net/index.php?title=Main_Page" class="block mt-4 mr-6 text-white no-underline border-b-2 border-transparent lg:inline-block lg:mt-0">
                             Guides
                         </a>
-                        <a href="#responsive-header" class="block mt-4 mr-6 text-white no-underline border-b-2 border-transparent lg:inline-block lg:mt-0">
+                        <a target="_blank" href="http://wiki.xileretro.net/index.php?title=Main_Page" class="block mt-4 mr-6 text-white no-underline border-b-2 border-transparent lg:inline-block lg:mt-0">
                             Packages
                         </a>
-                        <a href="#responsive-header" class="block mt-4 mr-6 text-white no-underline border-b-2 border-transparent lg:inline-block lg:mt-0">
+                        <a href="#steps2play" class="block mt-4 mr-6 text-white no-underline border-b-2 border-transparent lg:inline-block lg:mt-0">
                             Register
                         </a>
                         </div>
                         <div class="">
-                            <a href="#" style="color: #6e3755;" class="inline-block px-4 py-2 mt-4 mr-4 text-sm leading-none text-white no-underline rounded hover:border hover:border-white lg:mt-0">
+                            <a href="{{ route('login') }}" style="color: #6e3755;" class="inline-block px-4 py-2 mt-4 mr-4 text-sm leading-none text-white no-underline rounded hover:border hover:border-white lg:mt-0">
                                 <span class="mr-2">Account Login</span> <i class="fas fa-user"></i>
                             </a>
                         </div>
                         <div>
-                            <a href="#" style="color: #6e3755;" class="inline-block px-4 py-2 mt-4 text-sm leading-none text-white no-underline rounded hover:border hover:border-white lg:mt-0">
+                            <a target="_blank" href="{{ config('downloads.full')[array_key_last(config('downloads.full'))]['link'] }}" style="color: #6e3755;" class="inline-block px-4 py-2 mt-4 text-sm leading-none text-white no-underline rounded hover:border hover:border-white lg:mt-0">
                                 <span class="mr-2">Download</span> <i class="fas fa-download"></i>
                             </a>
                         </div>
@@ -70,18 +70,18 @@
                         <h2>Navigate</h2>
                         <div class="grid grid-cols-2 col-span-2 col-gap-6">
                             <ul>
-                                <li><a class="no-underline hover:underline" href="#top">Home</a></li>
-                                <li><a class="no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Server_Rules">Rulebook</a></li>
-                                <li><a class="no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Server_Information#Staff">The Staff</a></li>
-                                <li><a class="no-underline hover:underline" href="#download">Download</a></li>
-                                <li><a class="no-underline hover:underline" href="#register">Register</a></li>
+                                <li><a class="no-underline hover:underline" href="{{ url('/') }}">Home</a></li>
+                                <li><a target="_blank" class="no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Server_Rules">Rulebook</a></li>
+                                <li><a target="_blank" class="no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Server_Information#Staff">The Staff</a></li>
+                                <li><a class="no-underline hover:underline" href="#steps2play">Download</a></li>
+                                <li><a class="no-underline hover:underline" href="#steps2play">Register</a></li>
                             </ul>
                             <ul>
-                                <li><a class="no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Server_Information">Server Features</a></li>
-                                <li><a class="no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=General_Customs">Modified Official</a></li>
-                                <li><a class="no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Updates_Changelog">Updates & Changelog</a></li>
-                                <li><a class="no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Newbie_Center">Newbie Center</a></li>
-                                <li><a class="no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Events">Events</a></li>
+                                <li><a target="_blank" class="no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Server_Information">Server Features</a></li>
+                                <li><a target="_blank" class="no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=General_Customs">Modified Official</a></li>
+                                <li><a target="_blank" class="no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Updates_Changelog">Updates & Changelog</a></li>
+                                <li><a target="_blank" class="no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Newbie_Center">Newbie Center</a></li>
+                                <li><a target="_blank" class="no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Events">Events</a></li>
                             </ul>
                         </div>
                     </div>
