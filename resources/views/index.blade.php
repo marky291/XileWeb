@@ -7,8 +7,6 @@
         </div>
     @endif
 
-        {{ auth()->user() }}
-
     <section class="shadow landing">
         <div class="container grid grid-cols-5 gap-4 mx-auto">
             <div class="col-span-3 pt-20 pb-4 pr-6">
