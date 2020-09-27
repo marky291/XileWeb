@@ -44,11 +44,6 @@
                             Register
                         </a>
                         </div>
-                        <div class="">
-                            <a href="{{ route('login') }}" style="color: #6e3755;" class="inline-block px-4 py-2 mt-4 mr-4 text-sm leading-none text-white no-underline rounded hover:border hover:border-white lg:mt-0">
-                                <span class="mr-2">Account Login</span> <i class="fas fa-user"></i>
-                            </a>
-                        </div>
                         <div>
                             <a target="_blank" href="{{ config('downloads.full')[array_key_last(config('downloads.full'))]['link'] }}" style="color: #6e3755;" class="inline-block px-4 py-2 mt-4 text-sm leading-none text-white no-underline rounded hover:border hover:border-white lg:mt-0">
                                 <span class="mr-2">Download</span> <i class="fas fa-download"></i>
@@ -88,7 +83,7 @@
 
                     <div class="flex items-center p-0 mt-8 status">
                         <p class="my-0 ml-0 mr-6 text-5xl text-green-500">Server is Online!</p>
-                        <p class="px-2 text-sm text-gray-700 bg-gray-300 rounded">371</p>
+                        <p class="px-2 text-sm text-gray-700 bg-gray-300 rounded">{{ cache()->remember('users', now()->addMinutes(10), function () { return App\Ragnarok\Char::query()->online()->count(); }) }}</p>
                     </div>
                     <p class="m-0">No errors to report</p>
 

@@ -29,25 +29,29 @@
                         we are also here for the new~ So log in and pawn some noobs!!
                     </p>
                     <div class="flex flex-col my-10 quick-links">
-                        <button class="flex items-center text-left btn btn-primary">
-                            <svg class="w-4 h-4 mr-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg>
-                            <span>Create a Ragnarok Account</span>
-                        </button>
-                        <button class="flex items-center mt-4 text-left btn btn-primary">
-                            <svg class="w-4 h-4 mr-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg>
-                            <span>Download Zip from Mediafire (2GB)</span>
-                        </button>
+                        <a href="#steps2play" class="w-full no-underline">
+                            <button class="flex items-center w-full text-left btn btn-primary">
+                                <svg class="w-4 h-4 mr-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg>
+                                <span>Create a Ragnarok Account</span>
+                            </button>
+                        </a>
+                        <a href="#steps2play" class="w-full no-underline">
+                            <button class="flex items-center w-full mt-4 text-left btn btn-primary">
+                                <svg class="w-4 h-4 mr-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg>
+                                <span>{{ config('downloads.full')[array_key_last(config('downloads.full'))]['name'] }}</span>
+                            </button>
+                        </a>
                     </div>
                 </div>
                 <div class="flex items-center justify-between mt-4 text-5xl social-buttons">
-                    <a href="">
+                    <a href="#important-links" class="text-gray-700 hover:text-cool-gray-900">
                         <i class="fas fa-angle-double-down"></i>
                     </a>
                     <div class="flex flex-row">
-                        <a href="">
+                        <a href="https://www.facebook.com/xileretro" class="text-gray-700 hover:text-cool-gray-900">
                             <div class="mr-6 socal-facebook"><i class="fab fa-facebook"></i></div>
                         </a>
-                        <a href="">
+                        <a href="http://xileweb.test/discord.gg/hp7CS6k" class="text-gray-700 hover:text-cool-gray-900">
                             <div class="socal-discord"><i class="fab fa-discord"></i></div>
                         </a>
                     </div>

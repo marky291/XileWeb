@@ -3,8 +3,11 @@
 namespace App\Ragnarok;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 /**
  * @property int $account_id
@@ -33,7 +36,7 @@ use Illuminate\Notifications\Notifiable;
  */
 class Login extends Authenticatable
 {
-    //use Notifiable;
+    use Notifiable;
 
      /**
      * The connection name for the model.
