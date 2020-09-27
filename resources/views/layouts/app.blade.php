@@ -44,7 +44,7 @@
                             Register
                         </a>
                         </div>
-                        <div>
+                        <div class="hidden lg:block">
                             <a target="_blank" href="{{ config('downloads.full')[array_key_last(config('downloads.full'))]['link'] }}" style="color: #6e3755;" class="inline-block px-4 py-2 mt-4 text-sm leading-none text-white no-underline rounded hover:border hover:border-white lg:mt-0">
                                 <span class="mr-2">Download</span> <i class="fas fa-download"></i>
                             </a>
@@ -58,8 +58,8 @@
         @yield('content')
 
         <footer id="footer" class="shadow-inner">
-            <div class="container grid grid-cols-2 col-gap-1 pt-5 mx-auto pb-15 content">
-                <div class="col-span-1">
+            <div class="container px-3 md:px-0 grid grid-cols-2 col-gap-1 pt-5 mx-auto pb-15 content">
+                <div class="col-span-2 lg:col-span-1">
                     {{-- <img src="/images/logo.png" alt="XileRetro Logo" class="w-1/2"> --}}
                     <div class="grid grid-cols-2">
                         <h2>Navigate</h2>
@@ -88,12 +88,12 @@
                     <p class="m-0">No errors to report</p>
 
                 </div>
-                <div class="col-span-1">
+                <div class="col-span-2 lg:col-span-1">
                     <h2>Community Loaders</h2>
                     <div class="grid grid-cols-3 screenshots">
-                        <img class="col-span-1" src="images/loading/loading00.png" alt="Created by our players">
-                        <img class="col-span-1" src="images/loading/loading06.png" alt="Created by our players">
-                        <img class="col-span-1" src="images/loading/loading08.png" alt="Created by our players">
+                        <img class="col-span-1 my-0" src="images/loading/loading00.png" alt="Created by our players">
+                        <img class="col-span-1 my-0" src="images/loading/loading06.png" alt="Created by our players">
+                        <img class="col-span-1 my-0" src="images/loading/loading08.png" alt="Created by our players">
                     </div>
                     <div>
                         <h2>Get in Touch</h2>
@@ -120,12 +120,12 @@
                     </div>
                 </div>
             </div>
-            <div class="container grid grid-cols-3 pt-8 pb-10 mx-auto copyright">
-                <div class="flex items-center col-span-2 text-gray-700">
+            <div class="container px-3 md:px-0 grid grid-cols-3 pt-8 pb-10 mx-auto copyright">
+                <div class="flex items-center col-span-3 lg:col-span-2 lg:text-left text-gray-700">
                     <i class="mr-4 text-5xl far fa-heart"></i>
                     <p>A thank you to all our players who support and show commitment<br>to making a server that's great for everyone.</p>
                 </div>
-                <div class="flex items-end justify-end col-span-1 text-right">
+                <div class="hidden lg:flex items-end justify-end col-span-3 lg:col-span-1 text-right">
                     <p>Website design and coded by <a href="https://www.facebook.com/Marky291">Mark Hester</a><br>(Co-Owner of XileRetro)</p>
                 </div>
             </div>

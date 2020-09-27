@@ -8,12 +8,12 @@
     @endif
 
     <section class="shadow landing">
-        <div class="container grid grid-cols-5 gap-4 mx-auto">
-            <div class="col-span-3 pt-20 pb-4 pr-6">
-                <div class="mr-36">
+        <div class="container grid px-3 sm:px-0 grid-cols-5 gap-4 mx-auto">
+            <div class="col-span-5 lg:col-span-3 pt-20 pb-4 pr-6">
+                <div class="xl:mr-36">
                     <h1 class="mb-6" style="font-size:2.8em;">XileRetro <br><small class="font-normal">A Ragnarok Online Private Server</small></h1>
                     <p>
-                        Welcome to XileRetro, we are a team of developers with dedication
+                        Welcome, we are a team of developers with dedication
                         and love for the mechanics that drive Xile and the skills behind it.
                         Our server is an official implementation of the old eAthena architecture
                         into modern rAthena code where we can provide support for future mechanics
@@ -33,7 +33,7 @@
                                 <span>Create a Ragnarok Account</span>
                             </button>
                         </a>
-                        <a href="#steps2play" class="w-full no-underline">
+                        <a href="#steps2play" class="w-full no-underline hidden lg:block">
                             <button class="flex items-center w-full mt-4 text-left btn btn-primary">
                                 <svg class="w-4 h-4 mr-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg>
                                 <span>{{ config('downloads.full')[array_key_last(config('downloads.full'))]['name'] }}</span>
@@ -55,9 +55,9 @@
                     </div>
                 </div>
             </div>
-            <div class="grid col-span-2">
+            <div class="lg:grid col-span-2 hidden">
                 <div class="bg-no-repeat bg-cover feature-bg-img">
-                    <div style="margin-left:-13%">
+                    <div style="margin-left:-13%" class="hidden xl:block">
                         <img src="images/castle/castle_1.png" alt="Landing image" class="flex items-center justify-center rounded-full w-36 h-36">
                         <img src="images/castle/castle_2.png" alt="Landing image" class="flex items-center justify-center rounded-full w-36 h-36">
                         <img src="images/castle/castle_3.png" alt="Landing image" class="flex items-center justify-center rounded-full w-36 h-36">
@@ -67,10 +67,10 @@
         </div>
     </section>
 
-    <section id="important-links" class="container py-10 mx-auto">
+    <section id="important-links" class="container mx-auto">
         <h2>Important Links</h2>
         <div class="grid grid-cols-4 col-gap-8">
-            <div class="col-span-1">
+            <div class="col-span-4 md:col-span-2 lg:col-span-1">
                 <a href="https://wiki.xileretro.net/">
                     <div class="p-4 rounded-md hover:shadow-lg">
                         <div class="mb-6 border border-gray-200 rounded">
@@ -80,7 +80,7 @@
                     </div>
                 </a>
             </div>
-            <div class="col-span-1">
+            <div class="col-span-4 md:col-span-2 lg:col-span-1">
                 <a href="https://wiki.xileretro.net/index.php?title=Newbie_Center#Starter_Package_.5BShow.2FHide.5D">
                     <div class="p-4 rounded-md hover:shadow-lg">
                         <div class="mb-6 border border-gray-200 rounded">
@@ -90,7 +90,7 @@
                     </div>
                 </a>
             </div>
-            <div class="col-span-1">
+            <div class="col-span-4 md:col-span-2 lg:col-span-1">
                 <a href="https://wiki.xileretro.net/index.php?title=Leveling_Spots">
                     <div class="p-4 rounded-md hover:shadow-lg">
                         <div class="mb-6 border border-gray-200 rounded">
@@ -100,7 +100,7 @@
                     </div>
                 </a>
             </div>
-            <div class="col-span-1">
+            <div class="col-span-4 md:col-span-2 lg:col-span-1">
                 <a href="https://wiki.xileretro.net/index.php?title=Donation">
                     <div class="p-4 rounded-md hover:shadow-lg">
                         <div class="mb-6 border border-gray-200 rounded">
@@ -117,16 +117,16 @@
         <hr class="default">
     </div>
 
-    <section id="steps2play" class="container pt-5 pb-20 mx-auto" style="">
-        <div class="grid grid-cols-2">
-            <div class="col-span-1">
+    <section id="steps2play" class="container px-3 sm:px-0 pt-5 pb-20 mx-auto" style="">
+        <div class="grid grid-cols-2 col-gap-20">
+            <div class="col-span-2 lg:col-span-1 mb-16">
                 @guest
                 <h2 class="mt-0">Let's get you in game!</h2>
                 <h4>Register your Ragnarok Account</h4>
-                <form class="w-full max-w-lg" method="POST" action="/register">
+                <form method="POST" action="/register">
                     @csrf
-                    <div class="flex flex-wrap mb-2 -mx-3">
-                        <div class="w-full px-3">
+                    <div class="flex flex-wrap mb-2">
+                        <div class="w-full">
                             <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" for="grid-username">
                                 Username
                             </label>
@@ -138,8 +138,8 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="flex flex-wrap mb-2 -mx-3">
-                        <div class="w-full px-3">
+                    <div class="flex flex-wrap mb-2">
+                        <div class="w-full">
                             <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" for="grid-email">
                                 Email Address
                             </label>
@@ -151,8 +151,8 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="flex flex-wrap mb-2 -mx-3">
-                        <div class="w-full px-3">
+                    <div class="flex flex-wrap mb-2">
+                        <div class="w-full">
                             <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" for="grid-password">
                                 Password
                             </label>
@@ -164,8 +164,8 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="flex flex-wrap mb-2 -mx-3">
-                        <div class="w-full px-3">
+                    <div class="flex flex-wrap mb-2">
+                        <div class="w-full">
                             <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" for="grid-password-confirm">
                                 Confirm Password
                             </label>
@@ -194,17 +194,17 @@
                 </div>
                 @endguest
             </div>
-            <div class="col-span-1">
-                <h3>Grab a download.</h3>
-				<h4>Download and install with Lite Installer.</h4>
+            <div class="col-span-2 lg:col-span-1">
+                <h2 class="mt-0">Grab a download.</h2>
+				<h4 class="mb-10">Download and install with Lite Installer.</h4>
 				<div class="grid grid-cols-5">
-					<div class="col-span-1">
+					<div class="col-span-1 hidden md:block">
 						<i class="fas fa-file-archive step2-icon"></i>
 					</div>
-					<div class="col-span-4">
+					<div class="col-span-5 md:col-span-4">
                         @foreach(config('downloads.lite') as $item)
                             <a class="no-underline" href="{{ $item['link'] }}" target="_blank">
-                                <button class="flex items-center w-full mb-4 text-left btn {{ $item['bttn'] }}">
+                                <button class="truncate ... flex items-center w-full mb-4 text-left btn {{ $item['bttn'] }}">
                                     {{ $item['name'] }}
                                 </button>
                             </a>
@@ -214,13 +214,13 @@
 
 				<h4>Download and install with Full Installer.</h3>
 				<div class="grid grid-cols-5">
-					<div class="col-span-1">
+					<div class="col-span-1 hidden md:block">
 						<i class="fas fa-compact-disc step2-icon"></i>
 					</div>
-					<div class="col-span-4">
+					<div class="col-span-5 md:col-span-4">
                         @foreach(config('downloads.full') as $item)
                             <a class="no-underline" href="{{ $item['link'] }}" target="_blank">
-                                <button class="flex items-center w-full mb-4 text-left btn {{ $item['bttn'] }}">
+                                <button class="truncate ... flex items-center w-full mb-4 text-left btn {{ $item['bttn'] }}">
                                     {{ $item['name'] }}
                                 </button>
                             </a>
