@@ -136,7 +136,7 @@
                     <p>A thank you to all our players who support and show commitment<br>to making a server that's great for everyone.</p>
                 </div>
                 <div class="hidden lg:flex items-end justify-end col-span-3 lg:col-span-1 text-right">
-                    <p>Website design and coded by <a href="https://www.facebook.com/Marky291">Mark Hester</a><br>(Co-Owner of XileRetro)</p>
+                    <p>Website design and coded by <a href="https://www.facebook.com/Marky291">Mark Hester</a><br><span class="text-gray-400">Version {{ config('app.version') }}</span></p>
                 </div>
             </div>
         </footer>

@@ -130,7 +130,7 @@
                             <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" for="grid-username">
                                 Username
                             </label>
-                            <input name="username" class="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500 @error('username') border-red-500 @enderror" id="grid-username" value="{{ old('username') }}" type="text" placeholder="username" required autocomplete="name" autofocus>
+                            <input name="username" class="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500 @error('username') border-red-500 @enderror" id="grid-username" value="{{ old('username') }}" type="text" placeholder="username" required autocomplete="name">
                             @error('username')
                                 <p class="mt-4 text-xs italic text-red-500">
                                     {{ $message }}
