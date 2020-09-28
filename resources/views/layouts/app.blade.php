@@ -34,7 +34,7 @@
     <div id="app" class="prose max-w-none">
 
         <div style="background-color: #6e3755" class="shadow">
-            <div class="container mx-auto">
+            <div class="container mx-auto px-3 md:px-0">
                 <nav class="flex flex-wrap items-center justify-between py-6 pt-7">
                     <div class="flex-grow block w-full lg:flex lg:items-center lg:w-auto">
                         <div class="lg:flex-grow">
