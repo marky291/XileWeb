@@ -107,3 +107,19 @@ section.landing .feature-bg-img {
 }
 
 
+.important-title {
+    display: flex;
+    flex-direction: row;
+}
+.important-title:before, .important-title:after{
+    content: "";
+    flex: 1 1;
+    border-bottom: 1px solid #000;
+    margin: auto;
+  }
+.important-title:before {
+    margin-right: 40px
+  }
+.important-title:after {
+    margin-left: 40px
+  }
