@@ -30,7 +30,14 @@ use League\Flysystem\File;
  */
 class Guild extends Model
 {
-        /**
+     /**
+     * The connection name for the model.
+     *
+     * @var string|null
+     */
+    protected $connection = 'main';
+
+    /**
      * The primary key for the model.
      *
      * @var string

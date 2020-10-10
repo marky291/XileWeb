@@ -13,6 +13,13 @@ use Illuminate\Database\Eloquent\Model;
 class GuildMember extends Model
 {
     /**
+     * The connection name for the model.
+     *
+     * @var string|null
+     */
+    protected $connection = 'main';
+
+    /**
      * The table associated with the model.
      *
      * @var string

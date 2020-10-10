@@ -30,10 +30,13 @@ use Illuminate\Database\Eloquent\Model;
  */
 class GuildCastle extends Model
 {
-    /**
-     * Castle IDS
+
+     /**
+     * The connection name for the model.
+     *
+     * @var string|null
      */
-    const ID_Kriemhild = 15;
+    protected $connection = 'main';
 
     /**
      * The table associated with the model.
