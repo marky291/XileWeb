@@ -24,7 +24,7 @@
                         using the latest Gepard 3.0 security systems that helps prevents hacks
                         and macros to ultimately provide a solid foundation for future growth
                         internally and externally. We are not just here for the old players,
-                        we are also here for the new~ So log in and pawn some noobs!!
+                        we are also here for the new~ So log in and pwn some n00bs!!
                     </p>
                     <div class="flex flex-col my-10 quick-links">
                         <a href="#steps2play" class="w-full no-underline">
