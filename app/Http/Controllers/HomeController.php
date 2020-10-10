@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Ragnarok\GuildCastle;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +24,10 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $guild = GuildCastle::query()->where('id', GuildCastle::ID_Kriemhild);
+
+        dd($guild);
+
         return view('index');
     }
 }

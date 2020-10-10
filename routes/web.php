@@ -1,6 +1,8 @@
 <?php
 
+use App\Ragnarok\Guild;
 use Illuminate\Support\Facades\Route;
+use Ramsey\Uuid\Guid\Guid;
 
 /*
 |--------------------------------------------------------------------------
