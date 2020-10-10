@@ -128,10 +128,10 @@
                     @else
                         <img class="h-16 w-16 m-0 mb-4" src="/assets/emblems/empty.bmp"/>
                     @endif
-                    <h3 class="font-bold my-0 mb-1">{{ $item->name }}</h3>
-                    <p class="mb-1 mt-0">By <span class="text-branding">{{ $item->guild->name }}</span></p>
-                    <p class="mb-1 mt-0">Leader <span class="text-branding">{{ $item->guild->master }}</span></p>
-                    <p class="mb-1 mt-0"><span class="text-branding">{{ $item->guild->members->count() }}</span> Members</p>
+                    <h3 class="truncate ... font-bold my-0 mb-1">{{ $item->name }}</h3>
+                    <p class="truncate ... mb-1 mt-0">By <span class="text-branding">{{ $item->guild->name }}</span></p>
+                    <p class="truncate ... mb-1 mt-0">Leader <span class="text-branding">{{ $item->guild->master }}</span></p>
+                    <p class="truncate ... mb-1 mt-0"><span class="text-branding">{{ $item->guild->members->count() }}</span> Members</p>
                 </div>
             @endforeach
            </div>
