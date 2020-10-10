@@ -257,7 +257,7 @@
         </div>
     </section>
 
-    <section class="">
+    <section class="hidden md:block">
         <div class="container mx-auto text-left md:text-center mb-20">
             <h1 class="mb-0 tracking-widest important-title" style="font-size: 3em"><a target="_blank" class="no-underline text-gray-800 hover:text-blue-600" href="http://wiki.xileretro.net/index.php?title=Server_Rules">READ THE RULES</a></h1>
             <p><a href="https://discord.gg/M4nP4rn">Unfairly banned? Create an appeal</a></p>
