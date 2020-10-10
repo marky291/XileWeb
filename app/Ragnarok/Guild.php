@@ -71,7 +71,9 @@ class Guild extends Model
 
     public function getEmblemAttribute()
     {
-        $asset = "assets/emblems/{$this->guild_id}.png";
+        return Cache::remember("emblem.{$this->guild_id}", now()->addMinutes(1), function ()
+        {
+            $asset = "assets/emblems/{$this->guild_id}.png";
 
             $data = @gzuncompress(pack('H*', $this->emblem_data));
 
@@ -80,6 +82,7 @@ class Guild extends Model
             imagepng(Emblem::create($data), $asset);
 
             return url($asset);
+        });
     }
 
     public function Members()
