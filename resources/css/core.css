@@ -38,6 +38,10 @@ hr.default {
     background-color: #e5e7eb;
 }
 
+.text-branding {
+    color: #a52a2a;
+}
+
 section.landing {
     background: url('../assets/landing-bg@2x.png');
 }

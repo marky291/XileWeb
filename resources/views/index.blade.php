@@ -24,7 +24,7 @@
                         using the latest Gepard 3.0 security systems that helps prevents hacks
                         and macros to ultimately provide a solid foundation for future growth
                         internally and externally. We are not just here for the old players,
-                        we are also here for the new~ So log in and pwn some n00bs!!
+                        we are also here for the new~ So log in and pawn some noobs!!
                     </p>
                     <div class="flex flex-col my-10 quick-links">
                         <a href="#steps2play" class="w-full no-underline">
@@ -119,19 +119,19 @@
 
     <section class="hidden xl:block">
         <div class="container mx-auto flex rounded">
-        <h2 class="text-5xl self-center my-0 mr-16">Prontera<br><span class="font-normal text-lg">Castle Holders</span></h2>
+        <h2 class="text-5xl self-center my-0 mr-16">Prontera<br><span class="font-normal text-lg text-branding">Castle Holders</span></h2>
            <div class="py-16 grid grid-cols-5 gap-2 w-full">
             @foreach (App\Ragnarok\GuildCastle::prontera()->with('guild', 'guild.members')->get() as $item)
-                <div class="col-span-1 px-6 py-4 rounded  align-center flex flex-col hover:bg-gray-100 hover:shadow">
+                <div class="col-span-1 px-6 py-4 rounded align-center items-center flex flex-col hover:bg-gray-100 hover:shadow">
                     @if($item->guild->hasEmblem())
-                        <div class="w-16 h-16 m-0 mb-4 rounded-full shadow" style="background: url('{{ url($item->guild->emblem) }}')"></div>
+                        <div class="w-16 h-16 m-0 mb-4 rounded-lg shadow bg-cover bg-gray-100" style="background: url('{{ url($item->guild->emblem) }}')"></div>
                     @else
                         <img class="h-16 w-16 m-0 mb-4" src="/assets/emblems/empty.bmp"/>
                     @endif
                     <h3 class="font-bold my-0 mb-1">{{ $item->name }}</h3>
-                    <p class="mb-0 mt-0">Guild: {{ $item->guild->name }}</p>
-                    <p class="mb-0 mt-0">Leader: {{ $item->guild->master }}</p>
-                    <p class="mb-0 mt-0">Members: {{ $item->guild->members->count() }}</p>
+                    <p class="mb-1 mt-0">By <span class="text-branding">{{ $item->guild->name }}</span></p>
+                    <p class="mb-1 mt-0">Leader <span class="text-branding">{{ $item->guild->master }}</span></p>
+                    <p class="mb-1 mt-0"><span class="text-branding">{{ $item->guild->members->count() }}</span> Members</p>
                 </div>
             @endforeach
            </div>
