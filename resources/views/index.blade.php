@@ -142,7 +142,7 @@
         <hr class="default">
     </div>
 
-    <section id="steps2play" class="container px-3 sm:px-0 pt-5 pb-10 mx-auto" style="">
+    <section id="steps2play" class="container px-3 sm:px-0 pt-5 mx-auto" style="">
         <div class="grid grid-cols-2 col-gap-20 ">
             <div class="col-span-2 lg:col-span-1 mb-16">
                 @guest
@@ -257,9 +257,35 @@
         </div>
     </section>
 
+    <div class="md:hidden container mx-auto">
+        <hr class="default">
+    </div>
+
+    <section class="my-20 px-3 sm:px-0">
+        <div class="container mx-auto">
+            <h2 class="mt-0">Want to play our Android Beta version?</h2>
+            <div class="grid grid-cols-3 col-gap-12">
+                <div class="col-span-3 mb-10 lg:col-span-1">
+                    <h3>Get started</h3>
+                    <p>Start downloading by visiting this the xileretro website with your android device and clicking the link below.</p>
+                    <a href="{{ config('downloads.android.link') }}" class="btn bg-blue-500 text-white no-underline">XileRetro {{ config('downloads.android.title') }} APK v{{ config('downloads.android.version') }}</a>
+                </div>
+                <div class="col-span-3 mb-5 lg:col-span-1">
+                    <h3>OTA Updates</h3>
+                    <p>Our android application delivers updates over the air meaning you never have to worry about outdated version.</p>
+                </div>
+                <div class="col-span-3 mb-10 lg:col-span-1">
+                    <h3>Bugs and Support</h3>
+                    <p>We actively fix bugs and provide support to our android application through our discord channels.</p>
+                    <a href="https://discord.gg/hjSSSXX" class="btn bg-gray-500 text-white no-underline">Report android issues on our discord</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section class="hidden md:block">
         <div class="container mx-auto text-left md:text-center mb-20">
-            <h1 class="mb-0 tracking-widest important-title" style="font-size: 3em"><a target="_blank" class="no-underline text-gray-800 hover:text-blue-600" href="http://wiki.xileretro.net/index.php?title=Server_Rules">READ THE RULES</a></h1>
+            <h1 class="mb-0 tracking-widest important-title" style="font-size: 3em"><a target="_blank" class="no-underline text-blue-500 hover:text-blue-900" href="http://wiki.xileretro.net/index.php?title=Server_Rules">READ THE RULES</a></h1>
             <p><a href="https://discord.gg/M4nP4rn">Unfairly banned? Create an appeal</a></p>
         </div>
     </section>
