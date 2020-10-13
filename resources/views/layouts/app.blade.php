@@ -93,7 +93,7 @@
 
                     <div class="flex items-center p-0 mt-8 status">
                         <p class="my-0 ml-0 mr-6 text-5xl text-green-500">Server is Online!</p>
-                        <p class="px-2 text-sm text-gray-700 bg-gray-300 rounded">{{ cache()->remember('users', now()->addMinutes(10), function () { return App\Ragnarok\Char::query()->online()->count(); }) }}</p>
+                        <p class="px-2 text-sm text-gray-700 bg-gray-300 rounded">{{ cache()->remember('users', now()->addMinutes(1), function () { return App\Ragnarok\Char::query()->online()->count(); }) }}</p>
                     </div>
                     <p class="m-0">No errors to report</p>
 
