@@ -262,7 +262,7 @@
     </div>
 
     <section class="my-20 px-3 sm:px-0">
-        <div class="container mx-auto">
+        <div id="android" class="container mx-auto">
             <h2 class="mt-0">Want to play our Android Beta version?</h2>
             <div class="grid grid-cols-3 col-gap-12">
                 <div class="col-span-3 mb-10 lg:col-span-1">
