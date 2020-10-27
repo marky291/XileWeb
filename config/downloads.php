@@ -5,18 +5,18 @@ return [
 
     'lite' => [
         [
-            'name' => 'Download Lite from Mediafire (556mb)',
-            'link' => 'http://www.mediafire.com/file/mv5oiilgj12qip4/file',
+            'name' => 'Download Lite from Mediafire (554mb)',
+            'link' => 'http://www.mediafire.com/file/stf6mf61f7mshtf/Play-Lite.rar/file',
             'bttn' => 'btn-secondary',
         ],
         [
-            'name' => 'Download Lite from Mega Upload (556mb)',
-            'link' => 'https://mega.nz/file/KHw2wJzD#i_UfBXzSKgfDuz457OUtT8PvY8mYDaUeiMGUbb2yQDQ',
+            'name' => 'Download Lite from Mega Upload (554mb)',
+            'link' => 'https://mega.nz/file/fHoQ0LBA#HAHMZ_A0fAnSkNtZsKea3kWCBEpp3NO31dGwnugdJWY',
             'bttn' => 'btn-secondary',
         ],
         [
-            'name' => 'Download Lite from Google Drive (556mb)',
-            'link' => 'https://drive.google.com/file/d/1Gjw4ZPONLkHF5P-cMU-dQ2_kY5KPltqI/view?usp=sharing',
+            'name' => 'Download Lite from Google Drive (554mb)',
+            'link' => 'https://drive.google.com/file/d/1S2Y3ctICOjHEA5X0iV-CfQq4O_cM5jpR/view?usp=sharing',
             'bttn' => 'btn-secondary',
         ],
     ],
@@ -24,17 +24,17 @@ return [
     'full' => [
         [
             'name' => 'Download Full from Mediafire (1.93gb)',
-            'link' => 'http://www.mediafire.com/file/cv1as17169z0b3z/file',
+            'link' => 'http://www.mediafire.com/file/qw3m0win71ufp2r/Play.rar/file',
             'bttn' => 'btn-secondary',
         ],
         [
             'name' => 'Download Full from Mega Upload (1.93gb)',
-            'link' => 'https://mega.nz/file/6SgAAB6A#RkpM5wejJGE0pUvc6IUWzj-N8h-csWRQLIbP7xhuG8A',
+            'link' => 'https://mega.nz/file/7OhwQYKT#9Z2p_QYEjz4mHm--ilJokqQlw1c2nvQ-dSOa8d6ssG0',
             'bttn' => 'btn-secondary',
         ],
         [
             'name' => 'Download Full from Google Drive (1.93gb)',
-            'link' => 'https://drive.google.com/file/d/1DWkfifJw02vwoYPIxEnnikvSu7WZg3GH/view?usp=sharing',
+            'link' => 'https://drive.google.com/file/d/1qfVtgscCg8cgKJpPpZ6K-kuQ7V1EA9-D/view?usp=sharing',
             'bttn' => 'btn-primary',
         ],
     ],
