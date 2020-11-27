@@ -147,7 +147,7 @@
                                     <p class="m-0">Facebook Group</p>
                                 </div>
                             </a>
-                            <a href="discord.gg/hp7CS6k" class="no-underline hover:underline">
+                            <a href="https://discord.gg/hp7CS6k" class="no-underline hover:underline">
                                 <div class="flex items-center col-span-1">
                                     <i class="mr-2 text-4xl text-indigo-600 fab fa-discord"></i>
                                     <p class="m-0">Discord</p>
