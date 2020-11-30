@@ -5,37 +5,38 @@ return [
 
     'lite' => [
         [
-            'name' => 'Download Lite from Mediafire (554mb)',
-            'link' => 'http://www.mediafire.com/file/1i5azwasunv37p2/Play-Lite.rar/file',
+            'name' => 'Download Lite from Google Drive (732mb)',
+            'link' => 'https://drive.google.com/file/d/1qPjO9fLIQtjBNia96nzYu7wLIa1wPX56/view?usp=sharing',
+            'bttn' => 'btn-secondary',
+        ],
+        
+        [
+            'name' => 'Download Lite from Mega Upload (732mb)',
+            'link' => 'https://mega.nz/file/7Lp2lLJB#LKlH8RxOSxLs9mkTL2haN55LPyx5_MrQKlvCVjrht2M',
             'bttn' => 'btn-secondary',
         ],
         [
-            'name' => 'Download Lite from Mega Upload (554mb)',
-            'link' => 'https://mega.nz/file/GbYmRboA#q60Bu28Qy3Mridh8AcLygRqe6kLNVjaGJaT4WBSDUuc',
-            'bttn' => 'btn-secondary',
-        ],
-        [
-            'name' => 'Download Lite from Google Drive (554mb)',
-            'link' => 'https://drive.google.com/file/d/1lpm5OhW4iQBVIpSy18qF0vqFM6M66GVd/view?usp=sharing',
+            'name' => 'Download Lite from Mediafire (732mb)',
+            'link' => 'http://www.mediafire.com/file/yrahr0qyncj5kuw/Play-Lite.zip/file',
             'bttn' => 'btn-secondary',
         ],
     ],
 
     'full' => [
         [
-            'name' => 'Download Full from Mediafire (1.93gb)',
-            'link' => 'http://www.mediafire.com/file/lup7jugnn2sz4n8/Play.rar/file',
-            'bttn' => 'btn-secondary',
-        ],
-        [
-            'name' => 'Download Full from Mega Upload (1.93gb)',
-            'link' => 'https://mega.nz/file/bLIGBRbb#l4mNiEDF_Rzj_SsaoAympff3cQJwA5f6VLAGr6ZQqyQ',
-            'bttn' => 'btn-secondary',
-        ],
-        [
-            'name' => 'Download Full from Google Drive (1.93gb)',
-            'link' => 'https://drive.google.com/file/d/1bAiqESSlcHVi74mh9LqQ73cYuJS_Jcy2/view?usp=sharing',
+            'name' => 'Download Full from Google Drive (3.55gb)',
+            'link' => 'https://drive.google.com/file/d/1AsoVJcLuMeQlhl-vw5H3BtUrzizIoYMv/view?usp=sharing',
             'bttn' => 'btn-primary',
+        ],
+        [
+            'name' => 'Download Full from Mega Upload (3.55gb)',
+            'link' => 'https://mega.nz/file/KaogCbAY#Zj30gWNO-B_A8WgFbPYiAAIl46RoZ3dfB8po8S3wEHI',
+            'bttn' => 'btn-secondary',
+        ],
+        [
+            'name' => 'Download Full from Mediafire (3.55gb)',
+            'link' => 'http://www.mediafire.com/file/heddf2igr00kq5j/Play.zip/file',
+            'bttn' => 'btn-secondary',
         ],
     ],
 
