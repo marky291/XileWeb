@@ -6,17 +6,17 @@ return [
     'lite' => [
         [
             'name' => 'Download Lite from Mediafire (554mb)',
-            'link' => 'http://www.mediafire.com/file/stf6mf61f7mshtf/Play-Lite.rar/file',
+            'link' => 'http://www.mediafire.com/file/1i5azwasunv37p2/Play-Lite.rar/file',
             'bttn' => 'btn-secondary',
         ],
         [
             'name' => 'Download Lite from Mega Upload (554mb)',
-            'link' => 'https://mega.nz/file/fHoQ0LBA#HAHMZ_A0fAnSkNtZsKea3kWCBEpp3NO31dGwnugdJWY',
+            'link' => 'https://mega.nz/file/GbYmRboA#q60Bu28Qy3Mridh8AcLygRqe6kLNVjaGJaT4WBSDUuc',
             'bttn' => 'btn-secondary',
         ],
         [
             'name' => 'Download Lite from Google Drive (554mb)',
-            'link' => 'https://drive.google.com/file/d/1S2Y3ctICOjHEA5X0iV-CfQq4O_cM5jpR/view?usp=sharing',
+            'link' => 'https://drive.google.com/file/d/1lpm5OhW4iQBVIpSy18qF0vqFM6M66GVd/view?usp=sharing',
             'bttn' => 'btn-secondary',
         ],
     ],
@@ -24,17 +24,17 @@ return [
     'full' => [
         [
             'name' => 'Download Full from Mediafire (1.93gb)',
-            'link' => 'http://www.mediafire.com/file/qw3m0win71ufp2r/Play.rar/file',
+            'link' => 'http://www.mediafire.com/file/lup7jugnn2sz4n8/Play.rar/file',
             'bttn' => 'btn-secondary',
         ],
         [
             'name' => 'Download Full from Mega Upload (1.93gb)',
-            'link' => 'https://mega.nz/file/7OhwQYKT#9Z2p_QYEjz4mHm--ilJokqQlw1c2nvQ-dSOa8d6ssG0',
+            'link' => 'https://mega.nz/file/bLIGBRbb#l4mNiEDF_Rzj_SsaoAympff3cQJwA5f6VLAGr6ZQqyQ',
             'bttn' => 'btn-secondary',
         ],
         [
             'name' => 'Download Full from Google Drive (1.93gb)',
-            'link' => 'https://drive.google.com/file/d/1qfVtgscCg8cgKJpPpZ6K-kuQ7V1EA9-D/view?usp=sharing',
+            'link' => 'https://drive.google.com/file/d/1bAiqESSlcHVi74mh9LqQ73cYuJS_Jcy2/view?usp=sharing',
             'bttn' => 'btn-primary',
         ],
     ],
