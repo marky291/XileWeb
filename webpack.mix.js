@@ -15,10 +15,7 @@ mix
   .browserSync("xileweb.test")
   .js('resources/js/app.js', 'public/js')
   .postCss('resources/css/core.css', 'public/assets/core.css', [
-    require('postcss-import'),
     require('tailwindcss'),
-    require('postcss-nested'),
-    require('autoprefixer'),
   ]);
 
 if (mix.inProduction()) {

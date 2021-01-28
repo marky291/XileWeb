@@ -142,120 +142,8 @@
         <hr class="default">
     </div>
 
-    <section id="steps2play" class="container px-3 sm:px-0 pt-5 mx-auto" style="">
-        <div class="grid grid-cols-2 col-gap-20 ">
-            <div class="col-span-2 lg:col-span-1 mb-16">
-                @guest
-                <h2 class="mt-0">Let's get you in game!</h2>
-                <h4>Register your Ragnarok Account</h4>
-                <form method="POST" action="/register">
-                    @csrf
-                    <div class="flex flex-wrap mb-2">
-                        <div class="w-full">
-                            <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" for="grid-username">
-                                Username
-                            </label>
-                            <input name="username" class="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500 @error('username') border-red-500 @enderror" id="grid-username" value="{{ old('username') }}" type="text" placeholder="username" required autocomplete="name">
-                            @error('username')
-                                <p class="mt-4 text-xs italic text-red-500">
-                                    {{ $message }}
-                                </p>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="flex flex-wrap mb-2">
-                        <div class="w-full">
-                            <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" for="grid-email">
-                                Email Address
-                            </label>
-                            <input name="email" class="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500 @error('email') border-red-500 @enderror" id="grid-email" value="{{ old('email') }}" type="email" placeholder="account@xileretro.net" required autocomplete="email">
-                            @error('email')
-                                <p class="mt-4 text-xs italic text-red-500">
-                                    {{ $message }}
-                                </p>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="flex flex-wrap mb-2">
-                        <div class="w-full">
-                            <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" for="grid-password">
-                                Password
-                            </label>
-                            <input name="password" class="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500 @error('password') border-red-500 @enderror" id="grid-password" type="password" placeholder="******************" required autocomplete="new-password">
-                            @error('password')
-                                <p class="mt-4 text-xs italic text-red-500">
-                                    {{ $message }}
-                                </p>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="flex flex-wrap mb-2">
-                        <div class="w-full">
-                            <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" for="grid-password-confirm">
-                                Confirm Password
-                            </label>
-                            <input name="password_confirmation" class="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password-confirm" type="password" placeholder="******************" required autocomplete="new-password">
-                        </div>
-                    </div>
-					<div class="flex justify-start mt-6">
-                        <button class="col-span-1 btn btn-primary">
-                            <span>Create New Account</span>
-                        </button>
-                    </div>
-                </form>
-                @else
-                <div class="pr-28">
-                    <h2 class="mt-0">You are ready to log in game!</h4>
-                    <p>Open up your client and login with the username <b>{{ auth()->user()->userid }}</b> and the password you used to create the account!</p>
-                    <hr>
-                    <h2>Get a Headstart</h4>
-                    <p>If you are new to XileRetro or would like a refresher, we highly recommend checking out the <a href="http://wiki.xileretro.net/index.php?title=Newbie_Center" target="_blank">Newbie Center Guide</a> for an awesome head start!</p>
-                    <hr>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST">
-                        {{ csrf_field() }}
-                        <button class="btn btn-secondary" action="submit">Logout from Website</button>
-                    </form>
 
-                </div>
-                @endguest
-            </div>
-            <div class="col-span-2 lg:col-span-1">
-                <h2 class="mt-0">Grab a download.</h2>
-				<h4 class="mb-10">Download and install with Lite Installer.</h4>
-				<div class="grid grid-cols-5">
-					<div class="col-span-1 hidden md:block">
-						<i class="fas fa-file-archive step2-icon"></i>
-					</div>
-					<div class="col-span-5 md:col-span-4">
-                        @foreach(config('downloads.lite') as $item)
-                            <a class="no-underline" href="{{ $item['link'] }}" target="_blank">
-                                <button class="truncate ... flex items-center w-full mb-4 text-left btn {{ $item['bttn'] }}">
-                                    {{ $item['name'] }}
-                                </button>
-                            </a>
-                        @endforeach
-					</div>
-				</div>
-
-				<h4>Download and install with Full Installer.</h3>
-				<div class="grid grid-cols-5">
-					<div class="col-span-1 hidden md:block">
-						<i class="fas fa-compact-disc step2-icon"></i>
-					</div>
-					<div class="col-span-5 md:col-span-4">
-                        @foreach(config('downloads.full') as $item)
-                            <a class="no-underline" href="{{ $item['link'] }}" target="_blank">
-                                <button class="truncate ... flex items-center w-full mb-4 text-left btn {{ $item['bttn'] }}">
-                                    {{ $item['name'] }}
-                                </button>
-                            </a>
-                        @endforeach
-					</div>
-				</div>
-
-            </div>
-        </div>
-    </section>
+    <livewire:register/>
 
     <div class="md:hidden container mx-auto">
         <hr class="default">
@@ -264,7 +152,7 @@
     <section class="my-20 px-3 sm:px-0">
         <div id="android" class="container mx-auto">
             <h2 class="mt-0">Want to play our Android Beta version?</h2>
-            <div class="grid grid-cols-3 col-gap-12">
+            <div class="grid grid-cols-3 gap-12">
                 <div class="col-span-3 mb-10 lg:col-span-1">
                     <h3>Get started</h3>
                     <p>Start downloading by visiting this the xileretro website with your android device and clicking the link below.</p>

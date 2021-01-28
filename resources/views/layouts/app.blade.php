@@ -19,12 +19,11 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
-
     <!-- Styles -->
     <link href="{{ mix('assets/core.css') }}" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" rel="stylesheet">
+
+    @livewireStyles
 </head>
 <body class="h-screen antialiased leading-none">
 
@@ -54,7 +53,7 @@
   logged_in_greeting="Hello! 👋 We are here to help, let us know if you have any questions"
   logged_out_greeting="Hello! 👋 We are here to help, let us know if you have any questions!">
       </div>
-      
+
     <div id="fb-root"></div>
     <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v8.0&appId=661838800646818&autoLogAppEvents=1" nonce="ezF5mpW9"></script>
 
@@ -168,5 +167,7 @@
             </div>
         </footer>
     </div>
+    <script src="{{ asset('js/app.js') }}"></script>
+    @livewireScripts
 </body>
 </html>
