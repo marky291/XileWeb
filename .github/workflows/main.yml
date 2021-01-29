@@ -2,10 +2,12 @@
 
 name: Deploy
 
-# Triggered when a release is published.
+  # Trigger the workflow on push,
+  # but only for the master branch
 on:
-  release:
-    types: [published]
+  push:
+    branches:
+      - master
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
