@@ -64,21 +64,24 @@
                 <nav class="flex flex-wrap items-center justify-between py-6 pt-7">
                     <div class="flex-grow block w-full lg:flex lg:items-center lg:w-auto">
                         <div class="lg:flex-grow">
-                        <a href="{{ url('/') }}" class="block mt-4 mr-6 font-bold text-white no-underline border-b-2 lg:inline-block lg:mt-0 border-red-50">
-                            Home
-                        </a>
-                        <a target="_blank" href="http://wiki.xileretro.net/index.php?title=Donation" class="block mt-4 mr-6 text-white no-underline border-b-2 border-transparent lg:inline-block lg:mt-0">
-                            Donate
-                        </a>
-                        <a target="_blank" href="http://wiki.xileretro.net/index.php?title=Main_Page" class="block mt-4 mr-6 text-white no-underline border-b-2 border-transparent lg:inline-block lg:mt-0">
-                            Guides
-                        </a>
-                        <a target="_blank" href="http://wiki.xileretro.net/index.php?title=Main_Page" class="block mt-4 mr-6 text-white no-underline border-b-2 border-transparent lg:inline-block lg:mt-0">
-                            Packages
-                        </a>
-                        <a href="#steps2play" class="block mt-4 mr-6 text-white no-underline border-b-2 border-transparent lg:inline-block lg:mt-0">
-                            Register
-                        </a>
+                            <a href="{{ url('/') }}" class="block mt-4 mr-6 font-bold text-white no-underline border-b-2 lg:inline-block lg:mt-0 border-red-50">
+                                Home
+                            </a>
+                            <a target="_blank" href="http://wiki.xileretro.net/index.php?title=Donation" class="block mt-4 mr-6 text-white no-underline border-b-2 border-transparent lg:inline-block lg:mt-0">
+                                Donate
+                            </a>
+                            <a target="_blank" href="http://wiki.xileretro.net/index.php?title=Main_Page" class="block mt-4 mr-6 text-white no-underline border-b-2 border-transparent lg:inline-block lg:mt-0">
+                                Guides
+                            </a>
+                            <a target="_blank" href="http://wiki.xileretro.net/index.php?title=Main_Page" class="block mt-4 mr-6 text-white no-underline border-b-2 border-transparent lg:inline-block lg:mt-0">
+                                Packages
+                            </a>
+                            <a href="#steps2play" class="block mt-4 mr-6 text-white no-underline border-b-2 border-transparent lg:inline-block lg:mt-0">
+                                Register
+                            </a>
+                            <a href="https://forums.xileretro.net" target="_self" class="block mt-4 mr-6 text-white no-underline border-b-2 border-transparent lg:inline-block lg:mt-0 bg-white rounded text-red-900 px-3">
+                                Forums
+                            </a>
                         </div>
                         <div class="hidden lg:block">
                             <a target="_blank" href="{{ config('downloads.full')[array_key_last(config('downloads.full'))]['link'] }}" style="color: #6e3755;" class="inline-block px-4 py-2 mt-4 text-sm leading-none text-white no-underline rounded hover:border hover:border-white lg:mt-0">
