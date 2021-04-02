@@ -41,7 +41,7 @@ return [
 
     'android' => [
         'title' => 'Download Android',
-        'link' => 'http://srv2.roworkshop.com/apk/304/XileRetro.apk',
-        'version' => '3.04',
+        'link' => 'http://roworkshop.com/apk/315/XileRetro.apk',
+        'version' => '3.15',
     ]
 ];
