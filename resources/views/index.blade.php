@@ -46,10 +46,10 @@
                         <i class="fas fa-angle-double-down"></i>
                     </a>
                     <div class="flex flex-row">
-                        <a href="https://www.facebook.com/xileretro" class="text-blue-300 hover:text-blue-700">
+                        <a href="https://www.facebook.com/xileretro" class="text-gray-500 hover:text-blue-800">
                             <div class="mr-6 socal-facebook"><i class="fab fa-facebook"></i></div>
                         </a>
-                        <a href="https://discord.gg/v7rjCKvbNJ" class="text-purple-300 hover:text-purple-700">
+                        <a href="https://discord.gg/v7rjCKvbNJ" class="text-purple-500 hover:text-purple-800">
                             <div class="socal-discord"><i class="fab fa-discord"></i></div>
                         </a>
                     </div>
