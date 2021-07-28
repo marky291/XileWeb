@@ -5,36 +5,36 @@ return [
 
     'lite' => [
         [
-            'name' => 'Download Lite from Google Drive (1.04gb)',
-            'link' => 'https://drive.google.com/file/d/19OK-xL2kLsEKZmp0hzy7sWFVOOnZ3cE9/view?usp=sharing',
+            'name' => 'Download Lite from Google Drive (1.31gb)',
+            'link' => 'https://drive.google.com/file/d/1aI8VleAA1TU3SGRHahSNRI0Hex_8n9Jj/view?usp=sharing',
             'bttn' => 'btn-secondary',
         ],
         [
-            'name' => 'Download Lite from Mega Upload (1.04gb)',
-            'link' => 'https://mega.nz/file/HDY1gCDD#WNv38xzpOJjtnjXP7mAPkXGXHoXI6OFjiLzTRm-LjUw',
+            'name' => 'Download Lite from Mega Upload (1.31gb)',
+            'link' => 'https://mega.nz/file/iKpygSDZ#W1XRMSnKK9D4uPGjabjWhJIOuJOxxM1urPivkMoFGfI',
             'bttn' => 'btn-secondary',
         ],
         [
-            'name' => 'Download Lite from Mediafire (1.04gb)',
-            'link' => 'https://www.mediafire.com/file/ol0ltohtyhwn1au/Play-Lite.zip/file',
+            'name' => 'Download Lite from Mediafire (1.31gb)',
+            'link' => 'https://www.mediafire.com/file/nffh876azk3xtbs/Play-Lite.zip/file',
             'bttn' => 'btn-secondary',
         ],
     ],
 
     'full' => [
         [
-            'name' => 'Download Full from Google Drive (2.50gb)',
-            'link' => 'https://drive.google.com/file/d/1ExwrqSMmUY2_JKc04tOMeJzJquT-vtsk/view?usp=sharing',
+            'name' => 'Download Full from Google Drive (2.76gb)',
+            'link' => 'https://drive.google.com/file/d/1rnkYeEH6sgoazq4MCPRj_F8BuMmc2nQ4/view?usp=sharing',
             'bttn' => 'btn-primary',
         ],
         [
-            'name' => 'Download Full from Mega Upload (2.50gb)',
-            'link' => 'https://mega.nz/file/XSYFBKDZ#Vcb0QR4xvZHiO0JifgQeuxty4DVWEr5ry94dbx1JYEA',
+            'name' => 'Download Full from Mega Upload (2.76gb)',
+            'link' => 'https://mega.nz/file/WPwgGQbR#W1oirRqBl8Ao-f-tk55zurJf2H0rNVsPpbb_OaixpVM',
             'bttn' => 'btn-secondary',
         ],
         [
-            'name' => 'Download Full from Mediafire (2.50gb)',
-            'link' => 'https://www.mediafire.com/file/67kfbzkvbmhcsi6/Play.zip/file',
+            'name' => 'Download Full from Mediafire (2.76gb)',
+            'link' => 'https://www.mediafire.com/file/wop1u2lt6o4u1td/Play.zip/file',
             'bttn' => 'btn-secondary',
         ],
     ],
