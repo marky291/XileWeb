@@ -30,3 +30,5 @@ jobs:
           script: |
             cd ${{ secrets.DIRECTORY }}
             git pull
+            composer install
+            php artisan config:cache
