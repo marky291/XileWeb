@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\DB;
  * @property string $userid
  * @property string $user_pass
  * @property string $email
- * @property boolean $group_id
+ * @property bool $group_id
  * @property int $state
  * @property int $unban_time
  * @property int $expiration_time
@@ -22,13 +22,13 @@ use Illuminate\Support\Facades\DB;
  * @property string $lastlogin
  * @property string $last_ip
  * @property string $birthdate
- * @property boolean $character_slots
+ * @property bool $character_slots
  * @property string $pincode
  * @property int $pincode_change
  * @property int $vip_time
- * @property boolean $old_group
+ * @property bool $old_group
  * @property string $web_auth_token
- * @property boolean $web_auth_token_enabled
+ * @property bool $web_auth_token_enabled
  * @property int $last_unique_id
  * @property int $blocked_unique_id
  *
@@ -38,7 +38,7 @@ class Login extends Authenticatable
 {
     use Notifiable;
 
-     /**
+    /**
      * The connection name for the model.
      *
      * @var string|null

@@ -2,7 +2,6 @@
 
 return [
 
-
     'lite' => [
         [
             'name' => 'Download Lite from Google Drive (1.70gb)',
@@ -43,5 +42,5 @@ return [
         'title' => 'Download Android',
         'link' => 'http://roworkshop.com/apk/315/XileRetro.apk',
         'version' => '3.15',
-    ]
+    ],
 ];

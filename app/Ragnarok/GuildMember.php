@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property int $guild_id
  * @property int $char_id
- * @property integer $exp
- * @property boolean $position
+ * @property int $exp
+ * @property bool $position
  */
 class GuildMember extends Model
 {
@@ -30,5 +30,4 @@ class GuildMember extends Model
      * @var array
      */
     protected $fillable = ['exp', 'position'];
-
 }

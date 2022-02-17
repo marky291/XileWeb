@@ -21,5 +21,3 @@ Auth::routes();
 Route::view('/', 'index');
 
 //Route::view('/account', 'account');
-
-
