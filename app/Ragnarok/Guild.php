@@ -13,13 +13,13 @@ use League\Flysystem\File;
  * @property int $char_id
  * @property string $name
  * @property string $master
- * @property boolean $guild_lv
- * @property boolean $connect_member
- * @property boolean $max_member
- * @property integer $average_lv
- * @property integer $exp
+ * @property bool $guild_lv
+ * @property bool $connect_member
+ * @property bool $max_member
+ * @property int $average_lv
+ * @property int $exp
  * @property int $next_exp
- * @property boolean $skill_point
+ * @property bool $skill_point
  * @property string $mes1
  * @property string $mes2
  * @property int $emblem_len
@@ -30,7 +30,7 @@ use League\Flysystem\File;
  */
 class Guild extends Model
 {
-     /**
+    /**
      * The connection name for the model.
      *
      * @var string|null
@@ -71,13 +71,12 @@ class Guild extends Model
 
     public function getEmblemAttribute()
     {
-        return Cache::remember("emblem.{$this->guild_id}", now()->addMinutes(1), function ()
-        {
+        return Cache::remember("emblem.{$this->guild_id}", now()->addMinutes(1), function () {
             $asset = "assets/emblems/{$this->guild_id}.png";
 
             $data = @gzuncompress(pack('H*', $this->emblem_data));
 
-            header("Content-Type: image/png");
+            header('Content-Type: image/png');
 
             imagepng(Emblem::create($data), $asset);
 

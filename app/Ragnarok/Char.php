@@ -8,20 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property int $char_id
  * @property int $account_id
- * @property boolean $char_num
+ * @property bool $char_num
  * @property string $name
- * @property integer $class
- * @property integer $base_level
- * @property integer $job_level
- * @property integer $base_exp
- * @property integer $job_exp
+ * @property int $class
+ * @property int $base_level
+ * @property int $job_level
+ * @property int $base_exp
+ * @property int $job_exp
  * @property int $zeny
- * @property integer $str
- * @property integer $agi
- * @property integer $vit
- * @property integer $int
- * @property integer $dex
- * @property integer $luk
+ * @property int $str
+ * @property int $agi
+ * @property int $vit
+ * @property int $int
+ * @property int $dex
+ * @property int $luk
  * @property int $max_hp
  * @property int $hp
  * @property int $max_sp
@@ -29,48 +29,48 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $status_point
  * @property int $skill_point
  * @property int $option
- * @property boolean $karma
- * @property integer $manner
+ * @property bool $karma
+ * @property int $manner
  * @property int $party_id
  * @property int $guild_id
  * @property int $pet_id
  * @property int $homun_id
  * @property int $elemental_id
- * @property boolean $hair
- * @property integer $hair_color
- * @property integer $clothes_color
- * @property integer $body
- * @property integer $weapon
- * @property integer $shield
- * @property integer $head_top
- * @property integer $head_mid
- * @property integer $head_bottom
- * @property integer $robe
+ * @property bool $hair
+ * @property int $hair_color
+ * @property int $clothes_color
+ * @property int $body
+ * @property int $weapon
+ * @property int $shield
+ * @property int $head_top
+ * @property int $head_mid
+ * @property int $head_bottom
+ * @property int $robe
  * @property string $last_map
- * @property integer $last_x
- * @property integer $last_y
+ * @property int $last_x
+ * @property int $last_y
  * @property string $save_map
- * @property integer $save_x
- * @property integer $save_y
+ * @property int $save_x
+ * @property int $save_y
  * @property int $partner_id
- * @property boolean $online
+ * @property bool $online
  * @property int $father
  * @property int $mother
  * @property int $child
  * @property int $fame
- * @property integer $rename
+ * @property int $rename
  * @property int $delete_date
  * @property int $moves
  * @property int $unban_time
- * @property boolean $font
+ * @property bool $font
  * @property int $uniqueitem_counter
  * @property string $sex
- * @property boolean $hotkey_rowshift
- * @property boolean $hotkey_rowshift2
+ * @property bool $hotkey_rowshift
+ * @property bool $hotkey_rowshift2
  * @property int $clan_id
  * @property string $last_login
  * @property int $title_id
- * @property boolean $show_equip
+ * @property bool $show_equip
  */
 class Char extends Model
 {

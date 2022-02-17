@@ -10,8 +10,13 @@ use Livewire\Component;
 
 class Register extends Component
 {
+    public $username;
 
-    public $username, $email, $password, $password_confirmation;
+    public $email;
+
+    public $password;
+
+    public $password_confirmation;
 
     public $registrationComplete = false;
 
@@ -26,19 +31,20 @@ class Register extends Component
     public function register()
     {
         $this->validate([
-            'username' => ['required', 'string','unique:main.login,userid', 'min:4', 'max:23'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:main.login'],
+            'username' => ['required', 'string', 'unique:main.login,userid', 'min:4', 'max:23'],
+            'email' => ['required', 'string', 'email', 'max:39', 'unique:main.login'],
             'password' => ['required', 'string', 'min:6', 'max:31', 'confirmed'],
         ]);
 
         $account = Login::create([
             'userid' => $this->username,
             'email' => $this->email,
-            'user_pass' => hash('sha256', $this->password . config('database.secret')),
+            'user_pass' => hash('sha256', $this->password.config('database.secret')),
         ]);
 
-        if ($account->account_id == null){
-            $this->error = "Unable to create account, please report to GM or Admins.";
+        if ($account->account_id == null) {
+            $this->error = 'Unable to create account, please report to GM or Admins.';
+
             return;
         }
 
