@@ -4,17 +4,17 @@ return [
 
     'lite' => [
         [
-            'name' => 'Download Lite Client from Google Drive (2gb)',
+            'name' => 'Download Lite Client from Google Drive (2GB)',
             'link' => 'https://drive.google.com/file/d/1CIzmL_HVzQUhIr2o9k0Ezzd34Utpzv_6/view?usp=sharing',
             'bttn' => 'btn-secondary',
         ],
         [
-            'name' => 'Download Lite Client from Mega Upload (2gb)',
+            'name' => 'Download Lite Client from Mega Upload (2GB)',
             'link' => 'https://mega.nz/file/SOo3BKYS#UDAPIFUWNcfvxbGmQ5Dz_YpC9TqK1plNvjI2zz07zzQ',
             'bttn' => 'btn-secondary',
         ],
         [
-            'name' => 'Download Lite Client from Mediafire (2gb)',
+            'name' => 'Download Lite Client from Mediafire (2GB)',
             'link' => 'https://www.mediafire.com/file/jirxv5gowts0e5o/Play-Lite.zip/file',
             'bttn' => 'btn-secondary',
         ],
