@@ -29,13 +29,13 @@
                     <div class="flex flex-col my-10 quick-links">
                         <a href="#steps2play" class="w-full no-underline">
                             <button class="flex items-center w-full text-left btn btn-primary">
-                                <svg class="w-4 h-4 mr-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg>
+                                <!-- <svg class="w-4 h-4 mr-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg> -->
                                 <span>Create a Ragnarok Account</span>
                             </button>
                         </a>
-                        <a href="#steps2play" class="w-full no-underline hidden lg:block">
-                            <button class="flex items-center w-full mt-4 text-left btn btn-primary">
-                                <svg class="w-4 h-4 mr-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg>
+                        <a href="{{ config('downloads.full')[0]['link'] }}" target="_blank" class="w-full no-underline hidden lg:block">
+                            <button class="flex items-center w-full mt-4 text-left btn btn-primary bg-gray-800">
+                                <!-- <svg class="w-4 h-4 mr-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg> -->
                                 <span>{{ config('downloads.full')[array_key_first(config('downloads.full'))]['name'] }}</span>
                             </button>
                         </a>
@@ -67,7 +67,22 @@
         </div>
     </section>
 
-    <section id="important-links" class="container mx-auto">
+    <section id="steps2play" class="container px-3 sm:px-0 pt-36 mx-auto">
+        <livewire:register/>
+    </section>
+
+    <!-- <section id="mvprankingladder" class="container mx-auto grid">
+        <h2>MVP Ladder</h2>
+        @foreach (App\Ragnarok\MvpLadderRank::orderByDesc('day_kills')->limit(3)->get() as $rank)
+            <div class="cols-span-1">
+                <p>Player {{ $rank->name }}</p>
+                <p>{{ $rank->day_kills }} MVP Kills Today!</p>
+            </div>
+        @endforeach 
+    </section> -->
+
+
+    <section id="important-links" class="container mx-auto py-24">
         <h2>Important Links</h2>
         <div class="grid grid-cols-4 col-gap-8">
             <div class="col-span-4 md:col-span-2 lg:col-span-1">
@@ -113,11 +128,7 @@
         </div>
     </section>
 
-    <div class="container mx-auto hidden xl:block">
-        <hr class="default">
-    </div>
-
-    <section class="hidden xl:block">
+    <section id="prontera-castles"  class="container mx-auto py-24">
         <div class="container mx-auto flex rounded">
         <h2 class="text-5xl self-center my-0 mr-16">Prontera<br><span class="font-normal text-lg text-branding">Castle Holders</span></h2>
            <div class="py-16 grid grid-cols-5 gap-2 w-full">
@@ -138,19 +149,8 @@
         </div>
     </section>
 
-    <div class="container mx-auto">
-        <hr class="default">
-    </div>
-
-
-    <livewire:register/>
-
-    <div class="md:hidden container mx-auto">
-        <hr class="default">
-    </div>
-
     {{-- ANDOID SECTION REMOVED
-        <section class="my-20 px-3 sm:px-0">
+        <section class="my-24 px-3 sm:px-0">
             <div id="android" class="container mx-auto">
                 <h2 class="mt-0">Want to play our Android Beta version?</h2>
                 <div class="grid grid-cols-3 gap-12">

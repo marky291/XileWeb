@@ -1,8 +1,7 @@
-<section id="steps2play" class="container px-3 sm:px-0 pt-5 mx-auto" style="">
         <div class="grid grid-cols-2 gap-20 ">
             <div class="col-span-2 lg:col-span-1 mb-16">
                 @guest
-                <h2 class="mt-0">Let's get you in game!</h2>
+                <h2 class="mt-0 mb-2"><span class="mr-2">1.</span> Register an Account</h2>
                 @if ($error)
                  <div class="rounded-md bg-red-50 p-4 mb-5">
                     <div class="flex">
@@ -20,7 +19,7 @@
                     </div>
                   </div>
                 @else
-                    <h4>Register your Ragnarok Account</h4>
+                    <h4 class="mb-10">Let's get you ready to login and play.</h4>
                 @endif
 
                 <form>
@@ -118,27 +117,12 @@
                 @endguest
             </div>
             <div class="col-span-2 lg:col-span-1">
-                <h2 class="mt-0">Grab a download.</h2>
-				<h4 class="mb-10">Download and install with Lite Installer.</h4>
+                <h2 class="mt-0 mb-2"><span class="mr-2">2.</span> Download Client.</h2>
+                <h4>Download and install with Full Installer.</h3>
 				<div class="grid grid-cols-5">
 					<div class="col-span-1 hidden md:block">
-						<i class="fas fa-file-archive step2-icon"></i>
-					</div>
-					<div class="col-span-5 md:col-span-4">
-                        @foreach(config('downloads.lite') as $item)
-                            <a class="no-underline" href="{{ $item['link'] }}" target="_blank">
-                                <button class="truncate ... flex items-center w-full mb-4 text-left btn {{ $item['bttn'] }}">
-                                    {{ $item['name'] }}
-                                </button>
-                            </a>
-                        @endforeach
-					</div>
-				</div>
-
-				<h4>Download and install with Full Installer.</h3>
-				<div class="grid grid-cols-5">
-					<div class="col-span-1 hidden md:block">
-						<i class="fas fa-compact-disc step2-icon"></i>
+                    <i class="fas fa-file-archive step2-icon"></i>
+					
 					</div>
 					<div class="col-span-5 md:col-span-4">
                         @foreach(config('downloads.full') as $item)
@@ -151,6 +135,21 @@
 					</div>
 				</div>
 
+				<h4 class="mb-10">Download and install with Lite Installer.</h4>
+				<div class="grid grid-cols-5">
+					<div class="col-span-1 hidden md:block">
+                    <i class="fas fa-compact-disc step2-icon"></i>
+					</div>
+					<div class="col-span-5 md:col-span-4">
+                        @foreach(config('downloads.lite') as $item)
+                            <a class="no-underline" href="{{ $item['link'] }}" target="_blank">
+                                <button class="truncate ... flex items-center w-full mb-4 text-left btn {{ $item['bttn'] }}">
+                                    {{ $item['name'] }}
+                                </button>
+                            </a>
+                        @endforeach
+					</div>
+				</div>
+
             </div>
         </div>
-    </section>

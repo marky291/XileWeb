@@ -32,7 +32,7 @@ class Register extends Component
     {
         $this->validate([
             'username' => ['required', 'string', 'unique:main.login,userid', 'min:4', 'max:23'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:main.login'],
+            'email' => ['required', 'string', 'email', 'max:39', 'unique:main.login'],
             'password' => ['required', 'string', 'min:6', 'max:31', 'confirmed'],
         ]);
 
