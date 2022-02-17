@@ -30,5 +30,5 @@ jobs:
           script: |
             cd ${{ secrets.DIRECTORY }}
             git pull
-            composer install
-            php artisan config:cache
+            /opt/plesk/php/8.0/bin/php composer install
+            /opt/plesk/php/8.0/bin/php php artisan config:cache
