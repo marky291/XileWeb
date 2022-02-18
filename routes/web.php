@@ -20,6 +20,10 @@ Auth::routes();
 
 Route::view('/', 'index');
 
-//Route::view('/account', 'account');
-
-
+/**
+ * Google analytics says these are hit many times, so we'll 
+ * send them to the homepage rather than getting a 404.
+ */
+Route::redirect('/login', '/#steps2play');
+Route::redirect('/password/reset', '/#steps2play');
+Route::redirect('/register', '/#steps2play');
