@@ -30,8 +30,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class GuildCastle extends Model
 {
-
-     /**
+    /**
      * The connection name for the model.
      *
      * @var string|null
@@ -74,7 +73,7 @@ class GuildCastle extends Model
 
     public function scopeProntera(Builder $query)
     {
-        return $query->whereIn('castle_id', [15,16,17,18,19]);
+        return $query->whereIn('castle_id', [15, 16, 17, 18, 19]);
     }
 
     public function getNameAttribute()

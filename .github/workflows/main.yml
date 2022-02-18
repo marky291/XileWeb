@@ -30,3 +30,5 @@ jobs:
           script: |
             cd ${{ secrets.DIRECTORY }}
             git pull
+            /opt/plesk/php/8.0/bin/php /opt/psa/var/modules/composer/composer.phar install
+            /opt/plesk/php/8.0/bin/php artisan config:cache

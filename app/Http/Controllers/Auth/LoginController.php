@@ -47,5 +47,4 @@ class LoginController extends Controller
     {
         return 'userid';
     }
-
 }
