@@ -28,13 +28,13 @@
                     </p>
                     <div class="flex flex-col my-10 quick-links">
                         <a href="#steps2play" class="w-full no-underline">
-                            <button class="flex items-center w-full text-left btn btn-primary">
+                            <button id="hero-registration" class="flex items-center w-full text-left btn btn-primary">
                                 <!-- <svg class="w-4 h-4 mr-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg> -->
                                 <span>Create a Ragnarok Account</span>
                             </button>
                         </a>
                         <a href="{{ config('downloads.full')[0]['link'] }}" target="_blank" class="w-full no-underline hidden lg:block">
-                            <button class="flex items-center w-full mt-4 text-left btn btn-primary bg-gray-800">
+                            <button id="hero-download-full-client" class="flex items-center w-full mt-4 text-left btn btn-primary bg-gray-800">
                                 <!-- <svg class="w-4 h-4 mr-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg> -->
                                 <span>{{ config('downloads.full')[array_key_first(config('downloads.full'))]['name'] }}</span>
                             </button>
