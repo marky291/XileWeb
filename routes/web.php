@@ -16,7 +16,7 @@ use Ramsey\Uuid\Guid\Guid;
 |
 */
 
-// Auth::routes();
+Auth::routes();
 
 Route::view('/', 'index');
 
