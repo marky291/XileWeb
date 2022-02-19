@@ -73,7 +73,7 @@
                     </div>
 					<div class="flex justify-start mt-6">
                         <button wire:click.prevent="register" class="col-span-1 btn btn-primary">
-                            <span>Create New Account</span>
+                            <span class="click">Register Account</span>
                         </button>
                     </div>
                 </form>
@@ -83,9 +83,9 @@
                         <h2 class="mt-0 text-green-500">Registration Completed!</h4>
                         <p>You have created the following account.</p>
                         <ul>
-                            <li>Username: <span class="font-medium text-blue-700">{{ auth()->user()->userid }}</span></li>
-                            <li>Password: <span class="font-medium text-blue-700">********</span></li>
-                            <li>Email: <span class="font-medium text-blue-700">{{ auth()->user()->email }}</span></li>
+                            <li>Username: <span class="font-bold text-blue-700">{{ auth()->user()->userid }}</span></li>
+                            <li>Password: <span class="font-bold text-blue-700">{{ $this->password }}</span></li>
+                            <li>Email: <span class="font-bold text-blue-700">{{ auth()->user()->email }}</span></li>
                         </ul>
                         <p class="py-3">You can now login with the credentials created, if at any point you wish to change password please use <span class="font-medium text-blue-600">@myaccount</span> in game.</p>
                         <div class="rounded-md bg-green-50 p-4">

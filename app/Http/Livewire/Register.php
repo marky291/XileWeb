@@ -44,7 +44,6 @@ class Register extends Component
 
         if ($account->account_id == null) {
             $this->error = 'Unable to create account, please report to GM or Admins.';
-
             return;
         }
 
