@@ -6,7 +6,7 @@ return [
         [
             'name' => 'Download Lite Client from Google Drive (2GB)',
             'link' => 'https://drive.google.com/file/d/1CIzmL_HVzQUhIr2o9k0Ezzd34Utpzv_6/view?usp=sharing',
-            'bttn' => 'btn-secondary',
+            'bttn' => 'btn-primary bg-rose-800 hover:bg-rose-900 text-white',
         ],
         [
             'name' => 'Download Lite Client from Mega Upload (2GB)',
@@ -24,7 +24,7 @@ return [
         [
             'name' => 'Download Full Client from Google Drive (3GB)',
             'link' => 'https://drive.google.com/file/d/1WcxfwuFVZPSFlGgDuJWcIoejFzlyeHQh/view?usp=sharing',
-            'bttn' => 'btn-primary',
+            'bttn' => 'btn-primary bg-rose-800 hover:bg-rose-900 text-white',
         ],
         [
             'name' => 'Download Full Client from Mega Upload (3GB)',

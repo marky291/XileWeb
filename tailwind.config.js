@@ -1,67 +1,36 @@
+const colors = require('tailwindcss/colors')
+
 module.exports = {
+  mode: 'jit',
   important: true,
   purge: [
-    './resources/**/*.blade.php',
-    './resources/**/*.js',
-    './resources/**/*.vue',
+    './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
+    './vendor/laravel/jetstream/**/*.blade.php',
+    './storage/framework/views/*.php',
+    './resources/views/**/*.blade.php',
   ],
   theme: {
-    extend: {},
+    extend: {
+    },
     container: {
       center: false,
     },
     fontFamily: {
       sans: ['"Poppins"', 'sans-serif']
     },
-    typography: {
-        default: {
-            css: {
-                h3: {
-                    'margin-top': '0px',
-                    'font-weight': 'normal',
-                },
-                h4: {
-                    'color': '#62332C',
-                    'margin-bottom': '1.3em',
-                    'font-weight': 'normal',
-                },
-                a: {
-                    color: '#3182ce',
-                    '&:hover': {
-                    color: '#2c5282',
-                    },
-                },
-            },
-        },
+    colors: {
+      transparent: 'transparent',
+      current: 'currentColor',
+      white: colors.white,
+      gray: colors.gray,
+      red: colors.red,
+      green: colors.green,
+      rose: colors.rose,
+      blue: colors.blue,
+      indigo: colors.indigo,
     },
-    screens: {
-        'sm': '640px',
-        // => @media (min-width: 640px) { ... }
-
-        'md': '768px',
-        // => @media (min-width: 768px) { ... }
-
-        'lg': '1024px',
-        // => @media (min-width: 1024px) { ... }
-
-        'xl': '1280px',
-        // => @media (min-width: 1280px) { ... }
-    }
-  },
-  variants: {
-
   },
   plugins: [
-    require('@tailwindcss/ui'),
     require('@tailwindcss/typography'),
-  ],
-  purge: {
-    mode: 'all',
-    content: [
-      // Paths to your templates here...
-    ],
-    options: {
-      whitelist: ['h1', 'h2', 'h3', 'p', 'blockquote', 'strong' /* etc. */],
-    },
-  },
+  ]
 }

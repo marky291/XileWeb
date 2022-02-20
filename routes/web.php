@@ -20,6 +20,13 @@ Auth::routes();
 
 Route::view('/', 'index');
 
+Route::get('/', function()
+{
+    $prontera_castles = App\Ragnarok\GuildCastle::prontera()->with('guild', 'guild.members')->get();
+
+    return view('index', ['prontera_castles' => $prontera_castles]);
+});
+
 /**
  * Google analytics says these are hit many times, so we'll 
  * send them to the homepage rather than getting a 404.

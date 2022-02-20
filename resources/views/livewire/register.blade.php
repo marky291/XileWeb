@@ -1,7 +1,7 @@
         <div class="grid grid-cols-2 gap-20 ">
             <div class="col-span-2 lg:col-span-1 mb-16">
                 @guest
-                <h2 class="mt-0 mb-2"><span class="mr-2">1.</span> Register an Account</h2>
+                <h2 class="mt-0 mb-2 text-2xl font-bold"><span class="mr-2">1.</span> Register an Account.</h2>
                 @if ($error)
                  <div class="rounded-md bg-red-50 p-4 mb-5">
                     <div class="flex">
@@ -19,7 +19,7 @@
                     </div>
                   </div>
                 @else
-                    <h4 class="mb-10">Let's get you ready to login and play.</h4>
+                    <p class="mb-12 text-red-900">Let's get you ready to login and play.</h4>
                 @endif
 
                 <form>
@@ -72,7 +72,7 @@
                         </div>
                     </div>
 					<div class="flex justify-start mt-6">
-                        <button wire:click.prevent="register" class="col-span-1 btn btn-primary">
+                        <button wire:click.prevent="register" class="col-span-1 btn py-4 btn-primary bg-rose-800 hover:bg-rose-900">
                             <span class="click">Register Account</span>
                         </button>
                     </div>
@@ -117,17 +117,16 @@
                 @endguest
             </div>
             <div class="col-span-2 lg:col-span-1">
-                <h2 class="mt-0 mb-2"><span class="mr-2">2.</span> Download Client.</h2>
-                <h4>Download and install with Full Installer.</h3>
+                <h2 class="mt-0 mb-2 text-2xl font-bold"><span class="mr-2">2.</span> Download Client.</h2>
+                <p class="text-red-900 mb-12">Download and install with Full Installer.</h3>
 				<div class="grid grid-cols-5">
 					<div class="col-span-1 hidden md:block">
-                    <i class="fas fa-file-archive step2-icon"></i>
-					
+                        <i class="fas fa-file-archive step2-icon text-gray-600"></i>
 					</div>
 					<div class="col-span-5 md:col-span-4">
                         @foreach(config('downloads.full') as $item)
                             <a class="no-underline" href="{{ $item['link'] }}" target="_blank">
-                                <button class="truncate ... flex items-center w-full mb-4 text-left btn {{ $item['bttn'] }}">
+                                <button class="truncate ... flex items-center w-full mb-4 text-left btn py-4 {{ $item['bttn'] }}">
                                     {{ $item['name'] }}
                                 </button>
                             </a>
@@ -135,15 +134,15 @@
 					</div>
 				</div>
 
-				<h4 class="mb-10">Download and install with Lite Installer.</h4>
+				<p class="my-12 text-red-900">Download and install with Lite Installer.</p>
 				<div class="grid grid-cols-5">
 					<div class="col-span-1 hidden md:block">
-                    <i class="fas fa-compact-disc step2-icon"></i>
+                    <i class="fas fa-compact-disc step2-icon text-gray-600"></i>
 					</div>
 					<div class="col-span-5 md:col-span-4">
                         @foreach(config('downloads.lite') as $item)
                             <a class="no-underline" href="{{ $item['link'] }}" target="_blank">
-                                <button class="truncate ... flex items-center w-full mb-4 text-left btn {{ $item['bttn'] }}">
+                                <button class="truncate ... flex items-center w-full mb-4 py-4 text-left btn {{ $item['bttn'] }}">
                                     {{ $item['name'] }}
                                 </button>
                             </a>

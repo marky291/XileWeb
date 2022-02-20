@@ -10,7 +10,7 @@
     <section class="shadow landing">
         <div class="container grid px-3 sm:px-0 grid-cols-5 gap-4 mx-auto">
             <div class="col-span-5 lg:col-span-3 pt-20 pb-4 pr-6">
-                <div class="xl:mr-36">
+                <div class="xl:mr-36 prose">
                     <h1 class="mb-6" style="font-size:2.8em;">XileRetro <br><small class="font-normal">A Ragnarok Online Private Server</small></h1>
                     <p>
                         Welcome, we are a team of developers with dedication
@@ -28,13 +28,13 @@
                     </p>
                     <div class="flex flex-col my-10 quick-links">
                         <a href="#steps2play" class="w-full no-underline">
-                            <button id="hero-registration" class="flex items-center w-full text-left btn btn-primary">
+                            <button id="hero-registration" class="flex items-center w-full text-left btn btn-primary bg-rose-800 hover:bg-rose-900">
                                 <!-- <svg class="w-4 h-4 mr-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg> -->
                                 <span>Create a Ragnarok Account</span>
                             </button>
                         </a>
                         <a href="{{ config('downloads.full')[0]['link'] }}" target="_blank" class="w-full no-underline hidden lg:block">
-                            <button id="hero-download-full-client" class="flex items-center w-full mt-4 text-left btn btn-primary bg-gray-800">
+                            <button id="hero-download-full-client" class="flex items-center w-full mt-4 text-left btn btn-primary bg-white border border-rose-900 text-rose-900 border-rose-900">
                                 <!-- <svg class="w-4 h-4 mr-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg> -->
                                 <span>{{ config('downloads.full')[array_key_first(config('downloads.full'))]['name'] }}</span>
                             </button>
@@ -46,22 +46,30 @@
                         <i class="fas fa-angle-double-down"></i>
                     </a>
                     <div class="flex flex-row">
-                        <a href="https://www.facebook.com/xileretro" class="text-gray-500 hover:text-blue-800">
-                            <div class="mr-6 socal-facebook"><i class="fab fa-facebook"></i></div>
+                        <a href="https://www.facebook.com/xileretro" class="text-blue-500 hover:text-blue-800">
+                            <div class="mr-6 socal-facebook text-blue-500 hover:text-blue-800"><i class="fab fa-facebook"></i></div>
                         </a>
-                        <a href="https://discord.gg/v7rjCKvbNJ" class="text-purple-500 hover:text-purple-800">
-                            <div class="socal-discord"><i class="fab fa-discord"></i></div>
+                        <a href="https://discord.gg/v7rjCKvbNJ" class="text-indigo-500 hover:text-indigo-800">
+                            <div class="socal-discord text-indigo-500 hover:text-indigo-800"><i class="fab fa-discord"></i></div>
                         </a>
                     </div>
                 </div>
             </div>
+
             <div class="lg:grid col-span-2 hidden">
                 <div class="bg-no-repeat bg-cover feature-bg-img">
-                    <div style="margin-left:-13%" class="hidden xl:block">
-                        <img src="images/castle/castle_1.png" alt="Landing image" class="flex items-center justify-center rounded-full w-36 h-36">
-                        <img src="images/castle/castle_2.png" alt="Landing image" class="flex items-center justify-center rounded-full w-36 h-36">
-                        <img src="images/castle/castle_3.png" alt="Landing image" class="flex items-center justify-center rounded-full w-36 h-36">
+                    <div style="margin-left:-13%" class="hidden xl:block relative">
+                        <img src="images/castle/castle_1.png" alt="Landing image" class="absolute top-[60px] flex items-center justify-center rounded-full w-36 h-36">
+                        <img src="images/castle/castle_2.png" alt="Landing image" class="absolute top-[240px] flex items-center justify-center rounded-full w-36 h-36">
+                        <img src="images/castle/castle_3.png" alt="Landing image" class="absolute top-[420px] flex items-center justify-center rounded-full w-36 h-36">
                     </div>
+                    <!-- <div style="margin-left:-19%" class="relative">
+                        <img alt="{{ $prontera_castles[0]->guild->name }}" class="w-12 h-12 absolute rounded-md right-12 top-[0px] translate-y-12 pointer-events-none md:left-[12%]" src="{{ $prontera_castles[0]->guild->hasEmblem() ? url($prontera_castles[0]->guild->emblem) : '/assets/emblems/empty.bmp' }}">
+                        <img alt="{{ $prontera_castles[1]->guild->name }}" class="w-12 h-12 absolute rounded-md right-12 top-[90px] translate-y-12 pointer-events-none md:left-[12%]" src="{{ $prontera_castles[1]->guild->hasEmblem() ? url($prontera_castles[1]->guild->emblem) : '/assets/emblems/empty.bmp' }}">
+                        <img alt="{{ $prontera_castles[2]->guild->name }}" class="w-12 h-12 absolute rounded-md right-12 top-[180px] translate-y-12 pointer-events-none md:left-[12%]" src="{{ $prontera_castles[2]->guild->hasEmblem() ? url($prontera_castles[2]->guild->emblem) : '/assets/emblems/empty.bmp' }}">
+                        <img alt="{{ $prontera_castles[3]->guild->name }}" class="w-12 h-12 absolute rounded-md right-12 top-[270px] translate-y-12 pointer-events-none md:left-[12%]" src="{{ $prontera_castles[3]->guild->hasEmblem() ? url($prontera_castles[3]->guild->emblem) : '/assets/emblems/empty.bmp' }}">
+                        <img alt="{{ $prontera_castles[4]->guild->name }}" class="w-12 h-12 absolute rounded-md right-12 top-[360px] translate-y-12 pointer-events-none md:left-[12%]" src="{{ $prontera_castles[4]->guild->hasEmblem() ? url($prontera_castles[4]->guild->emblem) : '/assets/emblems/empty.bmp' }}">
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -83,45 +91,45 @@
 
 
     <section id="important-links" class="container mx-auto py-24">
-        <h2>Important Links</h2>
+        <h2 class="text-2xl font-semibold mb-5">Getting Started</h2>
         <div class="grid grid-cols-4 col-gap-8">
             <div class="col-span-4 md:col-span-2 lg:col-span-1">
                 <a href="https://wiki.xileretro.net/">
-                    <div class="p-4 rounded-md hover:shadow-lg">
+                    <div class="p-6 rounded-md hover:shadow-lg prose">
                         <div class="mb-6 border border-gray-200 rounded">
                             <img class="object-cover w-full rounded h-44" style="margin:0" src="https://swall.teahub.io/photos/small/99-999290_ragnarok-online-valkyrie.jpg" alt="Server information Image">
                         </div>
-                        <h3 style="font-size: 1.5em" class="mt-8 half-border">Server<br> Information &<br>Wiki</h3>
+                        <h3 style="font-size: 1.5em" class="mt-8 half-border font-normal">Server<br> Information &<br>Wiki</h3>
                     </div>
                 </a>
             </div>
             <div class="col-span-4 md:col-span-2 lg:col-span-1">
                 <a href="https://wiki.xileretro.net/index.php?title=Newbie_Center#Starter_Package_.5BShow.2FHide.5D">
-                    <div class="p-4 rounded-md hover:shadow-lg">
+                    <div class="p-6 rounded-md hover:shadow-lg prose">
                         <div class="mb-6 border border-gray-200 rounded">
                             <img class="object-cover w-full rounded h-44" style="margin:0" src="https://swall.teahub.io/photos/small/99-998493_ragnarok-online-artwork-anime-games-mmorpg-ragnarok-online.jpg" alt="Server information Image">
                         </div>
-                        <h3 style="font-size: 1.5em" class="mt-8 half-border">Starter<br>Packages & <br>Guides</h3>
+                        <h3 style="font-size: 1.5em" class="mt-8 half-border font-normal">Starter<br>Packages & <br>Guides</h3>
                     </div>
                 </a>
             </div>
             <div class="col-span-4 md:col-span-2 lg:col-span-1">
                 <a href="https://wiki.xileretro.net/index.php?title=Leveling_Spots">
-                    <div class="p-4 rounded-md hover:shadow-lg">
+                    <div class="p-6 rounded-md hover:shadow-lg prose">
                         <div class="mb-6 border border-gray-200 rounded">
                             <img class="object-cover w-full rounded h-44" style="margin:0" src="https://swall.teahub.io/photos/small/99-994510_photo-wallpaper-forest-flower-grass-elf-art-girl.jpg" alt="Server information Image">
                         </div>
-                        <h3 style="font-size: 1.5em" class="mt-8 half-border">Leveling<br>Areas & <br>Progression</h3>
+                        <h3 style="font-size: 1.5em" class="mt-8 half-border font-normal">Leveling<br>Areas & <br>Progression</h3>
                     </div>
                 </a>
             </div>
             <div class="col-span-4 md:col-span-2 lg:col-span-1">
                 <a href="https://wiki.xileretro.net/index.php?title=Donation">
-                    <div class="p-4 rounded-md hover:shadow-lg">
+                    <div class="p-6 rounded-md hover:shadow-lg prose">
                         <div class="mb-6 border border-gray-200 rounded">
                             <img class="object-cover w-full rounded h-44" style="margin:0" src="https://www.teahub.io/photos/full/28-281786_ragnarok-online-ragnarok-online-wallpapers-1920.jpg" alt="Server information Image">
                         </div>
-                        <h3 style="font-size: 1.5em" class="mt-8 half-border">Donation<br> Help &<br> Rewards</h3>
+                        <h3 style="font-size: 1.5em" class="mt-8 half-border font-normal">Donation<br> Help &<br> Rewards</h3>
                     </div>
                 </a>
             </div>
@@ -130,19 +138,19 @@
 
     <section id="prontera-castles"  class="container mx-auto py-24">
         <div class="container mx-auto flex rounded">
-        <h2 class="text-5xl self-center my-0 mr-16">Prontera<br><span class="font-normal text-lg text-branding">Castle Holders</span></h2>
+        <h2 class="text-5xl self-center my-0 font-bold mr-16 prose">Prontera<br><span class="font-normal text-lg text-rose-900">Castle Holders</span></h2>
            <div class="py-16 grid grid-cols-5 gap-2 w-full">
-            @foreach (App\Ragnarok\GuildCastle::prontera()->with('guild', 'guild.members')->get() as $item)
-                <div class="col-span-1 px-6 py-4 rounded align-center items-center flex flex-col hover:bg-gray-100 hover:shadow">
-                    @if($item->guild->hasEmblem())
-                        <div class="w-16 h-16 m-0 mb-4 rounded-lg shadow bg-cover bg-gray-100" style="background: url('{{ url($item->guild->emblem) }}')"></div>
+            @foreach ($prontera_castles as $castle)
+                <div class="prose col-span-1 px-6 py-4 rounded align-center items-center flex flex-col hover:bg-gray-100 hover:shadow">
+                    @if($castle->guild->hasEmblem())
+                        <div class="w-16 h-16 m-0 mb-4 rounded-lg shadow bg-cover bg-gray-100" style="background: url('{{ url($castle->guild->emblem) }}')"></div>
                     @else
                         <img class="h-16 w-16 m-0 mb-4" src="/assets/emblems/empty.bmp"/>
                     @endif
-                    <h3 class="truncate ... font-bold my-0 mb-1">{{ $item->name }}</h3>
-                    <p class="truncate ... mb-1 mt-0">By <span class="text-branding">{{ $item->guild->name }}</span></p>
-                    <p class="truncate ... mb-1 mt-0">Leader <span class="text-branding">{{ $item->guild->master }}</span></p>
-                    <p class="truncate ... mb-1 mt-0"><span class="text-branding">{{ $item->guild->members->count() }}</span> Members</p>
+                    <h3 class="truncate ... font-bold my-0 mb-1">{{ $castle->name }}</h3>
+                    <p class="truncate ... mb-1 mt-0">By <span class="text-rose-900">{{ $castle->guild->name }}</span></p>
+                    <p class="truncate ... mb-1 mt-0">Leader <span class="text-rose-900">{{ $castle->guild->master }}</span></p>
+                    <p class="truncate ... mb-1 mt-0"><span class="text-rose-900">{{ $castle->guild->members->count() }}</span> Members</p>
                 </div>
             @endforeach
            </div>
@@ -175,8 +183,8 @@
 
     <section class="hidden md:block">
         <div class="container mx-auto text-left md:text-center mb-20">
-            <h1 class="mb-0 tracking-widest important-title" style="font-size: 3em"><a target="_blank" class="no-underline text-blue-500 hover:text-blue-900" href="http://wiki.xileretro.net/index.php?title=Server_Rules">READ THE RULES</a></h1>
-            <p><a href="https://discord.gg/M4nP4rn">Unfairly banned? Create an appeal</a></p>
+            <h1 class="mb-8 tracking-widest important-title text-blue-500" style="font-size: 3em"><a target="_blank" class="no-underline text-blue-500 hover:text-blue-900 font-bold" href="http://wiki.xileretro.net/index.php?title=Server_Rules">READ THE RULES</a></h1>
+            <p><a href="https://discord.gg/M4nP4rn" class="hover:underline">Unfairly banned? Create an appeal</a></p>
         </div>
     </section>
 
