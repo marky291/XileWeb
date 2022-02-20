@@ -21,7 +21,7 @@
                             </svg>
                         </button>
                     </a>
-                    <a class="group relative inline-flex border border-rose-600 focus:outline-none hidden lg:ml-4 lg:inline-flex" href="https://www.mediafire.com/file/q9pd3wo8g6pkr16/Play.zip/file">
+                    <a target="_blank" class="group relative inline-flex border border-rose-600 focus:outline-none hidden lg:ml-4 lg:inline-flex" href="https://www.mediafire.com/file/q9pd3wo8g6pkr16/Play.zip/file">
                         <span class="w-full inline-flex items-center justify-center self-stretch px-4 py-2 text-sm text-rose-600 text-center font-bold uppercase bg-white ring-1 ring-rose-600 ring-offset-1 transform transition-transform group-hover:-translate-y-1  group-focus:-translate-y-1 group-focus:-translate-x-1">
                             Download
                         </span>
