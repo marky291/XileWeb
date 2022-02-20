@@ -75,8 +75,10 @@
         </div>
     </section>
 
-    <section id="steps2play" class="container px-3 sm:px-0 pt-36 mx-auto">
-        <livewire:register/>
+    <section id="steps2play" class="relative overflow-hidden py-16 md:pt-24 lg:pt-64">
+        <div class="max-w-screen-xl w-full mx-auto px-5">
+            <livewire:register/>
+        </div>
     </section>
 
     <!-- <section id="mvprankingladder" class="container mx-auto grid">
@@ -89,71 +91,74 @@
         @endforeach 
     </section> -->
 
-
-    <section id="important-links" class="container mx-auto py-24">
-        <h2 class="text-2xl font-semibold mb-5">Getting Started</h2>
-        <div class="grid grid-cols-4 col-gap-8">
-            <div class="col-span-4 md:col-span-2 lg:col-span-1">
-                <a href="https://wiki.xileretro.net/">
-                    <div class="p-6 rounded-md hover:shadow-lg prose">
-                        <div class="mb-6 border border-gray-200 rounded">
-                            <img class="object-cover w-full rounded h-44" style="margin:0" src="https://swall.teahub.io/photos/small/99-999290_ragnarok-online-valkyrie.jpg" alt="Server information Image">
+    <section id="important-links" class="relative overflow-hidden py-16 md:pt-48">
+        <div class="max-w-screen-xl w-full mx-auto px-5">
+            <h2 class="text-2xl font-semibold mb-5">Getting Started</h2>
+            <div class="grid grid-cols-4 col-gap-8">
+                <div class="col-span-4 md:col-span-2 lg:col-span-1">
+                    <a href="https://wiki.xileretro.net/">
+                        <div class="p-6 rounded-md hover:shadow-lg prose">
+                            <div class="mb-6 border border-gray-200 rounded">
+                                <img class="object-cover w-full rounded h-44" style="margin:0" src="https://swall.teahub.io/photos/small/99-999290_ragnarok-online-valkyrie.jpg" alt="Server information Image">
+                            </div>
+                            <h3 style="font-size: 1.5em" class="mt-8 half-border font-normal">Server<br> Information &<br>Wiki</h3>
                         </div>
-                        <h3 style="font-size: 1.5em" class="mt-8 half-border font-normal">Server<br> Information &<br>Wiki</h3>
-                    </div>
-                </a>
-            </div>
-            <div class="col-span-4 md:col-span-2 lg:col-span-1">
-                <a href="https://wiki.xileretro.net/index.php?title=Newbie_Center#Starter_Package_.5BShow.2FHide.5D">
-                    <div class="p-6 rounded-md hover:shadow-lg prose">
-                        <div class="mb-6 border border-gray-200 rounded">
-                            <img class="object-cover w-full rounded h-44" style="margin:0" src="https://swall.teahub.io/photos/small/99-998493_ragnarok-online-artwork-anime-games-mmorpg-ragnarok-online.jpg" alt="Server information Image">
+                    </a>
+                </div>
+                <div class="col-span-4 md:col-span-2 lg:col-span-1">
+                    <a href="https://wiki.xileretro.net/index.php?title=Newbie_Center#Starter_Package_.5BShow.2FHide.5D">
+                        <div class="p-6 rounded-md hover:shadow-lg prose">
+                            <div class="mb-6 border border-gray-200 rounded">
+                                <img class="object-cover w-full rounded h-44" style="margin:0" src="https://swall.teahub.io/photos/small/99-998493_ragnarok-online-artwork-anime-games-mmorpg-ragnarok-online.jpg" alt="Server information Image">
+                            </div>
+                            <h3 style="font-size: 1.5em" class="mt-8 half-border font-normal">Starter<br>Packages & <br>Guides</h3>
                         </div>
-                        <h3 style="font-size: 1.5em" class="mt-8 half-border font-normal">Starter<br>Packages & <br>Guides</h3>
-                    </div>
-                </a>
-            </div>
-            <div class="col-span-4 md:col-span-2 lg:col-span-1">
-                <a href="https://wiki.xileretro.net/index.php?title=Leveling_Spots">
-                    <div class="p-6 rounded-md hover:shadow-lg prose">
-                        <div class="mb-6 border border-gray-200 rounded">
-                            <img class="object-cover w-full rounded h-44" style="margin:0" src="https://swall.teahub.io/photos/small/99-994510_photo-wallpaper-forest-flower-grass-elf-art-girl.jpg" alt="Server information Image">
+                    </a>
+                </div>
+                <div class="col-span-4 md:col-span-2 lg:col-span-1">
+                    <a href="https://wiki.xileretro.net/index.php?title=Leveling_Spots">
+                        <div class="p-6 rounded-md hover:shadow-lg prose">
+                            <div class="mb-6 border border-gray-200 rounded">
+                                <img class="object-cover w-full rounded h-44" style="margin:0" src="https://swall.teahub.io/photos/small/99-994510_photo-wallpaper-forest-flower-grass-elf-art-girl.jpg" alt="Server information Image">
+                            </div>
+                            <h3 style="font-size: 1.5em" class="mt-8 half-border font-normal">Leveling<br>Areas & <br>Progression</h3>
                         </div>
-                        <h3 style="font-size: 1.5em" class="mt-8 half-border font-normal">Leveling<br>Areas & <br>Progression</h3>
-                    </div>
-                </a>
-            </div>
-            <div class="col-span-4 md:col-span-2 lg:col-span-1">
-                <a href="https://wiki.xileretro.net/index.php?title=Donation">
-                    <div class="p-6 rounded-md hover:shadow-lg prose">
-                        <div class="mb-6 border border-gray-200 rounded">
-                            <img class="object-cover w-full rounded h-44" style="margin:0" src="https://www.teahub.io/photos/full/28-281786_ragnarok-online-ragnarok-online-wallpapers-1920.jpg" alt="Server information Image">
+                    </a>
+                </div>
+                <div class="col-span-4 md:col-span-2 lg:col-span-1">
+                    <a href="https://wiki.xileretro.net/index.php?title=Donation">
+                        <div class="p-6 rounded-md hover:shadow-lg prose">
+                            <div class="mb-6 border border-gray-200 rounded">
+                                <img class="object-cover w-full rounded h-44" style="margin:0" src="https://www.teahub.io/photos/full/28-281786_ragnarok-online-ragnarok-online-wallpapers-1920.jpg" alt="Server information Image">
+                            </div>
+                            <h3 style="font-size: 1.5em" class="mt-8 half-border font-normal">Donation<br> Help &<br> Rewards</h3>
                         </div>
-                        <h3 style="font-size: 1.5em" class="mt-8 half-border font-normal">Donation<br> Help &<br> Rewards</h3>
-                    </div>
-                </a>
+                    </a>
+                </div>
             </div>
         </div>
     </section>
 
-    <section id="prontera-castles"  class="container mx-auto py-24">
-        <div class="container mx-auto flex rounded">
-        <h2 class="text-5xl self-center my-0 font-bold mr-16 prose">Prontera<br><span class="font-normal text-lg text-rose-900">Castle Holders</span></h2>
-           <div class="py-16 grid grid-cols-5 gap-2 w-full">
-            @foreach ($prontera_castles as $castle)
-                <div class="prose col-span-1 px-6 py-4 rounded align-center items-center flex flex-col hover:bg-gray-100 hover:shadow">
-                    @if($castle->guild->hasEmblem())
-                        <div class="w-16 h-16 m-0 mb-4 rounded-lg shadow bg-cover bg-gray-100" style="background: url('{{ url($castle->guild->emblem) }}')"></div>
-                    @else
-                        <img class="h-16 w-16 m-0 mb-4" src="/assets/emblems/empty.bmp"/>
-                    @endif
-                    <h3 class="truncate ... font-bold my-0 mb-1">{{ $castle->name }}</h3>
-                    <p class="truncate ... mb-1 mt-0">By <span class="text-rose-900">{{ $castle->guild->name }}</span></p>
-                    <p class="truncate ... mb-1 mt-0">Leader <span class="text-rose-900">{{ $castle->guild->master }}</span></p>
-                    <p class="truncate ... mb-1 mt-0"><span class="text-rose-900">{{ $castle->guild->members->count() }}</span> Members</p>
-                </div>
-            @endforeach
-           </div>
+    <section id="prontera-castles" class="hidden lg:block relative overflow-hidden py-16 md:pt-48">
+        <div class="max-w-screen-xl w-full mx-auto px-5">
+            <div class="container mx-auto flex rounded">
+            <h2 class="text-5xl self-center my-0 font-bold mr-16 prose">Prontera<br><span class="font-normal text-lg text-rose-900">Castle Holders</span></h2>
+            <div class="py-16 grid grid-cols-5 gap-2 w-full">
+                @foreach ($prontera_castles as $castle)
+                    <div class="prose col-span-1 px-6 py-4 rounded align-center items-center flex flex-col hover:bg-gray-100 hover:shadow">
+                        @if($castle->guild->hasEmblem())
+                            <div class="w-16 h-16 m-0 mb-4 rounded-lg shadow bg-cover bg-gray-100" style="background: url('{{ url($castle->guild->emblem) }}')"></div>
+                        @else
+                            <img class="h-16 w-16 m-0 mb-4" src="/assets/emblems/empty.bmp"/>
+                        @endif
+                        <h3 class="truncate ... font-bold my-0 mb-1">{{ $castle->name }}</h3>
+                        <p class="truncate ... mb-1 mt-0">By <span class="text-rose-900">{{ $castle->guild->name }}</span></p>
+                        <p class="truncate ... mb-1 mt-0">Leader <span class="text-rose-900">{{ $castle->guild->master }}</span></p>
+                        <p class="truncate ... mb-1 mt-0"><span class="text-rose-900">{{ $castle->guild->members->count() }}</span> Members</p>
+                    </div>
+                @endforeach
+            </div>
+            </div>
         </div>
     </section>
 
@@ -181,8 +186,8 @@
         </section>
     --}}
 
-    <section class="hidden md:block">
-        <div class="container mx-auto text-left md:text-center mb-20">
+    <section id="read-the-rules" class="relative overflow-hidden py-16 md:pt-48 hidden md:block">
+        <div class="max-w-screen-xl w-full mx-auto px-5 container mx-auto text-left md:text-center mb-20">
             <h1 class="mb-8 tracking-widest important-title text-blue-500" style="font-size: 3em"><a target="_blank" class="no-underline text-blue-500 hover:text-blue-900 font-bold" href="http://wiki.xileretro.net/index.php?title=Server_Rules">READ THE RULES</a></h1>
             <p><a href="https://discord.gg/M4nP4rn" class="hover:underline">Unfairly banned? Create an appeal</a></p>
         </div>

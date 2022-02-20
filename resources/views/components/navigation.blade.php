@@ -1,6 +1,6 @@
-<div class="top-0 w-full">
+<div class="top-0 w-full from-rose-900 bg-gradient-to-t to-rose-800 shadow">
     <header x-trap.inert.noscroll="navIsOpen" class="relative z-50 text-white" @keydown.window.escape="navIsOpen = false" @click.away="navIsOpen = false">
-        <div class="relative max-w-screen-2xl mx-auto w-full py-4 from-rose-900 bg-gradient-to-t to-rose-800 shadow transition duration-200 lg:bg-transparent lg:py-6">
+        <div class="relative max-w-screen-2xl mx-auto w-full py-4 transition duration-200 lg:bg-transparent lg:py-6">
             <div class="max-w-screen-xl mx-auto px-5 flex items-center justify-between">
                 <div class="flex-1">
                     <a href="/" class="inline-flex items-center">
