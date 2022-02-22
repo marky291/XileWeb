@@ -78,31 +78,16 @@
                     </div>
                 </form>
                 @else
-                <div class="pr-28">
+                <div class="pr-28 prose">
                     <div class="">
-                        <h2 class="mt-0 text-green-500">Registration Completed!</h4>
+                        <h2 class="mt-0 text-green-600">Registration Completed!</h4>
                         <p>You have created the following account.</p>
                         <ul>
-                            <li>Username: <span class="font-bold text-blue-700">{{ auth()->user()->userid }}</span></li>
-                            <li>Password: <span class="font-bold text-blue-700">{{ $this->password }}</span></li>
-                            <li>Email: <span class="font-bold text-blue-700">{{ auth()->user()->email }}</span></li>
+                            <li><span class="font-bold">Username:</span> <span class="text-gray-700">{{ auth()->user()->userid }}</span></li>
+                            <li><span class="font-bold">Password:</span> <span class="text-gray-700">{{ $this->password }}</span></li>
+                            <li><span class="font-bold">Email:</span> <span class="text-gray-700">{{ auth()->user()->email }}</span></li>
                         </ul>
                         <p class="py-3">You can now login with the credentials created, if at any point you wish to change password please use <span class="font-medium text-blue-600">@myaccount</span> in game.</p>
-                        <div class="rounded-md bg-green-50 p-4">
-                            <div class="flex">
-                                <div class="flex-shrink-0">
-                                <!-- Heroicon name: check-circle -->
-                                <svg class="h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                                </svg>
-                                </div>
-                                <div class="ml-3">
-                                    <h3 class="text-sm font-medium text-green-800">
-                                        You are now ready to login and kick some ass!
-                                    </h3>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                     <hr>
                     <h2>Get a Headstart</h4>
