@@ -49,7 +49,7 @@
                         <a href="https://www.facebook.com/xileretro" class="text-blue-500 hover:text-blue-800">
                             <div class="mr-6 socal-facebook text-blue-500 hover:text-blue-800"><i class="fab fa-facebook"></i></div>
                         </a>
-                        <a href="https://discord.gg/v7rjCKvbNJ" class="text-indigo-500 hover:text-indigo-800">
+                        <a href="https://discord.gg/hp7CS6k" class="text-indigo-500 hover:text-indigo-800">
                             <div class="socal-discord text-indigo-500 hover:text-indigo-800"><i class="fab fa-discord"></i></div>
                         </a>
                     </div>
