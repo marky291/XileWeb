@@ -72,7 +72,7 @@
                         </div>
                     </div>
 					<div class="flex justify-start mt-6">
-                        <button wire:click.prevent="register" class="col-span-1 btn py-4 btn-primary bg-rose-900">
+                        <button wire:click.prevent="register" class="col-span-1 btn py-4 btn-primary bg-rose-800 hover:bg-rose-900">
                             <span class="click">Register Account</span>
                         </button>
                     </div>
