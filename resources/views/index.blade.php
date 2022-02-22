@@ -76,6 +76,19 @@
     </section>
 
     <section id="steps2play" class="relative overflow-hidden py-16 md:pt-24 lg:pt-64">
+    <div class="hidden lg:block absolute -right-2 bottom-40 pointer-events-none">
+            <svg x-data="{
+        initializeAnimation: false,
+        init() {
+            setTimeout(() => {
+                this.initializeAnimation = true;
+            }, 2000);
+        },
+    }" :class="initializeAnimation ? 'animate-cube' : ''" class="text-red-600 animate-cube" width="46" height="53" viewBox="0 0 46 53" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="m23.102 1 22.1 12.704v25.404M23.101 1l-22.1 12.704v25.404" stroke="currentColor" stroke-width="1.435" stroke-linejoin="bevel"></path><path d="m45.202 39.105-22.1 12.702L1 39.105" stroke="currentColor" stroke-width="1.435" stroke-linejoin="bevel"></path><path transform="matrix(.86698 .49834 .00003 1 1 13.699)" stroke="currentColor" stroke-width="1.435" stroke-linejoin="bevel" d="M0 0h25.491v25.405H0z"></path><path transform="matrix(.86698 -.49834 -.00003 1 23.102 26.402)" stroke="currentColor" stroke-width="1.435" stroke-linejoin="bevel" d="M0 0h25.491v25.405H0z"></path><path transform="matrix(.86701 -.49829 .86701 .49829 1 13.702)" stroke="currentColor" stroke-width="1.435" stroke-linejoin="bevel" d="M0 0h25.491v25.491H0z"></path>
+</svg>
+        </div>
+    <span class="hidden absolute bg-radial-gradient opacity-[.15] pointer-events-none lg:inline-flex right-[-20%] top-0 w-[640px] h-[940px]"></span>
         <div class="max-w-screen-xl w-full mx-auto px-5">
             <livewire:register/>
         </div>
@@ -96,17 +109,17 @@
             <h2 class="text-2xl font-semibold mb-5">Getting Started</h2>
             <div class="grid grid-cols-4 col-gap-8">
                 <div class="col-span-4 md:col-span-2 lg:col-span-1">
-                    <a href="https://wiki.xileretro.net/">
+                    <a target="_blank" href="https://wiki.xileretro.net/index.php?title=Server_Information">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
                                 <img class="object-cover w-full rounded h-44" style="margin:0" src="https://swall.teahub.io/photos/small/99-999290_ragnarok-online-valkyrie.jpg" alt="Server information Image">
                             </div>
-                            <h3 style="font-size: 1.5em" class="mt-8 half-border font-normal">Server<br> Information &<br>Wiki</h3>
+                            <h3 style="font-size: 1.5em" class="mt-8 half-border font-normal">Server<br> Information & Features</h3>
                         </div>
                     </a>
                 </div>
                 <div class="col-span-4 md:col-span-2 lg:col-span-1">
-                    <a href="https://wiki.xileretro.net/index.php?title=Newbie_Center#Starter_Package_.5BShow.2FHide.5D">
+                    <a target="_blank" href="https://wiki.xileretro.net/index.php?title=Newbie_Center">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
                                 <img class="object-cover w-full rounded h-44" style="margin:0" src="https://swall.teahub.io/photos/small/99-998493_ragnarok-online-artwork-anime-games-mmorpg-ragnarok-online.jpg" alt="Server information Image">
@@ -116,7 +129,7 @@
                     </a>
                 </div>
                 <div class="col-span-4 md:col-span-2 lg:col-span-1">
-                    <a href="https://wiki.xileretro.net/index.php?title=Leveling_Spots">
+                    <a target="_blank" href="https://wiki.xileretro.net/index.php?title=Leveling_Spots">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
                                 <img class="object-cover w-full rounded h-44" style="margin:0" src="https://swall.teahub.io/photos/small/99-994510_photo-wallpaper-forest-flower-grass-elf-art-girl.jpg" alt="Server information Image">
@@ -126,7 +139,7 @@
                     </a>
                 </div>
                 <div class="col-span-4 md:col-span-2 lg:col-span-1">
-                    <a href="https://wiki.xileretro.net/index.php?title=Donation">
+                    <a target="_blank" href="https://wiki.xileretro.net/index.php?title=Donation">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
                                 <img class="object-cover w-full rounded h-44" style="margin:0" src="https://www.teahub.io/photos/full/28-281786_ragnarok-online-ragnarok-online-wallpapers-1920.jpg" alt="Server information Image">
@@ -135,9 +148,37 @@
                         </div>
                     </a>
                 </div>
+                <div class="col-span-4 md:col-span-2 lg:col-span-1">
+                    <a target="_blank" href="https://wiki.xileretro.net/index.php?title=MVP">
+                        <div class="p-6 rounded-md hover:shadow-lg prose">
+                            <div class="mb-6 border border-gray-200 rounded">
+                                <img class="object-cover w-full rounded h-44" style="margin:0" src="https://i.ytimg.com/vi/tEz-SHcyP1Y/maxresdefault.jpg" alt="Server information Image">
+                            </div>
+                            <h3 style="font-size: 1.5em" class="mt-8 half-border font-normal">Most Valuable <br> Player System</h3>
+                        </div>
+                    </a>
+                </div>
             </div>
         </div>
     </section>
+
+    <!-- <section id="important-links" class="max-w-screen-xl mx-auto px-5 pt-16 pb-24 md:pt-24 lg:pt-48">
+        <div class="sm:max-w-xl">
+            <h2 class="text-4xl font-bold md:text-5xl">Donation-Free Server</h2>
+            <p class="mt-6 text-gray-700 leading-relaxed">We pride ourselves on the ability to offer a server that you can compete and join without the need to ever spend real money, to achieve this we offer a dynamic zeny based system to determinate the value of an uber in game which you can then use to purchase donation items. This gives zeny more value and keeps it as main currency while allowing those who want to donate still retain the rewards to support the server.</p>
+        </div>
+        <ul class="mt-10 relative grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <x-donation-item name="Scarlet Angel Helm" image="scarlet_helm" cost="10" :set="true">
+                Helm of the fallen Scarlet Angel. <br>DEX +4, STR +4, VIT +8, MDEF +9
+            </x-donation-item>
+            <x-donation-item name="Scarlet Angel Ears" image="scarlet_ears" cost="6" :set="true">
+                Ears of the fallen Scarlet Angel.<br>Add a 10% resistance against all Status Ailments.
+            </x-donation-item>
+            <x-donation-item name="Scarlet Angel Wings" image="scarlet_wings" cost="9" :set="true">
+                Wings of the fallen Scarlet Angel.<br>+5 to All Stats
+            </x-donation-item>
+        </ul>
+    </section> -->
 
     <section id="prontera-castles" class="hidden lg:block relative overflow-hidden py-16 md:pt-48">
         <div class="max-w-screen-xl w-full mx-auto px-5">

@@ -127,3 +127,8 @@ section.landing .feature-bg-img {
 .bg-radial-gradient {
     background-image: radial-gradient(50% 50% at 50% 50%,#eb4432 0,hsla(0,0%,100%,0) 100%);
 }
+
+.animate-cube {
+    -webkit-animation: cube 6s ease-in-out infinite!important;
+    animation: cube 6s ease-in-out infinite!important;
+}
