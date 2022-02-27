@@ -106,8 +106,8 @@
 
     <section id="important-links" class="relative overflow-hidden py-16 md:pt-48">
         <div class="max-w-screen-xl w-full mx-auto px-5">
-            <h2 class="text-2xl font-semibold mb-5">Getting Started</h2>
-            <div class="grid grid-cols-4 col-gap-8">
+            <h2 class="text-4xl font-bold max-w-lg md:text-4xl">Getting Started</h2>
+            <div class="grid grid-cols-4 gap-12 mt-14">
                 <div class="col-span-4 md:col-span-2 lg:col-span-1">
                     <a target="_blank" href="https://wiki.xileretro.net/index.php?title=Server_Information">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
@@ -162,23 +162,57 @@
         </div>
     </section>
 
-    <!-- <section id="important-links" class="max-w-screen-xl mx-auto px-5 pt-16 pb-24 md:pt-24 lg:pt-48">
+    <section id="important-links">
+        <div class="relative overflow-hidden py-16 md:pt-48">
+            <span class="hidden absolute bg-radial-gradient opacity-[.15] pointer-events-none lg:inline-flex right-[-20%] top-0 w-[640px] h-[640px]"></span>
+            <div class="max-w-screen-xl w-full mx-auto px-5">
+                <h2 class="text-4xl font-bold max-w-lg md:text-4xl">Donation & Donation-Free Server Economics</h2>
+                <div class="mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+                    <div>
+                    <svg class="text-rose-500 w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                        <h3 class="mt-5 text-xl font-bold">Donate</h3>
+                        <p class="mt-4 text-gray-700 text-sm leading-relaxed">Earn ubers by supporting the server and get rewarded just remember we only reward uber tokens that can be spent in the uber store and nothing else.</p>
+                        <a class="group relative inline-flex border border-red-600 focus:outline-none mt-6" href="https://wiki.xileretro.net/index.php?title=Donation">
+                            <span class="w-full inline-flex items-center justify-center self-stretch px-4 py-2 text-sm text-red-600 text-center font-bold uppercase bg-white ring-1 ring-red-600 ring-offset-1 transform transition-transform group-hover:-translate-y-1 group-hover:-translate-x-1 group-focus:-translate-y-1 group-focus:-translate-x-1">
+                                Donate Now
+                            </span>
+                        </a>
+                    </div>
+                    <div>
+                        <svg class="w-8 h-8 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"></path></svg>
+                        <h3 class="mt-5 text-xl font-bold">Zeny Purchase</h3>
+                        <p class="mt-4 text-gray-700 text-sm leading-relaxed">Don't want to ever donate? Well you do not have too just spend some time in game, get to know others and you will have enough zeny to purchase ubers in no time.</p>
+                        <a class="group relative inline-flex border border-red-600 focus:outline-none mt-6" href="https://wiki.xileretro.net/index.php?title=Donation">
+                            <span class="w-full inline-flex items-center justify-center self-stretch px-4 py-2 text-sm text-red-600 text-center font-bold uppercase bg-white ring-1 ring-red-600 ring-offset-1 transform transition-transform group-hover:-translate-y-1 group-hover:-translate-x-1 group-focus:-translate-y-1 group-focus:-translate-x-1">
+                                Learn How
+                            </span>
+                        </a>
+                    </div>
+                    <!-- <div>
+                        <svg class="w-8 h-8 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+                        <h3 class="mt-5 text-xl font-bold">Cryptocurrencies</h3>
+                        <p class="mt-4 text-gray-700 text-sm leading-relaxed"><a class="underline" href="/docs/broadcasting">Laravel Echo</a> and event broadcasting make it a cinch to build modern, realtime user experiences. Create amazing realtime applications while powering your WebSockets with pure PHP, Node.js, or serverless solutions like <a class="underline" href="https://pusher.com">Pusher</a> and <a class="underline" href="https://ably.com">Ably</a>.</p>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="important-links" class="max-w-screen-xl mx-auto px-5 pt-16 pb-24 md:pt-24 lg:pt-48">
         <div class="sm:max-w-xl">
-            <h2 class="text-4xl font-bold md:text-5xl">Donation-Free Server</h2>
-            <p class="mt-6 text-gray-700 leading-relaxed">We pride ourselves on the ability to offer a server that you can compete and join without the need to ever spend real money, to achieve this we offer a dynamic zeny based system to determinate the value of an uber in game which you can then use to purchase donation items. This gives zeny more value and keeps it as main currency while allowing those who want to donate still retain the rewards to support the server.</p>
+            <h2 class="text-4xl font-bold md:text-4xl">Uber Store</h2>
+            <!-- <p class="mt-6 text-gray-700 leading-relaxed">We pride ourselves on the ability to offer a server that you can compete and join without the need to ever spend real money, to achieve this we offer a dynamic zeny based system to determinate the value of an uber in game which you can then use to purchase donation items. This gives zeny more value and keeps it as main currency while allowing those who want to donate still retain the rewards to support the server.</p> -->
+            <p class="mt-6 text-gray-700 leading-relaxed">Your ubers let you get some of the most powerful items in game, ubers can be purchased in game with zeny or by donation, here is a small preview of what is to offer, click to view our wiki for extensive catalogue of items.</p>
+            <p class="mt-6 text-gray-500 font-semibold leading-relaxed">Find the Donation store <span class="text-gray-700">@warp payon 142 224</span></p>
         </div>
         <ul class="mt-10 relative grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            <x-donation-item name="Scarlet Angel Helm" image="scarlet_helm" cost="10" :set="true">
-                Helm of the fallen Scarlet Angel. <br>DEX +4, STR +4, VIT +8, MDEF +9
-            </x-donation-item>
-            <x-donation-item name="Scarlet Angel Ears" image="scarlet_ears" cost="6" :set="true">
-                Ears of the fallen Scarlet Angel.<br>Add a 10% resistance against all Status Ailments.
-            </x-donation-item>
-            <x-donation-item name="Scarlet Angel Wings" image="scarlet_wings" cost="9" :set="true">
-                Wings of the fallen Scarlet Angel.<br>+5 to All Stats
-            </x-donation-item>
+            @foreach (config('donation.items') as $item)
+                <x-donation-item name="{{ $item['name'] }}" :image="$item['image']" cost="{{ $item['cost'] }}" :set="true">
+                    Helm of the fallen Scarlet Angel. <br>DEX +4, STR +4, VIT +8, MDEF +9
+                </x-donation-item>
+            @endforeach
         </ul>
-    </section> -->
+    </section>
 
     <section id="prontera-castles" class="hidden lg:block relative overflow-hidden py-16 md:pt-48">
         <div class="max-w-screen-xl w-full mx-auto px-5">
