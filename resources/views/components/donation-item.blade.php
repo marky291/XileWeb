@@ -1,5 +1,5 @@
-<li id="{{ $name }}" class="donation-item">
-    <a href="https://wiki.xileretro.net/index.php?title=Donation" class="flex p-4 border rounded border-gray-200 border-opacity-60 hover:border-rose-200 hover:cursor-pointer hover:shadow-md">
+<li>
+    <a id="{{ $name }}" href="https://wiki.xileretro.net/index.php?title=Donation" class="donation-item flex p-4 border rounded border-gray-200 border-opacity-60 hover:border-rose-200 hover:cursor-pointer hover:shadow-md">
         <div class="relative shrink-0 bg-breeze flex items-center justify-center w-16 h-20 rounded-lg overflow-hidden">
             <span class="absolute w-full h-full inset-0 bg-gradient-to-b from-[rgba(255,255,255,.2)] to-[rgba(255,255,255,0)]"></span>
             <img src="/images/donations/{{ $image }}" alt="Icon" class="relative w-12 h-20">
