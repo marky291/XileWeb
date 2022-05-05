@@ -11,7 +11,7 @@
         <div class="container grid px-3 sm:px-0 grid-cols-5 gap-4 mx-auto">
             <div class="col-span-5 lg:col-span-3 pt-20 pb-4 pr-6">
                 <div class="xl:mr-36 prose">
-                    <h1 class="mb-6" style="font-size:2.8em;">XileRetro <br><small class="font-normal">A Ragnarok Online Private Server</small></h1>
+                    <h1 class="mb-6" style="font-size:2.8em;">XileRetro <br><small class="font-normal">A Private Server</small></h1>
                     <p>
                         Welcome, we are a team of developers with dedication
                         and love for the mechanics that drive Xile and the skills behind it.
