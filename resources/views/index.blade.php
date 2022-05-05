@@ -30,7 +30,7 @@
                         <a href="#steps2play" class="w-full no-underline">
                             <button id="hero-registration" class="flex items-center w-full text-left btn btn-primary bg-rose-800 hover:bg-rose-900">
                                 <!-- <svg class="w-4 h-4 mr-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg> -->
-                                <span>Create a Ragnarok Account</span>
+                                <span>Create a Game Account</span>
                             </button>
                         </a>
                         <a href="{{ config('downloads.full')[0]['link'] }}" target="_blank" class="w-full no-underline hidden lg:block">
