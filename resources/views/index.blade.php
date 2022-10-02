@@ -254,7 +254,7 @@
                     <div class="col-span-3 mb-10 lg:col-span-1">
                         <h3>Bugs and Support</h3>
                         <p>We actively fix bugs and provide support to our android application through our discord channels.</p>
-                        <a href="https://discord.gg/hjSSSXX" class="btn bg-gray-500 text-white no-underline">Report android issues on our discord</a>
+                        <a href="https://discord.gg/hp7CS6k" class="btn bg-gray-500 text-white no-underline">Report android issues on our discord</a>
                     </div>
                 </div>
             </div>
@@ -264,7 +264,7 @@
     <section id="read-the-rules" class="relative overflow-hidden py-16 md:pt-48 hidden md:block">
         <div class="max-w-screen-xl w-full mx-auto px-5 container mx-auto text-left md:text-center mb-20">
             <h1 class="mb-8 tracking-widest important-title text-blue-500" style="font-size: 3em"><a target="_blank" class="no-underline text-blue-500 hover:text-blue-900 font-bold" href="http://wiki.xileretro.net/index.php?title=Server_Rules">READ THE RULES</a></h1>
-            <p><a href="https://discord.gg/M4nP4rn" class="hover:underline">Unfairly banned? Create an appeal</a></p>
+            <p><a href="https://discord.gg/hp7CS6k" class="hover:underline">Unfairly banned? Create an appeal</a></p>
         </div>
     </section>
 
