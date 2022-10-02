@@ -9,7 +9,7 @@
                 </div>
                 <ul class="relative hidden lg:flex lg:items-center lg:justify-center lg:gap-6 xl:gap-10">
                     <li><a class="text-white" href="http://wiki.xileretro.net/index.php?title=Donation">Donate</a></li>
-                    <li><a class="text-white" href="https://forums.xileretro.net/">Forums</a></li>
+                    <li><a class="text-white" href="https://discord.gg/hp7CS6k">Community</a></li>
                     <li><a class="text-white" href="http://wiki.xileretro.net/index.php?title=Main_Page">Wiki</a></li>
                     <li><a class="text-white" href="https://xileretro.net/#steps2play">Register</a></li>
                 </ul>
@@ -44,7 +44,7 @@
                 <div class="relative h-full w-full py-8 px-5 bg-white pointer-events-auto overflow-y-auto">
                     <ul>
                         <li><a class="block w-full py-4 text-rose-800" href="http://wiki.xileretro.net/index.php?title=Donation">Donate</a></li>
-                        <li><a class="block w-full py-4 text-rose-800" href="https://forums.xileretro.net">Forums</a></li>
+                        <li><a class="block w-full py-4 text-rose-800" href="https://discord.gg/hp7CS6k">Community</a></li>
                         <li><a class="block w-full py-4 text-rose-800" href="http://wiki.xileretro.net/index.php?title=Main_Page">Wiki</a></li>
                         <li><a class="block w-full py-4 text-rose-800" href="https://xileretro.net/#steps2play">Register</a></li>
                         <li class="flex sm:justify-center"><a class="group relative inline-flex border border-red-600 focus:outline-none mt-3 w-full max-w-md" href="https://www.mediafire.com/file/q9pd3wo8g6pkr16/Play.zip/file">
