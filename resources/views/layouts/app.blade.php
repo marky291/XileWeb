@@ -99,7 +99,7 @@
                             <ul class="m-0">
                                 <li><a target="_blank" class="text-gray-500 no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Server_Information">Server Features</a></li>
                                 <li><a target="_blank" class="text-gray-500 no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=General_Customs">Modified Official</a></li>
-                                <li><a target="_blank" class="text-gray-500 no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Updates_Changelog">Updates & Changelog</a></li>
+                                <li><a target="_blank" class="text-gray-500 no-underline hover:underline" href="https://wiki.xileretro.net/index.php?title=Category:Release_Notes">Updates & Release Notes</a></li>
                                 <li><a target="_blank" class="text-gray-500 no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Newbie_Center">Newbie Center</a></li>
                                 <li><a target="_blank" class="text-gray-500 no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Events">Events</a></li>
                             </ul>
