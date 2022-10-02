@@ -21,7 +21,7 @@
                             </svg>
                         </button>
                     </a>
-                    <a target="_blank" class="group relative inline-flex border border-rose-600 focus:outline-none hidden lg:ml-4 lg:inline-flex" href="https://www.mediafire.com/file/q9pd3wo8g6pkr16/Play.zip/file">
+                    <a target="_blank" class="group relative inline-flex border border-rose-600 focus:outline-none hidden lg:ml-4 lg:inline-flex" href="https://drive.google.com/file/d/1G0wRDlKBAkwLYqBvxU6aeQFEkVlXhNWH/view?usp=sharing">
                         <span class="w-full inline-flex items-center justify-center self-stretch px-4 py-2 text-sm text-rose-600 text-center font-bold uppercase bg-white ring-1 ring-rose-600 ring-offset-1 transform transition-transform group-hover:-translate-y-1  group-focus:-translate-y-1 group-focus:-translate-x-1">
                             Download
                         </span>
@@ -47,7 +47,7 @@
                         <li><a class="block w-full py-4 text-rose-800" href="https://discord.gg/hp7CS6k">Community</a></li>
                         <li><a class="block w-full py-4 text-rose-800" href="http://wiki.xileretro.net/index.php?title=Main_Page">Wiki</a></li>
                         <li><a class="block w-full py-4 text-rose-800" href="https://xileretro.net/#steps2play">Register</a></li>
-                        <li class="flex sm:justify-center"><a class="group relative inline-flex border border-red-600 focus:outline-none mt-3 w-full max-w-md" href="https://www.mediafire.com/file/q9pd3wo8g6pkr16/Play.zip/file">
+                        <li class="flex sm:justify-center"><a class="group relative inline-flex border border-red-600 focus:outline-none mt-3 w-full max-w-md" href="https://drive.google.com/file/d/1G0wRDlKBAkwLYqBvxU6aeQFEkVlXhNWH/view?usp=sharing">
                                 <span class="w-full inline-flex items-center justify-center self-stretch px-4 py-2 text-sm text-red-600 text-center font-bold uppercase bg-white ring-1 ring-red-600 ring-offset-1 transform transition-transform group-hover:-translate-y-1 group-hover:-translate-x-1 group-focus:-translate-y-1 group-focus:-translate-x-1">
                                     Download
                                 </span>
