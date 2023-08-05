@@ -1,81 +1,60 @@
 @extends('layouts.app')
 
 @section('content')
-    @if (session('status'))
-        <div class="px-3 py-4 mb-4 text-sm text-green-700 bg-green-100 border border-t-8 border-green-600 rounded" role="alert">
-            {{ session('status') }}
-        </div>
-    @endif
 
-    <section class="shadow landing">
+    <section class="shadow landing bg-cover pt-16">
         <div class="container grid px-3 sm:px-0 grid-cols-5 gap-4 mx-auto">
             <div class="col-span-5 lg:col-span-3 pt-20 pb-4 pr-6">
-                <div class="xl:mr-36 prose">
-                    <h1 class="mb-6" style="font-size:2.8em;">XileRetro <br><small class="font-normal">A Private Server</small></h1>
+                <div class="xl:mr-30 prose text-white p-8 rounded bg-gray-900 text-gray-300 bg-opacity-70">
+                    @if (session('message'))
+                        <div class="alert alert-info">
+                            <h1 class="mb-6 text-gray-500 text-3xl">{{ session('message') }}</h1>
+                        </div>
+                    @endif
+                    <h1 class="mb-6 text-white text-3xl">XileRO PK Server | <span class="text-amber-500">No Third Jobs</span></h1>
+
+                    <p class="text-xl text-gray-200">Private Ragnarok Online Server</p>
                     <p>
-                        Welcome, we are a team of developers with dedication
-                        and love for the mechanics that drive Xile and the skills behind it.
-                        Our server is an official implementation of the old eAthena architecture
-                        into modern rAthena code where we can provide support for future mechanics
-                        and features that were previously incapable.
+                        Welcome to the realm of fantasy and roleplay. Where you will be faced with monsters, magic adventure, and ultimately each other. Find friends, companions, foes, and so much more. Fight for leadership, power and glory. Rest at home here in the world of XileRO
                     </p>
                     <p>
-                        We secured the platform
-                        using the latest Gepard 3.0 security systems that helps prevents hacks
+                        We secured the platform using the latest Gepard 3.0 security systems that helps prevents hacks
                         and macros to ultimately provide a solid foundation for future growth
                         internally and externally. We are not just here for the old players,
                         we are also here for the new~ So log in and pawn some noobs!!
                     </p>
                     <div class="flex flex-col my-10 quick-links">
                         <a href="#steps2play" class="w-full no-underline">
-                            <button id="hero-registration" class="flex items-center w-full text-left btn btn-primary bg-rose-800 hover:bg-rose-900">
+                            <button id="hero-registration" class="flex items-center w-full text-left btn btn-primary bg-amber-500 text-gray-900 hover:bg-amber-300">
                                 <!-- <svg class="w-4 h-4 mr-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg> -->
                                 <span>Create a Game Account</span>
                             </button>
                         </a>
                         <a href="{{ config('downloads.full')[0]['link'] }}" target="_blank" class="w-full no-underline hidden lg:block">
-                            <button id="hero-download-full-client" class="flex items-center w-full mt-4 text-left btn btn-primary bg-white border border-rose-900 text-rose-900 border-rose-900">
-                                <!-- <svg class="w-4 h-4 mr-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg> -->
+                            <button id="hero-download-full-client" class="flex items-center w-full mt-4 text-left btn btn-primary bg-amber-500 hover:bg-amber-300 border text-gray-900 border-amber-900">
                                 <span>{{ config('downloads.full')[array_key_first(config('downloads.full'))]['name'] }}</span>
                             </button>
                         </a>
                     </div>
                 </div>
-                <div class="flex items-center justify-between mt-4 text-5xl social-buttons">
+                <div class="flex items-center justify-between mt-8 my-4 text-5xl social-buttons">
                     <a href="#important-links" class="text-gray-700 hover:text-cool-gray-900">
                         <i class="fas fa-angle-double-down"></i>
                     </a>
-                    <div class="flex flex-row">
+                    {{-- <div class="flex flex-row">
                         <a href="https://www.facebook.com/xileretro" class="text-blue-500 hover:text-blue-800">
                             <div class="mr-6 socal-facebook text-blue-500 hover:text-blue-800"><i class="fab fa-facebook"></i></div>
                         </a>
                         <a href="https://discord.gg/hp7CS6k" class="text-indigo-500 hover:text-indigo-800">
                             <div class="socal-discord text-indigo-500 hover:text-indigo-800"><i class="fab fa-discord"></i></div>
                         </a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="lg:grid col-span-2 hidden">
-                <div class="bg-no-repeat bg-cover feature-bg-img">
-                    <div style="margin-left:-13%" class="hidden xl:block relative">
-                        <img src="images/castle/castle_1.png" alt="Landing image" class="absolute top-[60px] flex items-center justify-center rounded-full w-36 h-36">
-                        <img src="images/castle/castle_2.png" alt="Landing image" class="absolute top-[240px] flex items-center justify-center rounded-full w-36 h-36">
-                        <img src="images/castle/castle_3.png" alt="Landing image" class="absolute top-[420px] flex items-center justify-center rounded-full w-36 h-36">
-                    </div>
-                    <!-- <div style="margin-left:-19%" class="relative">
-                        <img alt="{{ $prontera_castles[0]->guild->name }}" class="w-12 h-12 absolute rounded-md right-12 top-[0px] translate-y-12 pointer-events-none md:left-[12%]" src="{{ $prontera_castles[0]->guild->hasEmblem() ? url($prontera_castles[0]->guild->emblem) : '/assets/emblems/empty.bmp' }}">
-                        <img alt="{{ $prontera_castles[1]->guild->name }}" class="w-12 h-12 absolute rounded-md right-12 top-[90px] translate-y-12 pointer-events-none md:left-[12%]" src="{{ $prontera_castles[1]->guild->hasEmblem() ? url($prontera_castles[1]->guild->emblem) : '/assets/emblems/empty.bmp' }}">
-                        <img alt="{{ $prontera_castles[2]->guild->name }}" class="w-12 h-12 absolute rounded-md right-12 top-[180px] translate-y-12 pointer-events-none md:left-[12%]" src="{{ $prontera_castles[2]->guild->hasEmblem() ? url($prontera_castles[2]->guild->emblem) : '/assets/emblems/empty.bmp' }}">
-                        <img alt="{{ $prontera_castles[3]->guild->name }}" class="w-12 h-12 absolute rounded-md right-12 top-[270px] translate-y-12 pointer-events-none md:left-[12%]" src="{{ $prontera_castles[3]->guild->hasEmblem() ? url($prontera_castles[3]->guild->emblem) : '/assets/emblems/empty.bmp' }}">
-                        <img alt="{{ $prontera_castles[4]->guild->name }}" class="w-12 h-12 absolute rounded-md right-12 top-[360px] translate-y-12 pointer-events-none md:left-[12%]" src="{{ $prontera_castles[4]->guild->hasEmblem() ? url($prontera_castles[4]->guild->emblem) : '/assets/emblems/empty.bmp' }}">
-                    </div> -->
+                    </div> --}}
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="steps2play" class="relative overflow-hidden py-16 md:pt-24 lg:pt-64">
+    <section id="steps2play" class="bg-black relative overflow-hidden py-16 md:pt-24 lg:pt-32">
     <div class="hidden lg:block absolute -right-2 bottom-40 pointer-events-none">
             <svg x-data="{
         initializeAnimation: false,
@@ -94,67 +73,67 @@
         </div>
     </section>
 
-    <!-- <section id="mvprankingladder" class="container mx-auto grid">
+    {{-- <section id="mvprankingladder" class="container mx-auto grid">
         <h2>MVP Ladder</h2>
         @foreach (App\Ragnarok\MvpLadderRank::orderByDesc('day_kills')->limit(3)->get() as $rank)
             <div class="cols-span-1">
                 <p>Player {{ $rank->name }}</p>
                 <p>{{ $rank->day_kills }} MVP Kills Today!</p>
             </div>
-        @endforeach 
-    </section> -->
+        @endforeach
+    </section> --}}
 
-    <section id="important-links" class="relative overflow-hidden py-16 md:pt-48">
+    <section id="important-links" class="relative overflow-hidden py-16 md:pt-32 bg-black">
         <div class="max-w-screen-xl w-full mx-auto px-5">
-            <h2 class="text-4xl font-bold max-w-lg md:text-4xl">Getting Started</h2>
+            <h2 class="text-4xl font-bold max-w-lg md:text-4xl text-gray-100">Getting Started</h2>
             <div class="grid grid-cols-4 gap-12 mt-14">
-                <div class="col-span-4 md:col-span-2 lg:col-span-1">
+                <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 rounded">
                     <a target="_blank" href="https://wiki.xileretro.net/index.php?title=Server_Information">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
                                 <img class="object-cover w-full rounded h-44" style="margin:0" src="https://swall.teahub.io/photos/small/99-999290_ragnarok-online-valkyrie.jpg" alt="Server information Image">
                             </div>
-                            <h3 style="font-size: 1.5em" class="mt-8 half-border font-normal">Server<br> Information & Features</h3>
+                            <h3 style="font-size: 1.5em" class="mt-2 half-border font-normal text-gray-100">Server<br> Information & Features</h3>
                         </div>
                     </a>
                 </div>
-                <div class="col-span-4 md:col-span-2 lg:col-span-1">
+                <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 rounded">
                     <a target="_blank" href="https://wiki.xileretro.net/index.php?title=Newbie_Center">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
                                 <img class="object-cover w-full rounded h-44" style="margin:0" src="https://swall.teahub.io/photos/small/99-998493_ragnarok-online-artwork-anime-games-mmorpg-ragnarok-online.jpg" alt="Server information Image">
                             </div>
-                            <h3 style="font-size: 1.5em" class="mt-8 half-border font-normal">Starter<br>Packages & <br>Guides</h3>
+                            <h3 style="font-size: 1.5em" class="mt-2 half-border font-normal text-gray-100">Starter<br>Packages & <br>Guides</h3>
                         </div>
                     </a>
                 </div>
-                <div class="col-span-4 md:col-span-2 lg:col-span-1">
+                <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 rounded">
                     <a target="_blank" href="https://wiki.xileretro.net/index.php?title=Leveling_Spots">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
                                 <img class="object-cover w-full rounded h-44" style="margin:0" src="https://swall.teahub.io/photos/small/99-994510_photo-wallpaper-forest-flower-grass-elf-art-girl.jpg" alt="Server information Image">
                             </div>
-                            <h3 style="font-size: 1.5em" class="mt-8 half-border font-normal">Leveling<br>Areas & <br>Progression</h3>
+                            <h3 style="font-size: 1.5em" class="mt-2 half-border font-normal text-gray-100">Leveling<br>Areas & <br>Progression</h3>
                         </div>
                     </a>
                 </div>
-                <div class="col-span-4 md:col-span-2 lg:col-span-1">
+                <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 rounded">
                     <a target="_blank" href="https://wiki.xileretro.net/index.php?title=Donation">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
                                 <img class="object-cover w-full rounded h-44" style="margin:0" src="https://www.teahub.io/photos/full/28-281786_ragnarok-online-ragnarok-online-wallpapers-1920.jpg" alt="Server information Image">
                             </div>
-                            <h3 style="font-size: 1.5em" class="mt-8 half-border font-normal">Donation<br> Help &<br> Rewards</h3>
+                            <h3 style="font-size: 1.5em" class="mt-2 half-border font-normal text-gray-100">Donation<br> Help &<br> Rewards</h3>
                         </div>
                     </a>
                 </div>
-                <div class="col-span-4 md:col-span-2 lg:col-span-1">
+                <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 rounded">
                     <a target="_blank" href="https://wiki.xileretro.net/index.php?title=MVP">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
                                 <img class="object-cover w-full rounded h-44" style="margin:0" src="https://i.ytimg.com/vi/tEz-SHcyP1Y/maxresdefault.jpg" alt="Server information Image">
                             </div>
-                            <h3 style="font-size: 1.5em" class="mt-8 half-border font-normal">Most Valuable <br> Player System</h3>
+                            <h3 style="font-size: 1.5em" class="mt-2 half-border font-normal text-gray-100">Most Valuable <br> Player System</h3>
                         </div>
                     </a>
                 </div>
@@ -162,7 +141,7 @@
         </div>
     </section>
 
-    <section id="important-links">
+    {{-- <section id="important-links">
         <div class="relative overflow-hidden py-16 md:pt-48">
             <span class="hidden absolute bg-radial-gradient opacity-[.15] pointer-events-none lg:inline-flex right-[-20%] top-0 w-[640px] h-[640px]"></span>
             <div class="max-w-screen-xl w-full mx-auto px-5">
@@ -196,28 +175,33 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
 
-    <section id="important-links" class="max-w-screen-xl mx-auto px-5 pt-16 pb-24 md:pt-24 lg:pt-48">
-        <div class="sm:max-w-xl">
-            <h2 class="text-4xl font-bold md:text-4xl">Uber Store</h2>
-            <!-- <p class="mt-6 text-gray-700 leading-relaxed">We pride ourselves on the ability to offer a server that you can compete and join without the need to ever spend real money, to achieve this we offer a dynamic zeny based system to determinate the value of an uber in game which you can then use to purchase donation items. This gives zeny more value and keeps it as main currency while allowing those who want to donate still retain the rewards to support the server.</p> -->
-            <p class="mt-6 text-gray-700 leading-relaxed">Your ubers let you get some of the most powerful items in game, ubers can be purchased in game with zeny or by donation, here is a small preview of what is to offer, click to view our wiki for extensive catalogue of items.</p>
-            <p class="mt-6 text-gray-500 font-semibold leading-relaxed">Find the Donation store <span class="text-gray-700">@warp payon 142 224</span></p>
-        </div>
-        <ul class="mt-10 relative grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <section id="important-links" class="bg-black mx-auto px-5 pt-16 pb-24 md:pt-24 lg:pt-32">
+        <div class="max-w-screen-xl w-full mx-auto px-5">
+            <div class="">
+                <h2 class="text-4xl font-bold md:text-4xl text-gray-100">Uber Store</h2>
+                <!-- <p class="mt-6 text-gray-700 leading-relaxed">We pride ourselves on the ability to offer a server that you can compete and join without the need to ever spend real money, to achieve this we offer a dynamic zeny based system to determinate the value of an uber in game which you can then use to purchase donation items. This gives zeny more value and keeps it as main currency while allowing those who want to donate still retain the rewards to support the server.</p> -->
+                <p class="mt-6 text-gray-300 leading-relaxed">Your ubers let you get some of the most powerful items in game, ubers can be purchased in game with zeny or by donation, here is a small preview of what is to offer, click to view our wiki for extensive catalogue of items.</p>
+                <p class="mt-6 text-gray-200 font-semibold leading-relaxed">Find the Donation store <span class="text-gray-100">@warp payon 142 224</span></p>
+            </div>
+            <div class="">
+                <ul class="mt-10 relative grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             @foreach (config('donation.items') as $item)
                 <x-donation-item name="{{ $item['name'] }}" :image="$item['image']" cost="{{ $item['cost'] }}" :set="true">
                     Helm of the fallen Scarlet Angel. <br>DEX +4, STR +4, VIT +8, MDEF +9
                 </x-donation-item>
             @endforeach
         </ul>
+            </div>
+        </div>
+
     </section>
 
-    <section id="prontera-castles" class="hidden lg:block relative overflow-hidden py-16 md:pt-48">
+    <section id="prontera-castles" class="bg-black hidden lg:block relative overflow-hidden py-16 md:pt-32">
         <div class="max-w-screen-xl w-full mx-auto px-5">
             <div class="container mx-auto flex rounded">
-            <h2 class="text-5xl self-center my-0 font-bold mr-16 prose">Prontera<br><span class="font-normal text-lg text-rose-900">Castle Holders</span></h2>
+            <h2 class="text-5xl self-center my-0 font-bold mr-16 prose text-gray-100">Prontera<br><span class="font-normal text-lg text-amber-500">Castle Holders</span></h2>
             <div class="py-16 grid grid-cols-5 gap-2 w-full">
                 @foreach ($prontera_castles as $castle)
                     <div class="prose col-span-1 px-6 py-4 rounded align-center items-center flex flex-col hover:bg-gray-100 hover:shadow">
@@ -261,9 +245,9 @@
         </section>
     --}}
 
-    <section id="read-the-rules" class="relative overflow-hidden py-16 md:pt-48 hidden md:block">
+    <section id="read-the-rules" class="bg-black relative overflow-hidden py-16 md:pt-32 hidden md:block">
         <div class="max-w-screen-xl w-full mx-auto px-5 container mx-auto text-left md:text-center mb-20">
-            <h1 class="mb-8 tracking-widest important-title text-blue-500" style="font-size: 3em"><a target="_blank" class="no-underline text-blue-500 hover:text-blue-900 font-bold" href="http://wiki.xileretro.net/index.php?title=Server_Rules">READ THE RULES</a></h1>
+            <h1 class="mb-8 tracking-widest important-title text-blue-500" style="font-size: 3em"><a target="_blank" class="no-underline text-amber-500 hover:text-amber-300 font-bold" href="http://wiki.xileretro.net/index.php?title=Server_Rules">READ THE RULES</a></h1>
             <p><a href="https://discord.gg/hp7CS6k" class="hover:underline">Unfairly banned? Create an appeal</a></p>
         </div>
     </section>

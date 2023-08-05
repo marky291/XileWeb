@@ -43,10 +43,10 @@ hr.default {
 }
 
 section.landing {
-    background: url('../assets/landing-bg@2x.png');
+    background: url('../assets/landing-sitting.jpeg');
 }
 section.landing .feature-bg-img {
-    background: url('../assets/landing-img.png');
+    background: url('../assets/landing-sitting.png');
 }
 
 .step2-icon {
@@ -92,7 +92,7 @@ section.landing .feature-bg-img {
     bottom:0;
     position:absolute;
     z-index:9;
-    background:linear-gradient(to right, brown 50%, white 50%);
+    background:linear-gradient(to right, #f59e0c 80%, #f59e0c8f 20%);
 }
 
 #steps2play-top-border {
@@ -114,7 +114,7 @@ section.landing .feature-bg-img {
 .important-title:before, .important-title:after{
     content: "";
     flex: 1 1;
-    border-bottom: 1px solid #000;
+    border-bottom: 1px solid white;
     margin: auto;
   }
 .important-title:before {

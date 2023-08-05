@@ -26,7 +26,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>XileRetro Homepage</title>
+    <title>@yield('title', 'XileRO PK Server | No Third Jobs')</title>
 
     <!-- Styles -->
     <link href="{{ mix('assets/core.css') }}" rel="stylesheet">
@@ -82,26 +82,26 @@
 
         @yield('content')
 
-        <footer id="footer" class="shadow-inner">
+        <footer id="footer" class="bg-gray-900 shadow-inner">
             <div class="container px-3 md:px-0 grid grid-cols-2 col-gap-1 pt-12 mx-auto pb-15 content">
                 <div class="col-span-2 lg:col-span-1">
                     {{-- <img src="/images/logo.png" alt="XileRetro Logo" class="w-1/2"> --}}
                     <div class="grid grid-cols-2">
-                        <h2 class="text-xl font-bold my-6 text-gray-800">Navigate</h2>
+                        <h2 class="text-xl font-bold my-6 text-gray-100">Navigate</h2>
                         <div class="grid grid-cols-2 col-span-2 col-gap-6 prose">
                             <ul class="m-0">
-                                <li><a class="text-gray-500 no-underline hover:underline" href="{{ url('/') }}">Home</a></li>
-                                <li><a target="_blank" class="text-gray-500 no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Server_Rules">Rulebook</a></li>
-                                <li><a target="_blank" class="text-gray-500 no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Server_Information#Staff">The Staff</a></li>
-                                <li><a class="text-gray-500 no-underline hover:underline" href="#steps2play">Download</a></li>
-                                <li><a class="text-gray-500 no-underline hover:underline" href="#steps2play">Register</a></li>
+                                <li><a class="text-gray-300 no-underline hover:underline" href="{{ url('/') }}">Home</a></li>
+                                <li><a target="_blank" class="text-gray-300 no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Server_Rules">Rulebook</a></li>
+                                <li><a target="_blank" class="text-gray-300 no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Server_Information#Staff">The Staff</a></li>
+                                <li><a class="text-gray-300 no-underline hover:underline" href="#steps2play">Download</a></li>
+                                <li><a class="text-gray-300 no-underline hover:underline" href="#steps2play">Register</a></li>
                             </ul>
                             <ul class="m-0">
-                                <li><a target="_blank" class="text-gray-500 no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Server_Information">Server Features</a></li>
-                                <li><a target="_blank" class="text-gray-500 no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=General_Customs">Modified Official</a></li>
-                                <li><a target="_blank" class="text-gray-500 no-underline hover:underline" href="https://wiki.xileretro.net/index.php?title=Category:Release_Notes">Updates & Release Notes</a></li>
-                                <li><a target="_blank" class="text-gray-500 no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Newbie_Center">Newbie Center</a></li>
-                                <li><a target="_blank" class="text-gray-500 no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Events">Events</a></li>
+                                <li><a target="_blank" class="text-gray-300 no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Server_Information">Server Features</a></li>
+                                <li><a target="_blank" class="text-gray-300 no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=General_Customs">Modified Official</a></li>
+                                <li><a target="_blank" class="text-gray-300 no-underline hover:underline" href="https://wiki.xileretro.net/index.php?title=Category:Release_Notes">Updates & Release Notes</a></li>
+                                <li><a target="_blank" class="text-gray-300 no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Newbie_Center">Newbie Center</a></li>
+                                <li><a target="_blank" class="text-gray-300 no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Events">Events</a></li>
                             </ul>
                         </div>
                     </div>
@@ -110,28 +110,28 @@
                         <p class="my-0 mt-12 ml-0 mr-6 text-5xl text-green-500 mb-5">Server is Online!</p>
                         <p class="px-2 text-sm text-gray-700 bg-gray-300 rounded">{{ cache()->remember('users', now()->addMinutes(1), function () { return App\Ragnarok\Char::query()->online()->count(); }) }}</p>
                     </div>
-                    <p class="mb-20">No errors to report</p>
+                    <p class="mb-20 text-gray-300">No errors to report</p>
                 </div>
                 <div class="col-span-2 lg:col-span-1">
-                    <h2 class="text-xl font-bold my-6 text-gray-800">Community Loaders</h2>
+                    <h2 class="text-xl font-bold my-6 text-gray-100">Community Loaders</h2>
                     <div class="grid grid-cols-3 screenshots">
                         <img class="col-span-1 my-0" src="images/loading/loading00.png" alt="Created by our players">
                         <img class="col-span-1 my-0" src="images/loading/loading06.png" alt="Created by our players">
                         <img class="col-span-1 my-0" src="images/loading/loading08.png" alt="Created by our players">
                     </div>
                     <div>
-                        <h2 class="text-xl mt-20 font-bold my-6 text-gray-800">Get in Touch</h2>
+                        <h2 class="text-xl mt-20 font-bold my-6 text-gray-100">Get in Touch</h2>
                         <div class="grid grid-cols-3 col-gap-3">
                             <a href="https://www.facebook.com/groups/XileRetro" class="no-underline">
                                 <div class="flex items-center col-span-1">
-                                    <i class="mr-2 text-4xl text-blue-600 fab fa-facebook-square"></i>
-                                    <p class="m-0 text-blue-500">Facebook Page</p>
+                                    <i class="mr-2 text-4xl text-blue-500 fab fa-facebook-square"></i>
+                                    <p class="m-0 text-blue-100">Facebook Page</p>
                                 </div>
                             </a>
                             <a href="https://discord.gg/hp7CS6k" class="no-underline">
                                 <div class="flex items-center col-span-1">
-                                    <i class="mr-2 text-4xl text-indigo-600 fab fa-discord"></i>
-                                    <p class="m-0 text-indigo-600">Discord</p>
+                                    <i class="mr-2 text-4xl text-indigo-500 fab fa-discord"></i>
+                                    <p class="m-0 text-indigo-100">Discord</p>
                                 </div>
                             </a>
                         </div>
@@ -139,12 +139,12 @@
                 </div>
             </div>
             <div class="container px-3 md:px-0 grid grid-cols-3 pt-8 pb-10 mx-auto copyright">
-                <div class="flex items-center col-span-3 lg:col-span-2 lg:text-left text-gray-700 prose">
+                <div class="flex items-center col-span-3 lg:col-span-2 lg:text-left text-gray-300 prose">
                     <i class="mr-4 text-5xl far fa-heart"></i>
                     <p class="mt-0">A thank you to all our players who support and show commitment<br>to making a server that's great for everyone.</p>
                 </div>
-                <div class="hidden lg:flex items-end justify-end col-span-3 lg:col-span-1 text-right prose">
-                    <p class="mt-0">Website design and coded by XileRetro<br><span class="text-gray-400">Version {{ config('app.version') }}</span></p>
+                <div class="hidden lg:flex items-end justify-end col-span-3 lg:col-span-1 text-right prose text-gray-300">
+                    <p class="mt-0">Website design and coded by XileRetro<br><span class="text-gray-100">Version {{ config('app.version') }}</span></p>
                 </div>
             </div>
         </footer>

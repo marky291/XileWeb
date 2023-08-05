@@ -1,17 +1,17 @@
-<div class="top-0 w-full from-rose-900 bg-gradient-to-t to-rose-800 shadow">
+<div class="w-full absolute shadow bg-gray-900 bg-opacity-70">
     <header x-trap.inert.noscroll="navIsOpen" class="relative z-50 text-white" @keydown.window.escape="navIsOpen = false" @click.away="navIsOpen = false">
         <div class="relative max-w-screen-2xl mx-auto w-full py-4 transition duration-200 lg:bg-transparent lg:py-6">
             <div class="max-w-screen-xl mx-auto px-5 flex items-center justify-between">
                 <div class="flex-1">
                     <a href="/" class="inline-flex items-center">
-                        <h1 class="my-0 text-2xl py-0 font-bold">XileRetro</h1>
+                        <h1 class="my-0 text-2xl py-0 font-bold">XileRO</h1>
                     </a>
                 </div>
                 <ul class="relative hidden lg:flex lg:items-center lg:justify-center lg:gap-6 xl:gap-10">
-                    <li><a class="text-white" href="http://wiki.xileretro.net/index.php?title=Donation">Donate</a></li>
-                    <li><a class="text-white" href="https://discord.gg/hp7CS6k">Community</a></li>
-                    <li><a class="text-white" href="http://wiki.xileretro.net/index.php?title=Main_Page">Wiki</a></li>
-                    <li><a class="text-white" href="https://xileretro.net/#steps2play">Register</a></li>
+                    <li><a class="rounded py-3 px-6 text-gray-100 hover:bg-amber-500 hover:text-gray-900 border-gray-500 hover:bg-opacity-90 bg-gray-900 bg-opacity-50" href="https://xileretro.net/#steps2play">Register</a></li>
+                    <li><a class="rounded py-3 px-6 text-gray-100 hover:bg-amber-500 hover:text-gray-900 border-gray-500 hover:bg-opacity-90 bg-gray-900 bg-opacity-50" href="http://wiki.xileretro.net/index.php?title=Donation">Donate</a></li>
+                    <li><a class="rounded py-3 px-6 text-gray-100 hover:bg-amber-500 hover:text-gray-900 border-gray-500 hover:bg-opacity-90 bg-gray-900 bg-opacity-50" href="https://discord.gg/hp7CS6k">Discord</a></li>
+                    <li><a class="rounded py-3 px-6 text-gray-100 hover:bg-amber-500 hover:text-gray-900 border-gray-500 hover:bg-opacity-90 bg-gray-900 bg-opacity-50" href="http://wiki.xileretro.net/index.php?title=Main_Page">Wiki</a></li>
                 </ul>
                 <div class="flex-1 flex items-center justify-end">
                     <a target="_blank" href="https://wiki.xileretro.net/index.php?search=&title=Special%3ASearch&go=Go">
@@ -21,8 +21,8 @@
                             </svg>
                         </button>
                     </a>
-                    <a target="_blank" class="group relative inline-flex border border-rose-600 focus:outline-none hidden lg:ml-4 lg:inline-flex" href="https://drive.google.com/file/d/1Kf6R_IF6VqSy_ZcqspbqgK0LAFAfA11o/view?usp=sharing">
-                        <span class="w-full inline-flex items-center justify-center self-stretch px-4 py-2 text-sm text-rose-600 text-center font-bold uppercase bg-white ring-1 ring-rose-600 ring-offset-1 transform transition-transform group-hover:-translate-y-1  group-focus:-translate-y-1 group-focus:-translate-x-1">
+                    <a target="_blank" class="group relative inline-flex border border-amber-600 focus:outline-none hidden lg:ml-4 lg:inline-flex" href="https://drive.google.com/file/d/1Kf6R_IF6VqSy_ZcqspbqgK0LAFAfA11o/view?usp=sharing">
+                        <span class="w-full inline-flex items-center justify-center self-stretch px-4 py-2 text-sm text-gray-900 text-center font-bold uppercase bg-amber-500 ring-1 ring-amber-600 ring-offset-1 transform transition-transform group-hover:-translate-y-1  group-focus:-translate-y-1 group-focus:-translate-x-1">
                             Download
                         </span>
                     </a>
