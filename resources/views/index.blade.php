@@ -241,7 +241,7 @@
                         @else
                             <img class="h-16 w-16 m-0 mb-4" src="/assets/emblems/empty.bmp"/>
                         @endif
-                        <h3 class="truncate ... text-gray-900 bg-amber-700 px-3 rounded font-bold my-0 mb-1">{{ $castle->name }}</h3>
+                        <h3 class="truncate ... text-gray-900 bg-amber-500 px-3 rounded font-bold my-0 mb-1">{{ $castle->name }}</h3>
                         <p class="truncate ... mb-1 mt-0">By <span class="text-amber-500">{{ $castle->guild->name }}</span></p>
                         <p class="truncate ... mb-1 mt-0">Leader <span class="text-amber-500">{{ $castle->guild->master }}</span></p>
                         <p class="truncate ... mb-1 mt-0"><span class="text-amber-500">{{ $castle->guild->members->count() }}</span> Members</p>
