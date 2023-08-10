@@ -11,7 +11,7 @@
                             <h1 class="mb-6 text-gray-500 text-3xl">{{ session('message') }}</h1>
                         </div>
                     @endif
-                    <h1 class="mb-6 text-white text-3xl">XileRO PK Server | <span class="text-amber-500">No Third Jobs</span></h1>
+                    <h1 class="mb-6 text-white text-3xl">XileRO Retro | <span class="text-amber-500">No Third Jobs</span></h1>
 
                     <p class="text-xl text-gray-200">Private Ragnarok Online Server</p>
                     <p>
@@ -68,7 +68,7 @@
 </svg>
         </div>
     <span class="hidden absolute bg-radial-gradient opacity-[.15] pointer-events-none lg:inline-flex right-[-20%] top-0 w-[640px] h-[940px]"></span>
-        <div class="max-w-screen-xl w-full mx-auto px-5">
+        <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
             <livewire:register/>
         </div>
     </section>
@@ -84,7 +84,7 @@
     </section> --}}
 
     <section id="important-links" class="relative overflow-hidden py-16 md:pt-32 bg-black">
-        <div class="max-w-screen-xl w-full mx-auto px-5">
+        <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
             <h2 class="text-4xl font-bold max-w-lg md:text-4xl text-gray-100">Getting Started</h2>
             <div class="grid grid-cols-4 gap-12 mt-14">
                 <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 rounded">
@@ -101,7 +101,7 @@
                     <a target="_blank" href="https://wiki.xileretro.net/index.php?title=Newbie_Center">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
-                                <img class="object-cover w-full rounded h-44" style="margin:0" src="https://swall.teahub.io/photos/small/99-998493_ragnarok-online-artwork-anime-games-mmorpg-ragnarok-online.jpg" alt="Server information Image">
+                                <img class="object-cover w-full rounded h-44" style="margin:0" src="https://get.wallhere.com/photo/anime-Sword-Art-Online-Kirito-Sword-Art-Online-sword-1859509.jpg" alt="Server information Image">
                             </div>
                             <h3 style="font-size: 1.5em" class="mt-2 half-border font-normal text-gray-100">Starter<br>Packages & <br>Guides</h3>
                         </div>
@@ -114,6 +114,16 @@
                                 <img class="object-cover w-full rounded h-44" style="margin:0" src="https://swall.teahub.io/photos/small/99-994510_photo-wallpaper-forest-flower-grass-elf-art-girl.jpg" alt="Server information Image">
                             </div>
                             <h3 style="font-size: 1.5em" class="mt-2 half-border font-normal text-gray-100">Leveling<br>Areas & <br>Progression</h3>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 rounded">
+                    <a target="_blank" href="https://wiki.xileretro.net/index.php?title=Leveling_Spots">
+                        <div class="p-6 rounded-md hover:shadow-lg prose">
+                            <div class="mb-6 border border-gray-200 rounded">
+                                <img class="object-cover w-full rounded h-44" style="margin:0" src="https://e0.pxfuel.com/wallpapers/487/916/desktop-wallpaper-the-best-discord-themes-and-plugins-discord-gaming.jpg" alt="Server information Image">
+                            </div>
+                            <h3 style="font-size: 1.5em" class="mt-2 half-border font-normal text-gray-100">Discord Community Discussions</h3>
                         </div>
                     </a>
                 </div>
@@ -133,7 +143,27 @@
                             <div class="mb-6 border border-gray-200 rounded">
                                 <img class="object-cover w-full rounded h-44" style="margin:0" src="https://i.ytimg.com/vi/tEz-SHcyP1Y/maxresdefault.jpg" alt="Server information Image">
                             </div>
-                            <h3 style="font-size: 1.5em" class="mt-2 half-border font-normal text-gray-100">Most Valuable <br> Player System</h3>
+                            <h3 style="font-size: 1.5em" class="mt-2 half-border font-normal text-gray-100">MVP <br> Ranking <br>  System</h3>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 rounded">
+                    <a target="_blank" href="https://wiki.xileretro.net/index.php?title=MVP">
+                        <div class="p-6 rounded-md hover:shadow-lg prose">
+                            <div class="mb-6 border border-gray-200 rounded">
+                                <img class="object-cover w-full rounded h-44" style="margin:0" src="https://e0.pxfuel.com/wallpapers/186/786/desktop-wallpaper-sword-art-online-sword-art-online-sword-art-sword-art-online-pc.jpg" alt="Server information Image">
+                            </div>
+                            <h3 style="font-size: 1.5em" class="mt-2 half-border font-normal text-gray-100">Randomised <br> Weapons <br> Loots</h3>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 rounded">
+                    <a target="_blank" href="https://wiki.xileretro.net/index.php?title=MVP">
+                        <div class="p-6 rounded-md hover:shadow-lg prose">
+                            <div class="mb-6 border border-gray-200 rounded">
+                                <img class="object-cover w-full rounded h-44" style="margin:0" src="https://w0.peakpx.com/wallpaper/479/644/HD-wallpaper-i-reading-art-fantasy-reading-butterfly-book-digital-art.jpg" alt="Server information Image">
+                            </div>
+                            <h3 style="font-size: 1.5em" class="mt-2 half-border font-normal text-gray-100">Wikipedia <br> Knowledge <br> Base</h3>
                         </div>
                     </a>
                 </div>
@@ -178,7 +208,7 @@
     </section> --}}
 
     <section id="important-links" class="bg-black mx-auto px-5 pt-16 pb-24 md:pt-24 lg:pt-32">
-        <div class="max-w-screen-xl w-full mx-auto px-5">
+        <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
             <div class="">
                 <h2 class="text-4xl font-bold md:text-4xl text-gray-100">Uber Store</h2>
                 <!-- <p class="mt-6 text-gray-700 leading-relaxed">We pride ourselves on the ability to offer a server that you can compete and join without the need to ever spend real money, to achieve this we offer a dynamic zeny based system to determinate the value of an uber in game which you can then use to purchase donation items. This gives zeny more value and keeps it as main currency while allowing those who want to donate still retain the rewards to support the server.</p> -->
@@ -199,7 +229,7 @@
     </section>
 
     <section id="prontera-castles" class="bg-black hidden lg:block relative overflow-hidden py-16 md:pt-32">
-        <div class="max-w-screen-xl w-full mx-auto px-5">
+        <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
             <div class="container mx-auto flex rounded">
             <h2 class="text-5xl self-center my-0 font-bold mr-16 prose text-gray-100">Prontera<br><span class="font-normal text-lg text-amber-500">Castle Holders</span></h2>
             <div class="py-16 grid grid-cols-5 gap-2 w-full">
