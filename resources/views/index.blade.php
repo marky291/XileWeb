@@ -234,17 +234,19 @@
             <h2 class="text-5xl self-center my-0 font-bold mr-16 prose text-gray-100">Prontera<br><span class="font-normal text-lg text-amber-500">Castle Holders</span></h2>
             <div class="py-16 grid grid-cols-5 gap-2 w-full">
                 @foreach ($prontera_castles as $castle)
-                    <div class="prose col-span-1 px-6 py-4 rounded align-center items-center flex flex-col hover:bg-gray-100 hover:shadow">
+                 @if ($castle->guild->name != config("castles.staff.guildname"))
+                    <div class="prose col-span-1 px-6 py-4 text-gray-100 rounded align-center items-center flex flex-col bg-gray-900 hover:bg-gray-700 hover:shadow">
                         @if($castle->guild->hasEmblem())
                             <div class="w-16 h-16 m-0 mb-4 rounded-lg shadow bg-cover bg-gray-100" style="background: url('{{ url($castle->guild->emblem) }}')"></div>
                         @else
                             <img class="h-16 w-16 m-0 mb-4" src="/assets/emblems/empty.bmp"/>
                         @endif
                         <h3 class="truncate ... font-bold my-0 mb-1">{{ $castle->name }}</h3>
-                        <p class="truncate ... mb-1 mt-0">By <span class="text-rose-900">{{ $castle->guild->name }}</span></p>
-                        <p class="truncate ... mb-1 mt-0">Leader <span class="text-rose-900">{{ $castle->guild->master }}</span></p>
-                        <p class="truncate ... mb-1 mt-0"><span class="text-rose-900">{{ $castle->guild->members->count() }}</span> Members</p>
+                        <p class="truncate ... mb-1 mt-0">By <span class="text-amber-500">{{ $castle->guild->name }}</span></p>
+                        <p class="truncate ... mb-1 mt-0">Leader <span class="text-amber-500">{{ $castle->guild->master }}</span></p>
+                        <p class="truncate ... mb-1 mt-0"><span class="text-amber-500">{{ $castle->guild->members->count() }}</span> Members</p>
                     </div>
+                 @endif
                 @endforeach
             </div>
             </div>

@@ -26,7 +26,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title', 'XileRO PK Server | No Third Jobs')</title>
+    <title>@yield('title', 'XileRO Retro Server | No Third Jobs')</title>
 
     <!-- Styles -->
     <link href="{{ mix('assets/core.css') }}" rel="stylesheet">
