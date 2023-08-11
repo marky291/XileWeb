@@ -25,13 +25,13 @@
                     </p>
                     <div class="flex flex-col my-10 quick-links">
                         <a href="#steps2play" class="w-full no-underline">
-                            <button id="hero-registration" class="flex items-center w-full text-left btn btn-primary bg-amber-500 text-gray-900 hover:bg-amber-300">
+                            <button id="hero-registration" class="btn mt-4 xilero-button">
                                 <!-- <svg class="w-4 h-4 mr-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg> -->
                                 <span>Create a Game Account</span>
                             </button>
                         </a>
                         <a href="{{ config('downloads.full')[0]['link'] }}" target="_blank" class="w-full no-underline hidden lg:block">
-                            <button id="hero-download-full-client" class="flex items-center w-full mt-4 text-left btn btn-primary bg-amber-500 hover:bg-amber-300 border text-gray-900 border-amber-900">
+                            <button id="hero-download-full-client" class="btn mt-4 xilero-button">
                                 <span>{{ config('downloads.full')[array_key_first(config('downloads.full'))]['name'] }}</span>
                             </button>
                         </a>
@@ -87,7 +87,7 @@
         <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
             <h2 class="text-4xl font-bold max-w-lg md:text-4xl text-gray-100">Getting Started</h2>
             <div class="grid grid-cols-4 gap-12 mt-14">
-                <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 rounded">
+                <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 hover:bg-gray-800 rounded">
                     <a target="_blank" href="https://wiki.xileretro.net/index.php?title=Server_Information">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
@@ -97,7 +97,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 rounded">
+                <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 hover:bg-gray-800 rounded">
                     <a target="_blank" href="https://wiki.xileretro.net/index.php?title=Newbie_Center">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
@@ -107,7 +107,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 rounded">
+                <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 hover:bg-gray-800 rounded">
                     <a target="_blank" href="https://wiki.xileretro.net/index.php?title=Leveling_Spots">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
@@ -117,7 +117,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 rounded">
+                <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 hover:bg-gray-800 rounded">
                     <a target="_blank" href="https://wiki.xileretro.net/index.php?title=Leveling_Spots">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
@@ -127,7 +127,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 rounded">
+                <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 hover:bg-gray-800 rounded">
                     <a target="_blank" href="https://wiki.xileretro.net/index.php?title=Donation">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
@@ -137,7 +137,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 rounded">
+                <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 hover:bg-gray-800 rounded">
                     <a target="_blank" href="https://wiki.xileretro.net/index.php?title=MVP">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
@@ -147,7 +147,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 rounded">
+                <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 hover:bg-gray-800 rounded">
                     <a target="_blank" href="https://wiki.xileretro.net/index.php?title=MVP">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
@@ -157,7 +157,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 rounded">
+                <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 hover:bg-gray-800 rounded">
                     <a target="_blank" href="https://wiki.xileretro.net/index.php?title=MVP">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
@@ -213,7 +213,7 @@
                 <h2 class="text-4xl font-bold md:text-4xl text-gray-100">Uber Store</h2>
                 <!-- <p class="mt-6 text-gray-700 leading-relaxed">We pride ourselves on the ability to offer a server that you can compete and join without the need to ever spend real money, to achieve this we offer a dynamic zeny based system to determinate the value of an uber in game which you can then use to purchase donation items. This gives zeny more value and keeps it as main currency while allowing those who want to donate still retain the rewards to support the server.</p> -->
                 <p class="mt-6 text-gray-300 leading-relaxed">Your ubers let you get some of the most powerful items in game, ubers can be purchased in game with zeny or by donation, here is a small preview of what is to offer, click to view our wiki for extensive catalogue of items.</p>
-                <p class="mt-6 text-gray-200 font-semibold leading-relaxed">Find the Donation store <span class="text-gray-100">@warp payon 142 224</span></p>
+                <p class="mt-6 text-gray-200 font-semibold leading-relaxed">Find the Uber Store <span class="text-gray-100">@warp payon 142 224</span></p>
             </div>
             <div class="">
                 <ul class="mt-10 relative grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -253,6 +253,7 @@
         </div>
     </section>
 
+
     {{-- ANDOID SECTION REMOVED
         <section class="my-24 px-3 sm:px-0">
             <div id="android" class="container mx-auto">
@@ -277,10 +278,56 @@
         </section>
     --}}
 
-    <section id="read-the-rules" class="bg-black relative overflow-hidden py-16 md:pt-32 hidden md:block">
+    {{-- <section id="read-the-rules" class="bg-black relative overflow-hidden py-16 md:pt-32 hidden md:block">
         <div class="max-w-screen-xl w-full mx-auto px-5 container mx-auto text-left md:text-center mb-20">
             <h1 class="mb-8 tracking-widest important-title text-blue-500" style="font-size: 3em"><a target="_blank" class="no-underline text-amber-500 hover:text-amber-300 font-bold" href="http://wiki.xileretro.net/index.php?title=Server_Rules">READ THE RULES</a></h1>
             <p><a href="https://discord.gg/hp7CS6k" class="hover:underline">Unfairly banned? Create an appeal</a></p>
+        </div>
+    </section> --}}
+
+    <section id="read-the-rules" class="bg-black relative overflow-hidden py-16 md:pt-32 hidden md:block">
+        <div class="max-w-screen-xl w-full mx-auto px-5 container mx-auto text-left md:text-center mb-20">
+            <h1 class="mb-8 tracking-widest important-title text-blue-500" style="font-size: 2.5em"><a target="_blank" class="no-underline text-amber-500 hover:text-amber-300 font-bold" href="http://wiki.xileretro.net/index.php?title=Server_Rules"><span class="text-gray-100">XileRO PK</span> | Third Jobs</a></h1>
+            <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5 mt-20">
+                <div class="grid grid-cols-3 gap-12 text-gray-100 text-center mt-8">
+                    <div class="bg-gray-800 bg-opacity-90 rounded text-gray-100">
+                        <div class="">
+                            <img class="object-cover w-full rounded h-44" style="margin:0" src="https://wallpapercg.com/media/ts_2x/11480.webp" alt="Server information Image">
+                            <div class="p-4">
+                                XileRO PK Download
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-800 bg-opacity-90 rounded text-gray-100">
+                        <div class="">
+                            <img class="object-cover w-full rounded h-44" style="margin:0" src="https://wallpapers.com/images/hd/sword-art-online-wallpaper-javjk4u0ar7tbyeu.jpg" alt="Server information Image">
+                            <div class="p-4">
+                                XileRO PK Register
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-800 bg-opacity-90 rounded text-gray-100">
+                        <div class="">
+                            <img class="object-cover w-full rounded h-44" style="margin:0" src="https://wallpapers.com/images/hd/discord-logo-geometric-art-5barh6w9jxj5mhzw.jpg" alt="Server information Image">
+                            <div class="p-4">
+                                XileRO PK Discord
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{-- <div class="grid grid-cols-4 gap-12 mt-14">
+                    <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 hover:bg-gray-800 rounded">
+                        <a target="_blank" href="https://wiki.xileretro.net/index.php?title=Server_Information">
+                            <div class="p-6 rounded-md hover:shadow-lg prose">
+                                <div class="mb-6 border border-gray-200 rounded">
+                                    <img class="object-cover w-full rounded h-44" style="margin:0" src="https://swall.teahub.io/photos/small/99-999290_ragnarok-online-valkyrie.jpg" alt="Server information Image">
+                                </div>
+                                <h3 style="font-size: 1.5em" class="mt-2 half-border font-normal text-gray-100">Server<br> Information & Features</h3>
+                            </div>
+                        </a>
+                    </div>
+                </div> --}}
+            </div>
         </div>
     </section>
 
@@ -331,5 +378,49 @@
         </div> --}}
 
 	</section>
+
+    {{-- <section id="XileRO-PK" class="relative overflow-hidden py-16 md:pt-32 bg-black">
+        <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
+            <h2 class="text-4xl font-bold max-w-lg md:text-4xl text-gray-100">XileRO PK | <span class="text-amber-500">Third Jobs</span></h2>
+            <div class="grid grid-cols-3 gap-12 text-gray-100 text-center mt-8">
+                <div class="bg-gray-800 bg-opacity-90 rounded text-gray-100">
+                    <div class="">
+                        <img class="object-cover w-full rounded h-44" style="margin:0" src="https://wallpapercg.com/media/ts_2x/11480.webp" alt="Server information Image">
+                        <div class="p-4">
+                            XileRO PK Download
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-800 bg-opacity-90 rounded text-gray-100">
+                    <div class="">
+                        <img class="object-cover w-full rounded h-44" style="margin:0" src="https://wallpapers.com/images/hd/sword-art-online-wallpaper-javjk4u0ar7tbyeu.jpg" alt="Server information Image">
+                        <div class="p-4">
+                            XileRO PK Register
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-800 bg-opacity-90 rounded text-gray-100">
+                    <div class="">
+                        <img class="object-cover w-full rounded h-44" style="margin:0" src="https://wallpapers.com/images/hd/discord-logo-geometric-art-5barh6w9jxj5mhzw.jpg" alt="Server information Image">
+                        <div class="p-4">
+                            XileRO PK Discord
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-4 gap-12 mt-14">
+                <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 hover:bg-gray-800 rounded">
+                    <a target="_blank" href="https://wiki.xileretro.net/index.php?title=Server_Information">
+                        <div class="p-6 rounded-md hover:shadow-lg prose">
+                            <div class="mb-6 border border-gray-200 rounded">
+                                <img class="object-cover w-full rounded h-44" style="margin:0" src="https://swall.teahub.io/photos/small/99-999290_ragnarok-online-valkyrie.jpg" alt="Server information Image">
+                            </div>
+                            <h3 style="font-size: 1.5em" class="mt-2 half-border font-normal text-gray-100">Server<br> Information & Features</h3>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section> --}}
 
 @endsection
