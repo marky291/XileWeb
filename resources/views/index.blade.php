@@ -11,7 +11,7 @@
                             <h1 class="mb-6 text-gray-500 text-3xl">{{ session('message') }}</h1>
                         </div>
                     @endif
-                    <h1 class="mb-6 text-white text-3xl">XileRO Retro | <span class="text-amber-500">No Third Jobs</span></h1>
+                    <h1 class="mb-6 text-white text-3xl">XileRO PK Retro | <span class="text-amber-500">No Third Jobs</span></h1>
 
                     <p class="text-xl text-gray-200">Private Ragnarok Online Server</p>
                     <p>
