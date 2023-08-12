@@ -290,29 +290,29 @@
             <h1 class="mb-8 tracking-widest important-title text-blue-500" style="font-size: 2.5em"><a target="_blank" class="no-underline text-amber-500 hover:text-amber-300 font-bold" href="http://wiki.xileretro.net/index.php?title=Server_Rules"><span class="text-gray-100">XileRO PK</span> | Third Jobs</a></h1>
             <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5 mt-20">
                 <div class="grid grid-cols-3 gap-12 text-gray-100 text-center mt-8">
-                    <div class="bg-gray-800 bg-opacity-90 rounded text-gray-100">
-                        <div class="">
+                    <div class="bg-gray-800 bg-opacity-90 rounded text-gray-100 hover:bg-amber-500 hover:text-gray-900">
+                        <a href="https://drive.google.com/drive/folders/1EGeKownNt1cYne1e173OshhbYj31-mh-?usp=sharing">
                             <img class="object-cover w-full rounded h-44" style="margin:0" src="https://wallpapercg.com/media/ts_2x/11480.webp" alt="Server information Image">
                             <div class="p-4">
                                 XileRO PK Download
                             </div>
-                        </div>
+                        </a>
                     </div>
-                    <div class="bg-gray-800 bg-opacity-90 rounded text-gray-100">
-                        <div class="">
+                    <div class="bg-gray-800 bg-opacity-90 rounded text-gray-100 hover:bg-amber-500 hover:text-gray-900">
+                        <a href="https://www.facebook.com/groups/670800967076806/">
                             <img class="object-cover w-full rounded h-44" style="margin:0" src="https://wallpapers.com/images/hd/sword-art-online-wallpaper-javjk4u0ar7tbyeu.jpg" alt="Server information Image">
                             <div class="p-4">
-                                XileRO PK Register
+                                XileRO PK Facebook
                             </div>
-                        </div>
+                        </a>
                     </div>
-                    <div class="bg-gray-800 bg-opacity-90 rounded text-gray-100">
-                        <div class="">
+                    <div class="bg-gray-800 bg-opacity-90 rounded text-gray-100 hover:bg-amber-500 hover:text-gray-900">
+                        <a href="https://discord.com/invite/cFd4FZupDV">
                             <img class="object-cover w-full rounded h-44" style="margin:0" src="https://wallpapers.com/images/hd/discord-logo-geometric-art-5barh6w9jxj5mhzw.jpg" alt="Server information Image">
                             <div class="p-4">
                                 XileRO PK Discord
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
                 {{-- <div class="grid grid-cols-4 gap-12 mt-14">
