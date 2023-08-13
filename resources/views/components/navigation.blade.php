@@ -1,11 +1,11 @@
-<div class="w-full absolute shadow bg-gray-900 bg-opacity-70">
-    <header aria-label="Main Navigation" x-trap.inert.noscroll="navIsOpen" class="relative z-50 text-white" @keydown.window.escape="navIsOpen = false"
-        @click.away="navIsOpen = false" aria-label="Main Navigation">
+<nav class="w-full absolute shadow bg-gray-900 bg-opacity-70">
+    <div aria-label="Main Navigation" x-trap.inert.noscroll="navIsOpen" class="relative z-50 text-white" @keydown.window.escape="navIsOpen = false"
+        @click.away="navIsOpen = false">
         <div class="relative max-w-screen-2xl mx-auto w-full py-4 transition duration-200 lg:bg-transparent lg:py-6">
             <div class="max-w-screen-xl mx-auto px-5 flex items-center justify-between">
                 <div class="flex-1">
                     <a href="/" aria-label="Home Page" title="XileRO Home">
-                        <h1 class="my-0 text-2xl py-0 font-bold">XileRO.net</h1>
+                        <h2 class="my-0 text-2xl py-0 font-bold">XileRO.net</h2>
                     </a>
                 </div>
                 <ul aria-label="Desktop Navigation Menu" class="relative hidden lg:flex lg:items-center lg:justify-center lg:gap-6 xl:gap-10">
@@ -21,7 +21,7 @@
                     </li>
                 </ul>
                 <div class="flex-1 flex items-center justify-end">
-                    <a target="_blank" href="https://wiki.xileretro.net/index.php?search=&title=Special%3ASearch&go=Go"
+                    <a target="_blank" rel="noopener" href="https://wiki.xileretro.net/index.php?search=&title=Special%3ASearch&go=Go"
                         title="Search XileRO Wiki">
                         <button id="search_button" aria-label="Search XileRO Wiki">
                             <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -30,7 +30,7 @@
                             </svg>
                         </button>
                     </a>
-                    <a target="_blank"
+                    <a target="_blank" rel="noopener"
                         class="group relative inline-flex border border-amber-600 focus:outline-none hidden lg:ml-4 lg:inline-flex"
                         href="https://drive.google.com/file/d/1Kf6R_IF6VqSy_ZcqspbqgK0LAFAfA11o/view?usp=sharing"
                         title="Download XileRO">
@@ -41,7 +41,7 @@
                     </a>
                     <button aria-label="Toggle Mobile Menu"
                         class="ml-2 relative w-10 h-10 inline-flex items-center justify-center p-2 text-white lg:hidden"
-                        aria-label="Toggle Menu" @click.prevent="navIsOpen = !navIsOpen">
+                        @click.prevent="navIsOpen = !navIsOpen">
                         <svg x-show="! navIsOpen" class="w-6" viewBox="0 0 28 12" fill="none"
                             xmlns="http://www.w3.org/2000/svg" style="">
                             <line y1="1" x2="28" y2="1" stroke="currentColor" stroke-width="2">
@@ -108,5 +108,5 @@
                 </div>
             </nav>
         </div>
-    </header>
-</div>
+    </div>
+</nav>

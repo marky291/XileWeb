@@ -91,7 +91,7 @@
                     </div>
                     <hr>
                     <h2 class="text-gray-100">Get a Headstart</h4>
-                    <p>If you are new to XileRO or would like a refresher, we highly recommend checking out the <a class="text-amber-300 hover:text-amber-100" href="http://wiki.xileretro.net/index.php?title=Newbie_Center" target="_blank">Newbie Center Guide</a> for an awesome head start!</p>
+                    <p>If you are new to XileRO or would like a refresher, we highly recommend checking out the <a class="text-amber-300 hover:text-amber-100" href="http://wiki.xileretro.net/index.php?title=Newbie_Center" target="_blank" rel="noopener">Newbie Center Guide</a> for an awesome head start!</p>
                     <hr>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST">
                         {{ csrf_field() }}
@@ -110,7 +110,7 @@
 					</div>
 					<div class="col-span-5 md:col-span-4">
                         @foreach(config('downloads.full') as $item)
-                            <a class="no-underline" href="{{ $item['link'] }}" target="_blank">
+                            <a class="no-underline" href="{{ $item['link'] }}" target="_blank" rel="noopener">
                                 <button class="truncate ... flex items-center w-full mb-4 text-left btn py-4 {{ $item['bttn'] }}">
                                     {{ $item['name'] }}
                                 </button>
@@ -128,7 +128,7 @@
 					</div>
 					<div class="col-span-5 md:col-span-4">
                         @foreach(config('downloads.lite') as $item)
-                            <a class="no-underline" href="{{ $item['link'] }}" target="_blank">
+                            <a class="no-underline" href="{{ $item['link'] }}" target="_blank" rel="noopener">
                                 <button class="truncate ... flex items-center w-full mb-4 py-4 text-left btn {{ $item['bttn'] }}">
                                     {{ $item['name'] }}
                                 </button>

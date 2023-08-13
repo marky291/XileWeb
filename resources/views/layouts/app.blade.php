@@ -21,7 +21,7 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Join XileRO PK Retro - A Ragnarok Online adventure where fantasy meets challenge! Dive into battles, uncover magic, and build alliances. Securely powered by Gepard 3.0, welcoming both veterans and newcomers. Ready to conquer? Dive in and dominate!">
+    <meta name="description" content="Welcome to XileRO PK Retro, a realm of fantasy and roleplay in Ragnarok Online. Join us for adventure, monsters, magic, and battles.">
     <meta name="keywords" content="Ragnarok, Ragnarok Online, RO, XileRO, XileRO PK Retro, XileRO PK">
     <meta name="author" content="XileRO">
     <meta name="robots" content="index, follow">
@@ -72,17 +72,17 @@
                         <div class="grid grid-cols-2 col-span-2 col-gap-6 prose">
                             <ul class="m-0">
                                 <li><a class="text-gray-300 no-underline hover:underline" href="{{ url('/') }}" title="XileRetro Home Page">Home</a></li>
-                                <li><a target="_blank" class="text-gray-300 no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Server_Rules" title="XileRetro Server Rules">Rulebook</a></li>
-                                <li><a target="_blank" class="text-gray-300 no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Server_Information#Staff" title="Information about XileRetro Staff">The Staff</a></li>
-                                <li><a class="text-gray-300 no-underline hover:underline" href="#steps2play" title="Download XileRetro">Download</a></li>
-                                <li><a class="text-gray-300 no-underline hover:underline" href="#steps2play" title="Register for XileRetro">Register</a></li>
+                                <li><a target="_blank" rel="noopener" class="text-gray-300 no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Server_Rules" title="XileRetro Server Rules">Rulebook</a></li>
+                                <li><a target="_blank" rel="noopener" class="text-gray-300 no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Server_Information#Staff" title="Information about XileRetro Staff">The Staff</a></li>
+                                <li><a target="_blank" rel="noopener" class="text-gray-300 no-underline hover:underline" href="#steps2play" title="Download XileRetro">Download</a></li>
+                                <li><a target="_blank" rel="noopener" class="text-gray-300 no-underline hover:underline" href="#steps2play" title="Register for XileRetro">Register</a></li>
                             </ul>
                             <ul class="m-0">
-                                <li><a target="_blank" class="text-gray-300 no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Server_Information" title="XileRetro Server Features">Server Features</a></li>
-                                <li><a target="_blank" class="text-gray-300 no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=General_Customs" title="Modified official information of XileRetro">Modified Official</a></li>
-                                <li><a target="_blank" class="text-gray-300 no-underline hover:underline" href="https://wiki.xileretro.net/index.php?title=Category:Release_Notes" title="XileRetro Updates and Release Notes">Updates & Release Notes</a></li>
-                                <li><a target="_blank" class="text-gray-300 no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Newbie_Center" title="Support Center for XileRetro Newbies">Newbie Center</a></li>
-                                <li><a target="_blank" class="text-gray-300 no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Events" title="XileRetro Events and Activities">Events</a></li>
+                                <li><a target="_blank" rel="noopener" class="text-gray-300 no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Server_Information" title="XileRetro Server Features">Server Features</a></li>
+                                <li><a target="_blank" rel="noopener" class="text-gray-300 no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=General_Customs" title="Modified official information of XileRetro">Modified Official</a></li>
+                                <li><a target="_blank" rel="noopener" class="text-gray-300 no-underline hover:underline" href="https://wiki.xileretro.net/index.php?title=Category:Release_Notes" title="XileRetro Updates and Release Notes">Updates & Release Notes</a></li>
+                                <li><a target="_blank" rel="noopener" class="text-gray-300 no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Newbie_Center" title="Support Center for XileRetro Newbies">Newbie Center</a></li>
+                                <li><a target="_blank" rel="noopener" class="text-gray-300 no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Events" title="XileRetro Events and Activities">Events</a></li>
                             </ul>
                         </div>
                     </div>

@@ -8,7 +8,7 @@
                 <div class="xl:mr-30 prose text-white p-8 rounded bg-gray-900 text-gray-300 bg-opacity-70">
                     @if (session('message'))
                         <div class="alert alert-info">
-                            <h1 class="mb-6 text-gray-500 text-3xl">{{ session('message') }}</h1>
+                            <h3 class="mb-6 text-gray-500 text-3xl">{{ session('message') }}</h3>
                         </div>
                     @endif
                     <h1 class="mb-6 text-white text-3xl">XileRO PK Retro | <span class="text-amber-500">No Third Jobs</span></h1>
@@ -30,7 +30,7 @@
                                 <span>Create a Game Account</span>
                             </button>
                         </a>
-                        <a href="{{ config('downloads.full')[0]['link'] }}" target="_blank" class="w-full no-underline hidden lg:block">
+                        <a href="{{ config('downloads.full')[0]['link'] }}" target="_blank" rel="noopener" class="w-full no-underline hidden lg:block">
                             <button id="hero-download-full-client" class="btn mt-4 xilero-button">
                                 <span>{{ config('downloads.full')[array_key_first(config('downloads.full'))]['name'] }}</span>
                             </button>
@@ -88,7 +88,7 @@
             <h2 class="text-4xl font-bold max-w-lg md:text-4xl text-gray-100">Getting Started</h2>
             <div class="grid grid-cols-4 gap-12 mt-14">
                 <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 hover:bg-gray-800 rounded">
-                    <a title="Learn more about Server Information & Features on XileRetro Wiki" target="_blank" href="https://wiki.xileretro.net/index.php?title=Server_Information">
+                    <a title="Learn more about Server Information & Features on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xileretro.net/index.php?title=Server_Information">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
                                 <img class="object-cover w-full rounded h-44" style="margin:0" src="https://swall.teahub.io/photos/small/99-999290_ragnarok-online-valkyrie.jpg" alt="Server Information & Features">
@@ -98,7 +98,7 @@
                     </a>
                 </div>
                 <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 hover:bg-gray-800 rounded">
-                    <a title="Essential Starter Packages & Guides for New Players" target="_blank" href="https://wiki.xileretro.net/index.php?title=Newbie_Center">
+                    <a title="Essential Starter Packages & Guides for New Players" target="_blank" rel="noopener" href="https://wiki.xileretro.net/index.php?title=Newbie_Center">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
                                 <img class="object-cover w-full rounded h-44" style="margin:0" src="https://get.wallhere.com/photo/anime-Sword-Art-Online-Kirito-Sword-Art-Online-sword-1859509.jpg" alt="Starter Packages & Guids Image">
@@ -108,7 +108,7 @@
                     </a>
                 </div>
                 <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 hover:bg-gray-800 rounded">
-                    <a title="Discover Best Leveling Areas & Progression Tips on XileRetro Wiki" target="_blank" href="https://wiki.xileretro.net/index.php?title=Leveling_Spots">
+                    <a title="Discover Best Leveling Areas & Progression Tips on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xileretro.net/index.php?title=Leveling_Spots">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
                                 <img class="object-cover w-full rounded h-44" style="margin:0" src="https://swall.teahub.io/photos/small/99-994510_photo-wallpaper-forest-flower-grass-elf-art-girl.jpg" alt="Leveling Areas & Progression Image">
@@ -118,7 +118,7 @@
                     </a>
                 </div>
                 <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 hover:bg-gray-800 rounded">
-                    <a title="Join our Discord Community Discussions" target="_blank" href="https://discord.gg/hp7CS6k">
+                    <a title="Join our Discord Community Discussions" target="_blank" rel="noopener" href="https://discord.gg/hp7CS6k">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
                                 <img class="object-cover w-full rounded h-44" style="margin:0" src="https://e0.pxfuel.com/wallpapers/487/916/desktop-wallpaper-the-best-discord-themes-and-plugins-discord-gaming.jpg" alt="Discord Community Discussions Image">
@@ -128,7 +128,7 @@
                     </a>
                 </div>
                 <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 hover:bg-gray-800 rounded">
-                    <a title="Learn about the Donation Help & Rewards on XileRetro Wiki" target="_blank" href="https://wiki.xileretro.net/index.php?title=Donation">
+                    <a title="Learn about the Donation Help & Rewards on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xileretro.net/index.php?title=Donation">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
                                 <img class="object-cover w-full rounded h-44" style="margin:0" src="https://www.teahub.io/photos/full/28-281786_ragnarok-online-ragnarok-online-wallpapers-1920.jpg" alt="Donation Help & Rewards">
@@ -138,7 +138,7 @@
                     </a>
                 </div>
                 <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 hover:bg-gray-800 rounded">
-                    <a title="Explore the MVP Ranking System on XileRetro Wiki" target="_blank" href="https://wiki.xileretro.net/index.php?title=MVP">
+                    <a title="Explore the MVP Ranking System on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xileretro.net/index.php?title=MVP">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
                                 <img class="object-cover w-full rounded h-44" style="margin:0" src="https://i.ytimg.com/vi/tEz-SHcyP1Y/maxresdefault.jpg" alt="MVP Ranking System Image">
@@ -148,7 +148,7 @@
                     </a>
                 </div>
                 <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 hover:bg-gray-800 rounded">
-                    <a title="Discover Randomised Weapons Loots on XileRetro Wiki" target="_blank" href="https://wiki.xileretro.net/index.php?title=MVP">
+                    <a title="Discover Randomised Weapons Loots on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xileretro.net/index.php?title=MVP">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
                                 <img class="object-cover w-full rounded h-44" style="margin:0" src="https://e0.pxfuel.com/wallpapers/186/786/desktop-wallpaper-sword-art-online-sword-art-online-sword-art-sword-art-online-pc.jpg" alt="Randomised Weapon Loot Image">
@@ -158,7 +158,7 @@
                     </a>
                 </div>
                 <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 hover:bg-gray-800 rounded">
-                    <a title="Explore the Wikipedia Knowledge Base on XileRetro Wiki" target="_blank" href="https://wiki.xileretro.net/index.php?title=MVP">
+                    <a title="Explore the Wikipedia Knowledge Base on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xileretro.net/index.php?title=MVP">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
                                 <img class="object-cover w-full rounded h-44" style="margin:0" src="https://w0.peakpx.com/wallpaper/479/644/HD-wallpaper-i-reading-art-fantasy-reading-butterfly-book-digital-art.jpg" alt="Wikipedia Knowledge Base">
@@ -278,20 +278,13 @@
         </section>
     --}}
 
-    {{-- <section id="read-the-rules" class="bg-black relative overflow-hidden py-16 md:pt-32 hidden md:block">
-        <div class="max-w-screen-xl w-full mx-auto px-5 container mx-auto text-left md:text-center mb-20">
-            <h1 class="mb-8 tracking-widest important-title text-blue-500" style="font-size: 3em"><a target="_blank" class="no-underline text-amber-500 hover:text-amber-300 font-bold" href="http://wiki.xileretro.net/index.php?title=Server_Rules">READ THE RULES</a></h1>
-            <p><a href="https://discord.gg/hp7CS6k" class="hover:underline">Unfairly banned? Create an appeal</a></p>
-        </div>
-    </section> --}}
-
     <section id="read-the-rules" class="bg-black relative overflow-hidden py-16 md:pt-32 hidden md:block">
         <div class="max-w-screen-xl w-full mx-auto px-5 container text-left md:text-center mb-20">
-            <h1 class="mb-8 tracking-widest important-title text-blue-500" style="font-size: 2.5em"><a target="_blank" class="no-underline text-amber-500 hover:text-amber-300 font-bold" href="http://wiki.xileretro.net/index.php?title=Server_Rules"><span class="text-gray-100">XileRO PK</span> | Third Jobs</a></h1>
+            <h2 class="mb-8 tracking-widest important-title text-blue-500" style="font-size: 2.5em"><a target="_blank" rel="noopener noreferrer" class="no-underline text-amber-500 hover:text-amber-300 font-bold" href=""><span class="text-gray-100">XileRO PK</span> | Third Jobs</a></h2>
             <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5 mt-20">
                 <div class="grid grid-cols-3 gap-12 text-gray-100 text-center mt-8">
                     <div class="bg-gray-800 bg-opacity-90 rounded text-gray-100 hover:bg-amber-500 hover:text-gray-900">
-                        <a title="XileRO PK Third Jobs Download" aria-label="XileRO PK Third Jobs Download" href="https://drive.google.com/drive/folders/1EGeKownNt1cYne1e173OshhbYj31-mh-?usp=sharing">
+                        <a target="_blank" rel="noopener noreferrer" title="XileRO PK Third Jobs Download" aria-label="XileRO PK Third Jobs Download" href="https://drive.google.com/drive/folders/1EGeKownNt1cYne1e173OshhbYj31-mh-?usp=sharing">
                             <img class="object-cover w-full rounded h-44" style="margin:0" src="https://wallpapercg.com/media/ts_2x/11480.webp" alt="XileRO PK Third Jobs Download Image">
                             <div class="p-4">
                                 XileRO PK Download
@@ -299,7 +292,7 @@
                         </a>
                     </div>
                     <div class="bg-gray-800 bg-opacity-90 rounded text-gray-100 hover:bg-amber-500 hover:text-gray-900">
-                        <a title="XileRO PK Third Jobs Facebook" aria-label="XileRO PK Third Jobs Facebook" href="https://www.facebook.com/groups/670800967076806/">
+                        <a target="_blank" rel="noopener noreferrer" title="XileRO PK Third Jobs Facebook" aria-label="XileRO PK Third Jobs Facebook" href="https://www.facebook.com/groups/670800967076806/">
                             <img class="object-cover w-full rounded h-44" style="margin:0" src="https://wallpapers.com/images/hd/sword-art-online-wallpaper-javjk4u0ar7tbyeu.jpg" alt="XileRO PK Third Jobs Facebook Image">
                             <div class="p-4">
                                 XileRO PK Facebook
@@ -307,7 +300,7 @@
                         </a>
                     </div>
                     <div class="bg-gray-800 bg-opacity-90 rounded text-gray-100 hover:bg-amber-500 hover:text-gray-900">
-                        <a title="XileRO PK Third Jobs Discord" aria-label="XileRO PK Third Jobs Discord" href="https://discord.com/invite/cFd4FZupDV">
+                        <a target="_blank" rel="noopener noreferrer" title="XileRO PK Third Jobs Discord" aria-label="XileRO PK Third Jobs Discord" href="https://discord.com/invite/cFd4FZupDV">
                             <img class="object-cover w-full rounded h-44" style="margin:0" src="https://wallpapers.com/images/hd/discord-logo-geometric-art-5barh6w9jxj5mhzw.jpg" alt="XileRO PK Third Jobs Discord Image">
                             <div class="p-4">
                                 XileRO PK Discord
