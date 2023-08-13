@@ -25,6 +25,7 @@
     <meta name="keywords" content="Ragnarok, Ragnarok Online, RO, XileRO, XileRO PK Retro, XileRO PK">
     <meta name="author" content="XileRO">
     <meta name="robots" content="index, follow">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -82,7 +83,7 @@
                                 <li><a target="_blank" rel="noopener" class="text-gray-300 no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=General_Customs" title="Modified official information of XileRetro">Modified Official</a></li>
                                 <li><a target="_blank" rel="noopener" class="text-gray-300 no-underline hover:underline" href="https://wiki.xileretro.net/index.php?title=Category:Release_Notes" title="XileRetro Updates and Release Notes">Updates & Release Notes</a></li>
                                 <li><a target="_blank" rel="noopener" class="text-gray-300 no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Newbie_Center" title="Support Center for XileRetro Newbies">Newbie Center</a></li>
-                                <li><a target="_blank" rel="noopener" class="text-gray-300 no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Events" title="XileRetro Events and Activities">Events</a></li>
+                                <li><a target="_blank" rel="noopener noreferrer" class="text-gray-300 no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Events" title="XileRetro Events and Activities">Events</a></li>
                             </ul>
                         </div>
                     </div>
