@@ -30,7 +30,6 @@
                             </svg>
                         </button>
                     </a>
-
                     <a target="_blank"
                         class="group relative inline-flex border border-amber-600 focus:outline-none hidden lg:ml-4 lg:inline-flex"
                         href="https://drive.google.com/file/d/1Kf6R_IF6VqSy_ZcqspbqgK0LAFAfA11o/view?usp=sharing"
