@@ -18,7 +18,7 @@ use Ramsey\Uuid\Guid\Guid;
 
 Auth::routes();
 
-Route::view('/', 'index');
+// Route::view('/', 'index');
 
 Route::get('/', function()
 {
@@ -27,10 +27,18 @@ Route::get('/', function()
     return view('index', ['prontera_castles' => $prontera_castles]);
 });
 
+Route::view('/discord', 'discord');
+Route::view('/forums', 'forums');
+
 /**
- * Google analytics says these are hit many times, so we'll 
+ * Google analytics says these are hit many times, so we'll
  * send them to the homepage rather than getting a 404.
  */
 Route::redirect('/login', '/#steps2play');
 Route::redirect('/password/reset', '/#steps2play');
 Route::redirect('/register', '/#steps2play');
+
+
+Route::any('{query}', function() {
+    return redirect('/')->with('message', 'Redirected 404.');
+})->where('query', '.*');

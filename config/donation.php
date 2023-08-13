@@ -23,7 +23,7 @@ return [
             'name' => 'Scarlet Angel Ears',
             'image' => 'scarlet_ears.png',
             'description' => 'Ears of the fallen Scarlet Angel.',
-            'stats' => 'Add a 10% resistance against all Status Ailments.',
+            'stats' => 'Add a 10% resistance against all Statuses.',
             'isTokenSet' => true,
             'cost' => 6,
         ],
