@@ -19,6 +19,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route('/discord/player-count', function (Request $request) {
+Route::get('/discord/player-count', function (Request $request) {
     return cache()->remember('users', now()->addMinutes(1), function () { return App\Ragnarok\Char::query()->online()->count() * 6; });
 });
