@@ -107,7 +107,7 @@
                             <div class="flex items-center p-0 mt-8">
                                 <p class="my-0 mt-12 ml-0 mr-6 text-5xl text-green-500 mb-5">Server is Online!</p>
                             </div>
-                            <p class="mb-20 text-gray-300">Operational</p>
+                            <p class="mb-20 text-gray-300">Operational ({{ number_format(App\Ragnarok\Char::query()->online()->count() ?? 0) }})</p>
                         </div>
                         <div class="col-span-2 lg:col-span-1">
                             <h2 class="text-xl font-bold my-6 text-gray-100">Community Loaders</h2>

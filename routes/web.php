@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Livewire\Counter;
+use App\Ragnarok\Char;
+use App\Ragnarok\ServerZeny;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,10 +18,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    $prontera_castles = App\Ragnarok\GuildCastle::prontera()->with('guild', 'guild.members')->get();
-    $serverZeny = \App\Ragnarok\ServerZeny::first();
-
-    return view('index', ['server_zeny' => $serverZeny, 'prontera_castles' => $prontera_castles]);
+    return view('index', [
+        'server_zeny' => ServerZeny::first(),
+        'prontera_castles' => App\Ragnarok\GuildCastle::prontera()->with('guild', 'guild.members')->get()
+    ]);
 });
 
 Route::get('/dashboard', function () {

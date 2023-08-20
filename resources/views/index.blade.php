@@ -367,8 +367,6 @@
         </div>
     </div> --}}
 
-    </section>
-
     {{-- <section id="XileRO-PK" class="relative overflow-hidden py-16 md:pt-32 bg-black">
         <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
             <h2 class="text-4xl font-bold max-w-lg md:text-4xl text-gray-100">XileRO PK | <span class="text-amber-500">Third Jobs</span></h2>
