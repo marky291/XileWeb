@@ -4,9 +4,10 @@ import requests
 from datetime import datetime
 from discord.ext import tasks
 import sys
+import json
 
 token = sys.argv[1]
-player_count = sys.argv[2]
+url = sys.argv[2]
 
 intents = discord.Intents.default()
 intents.presences = True  # This might be required if you want to update bot presence/activity
@@ -21,9 +22,15 @@ async def on_ready():
 
 @tasks.loop(minutes=5)
 async def update_activity():
-    print(f'[{datetime.now()}] Player count: {player_count}')
-    activity = discord.Activity(name=f'{player_count} online.', type=discord.ActivityType.watching)
+    print(f'[{datetime.now()}] Starting activity update...')
+    response_API = requests.get(url)
+    data = json.loads(response_API.text)
+    count = data['player_count_formatted']
+    print(f'[{datetime.now()}] Parsed player count: {count}')
+    activity = discord.Activity(name=f'{count} online.', type=discord.ActivityType.watching)
     await client.change_presence(activity=activity)
+    print(f'[{datetime.now()}] Bot activity updated successfully!')
+
 try:
     print(f'[{datetime.now()}] Attempting to run the client...')
     client.run(token)

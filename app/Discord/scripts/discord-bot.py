@@ -4,9 +4,10 @@ import requests
 from datetime import datetime
 from discord.ext import tasks
 import sys
+import json
 
 token = sys.argv[1]
-cost = sys.argv[2]
+url = sys.argv[2]
 
 intents = discord.Intents.default()
 intents.presences = True  # This might be required if you want to update bot presence/activity
@@ -21,9 +22,14 @@ async def on_ready():
 
 @tasks.loop(minutes=1)
 async def update_activity():
-    print(f'[{datetime.now()}] Updating uber cost: {cost}')
+    print(f'[{datetime.now()}] Starting activity update...')
+    response_API = requests.get(url)
+    data = json.loads(response_API.text)
+    cost = data['total_uber_cost_formatted']
+    print(f'[{datetime.now()}] Parsed uber cost: {cost}')
     activity = discord.Activity(name=f'{cost} Zeny', type=discord.ActivityType.watching)
     await client.change_presence(activity=activity)
+    print(f'[{datetime.now()}] Bot activity updated successfully!')
 
 try:
     print(f'[{datetime.now()}] Attempting to run the client...')

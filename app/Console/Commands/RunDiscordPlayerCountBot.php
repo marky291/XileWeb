@@ -34,9 +34,9 @@ class RunDiscordPlayerCountBot extends Command
 
         $token = config('services.discord.player_count_token');
 
-        $player_count = number_format(Char::query()->online()->count() ?? 0);
+        $url = route('api.discord');
 
-        $process = new Process(['python3', $scriptPath, $token, $player_count]);
+        $process = new Process(['python3', $scriptPath, $token, $url]);
 
         $process->setTimeout(null);
 
