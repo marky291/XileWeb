@@ -35,9 +35,7 @@ class RunDiscordUberCostBot extends Command
 
         $token = config('services.discord.uber_cost_token');
 
-        $uberCost = ServerZeny::first()->zeny_cost;
-
-        $uberCost = number_format(rand(1000000, 5000000));
+        $uberCost = number_format(ServerZeny::first()->zeny_cost) ?? 0;
 
         $process = new Process(['python3', $scriptPath, $token, $uberCost ?? 0]);
 
