@@ -1,9 +1,8 @@
 <?php
 
-use App\Ragnarok\Guild;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\ProfileController;
+use App\Livewire\Counter;
 use Illuminate\Support\Facades\Route;
-use Ramsey\Uuid\Guid\Guid;
 
 /*
 |--------------------------------------------------------------------------
@@ -11,34 +10,26 @@ use Ramsey\Uuid\Guid\Guid;
 |--------------------------------------------------------------------------
 |
 | Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
 |
 */
 
-Auth::routes();
-
-// Route::view('/', 'index');
-
-Route::get('/', function()
-{
+Route::get('/', function () {
     $prontera_castles = App\Ragnarok\GuildCastle::prontera()->with('guild', 'guild.members')->get();
+    $serverZeny = \App\Ragnarok\ServerZeny::first();
 
-    return view('index', ['prontera_castles' => $prontera_castles]);
+    return view('index', ['server_zeny' => $serverZeny, 'prontera_castles' => $prontera_castles]);
 });
 
-Route::view('/discord', 'discord');
-Route::view('/forums', 'forums');
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-/**
- * Google analytics says these are hit many times, so we'll
- * send them to the homepage rather than getting a 404.
- */
-Route::redirect('/login', '/#steps2play');
-Route::redirect('/password/reset', '/#steps2play');
-Route::redirect('/register', '/#steps2play');
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
 
-
-Route::any('{query}', function() {
-    return redirect('/')->with('message', 'Redirected 404.');
-})->where('query', '.*');
+require __DIR__.'/auth.php';

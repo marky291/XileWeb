@@ -1,0 +1,20 @@
+{
+  "resources/assets/landing-sitting.jpeg": {
+    "file": "assets/landing-sitting-95915df5.jpeg",
+    "src": "resources/assets/landing-sitting.jpeg"
+  },
+  "resources/assets/landing-sitting.png": {
+    "file": "assets/landing-sitting-6e119303.png",
+    "src": "resources/assets/landing-sitting.png"
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-605721ae.css",
+    "isEntry": true,
+    "src": "resources/css/app.css"
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-0d91dc04.js",
+    "isEntry": true,
+    "src": "resources/js/app.js"
+  }
+}

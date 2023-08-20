@@ -2,6 +2,7 @@
 
 namespace App\Ragnarok;
 
+use App\Actions\CreateEmblemFromData;
 use App\Emblem;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
@@ -78,7 +79,7 @@ class Guild extends Model
 
             header('Content-Type: image/png');
 
-            imagepng(Emblem::create($data), $asset);
+            imagepng(CreateEmblemFromData::run($data), $asset);
 
             return url($asset);
         });

@@ -1,39 +1,32 @@
-@extends('layouts.app')
+<x-app-layout>
 
-@section('content')
-
-    <section class="shadow landing bg-cover pt-16">
+    <section class="shadow bg-[url('../assets/landing-sitting.jpeg')] bg-cover pt-16">
         <div class="container grid px-3 sm:px-0 grid-cols-5 gap-4 mx-auto">
-            <div class="col-span-5 lg:col-span-3 pt-20 pb-4 pr-6">
-                <div class="xl:mr-30 prose text-white p-8 rounded bg-gray-900 text-gray-300 bg-opacity-70">
-                    @if (session('message'))
-                        <div class="alert alert-info">
-                            <h1 class="mb-6 text-gray-500 text-3xl">{{ session('message') }}</h1>
-                        </div>
-                    @endif
-                    <h1 class="mb-6 text-white text-3xl">XileRO PK Retro | <span class="text-amber-500">No Third Jobs</span></h1>
+            <div class="col-span-5 lg:col-span-3 pt-20 pb-4 pr-32">
+                <div class="xl:mr-30 p-8 rounded bg-zinc-900/70">
+                    <div class="prose text-gray-300 tracking-normal text-lg">
+                        @if (session('message'))
+                            <div class="alert alert-info">
+                                <h3 class="mb-6 text-gray-500 text-3xl">{{ session('message') }}</h3>
+                            </div>
+                        @endif
+                        <h1 class="mb-6 text-white text-3xl">XileRO PK Retro | <span class="text-amber-500">No Third Jobs</span></h1>
 
-                    <p class="text-xl text-gray-200">Private Ragnarok Online Server</p>
-                    <p>
-                        Welcome to the realm of fantasy and roleplay. Where you will be faced with monsters, magic adventure, and ultimately each other. Find friends, companions, foes, and so much more. Fight for leadership, power and glory. Rest at home here in the world of XileRO
-                    </p>
-                    <p>
-                        We secured the platform using the latest Gepard 3.0 security systems that helps prevents hacks
-                        and macros to ultimately provide a solid foundation for future growth
-                        internally and externally. We are not just here for the old players,
-                        we are also here for the new~ So log in and pawn some noobs!!
-                    </p>
-                    <div class="flex flex-col my-10 quick-links">
-                        <a href="#steps2play" class="w-full no-underline">
-                            <button id="hero-registration" class="btn mt-4 xilero-button">
-                                <!-- <svg class="w-4 h-4 mr-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg> -->
-                                <span>Create a Game Account</span>
-                            </button>
-                        </a>
-                        <a href="{{ config('downloads.full')[0]['link'] }}" target="_blank" class="w-full no-underline hidden lg:block">
-                            <button id="hero-download-full-client" class="btn mt-4 xilero-button">
-                                <span>{{ config('downloads.full')[array_key_first(config('downloads.full'))]['name'] }}</span>
-                            </button>
+                        <p class="text-xl text-gray-200">Private Ragnarok Online Server</p>
+                        <p>
+                            Welcome to the realm of fantasy and roleplay. Where you will be faced with monsters, magic adventure, and ultimately each other. Find friends, companions, foes, and so much more. Fight for leadership, power and glory. Rest at home here in the world of XileRO
+                        </p>
+                        <p>
+                            We secured the platform using the latest Gepard 3.0 security systems that helps prevents hacks
+                            and macros to ultimately provide a solid foundation for future growth
+                            internally and externally. We are not just here for the old players,
+                            we are also here for the new~ So log in and pawn some noobs!!
+                        </p>
+                    </div>
+                    <div class="my-10 quick-links grid-rows-2 grid">
+                        <a href="#steps2play" class="my-2 w-full no-underline btn text-left mt-2 btn-primary" target="_blank" rel="noopener">Create a Game Account</a>
+                        <a href="{{ config('downloads.full')[0]['link'] }}" class="my-2 w-full no-underline btn text-left mt-2 btn-primary" target="_blank" rel="noopener">
+                            {{ config('downloads.full')[array_key_first(config('downloads.full'))]['name'] }}
                         </a>
                     </div>
                 </div>
@@ -55,7 +48,7 @@
     </section>
 
     <section id="steps2play" class="bg-black relative overflow-hidden py-16 md:pt-24 lg:pt-32">
-    <div class="hidden lg:block absolute -right-2 bottom-40 pointer-events-none">
+        <div class="hidden lg:block absolute -right-2 bottom-40 pointer-events-none">
             <svg x-data="{
         initializeAnimation: false,
         init() {
@@ -64,12 +57,12 @@
             }, 2000);
         },
     }" :class="initializeAnimation ? 'animate-cube' : ''" class="text-red-600 animate-cube" width="46" height="53" viewBox="0 0 46 53" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="m23.102 1 22.1 12.704v25.404M23.101 1l-22.1 12.704v25.404" stroke="currentColor" stroke-width="1.435" stroke-linejoin="bevel"></path><path d="m45.202 39.105-22.1 12.702L1 39.105" stroke="currentColor" stroke-width="1.435" stroke-linejoin="bevel"></path><path transform="matrix(.86698 .49834 .00003 1 1 13.699)" stroke="currentColor" stroke-width="1.435" stroke-linejoin="bevel" d="M0 0h25.491v25.405H0z"></path><path transform="matrix(.86698 -.49834 -.00003 1 23.102 26.402)" stroke="currentColor" stroke-width="1.435" stroke-linejoin="bevel" d="M0 0h25.491v25.405H0z"></path><path transform="matrix(.86701 -.49829 .86701 .49829 1 13.702)" stroke="currentColor" stroke-width="1.435" stroke-linejoin="bevel" d="M0 0h25.491v25.491H0z"></path>
-</svg>
+                <path d="m23.102 1 22.1 12.704v25.404M23.101 1l-22.1 12.704v25.404" stroke="currentColor" stroke-width="1.435" stroke-linejoin="bevel"></path><path d="m45.202 39.105-22.1 12.702L1 39.105" stroke="currentColor" stroke-width="1.435" stroke-linejoin="bevel"></path><path transform="matrix(.86698 .49834 .00003 1 1 13.699)" stroke="currentColor" stroke-width="1.435" stroke-linejoin="bevel" d="M0 0h25.491v25.405H0z"></path><path transform="matrix(.86698 -.49834 -.00003 1 23.102 26.402)" stroke="currentColor" stroke-width="1.435" stroke-linejoin="bevel" d="M0 0h25.491v25.405H0z"></path><path transform="matrix(.86701 -.49829 .86701 .49829 1 13.702)" stroke="currentColor" stroke-width="1.435" stroke-linejoin="bevel" d="M0 0h25.491v25.491H0z"></path>
+            </svg>
         </div>
-    <span class="hidden absolute bg-radial-gradient opacity-[.15] pointer-events-none lg:inline-flex right-[-20%] top-0 w-[640px] h-[940px]"></span>
+        <span class="hidden absolute bg-radial-gradient opacity-[.15] pointer-events-none lg:inline-flex right-[-20%] top-0 w-[640px] h-[940px]"></span>
         <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
-            <livewire:register/>
+            <livewire:register />
         </div>
     </section>
 
@@ -88,7 +81,7 @@
             <h2 class="text-4xl font-bold max-w-lg md:text-4xl text-gray-100">Getting Started</h2>
             <div class="grid grid-cols-4 gap-12 mt-14">
                 <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 hover:bg-gray-800 rounded">
-                    <a title="Learn more about Server Information & Features on XileRetro Wiki" target="_blank" href="https://wiki.xileretro.net/index.php?title=Server_Information">
+                    <a title="Learn more about Server Information & Features on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xileretro.net/index.php?title=Server_Information">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
                                 <img class="object-cover w-full rounded h-44" style="margin:0" src="https://swall.teahub.io/photos/small/99-999290_ragnarok-online-valkyrie.jpg" alt="Server Information & Features">
@@ -98,7 +91,7 @@
                     </a>
                 </div>
                 <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 hover:bg-gray-800 rounded">
-                    <a title="Essential Starter Packages & Guides for New Players" target="_blank" href="https://wiki.xileretro.net/index.php?title=Newbie_Center">
+                    <a title="Essential Starter Packages & Guides for New Players" target="_blank" rel="noopener" href="https://wiki.xileretro.net/index.php?title=Newbie_Center">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
                                 <img class="object-cover w-full rounded h-44" style="margin:0" src="https://get.wallhere.com/photo/anime-Sword-Art-Online-Kirito-Sword-Art-Online-sword-1859509.jpg" alt="Starter Packages & Guids Image">
@@ -108,7 +101,7 @@
                     </a>
                 </div>
                 <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 hover:bg-gray-800 rounded">
-                    <a title="Discover Best Leveling Areas & Progression Tips on XileRetro Wiki" target="_blank" href="https://wiki.xileretro.net/index.php?title=Leveling_Spots">
+                    <a title="Discover Best Leveling Areas & Progression Tips on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xileretro.net/index.php?title=Leveling_Spots">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
                                 <img class="object-cover w-full rounded h-44" style="margin:0" src="https://swall.teahub.io/photos/small/99-994510_photo-wallpaper-forest-flower-grass-elf-art-girl.jpg" alt="Leveling Areas & Progression Image">
@@ -118,7 +111,7 @@
                     </a>
                 </div>
                 <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 hover:bg-gray-800 rounded">
-                    <a title="Join our Discord Community Discussions" target="_blank" href="https://discord.gg/hp7CS6k">
+                    <a title="Join our Discord Community Discussions" target="_blank" rel="noopener" href="https://discord.gg/hp7CS6k">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
                                 <img class="object-cover w-full rounded h-44" style="margin:0" src="https://e0.pxfuel.com/wallpapers/487/916/desktop-wallpaper-the-best-discord-themes-and-plugins-discord-gaming.jpg" alt="Discord Community Discussions Image">
@@ -128,7 +121,7 @@
                     </a>
                 </div>
                 <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 hover:bg-gray-800 rounded">
-                    <a title="Learn about the Donation Help & Rewards on XileRetro Wiki" target="_blank" href="https://wiki.xileretro.net/index.php?title=Donation">
+                    <a title="Learn about the Donation Help & Rewards on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xileretro.net/index.php?title=Donation">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
                                 <img class="object-cover w-full rounded h-44" style="margin:0" src="https://www.teahub.io/photos/full/28-281786_ragnarok-online-ragnarok-online-wallpapers-1920.jpg" alt="Donation Help & Rewards">
@@ -138,7 +131,7 @@
                     </a>
                 </div>
                 <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 hover:bg-gray-800 rounded">
-                    <a title="Explore the MVP Ranking System on XileRetro Wiki" target="_blank" href="https://wiki.xileretro.net/index.php?title=MVP">
+                    <a title="Explore the MVP Ranking System on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xileretro.net/index.php?title=MVP">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
                                 <img class="object-cover w-full rounded h-44" style="margin:0" src="https://i.ytimg.com/vi/tEz-SHcyP1Y/maxresdefault.jpg" alt="MVP Ranking System Image">
@@ -148,7 +141,7 @@
                     </a>
                 </div>
                 <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 hover:bg-gray-800 rounded">
-                    <a title="Discover Randomised Weapons Loots on XileRetro Wiki" target="_blank" href="https://wiki.xileretro.net/index.php?title=MVP">
+                    <a title="Discover Randomised Weapons Loots on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xileretro.net/index.php?title=MVP">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
                                 <img class="object-cover w-full rounded h-44" style="margin:0" src="https://e0.pxfuel.com/wallpapers/186/786/desktop-wallpaper-sword-art-online-sword-art-online-sword-art-sword-art-online-pc.jpg" alt="Randomised Weapon Loot Image">
@@ -158,7 +151,7 @@
                     </a>
                 </div>
                 <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 hover:bg-gray-800 rounded">
-                    <a title="Explore the Wikipedia Knowledge Base on XileRetro Wiki" target="_blank" href="https://wiki.xileretro.net/index.php?title=MVP">
+                    <a title="Explore the Wikipedia Knowledge Base on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xileretro.net/index.php?title=MVP">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
                                 <img class="object-cover w-full rounded h-44" style="margin:0" src="https://w0.peakpx.com/wallpaper/479/644/HD-wallpaper-i-reading-art-fantasy-reading-butterfly-book-digital-art.jpg" alt="Wikipedia Knowledge Base">
@@ -210,19 +203,35 @@
     <section id="important-links" class="bg-black mx-auto px-5 pt-16 pb-24 md:pt-24 lg:pt-32">
         <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
             <div class="">
-                <h2 class="text-4xl font-bold md:text-4xl text-gray-100">Uber Store</h2>
+                <div class="grid grid-cols-2">
+                    <h2 class="text-4xl text-left font-bold md:text-4xl text-gray-100">Uber Store</h2>
+                    <h2 class="text-3xl text-right font-bold text-amber-500">>> Live Price: {{ number_format($server_zeny->zeny_cost) ?? 0 }} Zeny</h2>
+                </div>{{--                <h3 class="text-white text-2xl mt-4">Current Uber Cost: 1,000000 zeny</h3>--}}
                 <!-- <p class="mt-6 text-gray-700 leading-relaxed">We pride ourselves on the ability to offer a server that you can compete and join without the need to ever spend real money, to achieve this we offer a dynamic zeny based system to determinate the value of an uber in game which you can then use to purchase donation items. This gives zeny more value and keeps it as main currency while allowing those who want to donate still retain the rewards to support the server.</p> -->
                 <p class="mt-6 text-gray-300 leading-relaxed">Your ubers let you get some of the most powerful items in game, ubers can be purchased in game with zeny or by donation, here is a small preview of what is to offer, click to view our wiki for extensive catalogue of items.</p>
                 <p class="mt-6 text-gray-200 font-semibold leading-relaxed">Find the Uber Store <span class="text-gray-100">@warp payon 142 224</span></p>
             </div>
             <div class="">
                 <ul class="mt-10 relative grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            @foreach (config('donation.items') as $item)
-                <x-donation-item name="{{ $item['name'] }}" :image="$item['image']" cost="{{ $item['cost'] }}" :set="true">
-                    {{ $item['description'] }} <br> {{ $item['stats'] }}
-                </x-donation-item>
-            @endforeach
-        </ul>
+                    @foreach (config('donation.items') as $item)
+                        <li>
+                            <a id="{{ Str::slug($item['name']) }}" title="Uber Shop Item {{ $item['name'] }}" aria-label="Uber Shop Item {{ $item['name'] }}" href="https://wiki.xileretro.net/index.php?title=Donation" class="donation-item flex p-4 border rounded border-black bg-gray-900 border-opacity-60 hover:border-amber-500 hover:cursor-pointer hover:shadow-md">
+                                <div class="relative shrink-0 bg-breeze flex items-center justify-center rounded-lg overflow-hidden" style="height:100px; width:75px;">
+                                    {{-- <span class="absolute w-full h-full inset-0 bg-gradient-to-b from-[rgba(255,255,255,.2)] to-[rgba(255,255,255,0)]"></span> --}}
+                                    <img src="/images/donations/{{ $item['image'] }}" alt="{{ $item['name'] }} Item" class="relative" width="75" height="100">
+                                </div>
+                                <div class="ml-4 leading-5">
+                                    <div class="text-gray-100">{{ $item['name'] }}</div>
+                                    <div class="mt-1 text-sm text-gray-300">{{ $item['description'] }} <br> {{ $item['stats'] }}</div>
+                                    <div class="mt-1 text-sm text-amber-500 font-bold">{{ $item['cost'] }} Ubers</div>
+                                    @if(isset($set))
+                                        <div class="mt-1 text-sm text-amber-300 font-bold">Click to view Item Set Bonus</div>
+                                    @endif
+                                </div>
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
             </div>
         </div>
 
@@ -231,24 +240,24 @@
     <section id="prontera-castles" class="bg-black hidden lg:block relative overflow-hidden py-16 md:pt-32">
         <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
             <div class="container mx-auto flex rounded">
-            <h2 class="text-5xl self-center my-0 font-bold mr-16 prose text-gray-100">Prontera<br><span class="font-normal text-lg text-amber-500">Castle Holders</span></h2>
-            <div class="py-16 grid grid-cols-5 gap-2 w-full">
-                @foreach ($prontera_castles as $castle)
-                 @if ($castle->guild->name != config("castles.staff.guildname"))
-                    <div class="prose col-span-1 px-6 py-4 text-gray-100 rounded align-center items-center flex flex-col bg-gray-900 hover:bg-gray-700 hover:shadow">
-                        @if($castle->guild->hasEmblem())
-                            <div class="w-16 h-16 m-0 mb-4 rounded-lg shadow bg-cover bg-gray-100" style="background: url('{{ url($castle->guild->emblem) }}')"></div>
-                        @else
-                            <img class="h-16 w-16 m-0 mb-4" src="/assets/emblems/empty.bmp"/>
+                <h2 class="text-5xl self-center my-0 font-bold mr-16 prose text-gray-100">Prontera<br><span class="font-normal text-lg text-amber-500">Castle Holders</span></h2>
+                <div class="py-16 grid grid-cols-5 gap-2 w-full">
+                    @foreach ($prontera_castles as $castle)
+                        @if ($castle->guild->name != config("castles.staff.guildname"))
+                            <div class="prose col-span-1 px-6 py-4 text-gray-100 rounded align-center items-center flex flex-col bg-gray-900 hover:bg-gray-700 hover:shadow">
+                                @if($castle->guild->hasEmblem())
+                                    <div class="w-16 h-16 m-0 mb-4 rounded-lg shadow bg-cover bg-gray-100" style="background: url('{{ url($castle->guild->emblem) }}')"></div>
+                                @else
+                                    <img class="h-16 w-16 m-0 mb-4" src="/assets/emblems/empty.bmp"/>
+                                @endif
+                                <h3 class="truncate ... text-gray-900 bg-amber-500 px-3 rounded font-bold my-0 mb-1">{{ $castle->name }}</h3>
+                                <p class="truncate ... mb-1 mt-0">By <span class="text-amber-500">{{ $castle->guild->name }}</span></p>
+                                <p class="truncate ... mb-1 mt-0">Leader <span class="text-amber-500">{{ $castle->guild->master }}</span></p>
+                                <p class="truncate ... mb-1 mt-0"><span class="text-amber-500">{{ $castle->guild->members->count() }}</span> Members</p>
+                            </div>
                         @endif
-                        <h3 class="truncate ... text-gray-900 bg-amber-500 px-3 rounded font-bold my-0 mb-1">{{ $castle->name }}</h3>
-                        <p class="truncate ... mb-1 mt-0">By <span class="text-amber-500">{{ $castle->guild->name }}</span></p>
-                        <p class="truncate ... mb-1 mt-0">Leader <span class="text-amber-500">{{ $castle->guild->master }}</span></p>
-                        <p class="truncate ... mb-1 mt-0"><span class="text-amber-500">{{ $castle->guild->members->count() }}</span> Members</p>
-                    </div>
-                 @endif
-                @endforeach
-            </div>
+                    @endforeach
+                </div>
             </div>
         </div>
     </section>
@@ -278,20 +287,13 @@
         </section>
     --}}
 
-    {{-- <section id="read-the-rules" class="bg-black relative overflow-hidden py-16 md:pt-32 hidden md:block">
-        <div class="max-w-screen-xl w-full mx-auto px-5 container mx-auto text-left md:text-center mb-20">
-            <h1 class="mb-8 tracking-widest important-title text-blue-500" style="font-size: 3em"><a target="_blank" class="no-underline text-amber-500 hover:text-amber-300 font-bold" href="http://wiki.xileretro.net/index.php?title=Server_Rules">READ THE RULES</a></h1>
-            <p><a href="https://discord.gg/hp7CS6k" class="hover:underline">Unfairly banned? Create an appeal</a></p>
-        </div>
-    </section> --}}
-
     <section id="read-the-rules" class="bg-black relative overflow-hidden py-16 md:pt-32 hidden md:block">
         <div class="max-w-screen-xl w-full mx-auto px-5 container text-left md:text-center mb-20">
-            <h1 class="mb-8 tracking-widest important-title text-blue-500" style="font-size: 2.5em"><a target="_blank" class="no-underline text-amber-500 hover:text-amber-300 font-bold" href="http://wiki.xileretro.net/index.php?title=Server_Rules"><span class="text-gray-100">XileRO PK</span> | Third Jobs</a></h1>
+            <h2 class="mb-8 tracking-widest important-title text-blue-500" style="font-size: 2.5em"><a target="_blank" rel="noopener noreferrer" class="no-underline text-amber-500 hover:text-amber-300 font-bold" href=""><span class="text-gray-100">XileRO PK</span> | Third Jobs</a></h2>
             <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5 mt-20">
                 <div class="grid grid-cols-3 gap-12 text-gray-100 text-center mt-8">
                     <div class="bg-gray-800 bg-opacity-90 rounded text-gray-100 hover:bg-amber-500 hover:text-gray-900">
-                        <a title="XileRO PK Third Jobs Download" aria-label="XileRO PK Third Jobs Download" href="https://drive.google.com/drive/folders/1EGeKownNt1cYne1e173OshhbYj31-mh-?usp=sharing">
+                        <a target="_blank" rel="noopener noreferrer" title="XileRO PK Third Jobs Download" aria-label="XileRO PK Third Jobs Download" href="https://drive.google.com/drive/folders/1EGeKownNt1cYne1e173OshhbYj31-mh-?usp=sharing">
                             <img class="object-cover w-full rounded h-44" style="margin:0" src="https://wallpapercg.com/media/ts_2x/11480.webp" alt="XileRO PK Third Jobs Download Image">
                             <div class="p-4">
                                 XileRO PK Download
@@ -299,7 +301,7 @@
                         </a>
                     </div>
                     <div class="bg-gray-800 bg-opacity-90 rounded text-gray-100 hover:bg-amber-500 hover:text-gray-900">
-                        <a title="XileRO PK Third Jobs Facebook" aria-label="XileRO PK Third Jobs Facebook" href="https://www.facebook.com/groups/670800967076806/">
+                        <a target="_blank" rel="noopener noreferrer" title="XileRO PK Third Jobs Facebook" aria-label="XileRO PK Third Jobs Facebook" href="https://www.facebook.com/groups/670800967076806/">
                             <img class="object-cover w-full rounded h-44" style="margin:0" src="https://wallpapers.com/images/hd/sword-art-online-wallpaper-javjk4u0ar7tbyeu.jpg" alt="XileRO PK Third Jobs Facebook Image">
                             <div class="p-4">
                                 XileRO PK Facebook
@@ -307,7 +309,7 @@
                         </a>
                     </div>
                     <div class="bg-gray-800 bg-opacity-90 rounded text-gray-100 hover:bg-amber-500 hover:text-gray-900">
-                        <a title="XileRO PK Third Jobs Discord" aria-label="XileRO PK Third Jobs Discord" href="https://discord.com/invite/cFd4FZupDV">
+                        <a target="_blank" rel="noopener noreferrer" title="XileRO PK Third Jobs Discord" aria-label="XileRO PK Third Jobs Discord" href="https://discord.com/invite/cFd4FZupDV">
                             <img class="object-cover w-full rounded h-44" style="margin:0" src="https://wallpapers.com/images/hd/discord-logo-geometric-art-5barh6w9jxj5mhzw.jpg" alt="XileRO PK Third Jobs Discord Image">
                             <div class="p-4">
                                 XileRO PK Discord
@@ -319,7 +321,7 @@
         </div>
     </section>
 
-	{{-- <section id="communities" class="p-20">
+    {{-- <section id="communities" class="p-20">
         <h2>Community</h2>
 
         <div id="platforms" class="mb-8">
@@ -335,37 +337,37 @@
             </div>
         </div> --}}
 
-        {{-- <div id="loading-screens" class="mb-8">
-            <h3>Loading Screens</h3>
-            <h4>Imagery created by talented players</h4>
-            <div class="grid grid-cols-4 col-gap-4">
-                <div class="col-span1">
-                    <img style="margin:0 auto 0 auto" class="loading-screen" src="/images/loading/loading00@2x.png" alt="">
-                </div>
-                <div class="col-span1">
-                    <img style="margin:0 auto 0 auto" class="loading-screen" src="/images/loading/loading06@2x.png" alt="">
-                </div>
-                <div class="col-span1">
-                    <img style="margin:0 auto 0 auto" class="loading-screen" src="/images/loading/loading08@2x.png" alt="">
-                </div>
-                <div class="col-span1">
-                    <img style="margin:0 auto 0 auto" class="loading-screen" src="/images/loading/loading16@2x.png" alt="">
-                </div>
+    {{-- <div id="loading-screens" class="mb-8">
+        <h3>Loading Screens</h3>
+        <h4>Imagery created by talented players</h4>
+        <div class="grid grid-cols-4 col-gap-4">
+            <div class="col-span1">
+                <img style="margin:0 auto 0 auto" class="loading-screen" src="/images/loading/loading00@2x.png" alt="">
             </div>
-        </div> --}}
-
-        {{-- <div id="streams" class="mb-8">
-            <div class="grid grid-cols-2 gap-8">
-                <div class="col-span-1">
-                    <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fitsmegcmc%2Fvideos%2F337497594283701%2F&show_text=true&width=734&appId=661838800646818&height=661" width="600" height="700" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media" allowFullScreen="true"></iframe>
-                </div>
-                <div class="col-span-1">
-                    <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FAkarenochoa26%2Fvideos%2F3175468255893900%2F&show_text=true&width=734&appId=661838800646818&height=580" width="600" height="700" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media" allowFullScreen="true"></iframe>
-                </div>
+            <div class="col-span1">
+                <img style="margin:0 auto 0 auto" class="loading-screen" src="/images/loading/loading06@2x.png" alt="">
             </div>
-        </div> --}}
+            <div class="col-span1">
+                <img style="margin:0 auto 0 auto" class="loading-screen" src="/images/loading/loading08@2x.png" alt="">
+            </div>
+            <div class="col-span1">
+                <img style="margin:0 auto 0 auto" class="loading-screen" src="/images/loading/loading16@2x.png" alt="">
+            </div>
+        </div>
+    </div> --}}
 
-	</section>
+    {{-- <div id="streams" class="mb-8">
+        <div class="grid grid-cols-2 gap-8">
+            <div class="col-span-1">
+                <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fitsmegcmc%2Fvideos%2F337497594283701%2F&show_text=true&width=734&appId=661838800646818&height=661" width="600" height="700" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media" allowFullScreen="true"></iframe>
+            </div>
+            <div class="col-span-1">
+                <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FAkarenochoa26%2Fvideos%2F3175468255893900%2F&show_text=true&width=734&appId=661838800646818&height=580" width="600" height="700" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media" allowFullScreen="true"></iframe>
+            </div>
+        </div>
+    </div> --}}
+
+    </section>
 
     {{-- <section id="XileRO-PK" class="relative overflow-hidden py-16 md:pt-32 bg-black">
         <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
@@ -411,4 +413,5 @@
         </div>
     </section> --}}
 
-@endsection
+
+</x-app-layout>
