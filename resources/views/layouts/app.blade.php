@@ -25,7 +25,7 @@
     <meta name="keywords" content="Ragnarok, Ragnarok Online, RO, XileRO, XileRO PK Retro, XileRO PK">
     <meta name="author" content="XileRO">
     <meta name="robots" content="index, follow">
-    <!-- <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"> -->
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -49,7 +49,7 @@
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
 
-    
+
     <script src="https://cdn.jsdelivr.net/npm/@widgetbot/crate@3" async defer>
         const crate = new Crate({
           server: '702319926110584943',
