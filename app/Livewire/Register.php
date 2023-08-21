@@ -13,7 +13,7 @@ use Livewire\Component;
 
 class Register extends Component
 {
-    #[Rule(['required', 'string', 'unique:main.login,userid', 'min:4', 'max:23'])]
+    #[Rule(['required', 'alpha_num', 'unique:main.login,userid', 'min:4', 'max:23'])]
     public $username = '';
 
     #[Rule(['required', 'string', 'email', 'max:39', 'unique:main.login'])]
