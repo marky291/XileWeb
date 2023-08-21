@@ -1,8 +1,8 @@
 <x-app-layout>
 
     <section class="shadow bg-[url('../assets/landing-sitting.jpeg')] bg-cover md:pt-16">
-        <div class="container grid px-3 sm:px-0 grid-cols-5 gap-4 mx-auto">
-            <div class="col-span-5 lg:col-span-4 xl:col-span-3 pt-20 pb-4 lg:pr-32">
+        <div class="container grid px-3 sm:px-0 grid-cols-6 gap-4 mx-auto">
+            <div class="col-span-6 lg:col-span-4 xl:col-span-3 pt-20 pb-4">
                 <div class="xl:mr-30 p-8 rounded bg-zinc-900/70">
                     <div class="prose text-gray-300 tracking-normal text-lg">
                         @if (session('message'))
