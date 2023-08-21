@@ -1,5 +1,5 @@
 <div class="grid grid-cols-2 gap-20 ">
-    <div class="col-span-1">
+    <div class="col-span-2 lg:col-span-1">
         @guest
 
             <h2 class="mt-0 mb-2 text-2xl font-bold text-gray-100"><span class="mr-2">1.</span> Register an Account.</h2>
@@ -131,9 +131,9 @@
             </div>
         @endguest
     </div>
-    <div class="col-span-1">
+    <div class="col-span-2 lg:col-span-1">
         <h2 class="mt-0 mb-2 text-2xl font-bold text-gray-100"><span class="mr-2">2.</span> Download Client.</h2>
-        <p class="text-amber-500 mb-12">Download and install with Full Installer.</h3>
+        <h3 class="text-amber-500 mb-12">Download and install with Full Installer.</h3>
         <div class="grid grid-cols-5">
             <div class="col-span-1 hidden md:block">
                 <i class="fas fa-file-archive step2-icon text-gray-300"></i>

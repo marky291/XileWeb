@@ -49,6 +49,7 @@
       <data directive="@endisset" />
       <data directive="@endlang" />
       <data directive="@endonce" />
+      <data directive="@endpersist" />
       <data directive="@endphp" />
       <data directive="@endprepend" />
       <data directive="@endprependonce" />
@@ -83,12 +84,14 @@
       <data directive="@json" injection="true" prefix="&lt;?php&#10;echo json_encode(" suffix=") ?&gt;" />
       <data directive="@lang" injection="true" prefix="&lt;?php&#10;echo app('translator')-&gt;get(" suffix="); ?&gt;" />
       <data directive="@livewire" injection="true" prefix="&lt;?php \Livewire\Livewire::mount(" suffix="); ?&gt;" />
+      <data directive="@livewireScriptConfig" />
       <data directive="@livewireScripts" />
       <data directive="@livewireStyles" />
       <data directive="@method" injection="true" prefix="&lt;?php&#10;echo method_field(" suffix="); ?&gt;" />
       <data directive="@once" />
       <data directive="@overwrite" />
       <data directive="@parent" />
+      <data directive="@persist" injection="true" prefix="&lt;?php _bladeDirective(" suffix="); ?&gt;" />
       <data directive="@php" injection="true" prefix="&lt;?php&#10;(" suffix="); ?&gt;" />
       <data directive="@prepend" injection="true" prefix="&lt;?php&#10;$__env-&gt;startPrepend(" suffix="); ?&gt;" />
       <data directive="@prependonce" injection="true" prefix="&lt;?php&#10;$___phpstorm_prepend_once_params = [" suffix="]; if (! $__env-&gt;hasRenderedOnce($___phpstorm_prepend_once_params[1])): $__env-&gt;markAsRenderedOnce($___phpstorm_prepend_once_params); $__env-&gt;startPrepend($___phpstorm_prepend_once_params[0]); ?&gt;" />

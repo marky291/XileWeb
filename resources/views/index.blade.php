@@ -1,8 +1,8 @@
 <x-app-layout>
 
-    <section class="shadow bg-[url('../assets/landing-sitting.jpeg')] bg-cover pt-16">
+    <section class="shadow bg-[url('../assets/landing-sitting.jpeg')] bg-cover md:pt-16">
         <div class="container grid px-3 sm:px-0 grid-cols-5 gap-4 mx-auto">
-            <div class="col-span-5 lg:col-span-3 pt-20 pb-4 pr-32">
+            <div class="col-span-5 lg:col-span-4 xl:col-span-3 pt-20 pb-4 lg:pr-32">
                 <div class="xl:mr-30 p-8 rounded bg-zinc-900/70">
                     <div class="prose text-gray-300 tracking-normal text-lg">
                         @if (session('message'))
@@ -204,8 +204,8 @@
         <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
             <div class="">
                 <div class="grid grid-cols-2">
-                    <h2 class="text-4xl text-left font-bold md:text-4xl text-gray-100">Uber Store</h2>
-                    <h2 class="text-3xl text-right font-bold text-amber-500">>> Live Price: {{ number_format($server_zeny->total_uber_cost) ?? 0 }} Zeny</h2>
+                    <h2 class="col-span-2 md:col-span-1 text-4xl text-left font-bold md:text-4xl text-gray-100">Uber Store</h2>
+                    <h2 class="col-span-2 md:col-span-1 text-3xl text-left md:text-right font-bold text-amber-500"><span class="hidden md:inline-block">>></span> Live Price: {{ number_format($server_zeny->total_uber_cost) ?? 0 }} Zeny</h2>
                 </div>{{--                <h3 class="text-white text-2xl mt-4">Current Uber Cost: 1,000000 zeny</h3>--}}
                 <!-- <p class="mt-6 text-gray-700 leading-relaxed">We pride ourselves on the ability to offer a server that you can compete and join without the need to ever spend real money, to achieve this we offer a dynamic zeny based system to determinate the value of an uber in game which you can then use to purchase donation items. This gives zeny more value and keeps it as main currency while allowing those who want to donate still retain the rewards to support the server.</p> -->
                 <p class="mt-6 text-gray-300 leading-relaxed">Your ubers let you get some of the most powerful items in game, ubers can be purchased in game with zeny or by donation, here is a small preview of what is to offer, click to view our wiki for extensive catalogue of items.</p>

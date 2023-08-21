@@ -5,11 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d8b13a84-8bef-423e-8a9a-7f2cbe046dda" name="Changes" comment="Fix random number on uber cost">
+      <change beforePath="$PROJECT_DIR$/.idea/blade.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/blade.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Console/Commands/RunDiscordUberCostBot.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/RunDiscordUberCostBot.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Discord/scripts/discord-bot.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/Discord/scripts/discord-bot.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/register.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/register.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,12 +105,13 @@
       <path value="$PROJECT_DIR$/vendor/laravel/prompts" />
       <path value="$PROJECT_DIR$/vendor/lorisleiva/lody" />
       <path value="$PROJECT_DIR$/vendor/lorisleiva/laravel-actions" />
+      <path value="$PROJECT_DIR$/vendor/_laravel_idea" />
     </include_path>
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 8
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 8
+}</component>
   <component name="ProjectId" id="2UGbBmZ60f3j8uQYi762j4V1Mq9" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -128,6 +129,12 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mariadb",
+      "mysql"
+    ]
   }
 }]]></component>
   <component name="RunManager">
@@ -144,7 +151,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1692568731204</updated>
-      <workItem from="1692568732905" duration="2351000" />
+      <workItem from="1692568732905" duration="2705000" />
+      <workItem from="1692611095460" duration="611000" />
     </task>
     <task id="LOCAL-00001" summary="Fix random number on uber cost">
       <option name="closed" value="true" />

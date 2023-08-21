@@ -89,6 +89,7 @@
       <path value="$PROJECT_DIR$/vendor/laravel/prompts" />
       <path value="$PROJECT_DIR$/vendor/lorisleiva/lody" />
       <path value="$PROJECT_DIR$/vendor/lorisleiva/laravel-actions" />
+      <path value="$PROJECT_DIR$/vendor/_laravel_idea" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />
