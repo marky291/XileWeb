@@ -4,10 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d8b13a84-8bef-423e-8a9a-7f2cbe046dda" name="Changes" comment="Mobile website fixes">
+    <list default="true" id="d8b13a84-8bef-423e-8a9a-7f2cbe046dda" name="Changes" comment="CSS FIXES">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/build/assets/app-605721ae.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/build/assets/app-657268c2.css" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/public/build/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/build/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/register.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/register.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -150,7 +152,7 @@
       <option name="presentableId" value="Default" />
       <updated>1692568731204</updated>
       <workItem from="1692568732905" duration="2705000" />
-      <workItem from="1692611095460" duration="1259000" />
+      <workItem from="1692611095460" duration="2833000" />
     </task>
     <task id="LOCAL-00001" summary="Fix random number on uber cost">
       <option name="closed" value="true" />
@@ -168,7 +170,15 @@
       <option name="project" value="LOCAL" />
       <updated>1692611847576</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="CSS FIXES">
+      <option name="closed" value="true" />
+      <created>1692638532120</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1692638532120</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -177,7 +187,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Fix random number on uber cost" />
     <MESSAGE value="Mobile website fixes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Mobile website fixes" />
+    <MESSAGE value="CSS FIXES" />
+    <option name="LAST_COMMIT_MESSAGE" value="CSS FIXES" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

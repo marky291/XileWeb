@@ -2,7 +2,7 @@
     <div class="col-span-2 lg:col-span-1">
         @guest
 
-            <h2 class="mt-0 mb-2 text-2xl font-bold text-gray-100"><span class="mr-2">1.</span> Register an Account.</h2>
+            <h2 class="mt-0 mb-2 text-3xl font-bold text-gray-100"><span class="mr-2">1.</span> Register an Account.</h2>
             <h4 class="mb-12 text-amber-500">Let's get you ready to login and play.</h4>
 
             @if ($error)
@@ -132,7 +132,7 @@
         @endguest
     </div>
     <div class="col-span-2 lg:col-span-1">
-        <h2 class="mt-0 mb-2 text-2xl font-bold text-gray-100"><span class="mr-2">2.</span> Download Client.</h2>
+        <h2 class="mt-0 mb-2 text-3xl font-bold text-gray-100"><span class="mr-2">2.</span> Download Client.</h2>
         <h3 class="text-amber-500 mb-12">Download and install with Full Installer.</h3>
         <div class="grid grid-cols-5">
             <div class="col-span-1 hidden md:block">
