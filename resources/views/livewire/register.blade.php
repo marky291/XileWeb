@@ -26,7 +26,7 @@
                 </div>
             @endif
 
-            <form wire:submit>
+            <form wire:submit autocomplete="off">
                 <div class="space-y-5">
                     <div class="mb-2">
                         <div class="w-full">
@@ -34,10 +34,10 @@
                                    for="grid-username">
                                 Username
                             </label>
-                            <input wire:model.blur="username"
+                            <input wire:model.live="username"
                                    class="block w-full px-4 py-3 mb-3 leading-tight text-gray-100 bg-gray-800 border border-gray-900 rounded appearance-none focus:outline-none focus:bg-gray-600 focus:border-gray-500 @error('username') border-red-500 @enderror"
                                    id="grid-username" value="{{ old('username') }}" type="text" placeholder="username"
-                                   autocomplete="name">
+                                   autocomplete="off">
                             @error('username')
                             <p class="mt-4 text-xs italic text-red-500">
                                 {{ $message }}
@@ -51,10 +51,10 @@
                                    for="grid-email">
                                 Email Address
                             </label>
-                            <input wire:model="email"
+                            <input wire:model.live="email"
                                    class="block w-full px-4 py-3 mb-3 leading-tight text-gray-100 bg-gray-800 border border-gray-900 rounded appearance-none focus:outline-none focus:bg-gray-600 focus:border-gray-500 @error('email') border-red-500 @enderror"
                                    id="grid-email" value="{{ old('email') }}" type="email"
-                                   placeholder="account@xileretro.net" required autocomplete="email">
+                                   placeholder="account@xileretro.net" required autocomplete="off">
                             @error('email')
                             <p class="mt-4 text-xs italic text-red-500">
                                 {{ $message }}
@@ -71,7 +71,7 @@
                             <input wire:model="password"
                                    class="block w-full px-4 py-3 mb-3 leading-tight text-gray-100 bg-gray-800 border border-gray-900 rounded appearance-none focus:outline-none focus:bg-gray-600 focus:border-gray-500 @error('password') border-red-500 @enderror"
                                    id="grid-password" type="password" placeholder="******************" required
-                                   autocomplete="new-password">
+                                   autocomplete="off">
                             @error('password')
                             <p class="mt-4 text-xs italic text-red-500">
                                 {{ $message }}
@@ -88,7 +88,7 @@
                             <input wire:model="password_confirmation"
                                    class="block w-full px-4 py-3 mb-3 leading-tight text-gray-100 bg-gray-800 border border-gray-900 rounded appearance-none focus:outline-none focus:bg-gray-600 focus:border-gray-500"
                                    id="grid-password-confirm" type="password" placeholder="******************" required
-                                   autocomplete="new-password">
+                                   autocomplete="off">
                         </div>
                     </div>
                 </div>
