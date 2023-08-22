@@ -14,7 +14,7 @@
 
                         <p class="text-xl text-gray-200">Private Ragnarok Online Server</p>
                         <p>
-                            Welcome to the realm of fantasy and roleplay. Where you will be faced with monsters, magic adventure, and ultimately each other. Find friends, companions, foes, and so much more. Fight for leadership, power and glory. Rest at home here in the world of XileRO
+                            Step into the thrilling world of XileRO, the ultimate destination for retro PK gaming. Engage in epic battles with monsters, unleash powerful magic, and embark on adventurous quests with companions and foes alike. XileRO offers a unique PK server experience, filled with rich mechanics and a one-of-a-kind retro style. Join the excitement, fight for leadership, power, and glory, and discover what makes XileRO a leading choice for PK enthusiasts. Your journey in the world of XileRO awaits – where the battle never ends and adventure is just a click away!
                         </p>
                         <p>
                             We secured the platform using the latest Gepard 3.0 security systems that helps prevents hacks
