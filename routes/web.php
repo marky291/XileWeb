@@ -22,7 +22,7 @@ Route::get('/', function () {
         'server_zeny' => ServerZeny::first(),
         'prontera_castles' => App\Ragnarok\GuildCastle::prontera()->with('guild', 'guild.members')->get()
     ]);
-});
+})->name('home');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

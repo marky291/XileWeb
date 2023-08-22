@@ -233,7 +233,7 @@
             <div class="">
                 <div class="grid grid-cols-2">
                     <h2 class="col-span-2 md:col-span-1 text-4xl text-left font-bold md:text-4xl text-gray-100">Uber Store</h2>
-                    <h2 class="col-span-2 md:col-span-1 text-3xl text-left md:text-right font-bold text-amber-500"><span class="hidden md:inline-block">>></span> Live Price: {{ number_format($server_zeny->total_uber_cost) ?? 0 }} Zeny</h2>
+                    <h2 class="col-span-2 md:col-span-1 text-3xl text-left md:text-right font-bold text-amber-500"><span class="hidden md:inline-block">>></span> Live Price: {{ cache()->remember('index.live_uber', now()->addMinutes(10), fn() => number_format($server_zeny->total_uber_cost) ?? 0) }} Zeny</h2>
                 </div>{{--                <h3 class="text-white text-2xl mt-4">Current Uber Cost: 1,000000 zeny</h3>--}}
                 <!-- <p class="mt-6 text-gray-700 leading-relaxed">We pride ourselves on the ability to offer a server that you can compete and join without the need to ever spend real money, to achieve this we offer a dynamic zeny based system to determinate the value of an uber in game which you can then use to purchase donation items. This gives zeny more value and keeps it as main currency while allowing those who want to donate still retain the rewards to support the server.</p> -->
                 <p class="mt-6 text-gray-300 leading-relaxed">Your ubers let you get some of the most powerful items in game, ubers can be purchased in game with zeny or by donation, here is a small preview of what is to offer, click to view our wiki for extensive catalogue of items.</p>

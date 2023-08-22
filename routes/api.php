@@ -22,16 +22,18 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/discord', function () {
-    return Cache::remember('discord', now()->addMinutes(1), function() {
+    return Cache::remember('discord', 0, function() {
 
         $uberCost = ServerZeny::first()->total_uber_cost ?? 0;
         $playerCount = Char::query()->online()->count() ?? 0;
+        $latestCharacter = Char::latest('char_id')->first();
 
         return [
             'total_uber_cost' => $uberCost,
             'total_uber_cost_formatted' => number_format($uberCost),
             'player_count' => $playerCount,
             'player_count_formatted' => number_format($playerCount),
+            'latest_character_name' => Str::ucfirst($latestCharacter->name)
         ];
     });
 })->name('api.discord');

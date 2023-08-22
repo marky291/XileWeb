@@ -33,6 +33,7 @@ return [
 
     'discord' => [
         'uber_cost_token' => env('DISCORD_UBER_COST_TOKEN'),
-        'player_count_token' => env('DISCORD_PLAYER_COUNT_TOKEN')
+        'player_count_token' => env('DISCORD_PLAYER_COUNT_TOKEN'),
+        'latest_player_token' => env('DISCORD_LATEST_PLAYER_TOKEN')
     ],
 ];
