@@ -1,7 +1,7 @@
 <x-app-layout>
 
     <section class="shadow bg-[url('../assets/landing-sitting.jpeg')] bg-cover md:pt-16">
-        <div class="container grid px-3 sm:px-0 grid-cols-6 gap-4 mx-auto">
+        <div class="container grid px-3 sm:px-0 grid-cols-5 gap-4 mx-auto">
             <div class="col-span-6 lg:col-span-4 xl:col-span-3 pt-20 pb-4">
                 <div class="xl:mr-30 p-8 rounded bg-zinc-900/70">
                     <div class="prose text-gray-300 tracking-normal text-lg">
@@ -51,27 +51,27 @@
         <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
             <div class="grid grid-cols-5 gap-8 text-gray-100 text-left">
             <div class="text-2xl col-span-2 md:col-span-1">
-                <h2>Max Level</h2>
-                <p class="text-7xl text-amber-400">255</p>
+                <h3>Max Level</h3>
+                <p class="text-7xl text-amber-400">{{ config('xilero.max_level') }}</p>
             </div>
             <div class="text-2xl col-span-2 md:col-span-1">
-                <h2>Max Job</h2>
-                <p class="text-7xl text-amber-400">80</p>
+                <h3>Max Job</h3>
+                <p class="text-7xl text-amber-400">{{ config('xilero.max_job') }}</p>
             </div>
             <div class="text-2xl col-span-2 md:col-span-1">
-                <h2>Base EXP</h2>
-                <p class="text-7xl text-amber-400">7K</p>
+                <h3>Base EXP</h3>
+                <p class="text-7xl text-amber-400">{{ config('xilero.base_exp') }}</p>
             </div>
             <div class="text-2xl col-span-2 md:col-span-1">
-                <h2>Job EXP</h2>
-                <p class="text-7xl text-amber-400">7K</p>
+                <h3>Job EXP</h3>
+                <p class="text-7xl text-amber-400">{{ config('xilero.job_exp') }}</p>
             </div>
             <div class="text-2xl col-span-2 md:col-span-1">
-                <h2>Card Drops</h2>
-                <p class="text-7xl text-amber-400">20%</p>
+                <h3>Card Drops</h3>
+                <p class="text-7xl text-amber-400">{{ config('xilero.card_drops') }}%</p>
             </div>
         </div>
-            <p class="tracking-widest text-gray-100 text-2xl mt-6 bg-gradient-to-r from-gray-800 to-transparent py-1 rounded px-2">Custom Built Mechanics & Gameplay</p>
+            <p class="tracking-widest text-gray-100 text-xl mt-6 bg-gradient-to-r from-gray-800 to-transparent py-1 rounded px-2">Custom Built Mechanics & Gameplay</p>
         </div>
     </section>
 
@@ -106,7 +106,8 @@
 
     <section id="important-links" class="relative overflow-hidden py-16 md:pt-32 bg-black">
         <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
-            <h2 class="text-4xl font-bold max-w-lg md:text-4xl text-gray-100">Getting Started</h2>
+            <h2>Getting Started</h2>
+            <p class="mt-6 text-gray-300 leading-relaxed">Welcome to the world of Xilero, where unique adventures await! If you're new to our server or looking to enhance your gameplay experience, you've come to the right place. Our Getting Started guides are crafted to help players of all levels navigate the distinct features and mechanics that set Xilero apart.</p>
             <div class="grid grid-cols-4 gap-12 mt-14">
                 <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 hover:bg-gray-800 rounded">
                     <a title="Learn more about Server Information & Features on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xileretro.net/index.php?title=Server_Information">
@@ -232,12 +233,11 @@
         <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
             <div class="">
                 <div class="grid grid-cols-2">
-                    <h2 class="col-span-2 md:col-span-1 text-4xl text-left font-bold md:text-4xl text-gray-100">Uber Store</h2>
-                    <h2 class="col-span-2 md:col-span-1 text-3xl text-left md:text-right font-bold text-amber-500"><span class="hidden md:inline-block">>></span> Live Price: {{ cache()->remember('index.live_uber', now()->addMinutes(10), fn() => number_format($server_zeny->total_uber_cost) ?? 0) }} Zeny</h2>
+                    <h2 class="mb-0">Uber Store</h2>
+                    <h2 class="col-span-2 md:col-span-1 text-3xl text-left md:text-right font-bold mb-0 text-amber-500"><span class="hidden md:inline-block">>></span> Live Price: {{ cache()->remember('index.live_uber', now()->addMinutes(10), fn() => number_format($server_zeny->total_uber_cost) ?? 0) }} Zeny</h2>
                 </div>{{--                <h3 class="text-white text-2xl mt-4">Current Uber Cost: 1,000000 zeny</h3>--}}
                 <!-- <p class="mt-6 text-gray-700 leading-relaxed">We pride ourselves on the ability to offer a server that you can compete and join without the need to ever spend real money, to achieve this we offer a dynamic zeny based system to determinate the value of an uber in game which you can then use to purchase donation items. This gives zeny more value and keeps it as main currency while allowing those who want to donate still retain the rewards to support the server.</p> -->
-                <p class="mt-6 text-gray-300 leading-relaxed">Your ubers let you get some of the most powerful items in game, ubers can be purchased in game with zeny or by donation, here is a small preview of what is to offer, click to view our wiki for extensive catalogue of items.</p>
-                <p class="mt-6 text-gray-200 font-semibold leading-relaxed">Find the Uber Store <span class="text-gray-100">@warp payon 142 224</span></p>
+                <p class="mt-6 text-gray-300 leading-relaxed">Your ubers let you get some of the most powerful items in game, ubers can be purchased in game with zeny or by donation, here is a small preview of what is to offer, click to view our wiki for extensive catalogue of items. <span class="text-amber-500">@warp payon 142 224</span></p>
             </div>
             <div class="">
                 <ul class="mt-10 relative grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -266,24 +266,66 @@
     </section>
 
     <section id="prontera-castles" class="bg-black hidden lg:block relative overflow-hidden py-16 md:pt-32">
+{{--        <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">--}}
+{{--            <div class="container mx-auto flex rounded">--}}
+{{--                <h2 class="text-5xl self-center my-0 font-bold mr-16 prose text-gray-100">Prontera<br><span class="font-normal text-lg text-amber-500">Castle Holders</span></h2>--}}
+{{--                <div class="py-16 grid grid-cols-5 gap-2 w-full">--}}
+{{--                    @foreach ($prontera_castles as $castle)--}}
+{{--                        @if ($castle->guild->name != config("castles.staff.guildname"))--}}
+{{--                            <div class="prose col-span-1 px-6 py-4 text-gray-100 rounded align-center items-center flex flex-col bg-gray-900 hover:bg-gray-700 hover:shadow">--}}
+{{--                                @if($castle->guild->hasEmblem())--}}
+{{--                                    <div class="w-16 h-16 m-0 mb-4 rounded-lg shadow bg-cover bg-gray-100" style="background: url('{{ url($castle->guild->emblem) }}')"></div>--}}
+{{--                                @else--}}
+{{--                                    <img class="h-16 w-16 m-0 mb-4" src="/assets/emblems/empty.bmp"/>--}}
+{{--                                @endif--}}
+{{--                                <h3 class="truncate ... text-gray-900 bg-amber-500 px-3 rounded font-bold my-0 mb-1">{{ $castle->name }}</h3>--}}
+{{--                                <p class="truncate ... mb-1 mt-0">By <span class="text-amber-500">{{ $castle->guild->name }}</span></p>--}}
+{{--                                <p class="truncate ... mb-1 mt-0">Leader <span class="text-amber-500">{{ $castle->guild->master }}</span></p>--}}
+{{--                                <p class="truncate ... mb-1 mt-0"><span class="text-amber-500">{{ $castle->guild->members->count() }}</span> Members</p>--}}
+
+{{--                            </div>--}}
+{{--                        @endif--}}
+{{--                    @endforeach--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
         <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
-            <div class="container mx-auto flex rounded">
-                <h2 class="text-5xl self-center my-0 font-bold mr-16 prose text-gray-100">Prontera<br><span class="font-normal text-lg text-amber-500">Castle Holders</span></h2>
-                <div class="py-16 grid grid-cols-5 gap-2 w-full">
+            <div class="container mx-auto rounded">
+                <div class="">
+                    <div class="text-gray-100 flex justify-between">
+                        <h2>Woe Times</h2>
+                        <a class="text-amber-500 text-lg hover:text-underline" href="{{ route('woe') }}">View More</a>
+                    </div>
+                    <p class="mt-6 text-gray-300 leading-relaxed mb-8">Prepare for battle and mark your calendars! The War of Emperium on Xilero takes place across various timezones, ensuring that warriors from all corners of the world can join the fight. Find the schedule that fits your timezone below and rally your guild for the epic clashes in the specified castles.</p>
+                </div>
+                <div class="grid grid-cols-5 gap-5">
                     @foreach ($prontera_castles as $castle)
-                        @if ($castle->guild->name != config("castles.staff.guildname"))
-                            <div class="prose col-span-1 px-6 py-4 text-gray-100 rounded align-center items-center flex flex-col bg-gray-900 hover:bg-gray-700 hover:shadow">
-                                @if($castle->guild->hasEmblem())
-                                    <div class="w-16 h-16 m-0 mb-4 rounded-lg shadow bg-cover bg-gray-100" style="background: url('{{ url($castle->guild->emblem) }}')"></div>
-                                @else
-                                    <img class="h-16 w-16 m-0 mb-4" src="/assets/emblems/empty.bmp"/>
-                                @endif
-                                <h3 class="truncate ... text-gray-900 bg-amber-500 px-3 rounded font-bold my-0 mb-1">{{ $castle->name }}</h3>
-                                <p class="truncate ... mb-1 mt-0">By <span class="text-amber-500">{{ $castle->guild->name }}</span></p>
-                                <p class="truncate ... mb-1 mt-0">Leader <span class="text-amber-500">{{ $castle->guild->master }}</span></p>
-                                <p class="truncate ... mb-1 mt-0"><span class="text-amber-500">{{ $castle->guild->members->count() }}</span> Members</p>
-                            </div>
-                        @endif
+                        <div class="mb-4 bg-gray-900 bg-opacity-70 rounded p-5">
+                            <h3 class="text-amber-500 text-2xl mb-8 half-border">{{ $castle->name }}</h3>
+                            @foreach(config('castles.timezones') as $timezone)
+                                <div class="text-white mb-8 flex rounded">
+                                    <div class="mr-3">
+                                        @if($castle->guild->hasEmblem())
+                                            <div class="w-8 h-8 m-0 shadow" style="background: url('{{ url($castle->guild->emblem) }}'); background-size:contain;"></div>
+                                        @else
+                                            <img class="h-8 w-8 m-0" src="/assets/emblems/empty.bmp"/>
+                                        @endif
+                                    </div>
+                                    <div class="">
+                                        <h4 class="text-white font-bold mb-1">{{ $timezone }}</h4>
+                                        @foreach(config("castles.prontera.{$castle->name}.day") as $day)
+                                                <?php
+                                                $date = new DateTime();
+                                                $date->modify("next {$day}");
+                                                $time = DateTime::createFromFormat("H:i", config("castles.prontera.{$castle->name}.time"));
+                                                $date->setTime($time->format('H'), $time->format('i'))->modify(config('castles.modifier'));
+                                                ?>
+                                            <p class="mt-1 text-gray-400">{{ $date->setTimezone(new DateTimeZone($timezone))->format("l, H:i A") }}</p>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
                     @endforeach
                 </div>
             </div>

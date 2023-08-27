@@ -95,13 +95,7 @@ class ServerZenyTest extends TestCase
      */
     public function testDatabaseInteraction()
     {
-        ServerZeny::unguard();
-
-        // Assuming you have a way to seed or mock your view data
-        // For this example, I'll just create a mock record
-        ServerZeny::create([]);
-
-        $serverZeny = ServerZeny::first();
+        $serverZeny = ServerZeny::factory()->createOne();
 
         $this->assertNotNull($serverZeny);
         $this->assertIsInt($serverZeny->silver_count ?? 0);

@@ -119,6 +119,9 @@ section.landing .feature-bg-img {
 }
 
 @layer components {
+    h2 {
+        @apply text-white text-4xl mb-7;
+    }
     .btn-primary {
         @apply items-center w-full border-none text-left bg-amber-500 hover:bg-gray-100 cursor-pointer text-gray-900 border text-gray-900;
     }

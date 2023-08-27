@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $all_kills
  * @property int $char_id
  */
-class MvpLadderRank extends Model
+class MvpLadderRank extends RagnarokModel
 {
     use HasFactory;
 

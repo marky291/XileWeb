@@ -28,7 +28,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property GuildCastle kriemhild
  */
-class GuildCastle extends Model
+class GuildCastle extends RagnarokModel
 {
     /**
      * The connection name for the model.

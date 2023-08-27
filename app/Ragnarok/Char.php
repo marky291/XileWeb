@@ -3,6 +3,7 @@
 namespace App\Ragnarok;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -72,8 +73,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $title_id
  * @property bool $show_equip
  */
-class Char extends Model
+class Char extends RagnarokModel
 {
+    use HasFactory;
+
     /**
      * The connection name for the model.
      *

@@ -24,9 +24,17 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
+Route::get('/warofemperium', function()
+{
+    return view('warofemperium', [
+        'server_zeny' => ServerZeny::first(),
+        'prontera_castles' => App\Ragnarok\GuildCastle::prontera()->with('guild', 'guild.members')->get()
+    ]);
+})->name('woe');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'verified', 'server.owner'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

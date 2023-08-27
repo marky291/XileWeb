@@ -29,7 +29,7 @@ use League\Flysystem\File;
  * @property string $emblem
  * @property string $last_master_change
  */
-class Guild extends Model
+class Guild extends RagnarokModel
 {
     /**
      * The connection name for the model.

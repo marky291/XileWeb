@@ -101,7 +101,7 @@
         @else
             <div class="pr-28 prose text-gray-300">
                 <div class="text-gray-300">
-                    <h4 class="mt-0 text-gray-100">Registration Completed!</h4>
+                    <h2 class="mt-0 text-gray-100">Registration Completed!</h2>
                     <p>You have created the following account.</p>
                     <ul>
                         <li><span class="font-bold">Username:</span> <span

@@ -53,8 +53,13 @@ class Register extends Component
             'password' => Hash::make($this->password),
         ]);
 
+        // attach the two records.
+        $user->logins()->attach($account);
+
+        // fire the vents.
         event(new Registered($user));
 
+        // login to the application.
         Auth::login($user);
 
         session()->flash('message', 'Your new account is now ready!.');

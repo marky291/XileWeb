@@ -4,6 +4,7 @@ namespace App\Ragnarok;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Cache;
@@ -34,9 +35,9 @@ use Illuminate\Support\Facades\DB;
  *
  * @property int $total_online
  */
-class Login extends Authenticatable
+class Login extends RagnarokModel
 {
-    use Notifiable;
+    use Notifiable, HasFactory;
 
     /**
      * The connection name for the model.
@@ -88,5 +89,10 @@ class Login extends Authenticatable
     public function getAuthPassword()
     {
         return $this->user_pass;
+    }
+
+    public function donationUber()
+    {
+        return $this->hasOne(DonationUber::class, 'account_id', 'account_id');
     }
 }

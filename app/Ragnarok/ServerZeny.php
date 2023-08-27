@@ -25,8 +25,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $zeny_cost
  * @method static ServerZeny first()
  */
-class ServerZeny extends Model
+class ServerZeny extends RagnarokModel
 {
+    use HasFactory;
+
     /**
      * The connection name for the model.
      *

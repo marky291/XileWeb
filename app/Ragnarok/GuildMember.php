@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $exp
  * @property bool $position
  */
-class GuildMember extends Model
+class GuildMember extends RagnarokModel
 {
     /**
      * The connection name for the model.
