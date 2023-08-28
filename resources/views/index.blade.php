@@ -265,72 +265,49 @@
 
     </section>
 
-    <section id="prontera-castles" class="bg-black hidden lg:block relative overflow-hidden py-16 md:pt-32">
+{{--    <section id="prontera-castles" class="bg-black hidden lg:block relative overflow-hidden py-16 md:pt-32">--}}
 {{--        <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">--}}
-{{--            <div class="container mx-auto flex rounded">--}}
-{{--                <h2 class="text-5xl self-center my-0 font-bold mr-16 prose text-gray-100">Prontera<br><span class="font-normal text-lg text-amber-500">Castle Holders</span></h2>--}}
-{{--                <div class="py-16 grid grid-cols-5 gap-2 w-full">--}}
+{{--            <div class="container mx-auto rounded">--}}
+{{--                <div class="">--}}
+{{--                    <div class="text-gray-100 flex justify-between">--}}
+{{--                        <h2>Woe Times</h2>--}}
+{{--                        <a class="text-amber-500 text-lg hover:text-underline" href="{{ route('woe') }}">View More</a>--}}
+{{--                    </div>--}}
+{{--                    <p class="mt-6 text-gray-300 leading-relaxed mb-8">Prepare for battle and mark your calendars! The War of Emperium on Xilero takes place across various timezones, ensuring that warriors from all corners of the world can join the fight. Find the schedule that fits your timezone below and rally your guild for the epic clashes in the specified castles.</p>--}}
+{{--                </div>--}}
+{{--                <div class="grid grid-cols-5 gap-5">--}}
 {{--                    @foreach ($prontera_castles as $castle)--}}
-{{--                        @if ($castle->guild->name != config("castles.staff.guildname"))--}}
-{{--                            <div class="prose col-span-1 px-6 py-4 text-gray-100 rounded align-center items-center flex flex-col bg-gray-900 hover:bg-gray-700 hover:shadow">--}}
-{{--                                @if($castle->guild->hasEmblem())--}}
-{{--                                    <div class="w-16 h-16 m-0 mb-4 rounded-lg shadow bg-cover bg-gray-100" style="background: url('{{ url($castle->guild->emblem) }}')"></div>--}}
-{{--                                @else--}}
-{{--                                    <img class="h-16 w-16 m-0 mb-4" src="/assets/emblems/empty.bmp"/>--}}
-{{--                                @endif--}}
-{{--                                <h3 class="truncate ... text-gray-900 bg-amber-500 px-3 rounded font-bold my-0 mb-1">{{ $castle->name }}</h3>--}}
-{{--                                <p class="truncate ... mb-1 mt-0">By <span class="text-amber-500">{{ $castle->guild->name }}</span></p>--}}
-{{--                                <p class="truncate ... mb-1 mt-0">Leader <span class="text-amber-500">{{ $castle->guild->master }}</span></p>--}}
-{{--                                <p class="truncate ... mb-1 mt-0"><span class="text-amber-500">{{ $castle->guild->members->count() }}</span> Members</p>--}}
-
-{{--                            </div>--}}
-{{--                        @endif--}}
+{{--                        <div class="mb-4 bg-gray-900 bg-opacity-70 rounded p-5">--}}
+{{--                            <h3 class="text-amber-500 text-2xl mb-8 half-border">{{ $castle->name }}</h3>--}}
+{{--                            @foreach(config('castles.timezones') as $timezone)--}}
+{{--                                <div class="text-white mb-8 flex rounded">--}}
+{{--                                    <div class="mr-3">--}}
+{{--                                        @if($castle->guild->hasEmblem())--}}
+{{--                                            <div class="w-8 h-8 m-0 shadow" style="background: url('{{ url($castle->guild->emblem) }}'); background-size:contain;"></div>--}}
+{{--                                        @else--}}
+{{--                                            <img class="h-8 w-8 m-0" src="/assets/emblems/empty.bmp"/>--}}
+{{--                                        @endif--}}
+{{--                                    </div>--}}
+{{--                                    <div class="">--}}
+{{--                                        <h4 class="text-white font-bold mb-1">{{ $timezone }}</h4>--}}
+{{--                                        @foreach(config("castles.prontera.{$castle->name}.day") as $day)--}}
+{{--                                                <?php--}}
+{{--                                                $date = new DateTime();--}}
+{{--                                                $date->modify("next {$day}");--}}
+{{--                                                $time = DateTime::createFromFormat("H:i", config("castles.prontera.{$castle->name}.time"));--}}
+{{--                                                $date->setTime($time->format('H'), $time->format('i'))->modify(config('castles.modifier'));--}}
+{{--                                                ?>--}}
+{{--                                            <p class="mt-1 text-gray-400">{{ $date->setTimezone(new DateTimeZone($timezone))->format("l, H:i A") }}</p>--}}
+{{--                                        @endforeach--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            @endforeach--}}
+{{--                        </div>--}}
 {{--                    @endforeach--}}
 {{--                </div>--}}
 {{--            </div>--}}
 {{--        </div>--}}
-        <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
-            <div class="container mx-auto rounded">
-                <div class="">
-                    <div class="text-gray-100 flex justify-between">
-                        <h2>Woe Times</h2>
-                        <a class="text-amber-500 text-lg hover:text-underline" href="{{ route('woe') }}">View More</a>
-                    </div>
-                    <p class="mt-6 text-gray-300 leading-relaxed mb-8">Prepare for battle and mark your calendars! The War of Emperium on Xilero takes place across various timezones, ensuring that warriors from all corners of the world can join the fight. Find the schedule that fits your timezone below and rally your guild for the epic clashes in the specified castles.</p>
-                </div>
-                <div class="grid grid-cols-5 gap-5">
-                    @foreach ($prontera_castles as $castle)
-                        <div class="mb-4 bg-gray-900 bg-opacity-70 rounded p-5">
-                            <h3 class="text-amber-500 text-2xl mb-8 half-border">{{ $castle->name }}</h3>
-                            @foreach(config('castles.timezones') as $timezone)
-                                <div class="text-white mb-8 flex rounded">
-                                    <div class="mr-3">
-                                        @if($castle->guild->hasEmblem())
-                                            <div class="w-8 h-8 m-0 shadow" style="background: url('{{ url($castle->guild->emblem) }}'); background-size:contain;"></div>
-                                        @else
-                                            <img class="h-8 w-8 m-0" src="/assets/emblems/empty.bmp"/>
-                                        @endif
-                                    </div>
-                                    <div class="">
-                                        <h4 class="text-white font-bold mb-1">{{ $timezone }}</h4>
-                                        @foreach(config("castles.prontera.{$castle->name}.day") as $day)
-                                                <?php
-                                                $date = new DateTime();
-                                                $date->modify("next {$day}");
-                                                $time = DateTime::createFromFormat("H:i", config("castles.prontera.{$castle->name}.time"));
-                                                $date->setTime($time->format('H'), $time->format('i'))->modify(config('castles.modifier'));
-                                                ?>
-                                            <p class="mt-1 text-gray-400">{{ $date->setTimezone(new DateTimeZone($timezone))->format("l, H:i A") }}</p>
-                                        @endforeach
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        </div>
-    </section>
+{{--    </section>--}}
 
 
     {{-- ANDOID SECTION REMOVED
