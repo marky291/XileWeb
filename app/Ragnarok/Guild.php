@@ -72,17 +72,15 @@ class Guild extends RagnarokModel
 
     public function getEmblemAttribute()
     {
-        return Cache::remember("emblem.{$this->guild_id}", now()->addMinutes(1), function () {
-            $asset = "assets/emblems/{$this->guild_id}.png";
+        $asset = "assets/emblems/{$this->guild_id}.png";
 
-            $data = @gzuncompress(pack('H*', $this->emblem_data));
+        $data = @gzuncompress(pack('H*', $this->emblem_data));
 
-            header('Content-Type: image/png');
+        header('Content-Type: image/png');
 
-            imagepng(CreateEmblemFromData::run($data), $asset);
+        imagepng(CreateEmblemFromData::run($data), $asset);
 
-            return url($asset);
-        });
+        return url($asset);
     }
 
     public function Members()
