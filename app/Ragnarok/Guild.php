@@ -76,7 +76,7 @@ class Guild extends RagnarokModel
 
         $data = @gzuncompress(pack('H*', $this->emblem_data));
 
-        header('Content-Type: image/png');
+        //header('Content-Type: image/png');
 
         imagepng(CreateEmblemFromData::run($data), $asset);
 
