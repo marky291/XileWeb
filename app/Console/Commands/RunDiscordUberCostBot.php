@@ -29,27 +29,20 @@ class RunDiscordUberCostBot extends Command
      */
     public function handle()
     {
-        set_time_limit(0);  // Remove the PHP execution time limit
+        set_time_limit(0);
 
         $scriptPath = base_path('app/Discord/scripts/discord-bot.py');
-
         $token = config('services.discord.uber_cost_token');
-
         $url = route('api.discord');
 
         $process = new Process(['python3', $scriptPath, $token, $url]);
+        $process->setTimeout(3600);
 
-        $process->setTimeout(null);
-
-        // Run the script and provide feedback in real-time
-        $process->run(function ($type, $buffer) {
-            if (Process::ERR === $type) {
-                Log::error("Discord Uber Cost Bot error: " . $buffer);
-                $this->error($buffer);  // Send error to console
-            } else {
-                Log::info($buffer);
-                $this->info($buffer);  // Send output to console
-            }
+        // Directly send the output to log and console without buffering
+        $process->mustRun(function ($type, $buffer) {
+            $logMethod = Process::ERR === $type ? 'error' : 'info';
+            Log::$logMethod("Discord Uber Cost Bot: " . $buffer);
+            $this->output->write($buffer);
         });
 
         if (!$process->isSuccessful()) {
@@ -58,4 +51,5 @@ class RunDiscordUberCostBot extends Command
 
         $this->info('Discord Uber Cost Bot executed successfully.');
     }
+
 }

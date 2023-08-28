@@ -27,27 +27,20 @@ class RunDiscordLatestPlayerCommand extends Command
      */
     public function handle()
     {
-        set_time_limit(0);  // Remove the PHP execution time limit
+        set_time_limit(0);
 
         $scriptPath = base_path('app/Discord/scripts/latest-player.py');
-
         $token = config('services.discord.latest_player_token');
-
         $url = route('api.discord');
 
         $process = new Process(['python3', $scriptPath, $token, $url]);
-
         $process->setTimeout(null);
 
-        // Run the script and provide feedback in real-time
-        $process->run(function ($type, $buffer) {
-            if (Process::ERR === $type) {
-                Log::error("Discord Latest Player Error: " . $buffer);
-                $this->error($buffer);  // Send error to console
-            } else {
-                Log::info($buffer);
-                $this->info($buffer);  // Send output to console
-            }
+        // Directly send the output to log and console without buffering
+        $process->mustRun(function ($type, $buffer) {
+            $logMethod = Process::ERR === $type ? 'error' : 'info';
+            Log::$logMethod("Discord Latest Player: " . $buffer);
+            $this->output->write($buffer);
         });
 
         if (!$process->isSuccessful()) {
@@ -56,4 +49,5 @@ class RunDiscordLatestPlayerCommand extends Command
 
         $this->info('Discord latest player executed successfully.');
     }
+
 }
