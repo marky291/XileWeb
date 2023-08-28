@@ -54,7 +54,7 @@ class LoginResource extends Resource
                 Tables\Columns\TextColumn::make('userid'),
                 Tables\Columns\TextColumn::make('email'),
                 Tables\Columns\TextColumn::make('chars_count')->counts('chars'),
-                Tables\Columns\TextColumn::make('group_id'),
+                Tables\Columns\TextColumn::make('group_id')->sortable(),
                 Tables\Columns\TextColumn::make('lastlogin'),
             ])
             ->filters([

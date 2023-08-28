@@ -357,6 +357,17 @@
         </section>
     --}}
 
+    <section id="important-links" class="relative overflow-hidden py-16 md:pt-32 bg-black">
+        <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
+            <h2>Server Vending</h2>
+            <p class="mt-6 text-gray-300 leading-relaxed">Currently in beta, live vending data allows you to search for item IDs to check availability, price, and vendor location. Future feature updates will enhance support.</p>
+            <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5 mt-10">
+                @livewire('server-vendings')
+            </div>
+        </div>
+    </section>
+
+
     <section id="read-the-rules" class="bg-black relative overflow-hidden py-16 md:pt-32 hidden md:block">
         <div class="max-w-screen-xl w-full mx-auto px-5 container text-left md:text-center mb-20">
             <h2 class="mb-8 tracking-widest important-title text-blue-500" style="font-size: 2.5em"><a target="_blank" rel="noopener noreferrer" class="no-underline text-amber-500 hover:text-amber-300 font-bold" href=""><span class="text-gray-100">XileRO PK</span> | Third Jobs</a></h2>
