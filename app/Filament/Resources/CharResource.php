@@ -41,8 +41,8 @@ class CharResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('account_id'),
-                Tables\Columns\TextColumn::make('login.userid'),
-                Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\TextColumn::make('login.userid')->searchable(),
+                Tables\Columns\TextColumn::make('name')->label('Character')->searchable(),
                 Tables\Columns\TextColumn::make('last_login'),
             ])
             ->filters([
