@@ -8,12 +8,12 @@
     "src": "resources/assets/landing-sitting.png"
   },
   "resources/css/app.css": {
-    "file": "assets/app-662b7574.css",
+    "file": "assets/app-d233eb48.css",
     "isEntry": true,
     "src": "resources/css/app.css"
   },
   "resources/js/app.js": {
-    "file": "assets/app-0d91dc04.js",
+    "file": "assets/app-dbe23e4c.js",
     "isEntry": true,
     "src": "resources/js/app.js"
   }

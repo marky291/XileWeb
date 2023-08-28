@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Actions\MakeHashedLoginPassword;
 use App\Models\User;
 use App\Ragnarok\Login;
 use Illuminate\Auth\Events\Registered;
@@ -39,7 +40,7 @@ class Register extends Component
         $account = Login::create([
             'userid' => $this->username,
             'email' => $this->email,
-            'user_pass' => hash('sha256', $this->password.config('database.secret')),
+            'user_pass' => MakeHashedLoginPassword::run($this->password),
         ]);
 
         if ($account->account_id == null) {

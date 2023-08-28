@@ -38,6 +38,8 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" rel="stylesheet">
 
         <!-- Scripts -->
+        @filamentStyles
+        @filamentScripts
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body x-data="{

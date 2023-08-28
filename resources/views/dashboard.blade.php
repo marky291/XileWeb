@@ -26,7 +26,7 @@
         <div class="max-w-screen-xl w-full mx-auto bg-gray-800 rounded p-5">
             <div class="">
                 <div class="grid grid-cols-2">
-                    <h2 class="mb-0 text-lg">Reset Account Password</h2>
+                    @livewire('reset-login-password')
                 </div>
             </div>
         </div>

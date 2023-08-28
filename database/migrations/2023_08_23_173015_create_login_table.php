@@ -17,7 +17,6 @@ return new class extends Migration
                 $table->increments('account_id');
                 $table->string('userid', 23)->default('');
                 $table->string('user_pass', 64)->default('');
-                $table->enum('sex', ['M', 'F', 'S'])->default('M');
                 $table->string('email', 39)->default('');
                 $table->tinyInteger('group_id')->default(0);
                 $table->unsignedInteger('state')->default(0);

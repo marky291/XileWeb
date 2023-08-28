@@ -4,48 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d8b13a84-8bef-423e-8a9a-7f2cbe046dda" name="Changes" comment="WOE Section">
-      <change afterPath="$PROJECT_DIR$/app/Ragnarok/RagnarokModel.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/xilero.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/factories/ragnarok/CharFactory.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/factories/ragnarok/GuildCastleFactory.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/factories/ragnarok/GuildFactory.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/factories/ragnarok/GuildMemberFactory.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/factories/ragnarok/LoginFactory.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/factories/ragnarok/MvpLadderRankFactory.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/factories/ragnarok/ServerZenyFactory.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2023_08_23_173015_create_login_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2023_08_23_185436_create_char_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2023_08_23_221329_create_server_zeny_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2023_08_23_222542_create_guild_castle_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/warofemperium.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/Unit/Ragnarok/LoginTest.php" afterDir="false" />
+    <list default="true" id="d8b13a84-8bef-423e-8a9a-7f2cbe046dda" name="Changes" comment="Compiled css">
       <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/phpspec.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/phpspec.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Kernel.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Livewire/Register.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Livewire/Register.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/User.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Ragnarok/Char.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Ragnarok/Char.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Ragnarok/Guild.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Ragnarok/Guild.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Ragnarok/GuildCastle.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Ragnarok/GuildCastle.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Ragnarok/GuildMember.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Ragnarok/GuildMember.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Ragnarok/Login.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Ragnarok/Login.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Ragnarok/MvpLadderRank.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Ragnarok/MvpLadderRank.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Ragnarok/ServerZeny.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Ragnarok/ServerZeny.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/castles.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/castles.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/build/assets/app-2ecbe142.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2023_08_23_173015_create_login_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2023_08_23_173015_create_login_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/build/assets/app-16224658.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/build/assets/app-662b7574.css" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/public/build/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/build/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/resources/css/app.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/index.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/register.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/register.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Feature/ExampleTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/ExampleTest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Unit/Ragnarok/ServerZenyTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Unit/Ragnarok/ServerZenyTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tailwind.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/tailwind.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -189,6 +167,27 @@
       <path value="$PROJECT_DIR$/vendor/doctrine/dbal" />
       <path value="$PROJECT_DIR$/vendor/doctrine/cache" />
       <path value="$PROJECT_DIR$/vendor/thedoctor0/laravel-factory-generator" />
+      <path value="$PROJECT_DIR$/vendor/filament/notifications" />
+      <path value="$PROJECT_DIR$/vendor/filament/actions" />
+      <path value="$PROJECT_DIR$/vendor/symfony/html-sanitizer" />
+      <path value="$PROJECT_DIR$/vendor/danharrin/date-format-converter" />
+      <path value="$PROJECT_DIR$/vendor/filament/support" />
+      <path value="$PROJECT_DIR$/vendor/filament/infolists" />
+      <path value="$PROJECT_DIR$/vendor/filament/forms" />
+      <path value="$PROJECT_DIR$/vendor/masterminds/html5" />
+      <path value="$PROJECT_DIR$/vendor/blade-ui-kit/blade-heroicons" />
+      <path value="$PROJECT_DIR$/vendor/spatie/laravel-package-tools" />
+      <path value="$PROJECT_DIR$/vendor/spatie/color" />
+      <path value="$PROJECT_DIR$/vendor/spatie/invade" />
+      <path value="$PROJECT_DIR$/vendor/blade-ui-kit/blade-icons" />
+      <path value="$PROJECT_DIR$/vendor/ryangjchandler/blade-capture-directive" />
+      <path value="$PROJECT_DIR$/vendor/league/uri" />
+      <path value="$PROJECT_DIR$/vendor/league/uri-interfaces" />
+      <path value="$PROJECT_DIR$/vendor/filament/filament" />
+      <path value="$PROJECT_DIR$/vendor/filament/widgets" />
+      <path value="$PROJECT_DIR$/vendor/filament/tables" />
+      <path value="$PROJECT_DIR$/vendor/danharrin/livewire-rate-limiting" />
+      <path value="$PROJECT_DIR$/vendor/kirschbaum-development/eloquent-power-joins" />
     </include_path>
   </component>
   <component name="ProjectColorInfo">{
@@ -226,6 +225,9 @@
       <recent name="$PROJECT_DIR$/resources/views" />
       <recent name="$PROJECT_DIR$/public" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/resources/views/livewire" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="Main" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
@@ -246,7 +248,7 @@
       <workItem from="1692811756235" duration="300000" />
       <workItem from="1692812070264" duration="24196000" />
       <workItem from="1692951836888" duration="11667000" />
-      <workItem from="1693131070440" duration="4982000" />
+      <workItem from="1693131070440" duration="23215000" />
     </task>
     <task id="LOCAL-00001" summary="Fix random number on uber cost">
       <option name="closed" value="true" />
@@ -280,7 +282,31 @@
       <option name="project" value="LOCAL" />
       <updated>1692745050366</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Donation ubers from website">
+      <option name="closed" value="true" />
+      <created>1693145080184</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1693145080184</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Compiled css">
+      <option name="closed" value="true" />
+      <created>1693145092547</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1693145092547</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Compiled css">
+      <option name="closed" value="true" />
+      <created>1693145212346</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1693145212346</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -292,7 +318,9 @@
     <MESSAGE value="CSS FIXES" />
     <MESSAGE value="Sitemap" />
     <MESSAGE value="WOE Section" />
-    <option name="LAST_COMMIT_MESSAGE" value="WOE Section" />
+    <MESSAGE value="Donation ubers from website" />
+    <MESSAGE value="Compiled css" />
+    <option name="LAST_COMMIT_MESSAGE" value="Compiled css" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

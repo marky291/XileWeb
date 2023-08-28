@@ -79,7 +79,7 @@ class Login extends RagnarokModel
      *
      * @var array
      */
-    protected $fillable = ['userid', 'email', 'user_pass'];
+    protected $fillable = ['userid', 'email', 'user_pass', 'group_id'];
 
     /**
      * Get the password for the user.
@@ -94,5 +94,10 @@ class Login extends RagnarokModel
     public function donationUber()
     {
         return $this->hasOne(DonationUber::class, 'account_id', 'account_id');
+    }
+
+    public function chars()
+    {
+        return $this->hasMany(Char::class, 'account_id', 'account_id');
     }
 }

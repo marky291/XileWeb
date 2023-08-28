@@ -120,4 +120,9 @@ class Char extends RagnarokModel
     {
         return $query->where('online', 1);
     }
+
+    public function login()
+    {
+        return $this->belongsTo(Login::class, 'account_id', 'account_id');
+    }
 }
