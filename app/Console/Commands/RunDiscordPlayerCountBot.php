@@ -29,15 +29,25 @@ class RunDiscordPlayerCountBot extends Command
     public function handle()
     {
         set_time_limit(0);
+        pcntl_async_signals(true); // Enable signal handling
 
         $scriptPath = base_path('app/Discord/scripts/player-count.py');
         $token = config('services.discord.player_count_token');
         $url = route('api.discord');
 
         $process = new Process(['python3', $scriptPath, $token, $url]);
+        $process->setOptions(['create_process_group' => true]);
         $process->setTimeout(null);
 
-        // Directly send the output to log and console without buffering
+        // Register signal handlers
+        pcntl_signal(SIGTERM, function () use ($process) {
+            $process->stop();
+        });
+
+        pcntl_signal(SIGINT, function () use ($process) {
+            $process->stop();
+        });
+
         $process->mustRun(function ($type, $buffer) {
             $logMethod = Process::ERR === $type ? 'error' : 'info';
             Log::$logMethod("Discord Player Count: " . $buffer);
@@ -50,5 +60,4 @@ class RunDiscordPlayerCountBot extends Command
 
         $this->info('Discord player count executed successfully.');
     }
-
 }
