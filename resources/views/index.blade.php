@@ -92,7 +92,7 @@
         </div>
         <span class="hidden absolute bg-radial-gradient opacity-[.15] pointer-events-none lg:inline-flex right-[-20%] top-0 w-[640px] h-[940px]"></span>
         <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
-            <livewire:register />
+            <livewire:register lazy />
         </div>
     </section>
 
@@ -115,7 +115,7 @@
                     <a title="Learn more about Server Information & Features on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xileretro.net/index.php?title=Server_Information">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
-                                <img class="object-cover w-full rounded h-44" style="margin:0" src="https://swall.teahub.io/photos/small/99-999290_ragnarok-online-valkyrie.jpg" alt="Server Information & Features">
+                                <img class="object-cover w-full rounded h-44" style="margin:0" src="{{ asset('assets/getting-started/server-information.jpeg') }}" alt="Server Information & Features">
                             </div>
                             <h3 style="font-size: 1.5em" class="mt-2 half-border font-normal text-gray-100">Server<br> Information & Features</h3>
                         </div>
@@ -125,7 +125,7 @@
                     <a title="Essential Starter Packages & Guides for New Players" target="_blank" rel="noopener" href="https://wiki.xileretro.net/index.php?title=Newbie_Center">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
-                                <img class="object-cover w-full rounded h-44" style="margin:0" src="https://get.wallhere.com/photo/anime-Sword-Art-Online-Kirito-Sword-Art-Online-sword-1859509.jpg" alt="Starter Packages & Guids Image">
+                                <img class="object-cover w-full rounded h-44" style="margin:0" src="{{ asset('assets/getting-started/starter-packages.jpeg') }}" alt="Starter Packages & Guids Image">
                             </div>
                             <h3 style="font-size: 1.5em" class="mt-2 half-border font-normal text-gray-100">Starter<br>Packages & <br>Guides</h3>
                         </div>
@@ -135,7 +135,7 @@
                     <a title="Discover Best Leveling Areas & Progression Tips on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xileretro.net/index.php?title=Leveling_Spots">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
-                                <img class="object-cover w-full rounded h-44" style="margin:0" src="https://swall.teahub.io/photos/small/99-994510_photo-wallpaper-forest-flower-grass-elf-art-girl.jpg" alt="Leveling Areas & Progression Image">
+                                <img class="object-cover w-full rounded h-44" style="margin:0" src="{{ asset('assets/getting-started/leveling-areas.jpeg') }}" alt="Leveling Areas & Progression Image">
                             </div>
                             <h3 style="font-size: 1.5em" class="mt-2 half-border font-normal text-gray-100">Leveling<br>Areas & <br>Progression</h3>
                         </div>
@@ -145,7 +145,7 @@
                     <a title="Join our Discord Community Discussions" target="_blank" rel="noopener" href="https://discord.gg/hp7CS6k">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
-                                <img class="object-cover w-full rounded h-44" style="margin:0" src="https://e0.pxfuel.com/wallpapers/487/916/desktop-wallpaper-the-best-discord-themes-and-plugins-discord-gaming.jpg" alt="Discord Community Discussions Image">
+                                <img class="object-cover w-full rounded h-44" style="margin:0" src="{{ asset('assets/getting-started/discord-community.jpeg') }}" alt="Discord Community Discussions Image">
                             </div>
                             <h3 style="font-size: 1.5em" class="mt-2 half-border font-normal text-gray-100">Discord Community Discussions</h3>
                         </div>
@@ -155,7 +155,7 @@
                     <a title="Learn about the Donation Help & Rewards on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xileretro.net/index.php?title=Donation">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
-                                <img class="object-cover w-full rounded h-44" style="margin:0" src="https://www.teahub.io/photos/full/28-281786_ragnarok-online-ragnarok-online-wallpapers-1920.jpg" alt="Donation Help & Rewards">
+                                <img class="object-cover w-full rounded h-44" style="margin:0" src="{{ asset('assets/getting-started/donation-help.jpeg') }}" alt="Donation Help & Rewards">
                             </div>
                             <h3 style="font-size: 1.5em" class="mt-2 half-border font-normal text-gray-100">Donation<br> Help &<br> Rewards</h3>
                         </div>
@@ -165,7 +165,7 @@
                     <a title="Explore the MVP Ranking System on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xileretro.net/index.php?title=MVP">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
-                                <img class="object-cover w-full rounded h-44" style="margin:0" src="https://i.ytimg.com/vi/tEz-SHcyP1Y/maxresdefault.jpg" alt="MVP Ranking System Image">
+                                <img class="object-cover w-full rounded h-44" style="margin:0" src="{{ asset('assets/getting-started/mvp-ranking.jpeg') }}" alt="MVP Ranking System Image">
                             </div>
                             <h3 style="font-size: 1.5em" class="mt-2 half-border font-normal text-gray-100">MVP <br> Ranking <br>  System</h3>
                         </div>
@@ -175,7 +175,7 @@
                     <a title="Discover Randomised Weapons Loots on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xileretro.net/index.php?title=MVP">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
-                                <img class="object-cover w-full rounded h-44" style="margin:0" src="https://e0.pxfuel.com/wallpapers/186/786/desktop-wallpaper-sword-art-online-sword-art-online-sword-art-sword-art-online-pc.jpg" alt="Randomised Weapon Loot Image">
+                                <img class="object-cover w-full rounded h-44" style="margin:0" src="{{ asset('assets/getting-started/randomized-weapon-loots.jpeg') }}" alt="Randomised Weapon Loot Image">
                             </div>
                             <h3 style="font-size: 1.5em" class="mt-2 half-border font-normal text-gray-100">Randomised <br> Weapons <br> Loots</h3>
                         </div>
@@ -185,7 +185,7 @@
                     <a title="Explore the Wikipedia Knowledge Base on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xileretro.net/index.php?title=MVP">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
-                                <img class="object-cover w-full rounded h-44" style="margin:0" src="https://w0.peakpx.com/wallpaper/479/644/HD-wallpaper-i-reading-art-fantasy-reading-butterfly-book-digital-art.jpg" alt="Wikipedia Knowledge Base">
+                                <img class="object-cover w-full rounded h-44" style="margin:0" src="{{ asset('assets/getting-started/wikipedia-knowledge.jpeg') }}" alt="Wikipedia Knowledge Base">
                             </div>
                             <h3 style="font-size: 1.5em" class="mt-2 half-border font-normal text-gray-100">Wikipedia <br> Knowledge <br> Base</h3>
                         </div>
@@ -341,7 +341,7 @@
             <h2>Server Vending</h2>
             <p class="mt-6 text-gray-300 leading-relaxed">Currently in beta, live vending data allows you to search for item IDs to check availability, price, and vendor location. Future feature updates will enhance support.</p>
             <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5 mt-10">
-                @livewire('server-vendings')
+                <livewire:server-vendings lazy/>
             </div>
         </div>
     </section>
@@ -354,7 +354,7 @@
                 <div class="grid grid-cols-3 gap-12 text-gray-100 text-center mt-8">
                     <div class="bg-gray-800 bg-opacity-90 rounded text-gray-100 hover:bg-amber-500 hover:text-gray-900">
                         <a target="_blank" rel="noopener noreferrer" title="XileRO PK Third Jobs Download" aria-label="XileRO PK Third Jobs Download" href="https://drive.google.com/drive/folders/1EGeKownNt1cYne1e173OshhbYj31-mh-?usp=sharing">
-                            <img class="object-cover w-full rounded h-44" style="margin:0" src="https://wallpapercg.com/media/ts_2x/11480.webp" alt="XileRO PK Third Jobs Download Image">
+                            <img class="object-cover w-full rounded h-44" style="margin:0" src="{{ asset('assets/third-jobs/download.webp') }}" alt="XileRO PK Third Jobs Download Image">
                             <div class="p-4">
                                 XileRO PK Download
                             </div>
@@ -362,7 +362,7 @@
                     </div>
                     <div class="bg-gray-800 bg-opacity-90 rounded text-gray-100 hover:bg-amber-500 hover:text-gray-900">
                         <a target="_blank" rel="noopener noreferrer" title="XileRO PK Third Jobs Facebook" aria-label="XileRO PK Third Jobs Facebook" href="https://www.facebook.com/groups/670800967076806/">
-                            <img class="object-cover w-full rounded h-44" style="margin:0" src="https://wallpapers.com/images/hd/sword-art-online-wallpaper-javjk4u0ar7tbyeu.jpg" alt="XileRO PK Third Jobs Facebook Image">
+                            <img class="object-cover w-full rounded h-44" style="margin:0" src="{{ asset('assets/third-jobs/facebook.jpeg') }}" alt="XileRO PK Third Jobs Facebook Image">
                             <div class="p-4">
                                 XileRO PK Facebook
                             </div>
@@ -370,7 +370,7 @@
                     </div>
                     <div class="bg-gray-800 bg-opacity-90 rounded text-gray-100 hover:bg-amber-500 hover:text-gray-900">
                         <a target="_blank" rel="noopener noreferrer" title="XileRO PK Third Jobs Discord" aria-label="XileRO PK Third Jobs Discord" href="https://discord.com/invite/cFd4FZupDV">
-                            <img class="object-cover w-full rounded h-44" style="margin:0" src="https://wallpapers.com/images/hd/discord-logo-geometric-art-5barh6w9jxj5mhzw.jpg" alt="XileRO PK Third Jobs Discord Image">
+                            <img class="object-cover w-full rounded h-44" style="margin:0" src="{{ asset('assets/third-jobs/discord.jpeg') }}" alt="XileRO PK Third Jobs Discord Image">
                             <div class="p-4">
                                 XileRO PK Discord
                             </div>

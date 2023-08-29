@@ -22,6 +22,17 @@ class ServerVendings extends Component implements HasForms, HasTable
     use InteractsWithTable;
     use InteractsWithForms;
 
+    public function placeholder()
+    {
+        return <<<'HTML'
+        <div>
+            <div class="text-3xl text-gray-100 animate-ping">
+                Loading...
+            </div>
+        </div>
+        HTML;
+    }
+
     public function table(Table $table): Table
     {
         return $table
