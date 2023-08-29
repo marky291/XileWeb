@@ -1,9 +1,5 @@
-@extends('layouts.app')
-
-@section('title', 'XileRO Discord')
-
-@section('content')
-
+<x-app-layout>
+    @section('title', 'XileRO Discord')
     <section id="important-links" class="relative overflow-hidden py-16 md:pt-32 bg-black">
         <div class="max-w-screen-xl w-full mx-auto px-5 prose bg-gray-900 rounded p-6">
             <h2 class="text-4xl font-bold max-w-lg md:text-4xl text-gray-100">Discord</h2>
@@ -17,5 +13,4 @@
             </a>
         </div>
     </section>
-
-@endsection
+</x-app-layout>

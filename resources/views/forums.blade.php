@@ -1,8 +1,6 @@
-@extends('layouts.app')
+<x-app-layout>
 
-@section('title', 'XileRO Forums')
-
-@section('content')
+    @section('title', 'XileRO Forums')
 
     <section id="important-links" class="relative overflow-hidden py-16 md:pt-32 bg-black">
         <div class="max-w-screen-xl w-full mx-auto px-5 prose bg-gray-900 rounded p-6">
@@ -17,5 +15,4 @@
             </a>
         </div>
     </section>
-
-@endsection
+</x-app-layout>
