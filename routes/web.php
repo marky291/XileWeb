@@ -43,6 +43,13 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::view('/discord', 'discord');
+Route::view('/forums', 'forums');
+
+Route::any('{query}', function() {
+    return redirect('/')->with('message', 'Redirected 404.');
+})->where('query', '.*');
+
 Route::resource('posts', PostController::class)->only('show')->middleware('features:latest-posts');
 
 require __DIR__.'/auth.php';
