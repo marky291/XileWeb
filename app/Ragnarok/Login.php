@@ -67,12 +67,12 @@ class Login extends RagnarokModel
      */
     public $timestamps = false;
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = ['user_pass'];
+//    /**
+//     * The attributes that should be hidden for arrays.
+//     *
+//     * @var array
+//     */
+//    protected $hidden = ['user_pass'];
 
     /**
      * The attributes that should be fillable using forms.
