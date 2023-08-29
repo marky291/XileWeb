@@ -47,6 +47,8 @@
         </div>
     </section>
 
+{{--    <x-latest-post-preview/>--}}
+
     <section id="steps2play" class="bg-black relative overflow-hidden py-16 md:pt-24 lg:pt-32">
         <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
             <div class="grid grid-cols-5 gap-8 text-gray-100 text-left">

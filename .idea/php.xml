@@ -158,6 +158,7 @@
       <path value="$PROJECT_DIR$/vendor/filament/tables" />
       <path value="$PROJECT_DIR$/vendor/danharrin/livewire-rate-limiting" />
       <path value="$PROJECT_DIR$/vendor/kirschbaum-development/eloquent-power-joins" />
+      <path value="$PROJECT_DIR$/vendor/laravel/pennant" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />
