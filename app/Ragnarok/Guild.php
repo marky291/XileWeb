@@ -76,7 +76,7 @@ class Guild extends Model
 
             $data = @gzuncompress(pack('H*', $this->emblem_data));
 
-            header('Content-Type: image/png');
+            //header('Content-Type: image/png');
 
             imagepng(Emblem::create($data), $asset);
 
