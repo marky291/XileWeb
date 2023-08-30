@@ -52,7 +52,7 @@ class LoginResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('account_id'),
                 Tables\Columns\TextColumn::make('userid')->searchable(),
-                Tables\Columns\TextColumn::make('email'),
+                Tables\Columns\TextColumn::make('email')->searchable(),
                 Tables\Columns\TextColumn::make('chars_count')->counts('chars'),
                 Tables\Columns\TextColumn::make('group_id')->sortable(),
                 Tables\Columns\TextColumn::make('lastlogin'),
