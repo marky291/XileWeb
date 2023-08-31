@@ -70,7 +70,7 @@
             </div>
             <div class="text-2xl col-span-2 md:col-span-1">
                 <h3>Card Drops</h3>
-                <p class="text-7xl text-amber-400">{{ config('xilero.card_drops') }}%</p>
+                <p class="text-7xl text-amber-400">{{ config('xilero.card_drops') }}</p>
             </div>
         </div>
             <p class="tracking-widest text-gray-100 text-xl mt-6 bg-gradient-to-r from-gray-800 to-transparent py-1 rounded px-2">Custom Built Mechanics & Gameplay</p>
