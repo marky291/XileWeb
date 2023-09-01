@@ -10,7 +10,7 @@
                 </div>
                 <ul aria-label="Desktop Navigation Menu" class="relative hidden lg:flex lg:items-center lg:justify-center lg:gap-6 xl:gap-10">
                     <li><a class="rounded py-3 px-6 text-gray-100 hover:bg-amber-500 hover:text-gray-900 border-gray-500 hover:bg-opacity-90 bg-gray-900 bg-opacity-50"
-                           href="https://xileretro.net/#steps2play" title="Register at XileRO">Register</a></li>
+                           href="#steps2play" title="Register at XileRO">Register</a></li>
                     <li><a class="rounded py-3 px-6 text-gray-100 hover:bg-amber-500 hover:text-gray-900 border-gray-500 hover:bg-opacity-90 bg-gray-900 bg-opacity-50"
                            href="http://wiki.xileretro.net/index.php?title=Donation"
                            title="Donate to XileRO">Donate</a></li>

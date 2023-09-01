@@ -35,12 +35,13 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" rel="stylesheet">
+{{--        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" rel="stylesheet">--}}
 
         <!-- Scripts -->
         @filamentStyles
         @filamentScripts
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <script src="https://kit.fontawesome.com/0e7a67f5fc.js" crossorigin="anonymous"></script>
     </head>
     <body x-data="{
         navIsOpen: false,
@@ -137,7 +138,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="container px-3 md:px-0 grid grid-cols-3 pt-8 pb-10 mx-auto copyright">
+                    <div class="container px-3 mt-10 md:mt-0 md:px-0 grid grid-cols-3 pt-8 pb-10 mx-auto copyright">
                         <div class="flex items-center col-span-3 lg:col-span-2 lg:text-left text-gray-300 prose">
                             <i class="mr-4 text-5xl far fa-heart"></i>
                             <p class="mt-0">A thank you to all our players who support and show commitment<br>to making a server that's great for everyone.</p>

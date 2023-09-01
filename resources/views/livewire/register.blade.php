@@ -3,7 +3,7 @@
         @guest
 
             <h2 class="mt-0 mb-2 text-3xl font-bold text-gray-100"><span class="mr-2">1.</span> Register an Account.</h2>
-            <h4 class="mb-12 text-amber-500">Let's get you ready to login and play.</h4>
+            <p class="mb-12 text-amber-500">Let's get you ready to login and play.</p>
 
             @if ($error)
                 <div class="rounded-md bg-red-50 p-4 mb-5">
@@ -132,37 +132,56 @@
         @endguest
     </div>
     <div class="col-span-2 lg:col-span-1">
-        <h2 class="mt-0 mb-2 text-3xl font-bold text-gray-100"><span class="mr-2">2.</span> Download Client.</h2>
-        <h3 class="text-amber-500 mb-12">Download and install with Full Installer.</h3>
+        <h2 class="mt-0 mb-2 text-2xl font-bold text-gray-100"><span class="mr-2">2.</span> Download Full Client</h2>
+        <p class="mb-12 text-amber-500">Full downloads ensure an error-free experience.</p>
         <div class="grid grid-cols-5">
             <div class="col-span-1 hidden md:block">
-                <i class="fas fa-file-archive step2-icon text-gray-300"></i>
+                <i class="fa fa-windows step2-icon text-gray-300"></i>
             </div>
-            <div class="col-span-4 grid gap-5 grid-cols-1 grid-rows-3">
+            <div class="col-span-5 md:col-span-4 grid gap-5 grid-cols-1 grid-rows-3">
                 @foreach(config('downloads.full') as $item)
-                    <a class="no-underline truncate ... btn text-left {{ $item['bttn'] }}" href="{{ $item['link'] }}" target="_blank" rel="noopener">
+                    <a class="no-underline truncate ... text-gray-900 btn text-left {{ $item['bttn'] }}" href="{{ $item['link'] }}" target="_blank" rel="noopener">
                         {{ $item['name'] }}
                     </a>
                 @endforeach
             </div>
         </div>
 
-        <div
-            class="bg-amber-700 bg-amber-300 bg-gray-400 hover:bg-amber-100 hover:bg-gray-300 text-gray-900 hover:bg-white"></div>
-
-        <p class="my-12 text-amber-500">Download and install with Lite Installer.</p>
-        <div class="grid grid-cols-5">
-            <div class="col-span-1 hidden md:block">
-                <i class="fas fa-compact-disc step2-icon text-gray-300"></i>
-            </div>
-            <div class="col-span-4 grid gap-5 grid-cols-1 grid-rows-3">
-                @foreach(config('downloads.lite') as $item)
-                    <a class="no-underline truncate ... btn text-left {{ $item['bttn'] }}" href="{{ $item['link'] }}" target="_blank" rel="noopener">
-                        {{ $item['name'] }}
-                    </a>
-                @endforeach
+        <div class="mt-10">
+            <h2 class="mt-0 mb-8 text-2xl font-bold text-gray-100"><span class="mr-2">2.</span> Android Download</h2>
+            <p class="mb-12 text-amber-500">We are working to bring this out shortly, for now its just a teaser.</p>
+            <div class="grid grid-cols-5">
+                <div class="col-span-1 hidden md:block">
+                    <i class="fa fa-mobile step2-icon text-gray-300"></i>
+                </div>
+                <div class="col-span-5 md:col-span-4 grid gap-5 grid-cols-1 grid-rows-3">
+                    <div class="no-underline truncate bg-gray-800 text-white ... btn text-left {{ $item['bttn'] }}" href="{{ $item['link'] }}" target="_blank" rel="noopener">
+                        Downloads Coming Soon...
+                    </div>
+{{--                    @foreach(config('downloads.android') as $item)--}}
+{{--                        <a class="no-underline truncate ... btn text-left {{ $item['bttn'] }}" href="{{ $item['link'] }}" target="_blank" rel="noopener">--}}
+{{--                            {{ $item['name'] }}--}}
+{{--                        </a>--}}
+{{--                    @endforeach--}}
+                </div>
             </div>
         </div>
+
+{{--        <div class="">--}}
+{{--            <h2 class="mt-0 mb-6 text-3xl font-bold text-gray-100"><span class="mr-2">2.</span> Download Lite Client</h2>--}}
+{{--            <div class="grid grid-cols-5">--}}
+{{--                <div class="col-span-1 hidden md:block">--}}
+{{--                    <i class="fas fa-compact-disc step2-icon text-gray-300"></i>--}}
+{{--                </div>--}}
+{{--                <div class="col-span-5 md:col-span-4 grid gap-5 grid-cols-1 grid-rows-3">--}}
+{{--                    @foreach(config('downloads.lite') as $item)--}}
+{{--                        <a class="no-underline truncate ... btn text-left {{ $item['bttn'] }}" href="{{ $item['link'] }}" target="_blank" rel="noopener">--}}
+{{--                            {{ $item['name'] }}--}}
+{{--                        </a>--}}
+{{--                    @endforeach--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
 
     </div>
 </div>
