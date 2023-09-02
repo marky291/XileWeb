@@ -49,7 +49,8 @@ Route::view('/discord', 'discord');
 Route::view('/forums', 'forums');
 
 Route::resource('posts', PostController::class)->only('show');
-Route::get('patcher', function () {
+
+Route::get('patch/notice', function () {
     $rawPosts = DB::table('posts')
         ->select('id', 'slug', 'title', 'blurb', 'created_at', DB::raw('MONTH(created_at) as month, YEAR(created_at) as year'))
         ->orderBy('created_at', 'DESC')
