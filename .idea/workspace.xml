@@ -4,19 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d8b13a84-8bef-423e-8a9a-7f2cbe046dda" name="Changes" comment="Site updates">
-      <change afterPath="$PROJECT_DIR$/public/assets/patcher/background.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/patcher.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/post.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+    <list default="true" id="d8b13a84-8bef-423e-8a9a-7f2cbe046dda" name="Changes" comment="newsfeed">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/PostController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/PostController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/resources/css/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/components/latest-post-preview.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/components/latest-post-preview.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/post.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/post.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -252,7 +242,7 @@
       <workItem from="1693252628563" duration="450000" />
       <workItem from="1693253081762" duration="467000" />
       <workItem from="1693253728809" duration="8154000" />
-      <workItem from="1693427800976" duration="5377000" />
+      <workItem from="1693427800976" duration="6143000" />
     </task>
     <task id="LOCAL-00001" summary="Fix random number on uber cost">
       <option name="closed" value="true" />
@@ -446,7 +436,15 @@
       <option name="project" value="LOCAL" />
       <updated>1693568059891</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="newsfeed">
+      <option name="closed" value="true" />
+      <created>1693658207782</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1693658207782</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -488,7 +486,8 @@
     <MESSAGE value="Kill python when command is killed." />
     <MESSAGE value="Searchable Emails" />
     <MESSAGE value="Site updates" />
-    <option name="LAST_COMMIT_MESSAGE" value="Site updates" />
+    <MESSAGE value="newsfeed" />
+    <option name="LAST_COMMIT_MESSAGE" value="newsfeed" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
