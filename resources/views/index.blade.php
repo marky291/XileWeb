@@ -1,47 +1,38 @@
 <x-app-layout>
 
-    <section class="shadow bg-[url('../assets/landing-sitting.jpeg')] bg-cover md:pt-16">
-        <div class="container grid px-3 sm:px-0 grid-cols-5 gap-4 mx-auto">
-            <div class="col-span-6 lg:col-span-4 xl:col-span-3 pt-20 pb-4">
-                <div class="xl:mr-30 p-8 rounded bg-zinc-900/70">
-                    <div class="prose text-gray-300 tracking-normal text-lg">
+    <section class="shadow bg-[url('../assets/test.jpeg')] bg-fixed bg-cover bg-right md:pt-16">
+        <div class="container grid px-3 sm:px-0 grid-cols-5 gap-4 mx-auto py-12">
+            <div class="col-span-6 pt-20 pb-4">
+                <div class="">
+                    <div class="text-gray-300 tracking-normal text-lg text-center">
                         @if (session('message'))
                             <div class="alert alert-info">
                                 <h3 class="mb-6 text-gray-500 text-3xl">{{ session('message') }}</h3>
                             </div>
                         @endif
-                        <h1 class="mb-6 text-white text-3xl">XileRO PK Retro | <span class="text-amber-500">No Third Jobs</span></h1>
+{{--                        <p class="mb-20 text-3xl text-white">Welcome to</p>--}}
+                            <div class="relative py-20 md:py-48 flex justify-center items-center">
+                                <h2 class="text-[92px] md:text-[182px] absolute text-black drop-shadow-lg tracking-widest" style="font-family: 'Bonechiller', sans-serif;">XILERO</h2>
+                                <h2 class="text-[85px] md:text-[175px] absolute text-amber-400 drop-shadow-lg tracking-widest" style="font-family: 'Bonechiller', sans-serif;">XILERO</h2>
+                            </div>
 
-                        <p class="text-xl text-gray-200">Private Ragnarok Online Server</p>
-                        <p>
-                            Step into the thrilling world of XileRO, the ultimate destination for retro PK gaming. Engage in epic battles with monsters, unleash powerful magic, and embark on adventurous quests with companions and foes alike. XileRO offers a unique PK server experience, filled with rich mechanics and a one-of-a-kind retro style. Join the excitement, fight for leadership, power, and glory, and discover what makes XileRO a leading choice for PK enthusiasts. Your journey in the world of XileRO awaits – where the battle never ends and adventure is just a click away!
-                        </p>
-                        <p>
-                            We secured the platform using the latest Gepard 3.0 security systems that helps prevents hacks
-                            and macros to ultimately provide a solid foundation for future growth
-                            internally and externally. We are not just here for the old players,
-                            we are also here for the new~ So log in and pawn some noobs!!
-                        </p>
+{{--                        <p class="text-xl text-gray-200">Private Ragnarok Online Server</p>--}}
+{{--                        <p>--}}
+{{--                            Step into the thrilling world of XileRO, the ultimate destination for retro PK gaming. Engage in epic battles with monsters, unleash powerful magic, and embark on adventurous quests with companions and foes alike. XileRO offers a unique PK server experience, filled with rich mechanics and a one-of-a-kind retro style. Join the excitement, fight for leadership, power, and glory, and discover what makes XileRO a leading choice for PK enthusiasts. Your journey in the world of XileRO awaits – where the battle never ends and adventure is just a click away!--}}
+{{--                        </p>--}}
+{{--                        <p>--}}
+{{--                            We secured the platform using the latest Gepard 3.0 security systems that helps prevents hacks--}}
+{{--                            and macros to ultimately provide a solid foundation for future growth--}}
+{{--                            internally and externally. We are not just here for the old players,--}}
+{{--                            we are also here for the new~ So log in and pawn some noobs!!--}}
+{{--                        </p>--}}
                     </div>
-                    <div class="my-10 quick-links grid-rows-2 grid">
-                        <a href="#steps2play" class="my-2 w-full no-underline btn text-left mt-2 btn-primary" target="_blank" rel="noopener">Create a Game Account</a>
-                        <a href="{{ config('downloads.full')[0]['link'] }}" class="my-2 w-full no-underline btn text-left mt-2 btn-primary" target="_blank" rel="noopener">
-                            {{ config('downloads.full')[array_key_first(config('downloads.full'))]['name'] }}
-                        </a>
-                    </div>
-                </div>
-                <div class="flex items-center justify-between mt-8 my-4 text-5xl social-buttons">
-                    <a href="#important-links" class="text-gray-700 hover:text-cool-gray-900" aria-label="Jump to Important Links section">
-                        <i class="fas fa-angle-double-down"></i>
-                    </a>
-                    {{-- <div class="flex flex-row">
-                        <a href="https://www.facebook.com/xileretro" class="text-blue-500 hover:text-blue-800">
-                            <div class="mr-6 socal-facebook text-blue-500 hover:text-blue-800"><i class="fab fa-facebook"></i></div>
-                        </a>
-                        <a href="https://discord.gg/hp7CS6k" class="text-indigo-500 hover:text-indigo-800">
-                            <div class="socal-discord text-indigo-500 hover:text-indigo-800"><i class="fab fa-discord"></i></div>
-                        </a>
-                    </div> --}}
+{{--                    <div class="my-10 quick-links grid-rows-2 grid">--}}
+{{--                        <a href="#steps2play" class="my-2 w-full no-underline btn text-left mt-2 btn-primary" target="_blank" rel="noopener">Create a Game Account</a>--}}
+{{--                        <a href="{{ config('downloads.full')[0]['link'] }}" class="my-2 w-full no-underline btn text-left mt-2 btn-primary" target="_blank" rel="noopener">--}}
+{{--                            {{ config('downloads.full')[array_key_first(config('downloads.full'))]['name'] }}--}}
+{{--                        </a>--}}
+{{--                    </div>--}}
                 </div>
             </div>
         </div>
@@ -75,7 +66,9 @@
         </div>
     </section>
 
-    <x-latest-post-preview lazy/>
+    <div class="hidden md:block">
+        <x-latest-post-preview lazy/>
+    </div>
 
 
     <section id="steps2play" class="bg-black relative overflow-hidden py-16 md:pt-24 lg:pt-32">

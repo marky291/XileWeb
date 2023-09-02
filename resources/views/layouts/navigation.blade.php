@@ -1,4 +1,4 @@
-<nav class="w-full absolute shadow bg-gray-900 bg-opacity-70">
+<nav class="w-full absolute shadow bg-black/70">
     <div aria-label="Main Navigation" x-trap.inert.noscroll="navIsOpen" class="relative z-50 text-white" @keydown.window.escape="navIsOpen = false"
          @click.away="navIsOpen = false">
         <div class="relative max-w-screen-2xl mx-auto w-full py-4 transition duration-200 lg:bg-transparent lg:py-6">
