@@ -1,7 +1,7 @@
 <x-app-layout>
 
-    @section('title', 'XileRO | War of Emperium')
-    @section('description', "Join the War of Emperium on XileRO. Engage in epic castle battles, explore real-time ownership, and find battle schedules across all timezones. Answer the call to glory today!")
+    @section('title', 'XileRO | War of Emperium (WOE)')
+    @section('description', "Join the War of Emperium (WOE) on XileRO. Engage in epic castle battles, explore real-time ownership, and find battle schedules across all timezones. Answer the call to glory today!")
     @section('keywords', 'Ragnarok Online, War of Emperium, Xilero, castle battles, private server, WoE times, MMO, online gaming, guild wars, PvP, real-time strategy')
 
     <section class="shadow bg-[url('../assets/landing-sitting.jpeg')] bg-cover md:pt-16">

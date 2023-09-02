@@ -23,14 +23,14 @@
 
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <meta name="description" content="@yield('description', 'XileRO is a leading PK server, offering unique mechanics and one-of-a-kind retro style gameplay. Experience XileRetro today and join the immersive world that redefines PK gaming.')">
-        <meta name="keywords" content="@yield('keywords', 'Ragnarok, Ragnarok Online, RO, XileRO, XileRetro, XileRO PK Retro, XileRO PK, PK Server, Woe Server')">
+        <meta name="description" content="@yield('description', 'XileRO is a leading PK server, offering unique mechanics and one-of-a-kind classic style gameplay. Experience XileRetro today and join the immersive world that redefines PK gaming.')">
+        <meta name="keywords" content="@yield('keywords', 'Ragnarok, Ragnarok Online, Classic, RO, XileRO, XileRetro, XileRO PK Retro, XileRO PK, PK Server, Woe Server')">
         <meta name="author" content="XileRO, XileRetro">
         <meta name="robots" content="index, follow">
 
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 
-        <title>@yield('title', 'XileRO | The Ultimate Retro Experience')</title>
+        <title>@yield('title', 'XileRO | The Ultimate Classic Experience')</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
