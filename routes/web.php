@@ -60,7 +60,7 @@ Route::get('patcher', function () {
     });
 
     $response = response()->view('patcher', ['groupedPosts' => $groupedPosts]);
-    $response->headers->set('Content-Security-Policy', "frame-ancestors https://xileretro.net https://patch.xileretro.net");
+    $response->headers->set('Content-Security-Policy', "frame-ancestors https://xilero.net https://xileretro.net http://patch.xileretro.net");
 
     return $response;
 });
