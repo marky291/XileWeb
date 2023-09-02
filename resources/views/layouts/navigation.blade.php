@@ -5,7 +5,7 @@
             <div class="max-w-screen-xl mx-auto px-5 flex items-center justify-between">
                 <div class="flex-1">
                     <a href="/" aria-label="Home Page" title="XileRO Home">
-                        <h2 class="my-0 text-2xl py-0 font-bold">XileRO.net</h2>
+                        <h2 class="my-0 text-2xl py-0 font-bold">XiLeRO.NET</h2>
                     </a>
                 </div>
                 <ul aria-label="Desktop Navigation Menu" class="relative hidden lg:flex lg:items-center lg:justify-center lg:gap-6 xl:gap-10">

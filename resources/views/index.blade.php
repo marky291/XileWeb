@@ -13,7 +13,7 @@
 {{--                        <p class="mb-20 text-3xl text-white">Welcome to</p>--}}
                             <div class="relative py-20 md:py-48 flex justify-center items-center">
                                 <h2 class="text-[92px] md:text-[182px] absolute text-black drop-shadow-lg tracking-widest" style="font-family: 'Bonechiller', sans-serif;">XILERO</h2>
-                                <h2 class="text-[85px] md:text-[175px] absolute text-amber-400 drop-shadow-lg tracking-widest" style="font-family: 'Bonechiller', sans-serif;">XILERO</h2>
+                                <h2 class="text-[85px] md:text-[175px] absolute text-amber-400 drop-shadow-lg tracking-widest" style="font-family: 'Bonechiller', sans-serif;">XILE<span class="text-amber-500">RO</span></h2>
                             </div>
 
 {{--                        <p class="text-xl text-gray-200">Private Ragnarok Online Server</p>--}}
