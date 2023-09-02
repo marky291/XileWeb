@@ -4,12 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d8b13a84-8bef-423e-8a9a-7f2cbe046dda" name="Changes" comment="Searchable Emails">
+    <list default="true" id="d8b13a84-8bef-423e-8a9a-7f2cbe046dda" name="Changes" comment="Site updates">
+      <change afterPath="$PROJECT_DIR$/public/assets/patcher/background.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/patcher.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/post.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/PostController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/PostController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/resources/css/app.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/components/latest-post-preview.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/components/latest-post-preview.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/register.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/register.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -175,6 +182,9 @@
       <path value="$PROJECT_DIR$/vendor/danharrin/livewire-rate-limiting" />
       <path value="$PROJECT_DIR$/vendor/kirschbaum-development/eloquent-power-joins" />
       <path value="$PROJECT_DIR$/vendor/laravel/pennant" />
+      <path value="$PROJECT_DIR$/vendor/spatie/commonmark-shiki-highlighter" />
+      <path value="$PROJECT_DIR$/vendor/spatie/laravel-markdown" />
+      <path value="$PROJECT_DIR$/vendor/spatie/shiki-php" />
     </include_path>
   </component>
   <component name="ProjectColorInfo">{
@@ -186,29 +196,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/markhester/Desktop/XileRO/XileWeb2&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "/Users/markhester/Desktop/XileRO/XileWeb2/public/assets/patcher",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;mariadb&quot;,
-      &quot;mysql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mariadb",
+      "mysql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/public/assets/patcher" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/database/factories/ragnarok" />
       <recent name="$PROJECT_DIR$/resources/views" />
@@ -241,7 +252,7 @@
       <workItem from="1693252628563" duration="450000" />
       <workItem from="1693253081762" duration="467000" />
       <workItem from="1693253728809" duration="8154000" />
-      <workItem from="1693427800976" duration="2052000" />
+      <workItem from="1693427800976" duration="5377000" />
     </task>
     <task id="LOCAL-00001" summary="Fix random number on uber cost">
       <option name="closed" value="true" />
@@ -427,7 +438,15 @@
       <option name="project" value="LOCAL" />
       <updated>1693427832695</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="Site updates">
+      <option name="closed" value="true" />
+      <created>1693568059891</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1693568059891</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -468,7 +487,8 @@
     <MESSAGE value="Faster web page" />
     <MESSAGE value="Kill python when command is killed." />
     <MESSAGE value="Searchable Emails" />
-    <option name="LAST_COMMIT_MESSAGE" value="Searchable Emails" />
+    <MESSAGE value="Site updates" />
+    <option name="LAST_COMMIT_MESSAGE" value="Site updates" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

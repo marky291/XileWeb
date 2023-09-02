@@ -159,6 +159,9 @@
       <path value="$PROJECT_DIR$/vendor/danharrin/livewire-rate-limiting" />
       <path value="$PROJECT_DIR$/vendor/kirschbaum-development/eloquent-power-joins" />
       <path value="$PROJECT_DIR$/vendor/laravel/pennant" />
+      <path value="$PROJECT_DIR$/vendor/spatie/commonmark-shiki-highlighter" />
+      <path value="$PROJECT_DIR$/vendor/spatie/laravel-markdown" />
+      <path value="$PROJECT_DIR$/vendor/spatie/shiki-php" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />

@@ -4,9 +4,9 @@
             <h2>Latest Updates</h2>
             <p class="mt-6 text-gray-300 leading-relaxed">Welcome to the world of Xilero, where unique adventures await! If you're new to our server or looking to enhance your gameplay experience, you've come to the right place. Our Getting Started guides are crafted to help players of all levels navigate the distinct features and mechanics that set Xilero apart.</p>
             <div class="grid grid-cols-3 gap-12 mt-14">
-                @foreach(\App\Models\Post::all()->take(3) as $post)
+                @foreach(\App\Models\Post::orderBy('created_at', 'desc')->take(3)->get() as $post)
                     <div class="col-span-1 md:col-span-2 lg:col-span-1 bg-gray-900 hover:bg-gray-800 rounded">
-                        <a title="Essential Starter Packages & Guides for New Players" target="_blank" rel="noopener" href="{{ route('posts.show', $post) }}">
+                        <a title="Essential Starter Packages & Guides for New Players" href="{{ route('posts.show', $post) }}">
                             <div class="p-6 rounded-md hover:shadow-lg prose">
 {{--                                <div class="mb-6 border border-gray-200 rounded">--}}
 {{--                                    <img class="object-cover w-full rounded h-44" style="margin:0" src="https://get.wallhere.com/photo/anime-Sword-Art-Online-Kirito-Sword-Art-Online-sword-1859509.jpg" alt="Starter Packages & Guids Image">--}}

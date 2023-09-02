@@ -5,6 +5,8 @@ use App\Http\Controllers\ProfileController;
 use App\Livewire\Counter;
 use App\Ragnarok\Char;
 use App\Ragnarok\ServerZeny;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -46,10 +48,23 @@ Route::middleware('auth')->group(function () {
 Route::view('/discord', 'discord');
 Route::view('/forums', 'forums');
 
+Route::resource('posts', PostController::class)->only('show');
+Route::get('patcher', function () {
+    $rawPosts = DB::table('posts')
+        ->select('id', 'slug', 'title', 'blurb', 'created_at', DB::raw('MONTH(created_at) as month, YEAR(created_at) as year'))
+        ->orderBy('created_at', 'DESC')
+        ->get();
+
+    $groupedPosts = $rawPosts->groupBy(function ($date) {
+        return Carbon::parse($date->created_at)->format('F Y'); // grouping by month and year
+    });
+
+    return view('patcher', ['groupedPosts' => $groupedPosts]);
+});
+
 Route::any('{query}', function() {
     return redirect('/')->with('message', 'Redirected 404.');
 })->where('query', '.*');
 
-Route::resource('posts', PostController::class)->only('show')->middleware('features:latest-posts');
 
 require __DIR__.'/auth.php';

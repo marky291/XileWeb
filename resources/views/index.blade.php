@@ -47,8 +47,6 @@
         </div>
     </section>
 
-{{--    <x-latest-post-preview/>--}}
-
     <section id="rates" class="bg-black relative overflow-hidden py-16 md:pt-24 lg:pt-32">
         <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
             <div class="grid grid-cols-5 gap-8 text-gray-100 text-left">
@@ -76,6 +74,9 @@
             <p class="tracking-widest text-gray-100 text-xl mt-6 bg-gradient-to-r from-gray-800 to-transparent py-1 rounded px-2">Custom Built Mechanics & Gameplay</p>
         </div>
     </section>
+
+    <x-latest-post-preview lazy/>
+
 
     <section id="steps2play" class="bg-black relative overflow-hidden py-16 md:pt-24 lg:pt-32">
         <div class="hidden lg:block absolute -right-2 bottom-40 pointer-events-none">

@@ -119,6 +119,18 @@ section.landing .feature-bg-img {
 }
 
 @layer components {
+    .markdown p strong {
+        @apply text-gray-100;
+    }
+    .markdown ul li code {
+        @apply text-gray-100;
+    }
+    .markdown ul li strong {
+        @apply text-gray-100;
+    }
+    .markdown h2 {
+        @apply text-gray-100;
+    }
     h2 {
         @apply text-white text-4xl mb-7;
     }
