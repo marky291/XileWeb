@@ -59,7 +59,10 @@ Route::get('patcher', function () {
         return Carbon::parse($date->created_at)->format('F Y'); // grouping by month and year
     });
 
-    return view('patcher', ['groupedPosts' => $groupedPosts]);
+    $response = response()->view('patcher', ['groupedPosts' => $groupedPosts]);
+    $response->headers->set('Content-Security-Policy', "frame-ancestors https://xileretro.net https://patch.xileretro.net");
+
+    return $response;
 });
 
 Route::any('{query}', function() {
