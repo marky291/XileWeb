@@ -37,12 +37,13 @@ class LoginResource extends Resource
                 Forms\Components\TextInput::make('account_id')->unique(ignoreRecord: true),
                 Forms\Components\TextInput::make('userid')->unique(ignoreRecord: true),
                 Forms\Components\TextInput::make('email')->unique(ignoreRecord: true),
-                Forms\Components\TextInput::make('user_pass')->hintAction(
+                Forms\Components\TextInput::make('user_pass'),
+                Forms\Components\TextInput::make('group_id')->numeric(),
+                Forms\Components\TextInput::make('plain')->label('Plain Password')->hintAction(
                     Forms\Components\Actions\Action::make('Create Hash')->action(function (Get $get, Set $set, $state) {
                         $set('user_pass', MakeHashedLoginPassword::run($state));
-                    })
+                    }),
                 ),
-                Forms\Components\TextInput::make('group_id')->numeric(),
             ]);
     }
 

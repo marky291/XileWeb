@@ -13,17 +13,6 @@ class EditLogin extends EditRecord
 {
     protected static string $resource = LoginResource::class;
 
-    protected function mutateFormDataBeforeSave(array $data): array
-    {
-        if (array_key_exists('data.user_pass', $this->oldFormState) && $this->data['user_pass'] != "") {
-            $data['user_pass'] = MakeHashedLoginPassword::run($data['user_pass']);
-        } else {
-            $data['user_pass'] = $this->record->user_pass;
-        }
-
-        return $data;
-    }
-
     protected function getHeaderActions(): array
     {
         return [

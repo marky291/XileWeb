@@ -30,7 +30,6 @@ class CharResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('account_id'),
-                Forms\Components\TextInput::make('login.userid'),
                 Forms\Components\TextInput::make('name'),
                 Forms\Components\TextInput::make('last_login'),
             ]);

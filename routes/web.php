@@ -2,8 +2,7 @@
 
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
-use App\Livewire\Counter;
-use App\Ragnarok\Char;
+use App\Models\Patch;
 use App\Ragnarok\ServerZeny;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -64,6 +63,23 @@ Route::get('patch/notice', function () {
     $response->headers->set('Content-Security-Policy', "frame-ancestors https://xilero.net https://xileretro.net http://patch.xileretro.net");
 
     return $response;
+});
+
+Route::get('patch/list', function() {
+    $patches = Patch::all()->toArray();
+
+    $formattedPatches = array_map(function($patch) {
+        return sprintf(
+            "%d %s %s // %s",
+            $patch['number'],
+            $patch['type'],
+            $patch['patch_name'],
+            $patch['comments'],
+        );
+    }, $patches);
+
+    return response(implode("\n", $formattedPatches), 200)
+        ->header('Content-Type', 'text/plain');
 });
 
 Route::any('{query}', function() {

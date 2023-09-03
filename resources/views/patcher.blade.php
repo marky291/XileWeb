@@ -4,8 +4,6 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <link rel="stylesheet" type="text/css" href="/_static/css/banner-styles.css"/>
-    <link rel="stylesheet" type="text/css" href="/_static/css/iconochive.css"/>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
     <title>XileRetro Patcher</title>
 </head>
@@ -28,7 +26,7 @@
         font-size: 12px;
         color: #E6C17B;
         background-position: center top;
-        background-image: '{{ asset('assets/patcher/background.jpg') }}';
+        background-image: url('{{ asset('assets/patcher/background.jpg') }}');
     }
 
     h5 {
