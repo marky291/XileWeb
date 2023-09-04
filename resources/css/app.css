@@ -135,11 +135,11 @@ section.landing .feature-bg-img {
         @apply text-white text-4xl mb-7;
     }
     .btn-primary {
-        @apply items-center w-full border-none text-left bg-amber-500 hover:bg-gray-100 cursor-pointer text-gray-900 border text-gray-900;
+        @apply transition duration-300 items-center w-full border-none text-left bg-amber-500 hover:bg-gray-100 cursor-pointer text-gray-900 border text-gray-900;
     }
 
     .btn-secondary {
-        @apply items-center w-full border-none text-left bg-amber-300 hover:bg-gray-100 cursor-pointer text-gray-900 border text-gray-900;
+        @apply transition duration-300 items-center w-full border-none text-left bg-amber-300 hover:bg-gray-100 cursor-pointer text-gray-900 border text-gray-900;
     }
 
     .btn-discord {

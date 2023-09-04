@@ -92,7 +92,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="flex justify-start mt-6">
+                <div class="flex justify-start">
                     <button wire:click="register" class="btn w-auto py-12 text-left mt-4 xilero-button">
                         <span>Register Account</span>
                     </button>
@@ -148,21 +148,18 @@
         </div>
 
         <div class="mt-10">
-            <h2 class="mt-0 mb-8 text-2xl font-bold text-gray-100"><span class="mr-2">2.</span> Android Download</h2>
+            <h2 class="mt-0 mb-2 text-2xl font-bold text-gray-100"><span class="mr-2">2.</span> Android Download</h2>
             <p class="mb-12 text-amber-500">We are working to bring this out shortly, for now its just a teaser.</p>
             <div class="grid grid-cols-5">
                 <div class="col-span-1 hidden md:block">
                     <i class="fa fa-mobile step2-icon text-gray-300"></i>
                 </div>
                 <div class="col-span-5 md:col-span-4 grid gap-5 grid-cols-1 grid-rows-3">
-                    <div class="no-underline truncate bg-gray-800 text-white ... btn text-left {{ $item['bttn'] }}" href="{{ $item['link'] }}" target="_blank" rel="noopener">
-                        Downloads Coming Soon...
-                    </div>
-{{--                    @foreach(config('downloads.android') as $item)--}}
-{{--                        <a class="no-underline truncate ... btn text-left {{ $item['bttn'] }}" href="{{ $item['link'] }}" target="_blank" rel="noopener">--}}
-{{--                            {{ $item['name'] }}--}}
-{{--                        </a>--}}
-{{--                    @endforeach--}}
+                    @foreach(config('downloads.android') as $item)
+                        <a class="no-underline truncate ... btn text-left {{ $item['bttn'] }}" href="{{ $item['link'] }}" target="_blank" rel="noopener">
+                            {{ $item['name'] }}
+                        </a>
+                    @endforeach
                 </div>
             </div>
         </div>

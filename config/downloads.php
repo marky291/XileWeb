@@ -22,25 +22,29 @@ return [
 
     'full' => [
         [
-            'name' => 'Download Full Client from Google Drive (3GB)',
+            'name' => 'Full Client from Google Drive (3GB)',
             'link' => 'https://drive.google.com/file/d/1Kf6R_IF6VqSy_ZcqspbqgK0LAFAfA11o/view?usp=sharing',
             'bttn' => 'btn-primary'
         ],
         [
-            'name' => 'Download Full Client from Mega Upload (3GB)',
+            'name' => 'Full Client from Mega Upload (3GB)',
             'link' => 'https://mega.nz/file/yDRHCLDA#z671HSFPE5UgIZD1h8oDXOvOrVFc2zFBGyBkJNQiBVE',
-            'bttn' => 'btn-secondary'
-        ],
-        [
-            'name' => 'Download Full Client from Mediafire (3GB)',
-            'link' => 'https://www.mediafire.com/file/l0z00alq0xk1zwd/Play.zip/file',
             'bttn' => 'btn-secondary'
         ],
     ],
 
     'android' => [
-        'title' => 'Download Android',
-        'link' => 'http://roworkshop.com/apk/315/XileRetro.apk',
-        'version' => '3.15',
+        [
+            'name' => 'Android using Google Drive (3mb)',
+            'link' => 'https://drive.google.com/file/d/1T80VkU_qREY0RSu2xxfZ07PNe3VAy1fU/view?usp=drive_link',
+            'bttn' => 'btn-primary',
+            'version' => '3.15',
+        ],
+        [
+           'name' => 'Android using Mega Upload (3mb)',
+           'link' => 'https://mega.nz/file/0j0kmLbJ#TNzd-gp2tIuVy1ik0ODIN3gWFraRh8oLwmVO47Ep6zE',
+           'bttn' => 'btn-secondary',
+           'version' => '3.15',
+       ]
     ],
 ];

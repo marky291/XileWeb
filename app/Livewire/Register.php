@@ -68,6 +68,16 @@ class Register extends Component
         $this->registrationComplete = true;
     }
 
+    public function placeholder()
+    {
+        return <<<'HTML'
+        <div>
+            <div class="text-3xl text-gray-100 animate-ping">
+                Loading...
+            </div>
+        </div>
+        HTML;
+    }
     public function render()
     {
         return view('livewire.register');
