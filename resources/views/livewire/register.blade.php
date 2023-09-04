@@ -149,7 +149,7 @@
 
         <div class="mt-10">
             <h2 class="mt-0 mb-2 text-2xl font-bold text-gray-100"><span class="mr-2">2.</span> Android Download</h2>
-            <p class="mb-12 text-amber-500">We are working to bring this out shortly, for now its just a teaser.</p>
+            <p class="mb-12 text-amber-500">Play XileRO on the Go, with android, supporting automatic updates and gepard.</p>
             <div class="grid grid-cols-5">
                 <div class="col-span-1 hidden md:block">
                     <i class="fa fa-mobile step2-icon text-gray-300"></i>
