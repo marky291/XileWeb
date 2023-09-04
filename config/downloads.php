@@ -36,7 +36,7 @@ return [
     'android' => [
         [
             'name' => 'Android using Google Drive (3mb)',
-            'link' => 'https://drive.google.com/file/d/1T80VkU_qREY0RSu2xxfZ07PNe3VAy1fU/view?usp=drive_link',
+            'link' => 'https://drive.google.com/file/d/1T80VkU_qREY0RSu2xxfZ07PNe3VAy1fU/view?usp=sharing',
             'bttn' => 'btn-primary',
             'version' => '3.15',
         ],
