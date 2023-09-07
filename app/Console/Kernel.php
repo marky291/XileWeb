@@ -15,8 +15,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
-
+        //$schedule->command('inspire')->hourly();
+        $schedule->command('horizon:snapshot')->everyFiveMinutes();
         $schedule->job(new PostGuildPointsToDiscordJob('Kriemhild', today()))->dailyAt(config('xilero.woe_events.send_discord'))->withoutOverlapping();
     }
 
