@@ -1,7 +1,9 @@
 <?php
 
+use App\Actions\ProcessWoeEventPoints;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
+use App\Jobs\GuildMessagesToDiscord;
 use App\Models\Patch;
 use App\Ragnarok\ServerZeny;
 use Carbon\Carbon;
@@ -18,6 +20,10 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get('/test', function() {
+    ProcessWoeEventPoints::run('Kriemhild', today(), season: 1, sendDiscordNotification: true);
+});
 
 Route::get('/', function () {
     return view('index', [

@@ -2,6 +2,9 @@
 
 namespace App\Console;
 
+use App\Actions\ProcessWoeEventPoints;
+use App\Jobs\GuildMessagesToDiscord;
+use App\Jobs\PostGuildPointsToDiscordJob;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -13,6 +16,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
+
+        $schedule->job(new PostGuildPointsToDiscordJob('Kriemhild', today()))->dailyAt(config('xilero.woe_events.send_discord'))->withoutOverlapping();
     }
 
     /**

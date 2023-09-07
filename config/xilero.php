@@ -1,6 +1,12 @@
 <?php
 
 return [
+
+    'woe_events' => [
+        'season' => 1,
+        'send_discord' => "18:00",
+    ],
+
     'max_level' => '255',
     'max_job' => '120',
     'base_exp' => '4K',

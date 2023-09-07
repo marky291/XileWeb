@@ -4,9 +4,7 @@ namespace App\Ragnarok;
 
 use App\Actions\CreateEmblemFromData;
 use App\Emblem;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Storage;
 use League\Flysystem\File;
 
 /**
@@ -88,5 +86,10 @@ class Guild extends RagnarokModel
     public function Members()
     {
         return $this->hasMany(GuildMember::class, 'guild_id', 'guild_id');
+    }
+
+    public function GameWoeScore()
+    {
+        return $this->hasOne(GameWoeScore::class, 'guild_id', 'guild_id');
     }
 }
