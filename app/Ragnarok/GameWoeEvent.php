@@ -5,6 +5,10 @@ namespace App\Ragnarok;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @method static where(array $array)
+ * @method static whereIn(string $string, $pluck)
+ */
 class GameWoeEvent extends RagnarokModel
 {
     use HasFactory;

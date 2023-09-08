@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/test', function() {
-    ProcessWoeEventPoints::run('Kriemhild', today(), season: 1, sendDiscordNotification: true);
+    ProcessWoeEventPoints::run('Skoegul', today(), season: 1, sendDiscordNotification: true);
 });
 
 Route::get('/', function () {
