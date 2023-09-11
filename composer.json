@@ -20,6 +20,7 @@
         "laravel/tinker": "^2.8",
         "livewire/livewire": "^v3.0.0",
         "lorisleiva/laravel-actions": "^2.7",
+        "predis/predis": "^2.2",
         "spatie/laravel-markdown": "^2.4"
     },
     "require-dev": {
