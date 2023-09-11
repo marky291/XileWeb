@@ -30,6 +30,13 @@ use Illuminate\Database\Eloquent\Model;
  */
 class GuildCastle extends RagnarokModel
 {
+
+    const CASTLE_KRIEMHILD = 'Kriemhild';
+    const CASTLE_SWANHILD = 'Swanhild';
+    const CASTLE_SKOEGUL = 'Skoegul';
+    const CASTLE_GONDUL = 'Gondul';
+    const CASTLE_FADHRINGH = 'Fadhringh';
+
     /**
      * The connection name for the model.
      *

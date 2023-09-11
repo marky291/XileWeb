@@ -14,8 +14,10 @@ return new class extends Migration
         if (app()->runningUnitTests()) {
             Schema::create('game_woe_scores', function (Blueprint $table) {
                 $table->id();
+                $table->string('castle_name');
                 $table->integer('season')->default(1);
                 $table->integer('guild_id');
+                $table->string('guild_name');
                 $table->integer('guild_score')->default(0);
                 $table->timestamps();
             });

@@ -14,9 +14,11 @@ class GameWoeScore extends RagnarokModel
 {
     use HasFactory;
 
+    public const POINTS_CASTLE_OWNER = 4;
     public const POINTS_LONGEST_HELD = 3;
     public const POINTS_FIRST_BREAK = 2;
     public const POINTS_ATTENDED = 1;
+    public const POINTS_ABSENSE = -2;
 
     /**
      * The connection name for the model.
@@ -40,8 +42,11 @@ class GameWoeScore extends RagnarokModel
     protected $primaryKey = 'id';
 
     protected $fillable = [
+        'castle_name',
         'guild_id',
-        'guild_score'
+        'guild_score',
+        'guild_name',
+        'season',
     ];
 
     public function Guild()

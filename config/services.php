@@ -35,6 +35,10 @@ return [
         'uber_cost_token' => env('DISCORD_UBER_COST_TOKEN'),
         'player_count_token' => env('DISCORD_PLAYER_COUNT_TOKEN'),
         'latest_player_token' => env('DISCORD_LATEST_PLAYER_TOKEN'),
-        'channel_guild_events' => env('DISCORD_CHANNEL_GUILD_EVENTS')
+        'kriemhild_guild_points' => env('DISCORD_KRIEMHILD_GUILD_POINTS'),
+        'swanhild_guild_points' => env('DISCORD_SWANHILD_GUILD_POINTS'),
+        'skoegul_guild_points' => env('DISCORD_SKOEGUL_GUILD_POINTS'),
+        'fadhringh_guild_points' => env('DISCORD_FADHRINGH_GUILD_POINTS'),
+        'gondul_guild_points' => env('DISCORD_GONDUL_GUILD_POINTS'),
     ],
 ];

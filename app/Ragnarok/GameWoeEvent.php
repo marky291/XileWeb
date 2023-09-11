@@ -57,14 +57,21 @@ class GameWoeEvent extends RagnarokModel
 
     public function getGuildNameFromMessageAttribute()
     {
-        $pattern = '/Guild \[(.*?)\]/';
+        $pattern1 = '/The \[.*\] castle is currently held by the \[(.*?)\] guild./';
+        $pattern2 = '/Castle \[.*\] has been captured by \[.*\] for Guild \[(.*?)\]/';
+        $pattern3 = '/The \[.*\] castle has been conquered by the \[(.*?)\] guild./';
+        $pattern4 = '/Guild \[(.*?)\] has attended with member count greater than size \[\d+\]/';
 
-        if (preg_match($pattern, $this->message, $matches)) {
-            return $matches[1];
+        if (preg_match($pattern1, $this->message, $matches) ||
+            preg_match($pattern2, $this->message, $matches) ||
+            preg_match($pattern3, $this->message, $matches) ||
+            preg_match($pattern4, $this->message, $matches)) {
+            return empty($matches[1]) ? 'Unknown Guild' : $matches[1];
         }
 
-        return null;
+        return 'Unknown Guild';
     }
+
 
     public function getPlayerNameFromMessageAttribute()
     {

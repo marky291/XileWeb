@@ -99,7 +99,7 @@ class ProcessWoeEventPointsTest extends TestCase
 
         $score = GameWoeScore::firstWhere('guild_id', 1);
 
-        $this->assertEquals(GameWoeScore::POINTS_LONGEST_HELD + GameWoeScore::POINTS_FIRST_BREAK, $score->guild_score);
+        $this->assertEquals(GameWoeScore::POINTS_LONGEST_HELD + GameWoeScore::POINTS_FIRST_BREAK + GameWoeScore::POINTS_CASTLE_OWNER, $score->guild_score);
     }
 
     public function test_with_multiple_guilds()
@@ -145,7 +145,7 @@ class ProcessWoeEventPointsTest extends TestCase
         GameWoeEvent::create([
             'castle' => 'Kriemhild',
             'event' => GameWoeEvent::ENDED,
-            'guild_id' => 2,
+            'guild_id' => 1,
             'message' => 'Guild [Guild2]',
             'created_at' => now()->addSeconds(30),
             'processed' => false
@@ -157,7 +157,39 @@ class ProcessWoeEventPointsTest extends TestCase
         $guild1Score = GameWoeScore::firstWhere('guild_id', 1);
         $guild2Score = GameWoeScore::firstWhere('guild_id', 2);
 
-        $this->assertEquals(GameWoeScore::POINTS_LONGEST_HELD, $guild1Score->guild_score);
+        $this->assertEquals(GameWoeScore::POINTS_LONGEST_HELD + GameWoeScore::POINTS_CASTLE_OWNER, $guild1Score->guild_score);
         $this->assertEquals(GameWoeScore::POINTS_FIRST_BREAK + GameWoeScore::POINTS_ATTENDED, $guild2Score->guild_score);
     }
+
+    public function testCastleOwnerIsAwardedExtraPoints()
+    {
+        // Create initial events for a guild
+        GameWoeEvent::create([
+            'castle' => 'Kriemhild',
+            'event' => GameWoeEvent::STARTED,
+            'guild_id' => 1,
+            'message' => 'Guild [Guild2]',
+            'created_at' => now()->addSeconds(20),
+            'processed' => false
+        ]);
+
+        GameWoeEvent::create([
+            'castle' => 'Kriemhild',
+            'event' => GameWoeEvent::ENDED,
+            'guild_id' => 1,
+            'message' => 'Guild [Guild2]',
+            'created_at' => now()->addSeconds(20),
+            'processed' => false
+        ]);
+
+        // Act
+        $action = new ProcessWoeEventPoints();
+        $action->handle('Kriemhild', today(), 1);
+
+        // Assert
+        $gameWoeScore = GameWoeScore::first();
+        $this->assertNotNull($gameWoeScore);
+        $this->assertEquals(GameWoeScore::POINTS_CASTLE_OWNER + GameWoeScore::POINTS_LONGEST_HELD, $gameWoeScore->guild_score);
+    }
+
 }
