@@ -192,4 +192,57 @@ class ProcessWoeEventPointsTest extends TestCase
         $this->assertEquals(GameWoeScore::POINTS_CASTLE_OWNER + GameWoeScore::POINTS_LONGEST_HELD, $gameWoeScore->guild_score);
     }
 
+    /** @test */
+    public function it_does_not_carry_score_across_two_castles()
+    {
+        GameWoeEvent::create([
+            'castle' => 'Kriemhild',
+            'event' => GameWoeEvent::STARTED,
+            'guild_id' => 1,
+            'season' => 1,
+            'message' => 'Guild [Guild2]',
+            'created_at' => now()->addSeconds(0),
+            'processed' => false
+        ]);
+
+        GameWoeEvent::create([
+            'castle' => 'Kriemhild',
+            'event' => GameWoeEvent::ENDED,
+            'guild_id' => 1,
+            'season' => 1,
+            'message' => 'Guild [Guild2]',
+            'created_at' => now()->addSeconds(20),
+            'processed' => false
+        ]);
+
+        GameWoeEvent::create([
+            'castle' => 'Swanhild',
+            'event' => GameWoeEvent::STARTED,
+            'guild_id' => 1,
+            'season' => 1,
+            'message' => 'Guild [Guild2]',
+            'created_at' => now()->addSeconds(0),
+            'processed' => false
+        ]);
+
+        GameWoeEvent::create([
+            'castle' => 'Swanhild',
+            'event' => GameWoeEvent::ENDED,
+            'guild_id' => 1,
+            'season' => 1,
+            'message' => 'Guild [Guild2]',
+            'created_at' => now()->addSeconds(20),
+            'processed' => false
+        ]);
+
+        (new ProcessWoeEventPoints())->handle('Kriemhild', today(), 1);
+        (new ProcessWoeEventPoints())->handle('Swanhild', today(), 1);
+
+        $scores = GameWoeScore::all();
+
+        $this->assertCount(2, $scores);
+
+        $this->assertEquals(GameWoeScore::POINTS_CASTLE_OWNER + GameWoeScore::POINTS_LONGEST_HELD, $scores[0]->guild_score);
+        $this->assertEquals(GameWoeScore::POINTS_CASTLE_OWNER + GameWoeScore::POINTS_LONGEST_HELD, $scores[1]->guild_score);
+    }
 }

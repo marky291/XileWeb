@@ -19,6 +19,7 @@ return new class extends Migration
                 $table->string('message', 500)->nullable();
                 $table->string('castle', 50)->nullable();
                 $table->integer('edition')->nullable();
+                $table->integer('season')->default(1);
                 $table->string('event')->nullable();
                 $table->integer('guild_id')->nullable();
                 $table->integer('player')->nullable();

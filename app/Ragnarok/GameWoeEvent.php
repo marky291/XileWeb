@@ -50,6 +50,7 @@ class GameWoeEvent extends RagnarokModel
         'message',
         'castle',
         'edition',
+        'season',
         'event',
         'guild_id',
         'player'

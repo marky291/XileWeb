@@ -20,22 +20,22 @@ class ProcessWoeEventPoints
 
     public function handle(string $castle, \DateTime $dateTime, int $season, bool $sendDiscordNotification = false)
     {
-        $events = $this->fetchEvents($castle, $dateTime);
+        $events = $this->fetchEvents($castle, $season, $dateTime);
 
         if ($events->count() <= 1) return;
 
         [$guildDurations, $guildAttended] = $this->processEvents($events);
 
-        $this->updateScores($guildDurations, $guildAttended, $events, $season);
+        $this->updateScores($guildDurations, $guildAttended, $events, $season, $castle);
 
         if ($sendDiscordNotification) {
             $this->sendDiscordNotification($castle, $guildDurations, $guildAttended, $events, $season);
         }
     }
 
-    private function fetchEvents(string $castle, \DateTime $dateTime)
+    private function fetchEvents(string $castle, int $season, \DateTime $dateTime)
     {
-        return GameWoeEvent::where(['processed' => false, 'castle' => $castle])
+        return GameWoeEvent::where(['processed' => false, 'castle' => $castle, 'season' => $season])
             ->whereDate('created_at', $dateTime->format('Y-m-d'))
             ->orderBy('created_at')
             ->get();
@@ -88,9 +88,9 @@ class ProcessWoeEventPoints
         return [$guildDurations, $guildAttended];
     }
 
-    private function updateScores($guildDurations, $guildAttended, $events, $season): void
+    private function updateScores($guildDurations, $guildAttended, $events, $season, $castle): void
     {
-        DB::transaction(function () use ($guildDurations, $guildAttended, $season, $events) {
+        DB::transaction(function () use ($guildDurations, $guildAttended, $season, $events, $castle) {
             $longestDurationGuildId = array_search(max($guildDurations), $guildDurations);
             $firstBreakGuild = optional($events->firstWhere('event', GameWoeEvent::BREAK));
 
@@ -101,7 +101,7 @@ class ProcessWoeEventPoints
             foreach ($guildDurations as $guild_id => $duration) {
                 if ($guild_id == 0) continue;
 
-                $score = GameWoeScore::firstOrNew(['guild_id' => $guild_id, 'season' => $season]);
+                $score = GameWoeScore::firstOrNew(['guild_id' => $guild_id, 'season' => $season, 'castle_name' => $castle]);
 
                 // set the guild name from events.
                 $guildName = $events->firstWhere('guild_id', $guild_id)->guild_name_from_message ?? '';
