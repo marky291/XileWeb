@@ -38,8 +38,18 @@
         </div>
     </section>
 
-    <section id="rates" class="bg-black relative overflow-hidden py-16 md:pt-24 lg:pt-32">
+    <section id="read-the-rules" class="bg-black relative overflow-hidden py-16 md:pt-32 hidden md:block">
+        <div class="max-w-screen-xl w-full mx-auto flex justify-between container md:text-center mb-0 bg-gray-900 p-4 rounded to-transparent">
+            <div class="no-underline text-gray-100 hover:text-amber-300 font-bold text-2xl">Connect with Low Ping, Globally</div>
+            <div class="no-underline text-amber-500 hover:text-amber-300 font-bold text-2xl" href=""><span class="text-gray-100">XileRO</span> | HyperDrive™  [<span class="text-gray-100">{{ config('xilero.hyperdrive.ip_address') }}</span>]</div>
+        </div>
+    </section>
+
+    <section id="rates" class="bg-black relative overflow-hidden py-16 md:pt-24 lg:pt-16">
         <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
+            <h2>Quick Stats</h2>
+{{--            <p class="mt-6 text-gray-300 leading-relaxed">Welcome to the world of Xilero, where unique adventures await! If you're new to our server or looking to enhance your gameplay experience, you've come to the right place. Our Getting Started guides are crafted to help players of all levels navigate the distinct features and mechanics that set Xilero apart.</p>--}}
+
             <div class="grid grid-cols-5 gap-8 text-gray-100 text-left">
             <div class="text-2xl col-span-2 md:col-span-1">
                 <h3>Max Level</h3>
