@@ -2,6 +2,9 @@
 
 return [
 
+    'hyperdrive' => [
+        'ip_address' => '15.197.157.22'
+    ],
     'woe_events' => [
         'season' => 1,
         'send_discord' => "18:00",
