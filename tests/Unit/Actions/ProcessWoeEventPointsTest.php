@@ -161,7 +161,7 @@ class ProcessWoeEventPointsTest extends TestCase
         $this->assertEquals(GameWoeScore::POINTS_FIRST_BREAK + GameWoeScore::POINTS_ATTENDED, $guild2Score->guild_score);
     }
 
-    public function testCastleOwnerIsAwardedExtraPoints()
+    public function test_CastleOwnerIsAwardedExtraPoints()
     {
         // Create initial events for a guild
         GameWoeEvent::create([
@@ -244,5 +244,137 @@ class ProcessWoeEventPointsTest extends TestCase
 
         $this->assertEquals(GameWoeScore::POINTS_CASTLE_OWNER + GameWoeScore::POINTS_LONGEST_HELD, $scores[0]->guild_score);
         $this->assertEquals(GameWoeScore::POINTS_CASTLE_OWNER + GameWoeScore::POINTS_LONGEST_HELD, $scores[1]->guild_score);
+    }
+
+    /** @test */
+    public function it_gives_1_point_to_attended_guild_with_multiple_attendences()
+    {
+        GameWoeEvent::create([
+            'castle' => 'Skoegul',
+            'event' => GameWoeEvent::STARTED,
+            'guild_id' => 1,
+            'season' => 1,
+            'message' => 'The [Skoegul] castle is currently held by the [Viexens] guild.',
+            'created_at' => now(),
+            'processed' => false
+        ]);
+        GameWoeEvent::create([
+            'castle' => 'Skoegul',
+            'event' => GameWoeEvent::ATTENDED,
+            'guild_id' => 1,
+            'season' => 1,
+            'message' => 'Guild [Viexens] has attended with member count greater than size [8].',
+            'created_at' => now()->addMinutes(1),
+            'processed' => false
+        ]);
+        GameWoeEvent::create([
+            'castle' => 'Skoegul',
+            'event' => GameWoeEvent::ATTENDED,
+            'guild_id' => 2,
+            'season' => 1,
+            'message' => 'Guild [.Bounty-Hunters.] has attended with member count greater than size [8].',
+            'created_at' => now()->addMinutes(2),
+            'processed' => false
+        ]);
+        GameWoeEvent::create([
+            'castle' => 'Skoegul',
+            'event' => GameWoeEvent::ATTENDED,
+            'guild_id' => 2,
+            'season' => 1,
+            'message' => 'Guild [.Bounty-Hunters.] has attended with member count greater than size [8].',
+            'created_at' => now()->addMinutes(3),
+            'processed' => false
+        ]);
+        GameWoeEvent::create([
+            'castle' => 'Skoegul',
+            'event' => GameWoeEvent::ATTENDED,
+            'guild_id' => 2,
+            'season' => 1,
+            'message' => 'Guild [.Bounty-Hunters.] has attended with member count greater than size [8].',
+            'created_at' => now()->addMinutes(4),
+            'processed' => false
+        ]);
+        GameWoeEvent::create([
+            'castle' => 'Skoegul',
+            'event' => GameWoeEvent::ATTENDED,
+            'guild_id' => 2,
+            'season' => 1,
+            'message' => 'Guild [.Bounty-Hunters.] has attended with member count greater than size [8].',
+            'created_at' => now()->addMinutes(5),
+            'processed' => false
+        ]);
+        GameWoeEvent::create([
+            'castle' => 'Skoegul',
+            'event' => GameWoeEvent::ATTENDED,
+            'guild_id' => 2,
+            'season' => 1,
+            'message' => 'Guild [.Bounty-Hunters.] has attended with member count greater than size [8].',
+            'created_at' => now()->addMinutes(6),
+            'processed' => false
+        ]);
+        GameWoeEvent::create([
+            'castle' => 'Skoegul',
+            'event' => GameWoeEvent::ATTENDED,
+            'guild_id' => 2,
+            'season' => 1,
+            'message' => 'Guild [.Bounty-Hunters.] has attended with member count greater than size [8].',
+            'created_at' => now()->addMinutes(7),
+            'processed' => false
+        ]);
+        GameWoeEvent::create([
+            'castle' => 'Skoegul',
+            'event' => GameWoeEvent::ATTENDED,
+            'guild_id' => 2,
+            'season' => 1,
+            'message' => 'Guild [.Bounty-Hunters.] has attended with member count greater than size [8].',
+            'created_at' => now()->addMinutes(8),
+            'processed' => false
+        ]);
+        GameWoeEvent::create([
+            'castle' => 'Skoegul',
+            'event' => GameWoeEvent::ATTENDED,
+            'guild_id' => 2,
+            'season' => 1,
+            'message' => 'Guild [.Bounty-Hunters.] has attended with member count greater than size [8].',
+            'created_at' => now()->addMinutes(9),
+            'processed' => false
+        ]);
+        GameWoeEvent::create([
+            'castle' => 'Skoegul',
+            'event' => GameWoeEvent::ATTENDED,
+            'guild_id' => 2,
+            'season' => 1,
+            'message' => 'Guild [.Bounty-Hunters.] has attended with member count greater than size [8].',
+            'created_at' => now()->addMinutes(10),
+            'processed' => false
+        ]);
+        GameWoeEvent::create([
+            'castle' => 'Skoegul',
+            'event' => GameWoeEvent::ATTENDED,
+            'guild_id' => 2,
+            'season' => 1,
+            'message' => 'Guild [.Bounty-Hunters.] has attended with member count greater than size [8].',
+            'created_at' => now()->addMinutes(10),
+            'processed' => false
+        ]);
+        GameWoeEvent::create([
+            'castle' => 'Skoegul',
+            'event' => GameWoeEvent::ENDED,
+            'guild_id' => 1,
+            'season' => 1,
+            'message' => 'The [Skoegul] castle has been conquered by the [Viexens] guild.',
+            'created_at' => now()->addMinutes(11),
+            'processed' => false
+        ]);
+
+        (new ProcessWoeEventPoints())->handle('Skoegul', today(), 1);
+
+        $scores = GameWoeScore::all();
+
+        $this->assertCount(2, $scores);
+
+        $this->assertEquals(GameWoeScore::POINTS_CASTLE_OWNER + GameWoeScore::POINTS_LONGEST_HELD + GameWoeScore::POINTS_ATTENDED, $scores[0]->guild_score);
+        $this->assertEquals(GameWoeScore::POINTS_ATTENDED, $scores[1]->guild_score);
+
     }
 }

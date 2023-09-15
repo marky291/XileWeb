@@ -98,20 +98,20 @@ class ProcessWoeEventPoints
                 return $event->event === GameWoeEvent::ENDED;
             })->last();
 
-            foreach ($guildDurations as $guild_id => $duration) {
+            $mergedGuilds = array_merge(array_keys($guildAttended), array_keys($guildDurations));
+
+            foreach (array_unique($mergedGuilds) as $guild_id) {
                 if ($guild_id == 0) continue;
 
                 $score = GameWoeScore::firstOrNew(['guild_id' => $guild_id, 'season' => $season, 'castle_name' => $castle]);
-
-                // set the guild name from events.
                 $guildName = $events->firstWhere('guild_id', $guild_id)->guild_name_from_message ?? '';
                 $score->guild_name = $guildName;
+                $score->castle_name = $events->first()->castle;
 
-                // New line to set castle_name
-                $score->castle_name = $events->first()->castle;  // Assuming all events have the same castle name
-
-                if ($guild_id == $longestDurationGuildId) {
-                    $score->guild_score += GameWoeScore::POINTS_LONGEST_HELD;
+                if (isset($guildDurations[$guild_id])) {
+                    if ($guild_id == $longestDurationGuildId) {
+                        $score->guild_score += GameWoeScore::POINTS_LONGEST_HELD;
+                    }
                 }
 
                 if ($firstBreakGuild && $firstBreakGuild->guild_id === $guild_id) {
@@ -122,7 +122,6 @@ class ProcessWoeEventPoints
                     $score->guild_score += GameWoeScore::POINTS_ATTENDED;
                 }
 
-                // Inside your foreach loop that iterates over $guildDurations
                 if ($winningGuildEvent && $guild_id == $winningGuildEvent->guild_id) {
                     $score->guild_score += GameWoeScore::POINTS_CASTLE_OWNER;
                 }
@@ -192,7 +191,7 @@ class ProcessWoeEventPoints
         if ($firstBreakGuild && $firstBreakGuild->getPlayerNameFromMessageAttribute()) {
             $highlights .= "────────────────────────────────\n";
             $highlights .= "**Highlights:**\n";
-            $highlights .= "First Castle Break by: **" . $firstBreakGuild->getPlayerNameFromMessageAttribute() . "**\n";
+            $highlights .= "First Castle Break by player: **" . $firstBreakGuild->getPlayerNameFromMessageAttribute() . "**\n";
         }
 
         $breakCounts = [];
