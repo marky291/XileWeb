@@ -18,11 +18,11 @@ class Kernel extends ConsoleKernel
         //$schedule->command('inspire')->everyFiveSeconds();
         $schedule->command('horizon:snapshot')->everyFiveMinutes();
 
-        $schedule->job(new PostGuildPointsToDiscordJob('Kriemhild', today()))->hourly()->withoutOverlapping();
-        $schedule->job(new PostGuildPointsToDiscordJob('Swanhild', today()))->hourly()->withoutOverlapping();
-        $schedule->job(new PostGuildPointsToDiscordJob('Fadhringh', today()))->hourly()->withoutOverlapping();
-        $schedule->job(new PostGuildPointsToDiscordJob('Skoegul', today()))->hourly()->withoutOverlapping();
-        $schedule->job(new PostGuildPointsToDiscordJob('Gondul', today()))->hourly()->withoutOverlapping();
+        $schedule->job(new PostGuildPointsToDiscordJob('Kriemhild', today()))->hourlyAt(5)->withoutOverlapping();
+        $schedule->job(new PostGuildPointsToDiscordJob('Swanhild', today()))->hourlyAt(5)->withoutOverlapping();
+        $schedule->job(new PostGuildPointsToDiscordJob('Fadhringh', today()))->hourlyAt(5)->withoutOverlapping();
+        $schedule->job(new PostGuildPointsToDiscordJob('Skoegul', today()))->hourlyAt(5)->withoutOverlapping();
+        $schedule->job(new PostGuildPointsToDiscordJob('Gondul', today()))->hourlyAt(5)->withoutOverlapping();
     }
 
     /**
