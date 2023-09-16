@@ -16,8 +16,8 @@
         <div class="z-0 absolute effect-light-blue-bang top-[20px] right-[140px]"></div>
         <div class="z-0 absolute effect-light-yellow-bang top-[20px] right-[180px]"></div>
         <div class="z-10 relative block-home max-w-screen-xl w-full mx-auto flex justify-between container md:text-center mb-0 bg-gray-900 p-4 py-8 rounded to-transparent">
-            <div class="no-underline text-gray-100 hover:text-amber-300 font-bold text-2xl">Connect with Low Ping, Globally</div>
-            <div class="no-underline text-amber-500 hover:text-amber-300 font-bold text-2xl" href=""><span class="text-gray-100">XileRO</span> | HyperDrive™  [<span class="text-gray-100">{{ config('xilero.hyperdrive.ip_address') }}</span>]</div>
+            <div class="no-underline text-gray-100 hover:text-amber-300 font-bold text-2xl cursor-pointer">Connect with Low Ping, Globally</div>
+            <div class="no-underline text-amber-500 hover:text-amber-300 font-bold text-2xl cursor-pointer" href=""><span class="text-gray-100">XileRO</span> | HyperDrive™  [<span class="text-gray-100 cursor-text">{{ config('xilero.hyperdrive.ip_address') }}</span>]</div>
         </div>
     </section>
 
