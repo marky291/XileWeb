@@ -56,19 +56,6 @@
     <div class="line"></div>
 
     <section id="steps2play" class="bg-clash-bg relative overflow-hidden py-12 px-24">
-        <div class="hidden lg:block absolute -right-2 bottom-40 pointer-events-none">
-            <svg x-data="{
-        initializeAnimation: false,
-        init() {
-            setTimeout(() => {
-                this.initializeAnimation = true;
-            }, 2000);
-        },
-    }" :class="initializeAnimation ? 'animate-cube' : ''" class="text-red-600 animate-cube" width="46" height="53" viewBox="0 0 46 53" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="m23.102 1 22.1 12.704v25.404M23.101 1l-22.1 12.704v25.404" stroke="currentColor" stroke-width="1.435" stroke-linejoin="bevel"></path><path d="m45.202 39.105-22.1 12.702L1 39.105" stroke="currentColor" stroke-width="1.435" stroke-linejoin="bevel"></path><path transform="matrix(.86698 .49834 .00003 1 1 13.699)" stroke="currentColor" stroke-width="1.435" stroke-linejoin="bevel" d="M0 0h25.491v25.405H0z"></path><path transform="matrix(.86698 -.49834 -.00003 1 23.102 26.402)" stroke="currentColor" stroke-width="1.435" stroke-linejoin="bevel" d="M0 0h25.491v25.405H0z"></path><path transform="matrix(.86701 -.49829 .86701 .49829 1 13.702)" stroke="currentColor" stroke-width="1.435" stroke-linejoin="bevel" d="M0 0h25.491v25.491H0z"></path>
-            </svg>
-        </div>
-        <span class="hidden absolute bg-radial-gradient opacity-[.15] pointer-events-none lg:inline-flex right-[-20%] top-0 w-[640px] h-[940px]"></span>
         <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
             <livewire:register lazy />
         </div>
