@@ -9,14 +9,14 @@
                     </a>
                 </div>
                 <ul aria-label="Desktop Navigation Menu" class="relative hidden lg:flex lg:items-center lg:justify-center lg:gap-6 xl:gap-10">
-                    <li><a class="rounded py-3 px-6 text-gray-100 hover:bg-amber-500 hover:text-gray-900 border-gray-500 hover:bg-opacity-90 bg-gray-900 bg-opacity-50"
+                    <li><a class="hover:bg-gradient-to-bl hover:from-blue-900 hover:to-fuchsia-700 rounded py-3 px-6 text-gray-100 border-gray-500 bg-gray-900 bg-opacity-50"
                            href="#steps2play" title="Register at XileRO">Register</a></li>
-                    <li><a class="rounded py-3 px-6 text-gray-100 hover:bg-amber-500 hover:text-gray-900 border-gray-500 hover:bg-opacity-90 bg-gray-900 bg-opacity-50"
+                    <li><a class="hover:bg-gradient-to-tr hover:from-blue-900 hover:to-fuchsia-700 rounded py-3 px-6 text-gray-100 border-gray-500 bg-gray-900 bg-opacity-50"
                            href="http://wiki.xileretro.net/index.php?title=Donation"
                            title="Donate to XileRO">Donate</a></li>
-                    <li><a class="rounded py-3 px-6 text-gray-100 hover:bg-amber-500 hover:text-gray-900 border-gray-500 hover:bg-opacity-90 bg-gray-900 bg-opacity-50"
+                    <li><a class="hover:bg-gradient-to-bl hover:from-blue-900 hover:to-fuchsia-700 rounded py-3 px-6 text-gray-100 border-gray-500 bg-gray-900 bg-opacity-50"
                            href="https://discord.gg/hp7CS6k" title="Join XileRO on Discord">Discord</a></li>
-                    <li><a class="rounded py-3 px-6 text-gray-100 hover:bg-amber-500 hover:text-gray-900 border-gray-500 hover:bg-opacity-90 bg-gray-900 bg-opacity-50"
+                    <li><a class="hover:bg-gradient-to-tr hover:from-blue-900 hover:to-fuchsia-700 rounded py-3 px-6 text-gray-100 border-gray-500 bg-gray-900 bg-opacity-50"
                            href="http://wiki.xileretro.net/index.php?title=Main_Page" title="XileRO Wiki Page">Wiki</a>
                     </li>
                 </ul>
@@ -31,11 +31,11 @@
                         </button>
                     </a>
                     <a target="_blank" rel="noopener"
-                       class="group relative inline-flex border border-amber-600 focus:outline-none hidden lg:ml-4 lg:inline-flex"
+                       class="btn btn-primary ml-12"
                        href="https://drive.google.com/file/d/1Kf6R_IF6VqSy_ZcqspbqgK0LAFAfA11o/view?usp=sharing"
                        title="Download XileRO">
                         <span
-                            class="w-full inline-flex items-center justify-center self-stretch px-4 py-2 text-sm text-gray-900 text-center font-bold uppercase bg-amber-500 ring-1 ring-amber-600 ring-offset-1 transform transition-transform group-hover:-translate-y-1  group-focus:-translate-y-1 group-focus:-translate-x-1">
+                            class="">
                             Download
                         </span>
                     </a>

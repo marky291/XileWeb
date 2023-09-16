@@ -29,139 +29,25 @@ hr.default {
     height: 86px;
 }
 
+.section-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.center-letter {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 140px; /* The width should match the font size to work properly */
+}
+
 .block-home {
-    background: url(https://clash-ro.net/home/themes/clashragnarok/images/block-top-bg.png) center top repeat-x;
+    background: url(../assets/block-top-bg.png) center top repeat-x;
     background-color: #12141f;
     box-shadow: 0 10px 15px 4px rgba(0,0,0,.3);
     border: 1px solid #191b2e;
-}
-
-.fire {
-
-}
-
-.fire-1 {
-    background: url(../assets/effects/fire-1.png) no-repeat;
-    width: 764px;
-    height: 313px;
-    transform: scale(.6);
-    animation: spark-1 4s linear infinite;
-    animation-delay: 1s;
-}
-
-.fire-2 {
-    background: url(../assets/effects/fire-2.png) no-repeat;
-    width: 149px;
-    height: 335px;
-    transform: scale(.6);
-    animation: spark-1 4s linear infinite;
-    animation-delay: 2s;
-}
-
-.fire-3 {
-    background: url(../assets/effects/fire-3.png) no-repeat;
-    width: 128px;
-    height: 165px;
-    transform: scale(.6);
-    animation: spark-3 4s linear infinite;
-    animation-delay: 2s;
-}
-
-.fire-big {
-    background: url(../assets/effects/fire-4.png) no-repeat;
-    width: 794px;
-    height: 176px;
-    transform: scale(.6);
-    animation: spark-5 4s linear infinite;
-}
-
-@keyframes spark-5{
-    0%{
-        bottom:-180px;
-        transform:scale(.6);
-        opacity:1
-    }
-    25%{
-        bottom:-120px;
-        transform:scale(.7);
-        opacity:1
-    }
-    50%{
-        bottom:-60px;
-        transform:scale(.8);
-        opacity:1
-    }
-    75%{
-        bottom:0;
-        transform:scale(.9);
-        opacity:.5
-    }
-    to{
-        bottom:60px;
-        transform:scale(1);
-        opacity:0
-    }
-}
-
-@keyframes spark-3{
-    0%{
-        bottom:-140px;
-        -webkit-transform:scale(.6);
-        transform:scale(.6);
-        opacity:1
-    }
-    25%{
-        bottom:-80px;
-        -webkit-transform:scale(.7);
-        transform:scale(.7);
-        opacity:1
-    }
-    50%{
-        bottom:-20px;
-        -webkit-transform:scale(.8);
-        transform:scale(.8);
-        opacity:1
-    }
-    75%{
-        bottom:40px;
-        -webkit-transform:scale(.9);
-        transform:scale(.9);
-        opacity:.5
-    }
-    to{
-        bottom:100px;
-        -webkit-transform:scale(1);
-        transform:scale(1);
-        opacity:0
-    }
-}
-
-@keyframes spark-1{
-    0%{
-        bottom:-320px;
-        transform:scale(.6);
-        opacity:1
-    }
-    25%{
-        bottom:-240px;
-        transform:scale(.7);
-        opacity:1
-    }
-    50%{
-        bottom:-160px;
-        transform:scale(.8);
-        opacity:1
-    }
-    75%{
-        bottom:-80px;
-        transform:scale(.9);
-        opacity:.5
-    }
-    to{
-        bottom:0;
-        transform:scale(1);
-        opacity:0
-    }
+    @apply hover:shadow-md hover:shadow-violet-500 transition duration-300 ease-in-out;
 }
 
 .effect-light-yellow-bang {

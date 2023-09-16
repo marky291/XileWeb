@@ -63,7 +63,7 @@
         crate.notify("⭒❃.✮: Welcome to XileRO, Dont forget to join our discord community! :✮.❃⭒")
     </script>
 
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+        <div class="min-h-screen">
 
 
         <div id="app" class="max-w-none">

@@ -1,14 +1,13 @@
 <x-app-layout>
 
-    <section class="shadow bg-clash-bg bg-right py-24 pt-80">
-        <div class="">
-            <h2 class="text-[140px] text-center tracking-[80px]">XILERO</h2>
-            <div class="fire relative">
-                <div class="fire-1 absolute top-20 right-[500px]"></div>
-                <div class="fire-2 absolute top-5 right-[500px]"></div>
-                <div class="fire-3 absolute top-5 right-[500px]"></div>
-                <div class="fire-big absolute top-5 right-[500px]"></div>
-            </div>
+    <section class="shadow bg-clash-bg bg-right py-20 pt-80">
+        <div class="section-div text-gray-100">
+            <span class="text-[140px] center-letter">X</span>
+            <span class="text-[140px] center-letter">I</span>
+            <span class="text-[140px] center-letter">L</span>
+            <span class="text-[140px] center-letter">E</span>
+            <span class="text-[140px] center-letter">R</span>
+            <span class="text-[140px] center-letter">O</span>
         </div>
     </section>
 
@@ -106,7 +105,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-span-4 md:col-span-2 lg:col-span-1 block-home">
+                <div class="col-span-4 md:col-span-2 lg:col-span-1 block-home hover:shadow-md hover:shadow-violet-500">
                     <a title="Essential Starter Packages & Guides for New Players" target="_blank" rel="noopener" href="https://wiki.xileretro.net/index.php?title=Newbie_Center">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
@@ -116,7 +115,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-span-4 md:col-span-2 lg:col-span-1 block-home">
+                <div class="col-span-4 md:col-span-2 lg:col-span-1 block-home hover:shadow-md hover:shadow-violet-500">
                     <a title="Discover Best Leveling Areas & Progression Tips on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xileretro.net/index.php?title=Leveling_Spots">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
@@ -126,7 +125,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-span-4 md:col-span-2 lg:col-span-1 block-home">
+                <div class="col-span-4 md:col-span-2 lg:col-span-1 block-home hover:shadow-md hover:shadow-violet-500">
                     <a title="Join our Discord Community Discussions" target="_blank" rel="noopener" href="https://discord.gg/hp7CS6k">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
@@ -136,7 +135,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-span-4 md:col-span-2 lg:col-span-1 block-home">
+                <div class="col-span-4 md:col-span-2 lg:col-span-1 block-home hover:shadow-md hover:shadow-violet-500">
                     <a title="Learn about the Donation Help & Rewards on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xileretro.net/index.php?title=Donation">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
@@ -146,7 +145,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-span-4 md:col-span-2 lg:col-span-1 block-home">
+                <div class="col-span-4 md:col-span-2 lg:col-span-1 block-home hover:shadow-md hover:shadow-violet-500">
                     <a title="Explore the MVP Ranking System on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xileretro.net/index.php?title=MVP">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
@@ -156,7 +155,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-span-4 md:col-span-2 lg:col-span-1 block-home">
+                <div class="col-span-4 md:col-span-2 lg:col-span-1 block-home hover:shadow-md hover:shadow-violet-500">
                     <a title="Discover Randomised Weapons Loots on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xileretro.net/index.php?title=MVP">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
@@ -166,7 +165,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-span-4 md:col-span-2 lg:col-span-1 block-home">
+                <div class="col-span-4 md:col-span-2 lg:col-span-1 block-home hover:shadow-md hover:shadow-violet-500">
                     <a title="Explore the Wikipedia Knowledge Base on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xileretro.net/index.php?title=MVP">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
