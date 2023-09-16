@@ -1,87 +1,62 @@
 <x-app-layout>
 
-    <section class="shadow bg-[url('../assets/test.jpeg')] bg-fixed bg-cover bg-right md:pt-16">
-        <div class="container grid px-3 sm:px-0 grid-cols-5 gap-4 mx-auto py-12">
-            <div class="col-span-6 pt-20 pb-4">
-                <div class="">
-                    <div class="text-gray-300 tracking-normal text-lg text-center">
-                        @if (session('message'))
-                            <div class="alert alert-info">
-                                <h3 class="mb-6 text-gray-500 text-3xl">{{ session('message') }}</h3>
-                            </div>
-                        @endif
-{{--                        <p class="mb-20 text-3xl text-white">Welcome to</p>--}}
-                            <div class="relative pt-20 pb-10 md:py-48 flex text-left md:justify-center items-center">
-                                <h2 class="text-[107px] md:text-[182px] absolute text-black drop-shadow-lg tracking-widest" style="font-family: 'Bonechiller', sans-serif;">XILERO</h2>
-                                <h2 class="text-[100px] md:text-[175px] absolute text-amber-400 drop-shadow-lg tracking-widest" style="font-family: 'Bonechiller', sans-serif;">XILE<span class="text-amber-500">RO</span></h2>
-                            </div>
-
-{{--                        <p class="text-xl text-gray-200">Private Ragnarok Online Server</p>--}}
-{{--                        <p>--}}
-{{--                            Step into the thrilling world of XileRO, the ultimate destination for retro PK gaming. Engage in epic battles with monsters, unleash powerful magic, and embark on adventurous quests with companions and foes alike. XileRO offers a unique PK server experience, filled with rich mechanics and a one-of-a-kind retro style. Join the excitement, fight for leadership, power, and glory, and discover what makes XileRO a leading choice for PK enthusiasts. Your journey in the world of XileRO awaits – where the battle never ends and adventure is just a click away!--}}
-{{--                        </p>--}}
-{{--                        <p>--}}
-{{--                            We secured the platform using the latest Gepard 3.0 security systems that helps prevents hacks--}}
-{{--                            and macros to ultimately provide a solid foundation for future growth--}}
-{{--                            internally and externally. We are not just here for the old players,--}}
-{{--                            we are also here for the new~ So log in and pawn some noobs!!--}}
-{{--                        </p>--}}
-                    </div>
-{{--                    <div class="my-10 quick-links grid-rows-2 grid">--}}
-{{--                        <a href="#steps2play" class="my-2 w-full no-underline btn text-left mt-2 btn-primary" target="_blank" rel="noopener">Create a Game Account</a>--}}
-{{--                        <a href="{{ config('downloads.full')[0]['link'] }}" class="my-2 w-full no-underline btn text-left mt-2 btn-primary" target="_blank" rel="noopener">--}}
-{{--                            {{ config('downloads.full')[array_key_first(config('downloads.full'))]['name'] }}--}}
-{{--                        </a>--}}
-{{--                    </div>--}}
-                </div>
+    <section class="shadow bg-clash-bg bg-right py-24 pt-80">
+        <div class="">
+            <h2 class="text-[140px] text-center tracking-[80px]">XILERO</h2>
+            <div class="fire relative">
+                <div class="fire-1 absolute top-20 right-[500px]"></div>
+                <div class="fire-2 absolute top-5 right-[500px]"></div>
+                <div class="fire-3 absolute top-5 right-[500px]"></div>
+                <div class="fire-big absolute top-5 right-[500px]"></div>
             </div>
         </div>
     </section>
 
-    <section id="read-the-rules" class="bg-black relative overflow-hidden py-16 md:pt-32 hidden md:block">
-        <div class="max-w-screen-xl w-full mx-auto flex justify-between container md:text-center mb-0 bg-gray-900 p-4 rounded to-transparent">
+
+    <section id="read-the-rules" class="bg-clash-bg relative rounded-lg overflow-hidden py-24 md:pt-32 hidden md:block">
+        <div class="z-0 absolute effect-light-blue-bang top-[20px] right-[140px]"></div>
+        <div class="z-0 absolute effect-light-yellow-bang top-[20px] right-[180px]"></div>
+        <div class="z-10 relative block-home max-w-screen-xl w-full mx-auto flex justify-between container md:text-center mb-0 bg-gray-900 p-4 py-8 rounded to-transparent">
             <div class="no-underline text-gray-100 hover:text-amber-300 font-bold text-2xl">Connect with Low Ping, Globally</div>
             <div class="no-underline text-amber-500 hover:text-amber-300 font-bold text-2xl" href=""><span class="text-gray-100">XileRO</span> | HyperDrive™  [<span class="text-gray-100">{{ config('xilero.hyperdrive.ip_address') }}</span>]</div>
         </div>
     </section>
 
-    <section id="rates" class="bg-black relative overflow-hidden py-16 md:pt-24 lg:pt-16">
-        <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
-            <h2>Quick Stats</h2>
+{{--    <section id="rates" class="bg-clash-bg relative overflow-hidden py-16 md:pt-24 lg:pt-16">--}}
+{{--        <div class="max-w-screen-xl w-full mx-auto lg:px-8 px-5">--}}
+{{--            <h2>Quick Stats</h2>--}}
 {{--            <p class="mt-6 text-gray-300 leading-relaxed">Welcome to the world of Xilero, where unique adventures await! If you're new to our server or looking to enhance your gameplay experience, you've come to the right place. Our Getting Started guides are crafted to help players of all levels navigate the distinct features and mechanics that set Xilero apart.</p>--}}
 
-            <div class="grid grid-cols-5 gap-8 text-gray-100 text-left">
-            <div class="text-2xl col-span-2 md:col-span-1">
-                <h3>Max Level</h3>
-                <p class="text-5xl lg:text-7xl text-amber-400">{{ config('xilero.max_level') }}</p>
-            </div>
-            <div class="text-2xl col-span-2 md:col-span-1">
-                <h3>Max Job</h3>
-                <p class="text-5xl lg:text-7xl text-amber-400">{{ config('xilero.max_job') }}</p>
-            </div>
-            <div class="text-2xl col-span-2 md:col-span-1">
-                <h3>Base EXP</h3>
-                <p class="text-5xl lg:text-7xl text-amber-400">{{ config('xilero.base_exp') }}</p>
-            </div>
-            <div class="text-2xl col-span-2 md:col-span-1">
-                <h3>Job EXP</h3>
-                <p class="text-5xl lg:text-7xl text-amber-400">{{ config('xilero.job_exp') }}</p>
-            </div>
-            <div class="text-2xl col-span-2 md:col-span-1">
-                <h3>Card Drops</h3>
-                <p class="text-5xl lg:text-7xl text-amber-400">{{ config('xilero.card_drops') }}</p>
-            </div>
-        </div>
-            <p class="tracking-widest text-gray-100 text-xl mt-6 bg-gradient-to-r from-gray-800 to-transparent py-1 rounded px-2">Custom Built Mechanics & Gameplay</p>
-        </div>
-    </section>
-
-    <div class="hidden md:block">
-        <x-latest-post-preview lazy/>
-    </div>
+{{--            <div class="grid grid-cols-5 gap-8 text-gray-100 text-left">--}}
+{{--            <div class="text-2xl col-span-2 md:col-span-1">--}}
+{{--                <h3>Max Level</h3>--}}
+{{--                <p class="text-5xl lg:text-7xl text-amber-200">{{ config('xilero.max_level') }}</p>--}}
+{{--            </div>--}}
+{{--            <div class="text-2xl col-span-2 md:col-span-1">--}}
+{{--                <h3>Max Job</h3>--}}
+{{--                <p class="text-5xl lg:text-7xl text-amber-200">{{ config('xilero.max_job') }}</p>--}}
+{{--            </div>--}}
+{{--            <div class="text-2xl col-span-2 md:col-span-1">--}}
+{{--                <h3>Base EXP</h3>--}}
+{{--                <p class="text-5xl lg:text-7xl text-amber-200">{{ config('xilero.base_exp') }}</p>--}}
+{{--            </div>--}}
+{{--            <div class="text-2xl col-span-2 md:col-span-1">--}}
+{{--                <h3>Job EXP</h3>--}}
+{{--                <p class="text-5xl lg:text-7xl text-amber-200">{{ config('xilero.job_exp') }}</p>--}}
+{{--            </div>--}}
+{{--            <div class="text-2xl col-span-2 md:col-span-1">--}}
+{{--                <h3>Card Drops</h3>--}}
+{{--                <p class="text-5xl lg:text-7xl text-amber-200">{{ config('xilero.card_drops') }}</p>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--            <p class="tracking-widest text-gray-100 text-xl mt-6 bg-gradient-to-r from-violet-800 to-transparent py-1 rounded px-2">Custom Built Mechanics & Gameplay</p>--}}
+{{--        </div>--}}
+{{--    </section>--}}
 
 
-    <section id="steps2play" class="bg-black relative overflow-hidden py-16 md:pt-24 lg:pt-32">
+    <div class="line"></div>
+
+    <section id="steps2play" class="bg-clash-bg relative overflow-hidden py-12 px-24">
         <div class="hidden lg:block absolute -right-2 bottom-40 pointer-events-none">
             <svg x-data="{
         initializeAnimation: false,
@@ -100,6 +75,12 @@
         </div>
     </section>
 
+    <div class="line"></div>
+    <div class="hidden md:block">
+        <x-latest-post-preview lazy/>
+    </div>
+    <div class="line"></div>
+
     {{-- <section id="mvprankingladder" class="container mx-auto grid">
         <h2>MVP Ladder</h2>
         @foreach (App\Ragnarok\MvpLadderRank::orderByDesc('day_kills')->limit(3)->get() as $rank)
@@ -110,12 +91,12 @@
         @endforeach
     </section> --}}
 
-    <section id="important-links" class="relative overflow-hidden py-16 md:pt-32 bg-black">
+    <section id="important-links" class="relative overflow-hidden py-8 bg-clash-bg">
         <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
             <h2>Getting Started</h2>
             <p class="mt-6 text-gray-300 leading-relaxed">Welcome to the world of Xilero, where unique adventures await! If you're new to our server or looking to enhance your gameplay experience, you've come to the right place. Our Getting Started guides are crafted to help players of all levels navigate the distinct features and mechanics that set Xilero apart.</p>
             <div class="grid grid-cols-4 gap-12 mt-14">
-                <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 hover:bg-gray-800 rounded">
+                <div class="col-span-4 md:col-span-2 lg:col-span-1 block-home">
                     <a title="Learn more about Server Information & Features on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xileretro.net/index.php?title=Server_Information">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
@@ -125,7 +106,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 hover:bg-gray-800 rounded">
+                <div class="col-span-4 md:col-span-2 lg:col-span-1 block-home">
                     <a title="Essential Starter Packages & Guides for New Players" target="_blank" rel="noopener" href="https://wiki.xileretro.net/index.php?title=Newbie_Center">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
@@ -135,7 +116,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 hover:bg-gray-800 rounded">
+                <div class="col-span-4 md:col-span-2 lg:col-span-1 block-home">
                     <a title="Discover Best Leveling Areas & Progression Tips on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xileretro.net/index.php?title=Leveling_Spots">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
@@ -145,7 +126,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 hover:bg-gray-800 rounded">
+                <div class="col-span-4 md:col-span-2 lg:col-span-1 block-home">
                     <a title="Join our Discord Community Discussions" target="_blank" rel="noopener" href="https://discord.gg/hp7CS6k">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
@@ -155,7 +136,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 hover:bg-gray-800 rounded">
+                <div class="col-span-4 md:col-span-2 lg:col-span-1 block-home">
                     <a title="Learn about the Donation Help & Rewards on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xileretro.net/index.php?title=Donation">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
@@ -165,7 +146,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 hover:bg-gray-800 rounded">
+                <div class="col-span-4 md:col-span-2 lg:col-span-1 block-home">
                     <a title="Explore the MVP Ranking System on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xileretro.net/index.php?title=MVP">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
@@ -175,7 +156,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 hover:bg-gray-800 rounded">
+                <div class="col-span-4 md:col-span-2 lg:col-span-1 block-home">
                     <a title="Discover Randomised Weapons Loots on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xileretro.net/index.php?title=MVP">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
@@ -185,7 +166,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 hover:bg-gray-800 rounded">
+                <div class="col-span-4 md:col-span-2 lg:col-span-1 block-home">
                     <a title="Explore the Wikipedia Knowledge Base on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xileretro.net/index.php?title=MVP">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
@@ -235,7 +216,9 @@
         </div>
     </section> --}}
 
-    <section id="important-links" class="bg-black mx-auto px-5 pt-16 pb-24 md:pt-24 lg:pt-32">
+    <div class="line"></div>
+
+    <section id="uber-store" class="bg-clash-bg mx-auto py-5 pt-8 pb-24">
         <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
             <div class="">
                 <div class="grid grid-cols-2">
@@ -248,8 +231,8 @@
             <div class="">
                 <ul class="mt-10 relative grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     @foreach (config('donation.items') as $item)
-                        <li>
-                            <a id="{{ Str::slug($item['name']) }}" title="Uber Shop Item {{ $item['name'] }}" aria-label="Uber Shop Item {{ $item['name'] }}" href="https://wiki.xileretro.net/index.php?title=Donation" class="donation-item flex p-4 border rounded border-black bg-gray-900 border-opacity-60 hover:border-amber-500 hover:cursor-pointer hover:shadow-md">
+                        <li class="block-home p-6">
+                            <a id="{{ Str::slug($item['name']) }}" title="Uber Shop Item {{ $item['name'] }}" aria-label="Uber Shop Item {{ $item['name'] }}" href="https://wiki.xileretro.net/index.php?title=Donation" class="flex">
                                 <div class="relative shrink-0 bg-breeze flex items-center justify-center rounded-lg overflow-hidden" style="height:100px; width:75px;">
                                     {{-- <span class="absolute w-full h-full inset-0 bg-gradient-to-b from-[rgba(255,255,255,.2)] to-[rgba(255,255,255,0)]"></span> --}}
                                     <img src="/images/donations/{{ $item['image'] }}" alt="{{ $item['name'] }} Item" class="relative" width="75" height="100">
@@ -259,7 +242,7 @@
                                     <div class="mt-1 text-sm text-gray-300">{{ $item['description'] }} <br> {{ $item['stats'] }}</div>
                                     <div class="mt-1 text-sm text-amber-500 font-bold">{{ $item['cost'] }} Ubers</div>
                                     @if(isset($set))
-                                        <div class="mt-1 text-sm text-amber-300 font-bold">Click to view Item Set Bonus</div>
+                                        <div class="mt-1 text-sm text-amber-200 font-bold">Click to view Item Set Bonus</div>
                                     @endif
                                 </div>
                             </a>
@@ -271,20 +254,22 @@
 
     </section>
 
-    <section id="prontera-castles" class="bg-black hidden lg:block relative overflow-hidden py-16 md:pt-32">
+    <div class="line"></div>
+
+    <section id="prontera-castles" class="bg-clash-bg hidden lg:block relative overflow-hidden py-8">
         <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
             <div class="container mx-auto rounded">
                 <div class="">
                     <div class="text-gray-100 flex justify-between">
                         <h2>Woe Times</h2>
-                        <a class="text-amber-500 text-lg hover:text-underline" href="{{ route('woe') }}">View More</a>
+                        <a class="text-amber-200 text-lg hover:text-underline" href="{{ route('woe') }}">View More</a>
                     </div>
                     <p class="mt-6 text-gray-300 leading-relaxed mb-8">Prepare for battle and mark your calendars! The War of Emperium on Xilero takes place across various timezones, ensuring that warriors from all corners of the world can join the fight. Find the schedule that fits your timezone below and rally your guild for the epic clashes in the specified castles.</p>
                 </div>
                 <div class="grid grid-cols-5 gap-5">
                     @foreach ($prontera_castles as $castle)
-                        <div class="mb-4 bg-gray-900 bg-opacity-70 rounded p-5">
-                            <h3 class="text-amber-500 text-2xl mb-8 half-border">{{ $castle->name }}</h3>
+                        <div class="mb-4 block-home bg-opacity-70 rounded p-5">
+                            <h3 class="text-amber-200 text-2xl mb-8 half-border">{{ $castle->name }}</h3>
                             @foreach(config('castles.timezones') as $timezone)
                                 <div class="text-white mb-8 flex rounded">
                                     <div class="mr-3">
@@ -340,7 +325,9 @@
         </section>
     --}}
 
-    <section id="important-links" class="relative overflow-hidden py-16 md:pt-32 bg-black">
+    <div class="line"></div>
+
+    <section id="important-links" class="bg-clash-bg relative overflow-hidden py-8 pb-32">
         <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
             <h2>Server Vending</h2>
             <p class="mt-6 text-gray-300 leading-relaxed">Currently in beta, live vending data allows you to search for item IDs to check availability, price, and vendor location. Future feature updates will enhance support.</p>
@@ -351,39 +338,39 @@
     </section>
 
 
-    <section id="read-the-rules" class="bg-black relative overflow-hidden py-16 md:pt-32 hidden md:block">
-        <div class="max-w-screen-xl w-full mx-auto px-5 container text-left md:text-center mb-20">
-            <h2 class="mb-8 tracking-widest important-title text-blue-500" style="font-size: 2.5em"><a target="_blank" rel="noopener noreferrer" class="no-underline text-amber-500 hover:text-amber-300 font-bold" href=""><span class="text-gray-100">XileRO PK</span> | Third Jobs</a></h2>
-            <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5 mt-20">
-                <div class="grid grid-cols-3 gap-12 text-gray-100 text-center mt-8">
-                    <div class="bg-gray-800 bg-opacity-90 rounded text-gray-100 hover:bg-amber-500 hover:text-gray-900">
-                        <a target="_blank" rel="noopener noreferrer" title="XileRO PK Third Jobs Download" aria-label="XileRO PK Third Jobs Download" href="https://drive.google.com/drive/folders/1EGeKownNt1cYne1e173OshhbYj31-mh-?usp=sharing">
-                            <img class="object-cover w-full rounded h-44" style="margin:0" src="{{ asset('assets/third-jobs/download.webp') }}" alt="XileRO PK Third Jobs Download Image">
-                            <div class="p-4">
-                                XileRO PK Download
-                            </div>
-                        </a>
-                    </div>
-                    <div class="bg-gray-800 bg-opacity-90 rounded text-gray-100 hover:bg-amber-500 hover:text-gray-900">
-                        <a target="_blank" rel="noopener noreferrer" title="XileRO PK Third Jobs Facebook" aria-label="XileRO PK Third Jobs Facebook" href="https://www.facebook.com/groups/670800967076806/">
-                            <img class="object-cover w-full rounded h-44" style="margin:0" src="{{ asset('assets/third-jobs/facebook.jpeg') }}" alt="XileRO PK Third Jobs Facebook Image">
-                            <div class="p-4">
-                                XileRO PK Facebook
-                            </div>
-                        </a>
-                    </div>
-                    <div class="bg-gray-800 bg-opacity-90 rounded text-gray-100 hover:bg-amber-500 hover:text-gray-900">
-                        <a target="_blank" rel="noopener noreferrer" title="XileRO PK Third Jobs Discord" aria-label="XileRO PK Third Jobs Discord" href="https://discord.com/invite/cFd4FZupDV">
-                            <img class="object-cover w-full rounded h-44" style="margin:0" src="{{ asset('assets/third-jobs/discord.jpeg') }}" alt="XileRO PK Third Jobs Discord Image">
-                            <div class="p-4">
-                                XileRO PK Discord
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+{{--    <section id="read-the-rules" class="bg-black relative overflow-hidden py-16 md:pt-32 hidden md:block">--}}
+{{--        <div class="max-w-screen-xl w-full mx-auto px-5 container text-left md:text-center mb-20">--}}
+{{--            <h2 class="mb-8 tracking-widest important-title text-blue-500" style="font-size: 2.5em"><a target="_blank" rel="noopener noreferrer" class="no-underline text-amber-500 hover:text-amber-300 font-bold" href=""><span class="text-gray-100">XileRO PK</span> | Third Jobs</a></h2>--}}
+{{--            <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5 mt-20">--}}
+{{--                <div class="grid grid-cols-3 gap-12 text-gray-100 text-center mt-8">--}}
+{{--                    <div class="bg-gray-800 bg-opacity-90 rounded text-gray-100 hover:bg-amber-500 hover:text-gray-900">--}}
+{{--                        <a target="_blank" rel="noopener noreferrer" title="XileRO PK Third Jobs Download" aria-label="XileRO PK Third Jobs Download" href="https://drive.google.com/drive/folders/1EGeKownNt1cYne1e173OshhbYj31-mh-?usp=sharing">--}}
+{{--                            <img class="object-cover w-full rounded h-44" style="margin:0" src="{{ asset('assets/third-jobs/download.webp') }}" alt="XileRO PK Third Jobs Download Image">--}}
+{{--                            <div class="p-4">--}}
+{{--                                XileRO PK Download--}}
+{{--                            </div>--}}
+{{--                        </a>--}}
+{{--                    </div>--}}
+{{--                    <div class="bg-gray-800 bg-opacity-90 rounded text-gray-100 hover:bg-amber-500 hover:text-gray-900">--}}
+{{--                        <a target="_blank" rel="noopener noreferrer" title="XileRO PK Third Jobs Facebook" aria-label="XileRO PK Third Jobs Facebook" href="https://www.facebook.com/groups/670800967076806/">--}}
+{{--                            <img class="object-cover w-full rounded h-44" style="margin:0" src="{{ asset('assets/third-jobs/facebook.jpeg') }}" alt="XileRO PK Third Jobs Facebook Image">--}}
+{{--                            <div class="p-4">--}}
+{{--                                XileRO PK Facebook--}}
+{{--                            </div>--}}
+{{--                        </a>--}}
+{{--                    </div>--}}
+{{--                    <div class="bg-gray-800 bg-opacity-90 rounded text-gray-100 hover:bg-amber-500 hover:text-gray-900">--}}
+{{--                        <a target="_blank" rel="noopener noreferrer" title="XileRO PK Third Jobs Discord" aria-label="XileRO PK Third Jobs Discord" href="https://discord.com/invite/cFd4FZupDV">--}}
+{{--                            <img class="object-cover w-full rounded h-44" style="margin:0" src="{{ asset('assets/third-jobs/discord.jpeg') }}" alt="XileRO PK Third Jobs Discord Image">--}}
+{{--                            <div class="p-4">--}}
+{{--                                XileRO PK Discord--}}
+{{--                            </div>--}}
+{{--                        </a>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </section>--}}
 
     {{-- <section id="communities" class="p-20">
         <h2>Community</h2>

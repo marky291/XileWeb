@@ -93,7 +93,7 @@
                     </div>
                 </div>
                 <div class="flex justify-start">
-                    <button wire:click="register" class="btn w-auto py-12 text-left mt-4 xilero-button">
+                    <button wire:click="register" class="btn btn-primary w-auto py-12 text-left mt-4">
                         <span>Register Account</span>
                     </button>
                 </div>
@@ -163,22 +163,6 @@
                 </div>
             </div>
         </div>
-
-{{--        <div class="">--}}
-{{--            <h2 class="mt-0 mb-6 text-3xl font-bold text-gray-100"><span class="mr-2">2.</span> Download Lite Client</h2>--}}
-{{--            <div class="grid grid-cols-5">--}}
-{{--                <div class="col-span-1 hidden md:block">--}}
-{{--                    <i class="fas fa-compact-disc step2-icon text-gray-300"></i>--}}
-{{--                </div>--}}
-{{--                <div class="col-span-5 md:col-span-4 grid gap-5 grid-cols-1 grid-rows-3">--}}
-{{--                    @foreach(config('downloads.lite') as $item)--}}
-{{--                        <a class="no-underline truncate ... btn text-left {{ $item['bttn'] }}" href="{{ $item['link'] }}" target="_blank" rel="noopener">--}}
-{{--                            {{ $item['name'] }}--}}
-{{--                        </a>--}}
-{{--                    @endforeach--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
 
     </div>
 </div>

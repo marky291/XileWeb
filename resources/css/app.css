@@ -21,6 +21,182 @@ hr.default {
     @apply rounded;
     @apply font-normal;
 }
+.line {
+    display: block;
+    background: url(../assets/line.png) center no-repeat;
+    width: 100%;
+    overflow-x: hidden;
+    height: 86px;
+}
+
+.block-home {
+    background: url(https://clash-ro.net/home/themes/clashragnarok/images/block-top-bg.png) center top repeat-x;
+    background-color: #12141f;
+    box-shadow: 0 10px 15px 4px rgba(0,0,0,.3);
+    border: 1px solid #191b2e;
+}
+
+.fire {
+
+}
+
+.fire-1 {
+    background: url(../assets/effects/fire-1.png) no-repeat;
+    width: 764px;
+    height: 313px;
+    transform: scale(.6);
+    animation: spark-1 4s linear infinite;
+    animation-delay: 1s;
+}
+
+.fire-2 {
+    background: url(../assets/effects/fire-2.png) no-repeat;
+    width: 149px;
+    height: 335px;
+    transform: scale(.6);
+    animation: spark-1 4s linear infinite;
+    animation-delay: 2s;
+}
+
+.fire-3 {
+    background: url(../assets/effects/fire-3.png) no-repeat;
+    width: 128px;
+    height: 165px;
+    transform: scale(.6);
+    animation: spark-3 4s linear infinite;
+    animation-delay: 2s;
+}
+
+.fire-big {
+    background: url(../assets/effects/fire-4.png) no-repeat;
+    width: 794px;
+    height: 176px;
+    transform: scale(.6);
+    animation: spark-5 4s linear infinite;
+}
+
+@keyframes spark-5{
+    0%{
+        bottom:-180px;
+        transform:scale(.6);
+        opacity:1
+    }
+    25%{
+        bottom:-120px;
+        transform:scale(.7);
+        opacity:1
+    }
+    50%{
+        bottom:-60px;
+        transform:scale(.8);
+        opacity:1
+    }
+    75%{
+        bottom:0;
+        transform:scale(.9);
+        opacity:.5
+    }
+    to{
+        bottom:60px;
+        transform:scale(1);
+        opacity:0
+    }
+}
+
+@keyframes spark-3{
+    0%{
+        bottom:-140px;
+        -webkit-transform:scale(.6);
+        transform:scale(.6);
+        opacity:1
+    }
+    25%{
+        bottom:-80px;
+        -webkit-transform:scale(.7);
+        transform:scale(.7);
+        opacity:1
+    }
+    50%{
+        bottom:-20px;
+        -webkit-transform:scale(.8);
+        transform:scale(.8);
+        opacity:1
+    }
+    75%{
+        bottom:40px;
+        -webkit-transform:scale(.9);
+        transform:scale(.9);
+        opacity:.5
+    }
+    to{
+        bottom:100px;
+        -webkit-transform:scale(1);
+        transform:scale(1);
+        opacity:0
+    }
+}
+
+@keyframes spark-1{
+    0%{
+        bottom:-320px;
+        transform:scale(.6);
+        opacity:1
+    }
+    25%{
+        bottom:-240px;
+        transform:scale(.7);
+        opacity:1
+    }
+    50%{
+        bottom:-160px;
+        transform:scale(.8);
+        opacity:1
+    }
+    75%{
+        bottom:-80px;
+        transform:scale(.9);
+        opacity:.5
+    }
+    to{
+        bottom:0;
+        transform:scale(1);
+        opacity:0
+    }
+}
+
+.effect-light-yellow-bang {
+    background: url("../assets/effects/yellow-light.png");
+    width: 300px;
+    height: 300px;
+
+    animation: reverse-spin 2s linear infinite;
+
+    @keyframes spin {
+        from {
+            transform: rotate(360deg);
+        }
+        to {
+            transform: rotate(0deg);
+        }
+    }
+}
+
+.effect-light-blue-bang {
+    background: url("../assets/effects/light-blue.png");
+    width: 350px;
+    height: 350px;
+
+    animation: spin 15s linear infinite;
+
+    @keyframes spin {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
+}
 
 .text-branding {
     color: #a52a2a;
@@ -135,12 +311,37 @@ section.landing .feature-bg-img {
         @apply text-white text-4xl mb-7;
     }
     .btn-primary {
-        @apply transition duration-300 items-center w-full border-none text-left bg-amber-500 hover:bg-gray-100 cursor-pointer text-gray-900 border text-gray-900;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        border: none;
+        color: #ffffff!important;
+        font-size: 12px;
+        position: relative;
+        z-index: 1;
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        box-shadow: 0 0 22px 5px rgba(59,36,151,.2), 0 10px 15px 4px rgba(0,0,0,.3);
+
+        @apply bg-gradient-to-br from-blue-900 to-fuchsia-700 hover:bg-gradient-to-bl hover:from-blue-900 hover:to-fuchsia-700;
     }
 
     .btn-secondary {
-        @apply transition duration-300 items-center w-full border-none text-left bg-amber-300 hover:bg-gray-100 cursor-pointer text-gray-900 border text-gray-900;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        border: none;
+        color: #ffffff!important;
+        font-size: 12px;
+        position: relative;
+        z-index: 1;
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        box-shadow: 0 0 22px 5px rgba(59,36,151,.2), 0 10px 15px 4px rgba(0,0,0,.3);
+
+        @apply bg-gradient-to-br from-blue-900 to-fuchsia-700 hover:bg-gradient-to-bl hover:from-blue-900 hover:to-fuchsia-700;
     }
+
 
     .btn-discord {
         @apply items-center w-full border-none text-left bg-indigo-600 hover:bg-indigo-400 cursor-pointer text-white border font-bold;

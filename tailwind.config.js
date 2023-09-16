@@ -18,6 +18,8 @@ export default {
         extend: {
             colors: {
                 gray: colors.zinc,
+                'clash-bg': '#0b0d16',
+                'clash-foot': '#04060c',
             },
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],

@@ -72,7 +72,7 @@
 
             <!-- Page Heading -->
             @if (isset($header))
-                <header class="bg-white dark:bg-gray-800 shadow">
+                <header class="bg-clash-foot shadow">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                         {{ $header }}
                     </div>
@@ -80,11 +80,11 @@
             @endif
 
             <!-- Page Content -->
-            <main>
+            <main class="bg-clash-bg">
                 {{ $slot }}
             </main>
 
-                <footer id="footer" class="bg-gray-900 shadow-inner">
+                <footer id="footer" class="bg-clash-foot shadow-inner">
                     <div class="container px-3 md:px-0 grid grid-cols-2 col-gap-1 pt-12 mx-auto pb-15 content">
                         <div class="col-span-2 lg:col-span-1">
                             {{-- <img src="/images/logo.png" alt="XileRetro Logo" class="w-1/2"> --}}
