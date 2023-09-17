@@ -252,8 +252,8 @@
                     </div>
                     <p class="mt-6 text-gray-300 leading-relaxed mb-8">Prepare for battle and mark your calendars! The War of Emperium on Xilero takes place across various timezones, ensuring that warriors from all corners of the world can join the fight. Find the schedule that fits your timezone below and rally your guild for the epic clashes in the specified castles.</p>
                 </div>
-                <div class="grid grid-cols-5 gap-5">
-                    @foreach ($prontera_castles as $castle)
+                <div class="grid grid-cols-{{$castles->count()}} gap-5">
+                    @foreach ($castles as $castle)
                         <div class="mb-4 block-home bg-opacity-70 rounded p-5">
                             <h3 class="text-amber-200 text-2xl mb-8 half-border">{{ $castle->name }}</h3>
                             @foreach(config('castles.timezones') as $timezone)

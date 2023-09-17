@@ -12,28 +12,33 @@ return [
         'Asia/Kolkata'
     ],
     'prontera' => [
-        'Kriemhild' => [
+        'Hljod' => [
             'open' => true,
             'time' => '15:00',
             'day' => ['Sunday']
         ],
-        'Swanhild' => [
+        'Kriemhild' => [
             'open' => true,
-            'time' => '01:00',
+            'time' => '15:00',
             'day' => ['Saturday']
         ],
-        'Fadhgridh' => [
+        'Swanhild' => [
             'open' => true,
+            'time' => '15:00',
+            'day' => ['Friday']
+        ],
+        'Fadhgridh' => [
+            'open' => false,
             'time' => '08:00',
             'day' => ['Friday']
         ],
         'Skoegul' => [
-            'open' => true,
+            'open' => false,
             'time' => '15:00',
             'day' => ['Friday', 'Saturday']
         ],
         'Gondul' => [
-            'open' => true,
+            'open' => false,
             'time' => '15:00',
             'day' => ['Friday', 'Saturday']
         ],

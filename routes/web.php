@@ -30,17 +30,32 @@ use Illuminate\Support\Facades\Route;
 //});
 
 Route::get('/', function () {
+
+    $castle_order = [28, 15, 16];
+
     return view('index', [
         'server_zeny' => ServerZeny::first(),
-        'prontera_castles' => App\Ragnarok\GuildCastle::prontera()->with('guild', 'guild.members')->get()
+        'castles' => App\Ragnarok\GuildCastle::whereIn('castle_id', $castle_order)
+            ->with('guild', 'guild.members')
+            ->get()
+            ->sortBy(function($castle, $key) use ($castle_order) {
+                return array_search((string)$castle->castle_id, $castle_order);
+            })
     ]);
 })->name('home');
 
 Route::get('/warofemperium', function()
 {
+    $castle_order = [28, 15, 16];
+
     return view('warofemperium', [
         'server_zeny' => ServerZeny::first(),
-        'prontera_castles' => App\Ragnarok\GuildCastle::prontera()->with('guild', 'guild.members')->get()
+        'castles' => App\Ragnarok\GuildCastle::whereIn('castle_id', $castle_order)
+            ->with('guild', 'guild.members')
+            ->get()
+            ->sortBy(function($castle, $key) use ($castle_order) {
+                return array_search((string)$castle->castle_id, $castle_order);
+            })
     ]);
 })->name('woe');
 
