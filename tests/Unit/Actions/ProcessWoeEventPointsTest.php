@@ -356,7 +356,7 @@ class ProcessWoeEventPointsTest extends TestCase
             'guild_id' => 2,
             'season' => 1,
             'message' => 'Guild [.Bounty-Hunters.] has attended with member count greater than size [8].',
-            'created_at' => now()->addMinutes(10),
+            'created_at' => now()->addMinutes(11),
             'processed' => false
         ]);
         GameWoeEvent::create([
@@ -365,7 +365,7 @@ class ProcessWoeEventPointsTest extends TestCase
             'guild_id' => 1,
             'season' => 1,
             'message' => 'The [Skoegul] castle has been conquered by the [Viexens] guild.',
-            'created_at' => now()->addMinutes(11),
+            'created_at' => now()->addMinutes(12),
             'processed' => false
         ]);
 

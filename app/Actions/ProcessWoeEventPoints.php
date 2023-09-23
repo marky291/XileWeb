@@ -16,7 +16,7 @@ class ProcessWoeEventPoints
 
     public function isDebug()
     {
-        return false;
+        return true;
     }
 
     public function handle(string $castle, \DateTime $dateTime, int $season, bool $sendDiscordNotification = false)
@@ -83,13 +83,12 @@ class ProcessWoeEventPoints
 
             if ($event->event === GameWoeEvent::ATTENDED) {
                 $guildAttended[$event->guild_id] = ($guildAttended[$event->guild_id] ?? 0) + 1;
+                return;
             }
 
             if ($lastEvent) {
                 $duration = $event->created_at->diffInSeconds($lastEvent->created_at);
-                if (in_array($lastEvent->event, [GameWoeEvent::STARTED, GameWoeEvent::BREAK])) {
-                    $guildDurations[$lastEvent->guild_id] = ($guildDurations[$lastEvent->guild_id] ?? 0) + $duration;
-                }
+                $guildDurations[$lastEvent->guild_id] = ($guildDurations[$lastEvent->guild_id] ?? 0) + $duration;
             }
 
             $lastEvent = $event;
