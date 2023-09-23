@@ -18,11 +18,13 @@ class Kernel extends ConsoleKernel
         //$schedule->command('inspire')->everyFiveSeconds();
         $schedule->command('horizon:snapshot')->everyFiveMinutes();
 
-        $schedule->job(new PostGuildPointsToDiscordJob('Kriemhild', today()))->hourlyAt(5)->withoutOverlapping();
-        $schedule->job(new PostGuildPointsToDiscordJob('Swanhild', today()))->hourlyAt(5)->withoutOverlapping();
-        $schedule->job(new PostGuildPointsToDiscordJob('Fadhringh', today()))->hourlyAt(5)->withoutOverlapping();
-        $schedule->job(new PostGuildPointsToDiscordJob('Skoegul', today()))->hourlyAt(5)->withoutOverlapping();
-        $schedule->job(new PostGuildPointsToDiscordJob('Gondul', today()))->hourlyAt(5)->withoutOverlapping();
+        // schedule woe point calculations
+        $schedule->job(new PostGuildPointsToDiscordJob('Kriemhild', today()))->at('18:00')->withoutOverlapping();
+        $schedule->job(new PostGuildPointsToDiscordJob('Swanhild', today()))->at('18:00')->withoutOverlapping();
+        $schedule->job(new PostGuildPointsToDiscordJob('Fadhringh', today()))->at('18:00')->withoutOverlapping();
+        $schedule->job(new PostGuildPointsToDiscordJob('Skoegul', today()))->at('18:00')->withoutOverlapping();
+        $schedule->job(new PostGuildPointsToDiscordJob('Gondul', today()))->at('18:00')->withoutOverlapping();
+        $schedule->job(new PostGuildPointsToDiscordJob('Hljod', today()))->at('18:00')->withoutOverlapping();
     }
 
     /**
