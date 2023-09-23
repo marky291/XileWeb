@@ -247,7 +247,7 @@
 
     <div class="line"></div>
 
-    <section id="important-links" class="bg-clash-bg relative overflow-hidden py-8 pb-32">
+    <section id="important-links" class="bg-clash-bg relative overflow-hidden py-8 pb-24">
         <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
             <h2>Server Vending</h2>
             <p class="mt-6 text-gray-300 leading-relaxed">Currently in beta, live vending data allows you to search for item IDs to check availability, price, and vendor location. Future feature updates will enhance support.</p>
@@ -259,7 +259,7 @@
 
     <div class="line"></div>
 
-    <section id="prontera-castles" class="bg-clash-bg hidden lg:block relative overflow-hidden py-8">
+    <section id="prontera-castles" class="bg-clash-bg hidden lg:block relative overflow-hidden py-8 pb-24">
         <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
             <div class="container mx-auto rounded">
                 <div class="">
