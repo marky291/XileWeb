@@ -16,7 +16,7 @@ class ProcessWoeEventPoints
 
     public function isDebug()
     {
-        return true;
+        return false;
     }
 
     public function handle(string $castle, \DateTime $dateTime, int $season, bool $sendDiscordNotification = false)
