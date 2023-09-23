@@ -55,6 +55,11 @@
 
     <div class="line"></div>
 
+    @if(auth()->check())
+        <livewire:my-account-details/>
+    @endif
+
+
     <section id="steps2play" class="bg-clash-bg relative overflow-hidden py-12 px-24">
         <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
             <livewire:register lazy />
@@ -242,6 +247,18 @@
 
     <div class="line"></div>
 
+    <section id="important-links" class="bg-clash-bg relative overflow-hidden py-8 pb-32">
+        <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
+            <h2>Server Vending</h2>
+            <p class="mt-6 text-gray-300 leading-relaxed">Currently in beta, live vending data allows you to search for item IDs to check availability, price, and vendor location. Future feature updates will enhance support.</p>
+            <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5 mt-10">
+                <livewire:server-vendings lazy/>
+            </div>
+        </div>
+    </section>
+
+    <div class="line"></div>
+
     <section id="prontera-castles" class="bg-clash-bg hidden lg:block relative overflow-hidden py-8">
         <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
             <div class="container mx-auto rounded">
@@ -311,18 +328,7 @@
         </section>
     --}}
 
-    <div class="line"></div>
-
-    <section id="important-links" class="bg-clash-bg relative overflow-hidden py-8 pb-32">
-        <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
-            <h2>Server Vending</h2>
-            <p class="mt-6 text-gray-300 leading-relaxed">Currently in beta, live vending data allows you to search for item IDs to check availability, price, and vendor location. Future feature updates will enhance support.</p>
-            <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5 mt-10">
-                <livewire:server-vendings lazy/>
-            </div>
-        </div>
-    </section>
-
+{{--    <div class="line"></div>--}}
 
 {{--    <section id="read-the-rules" class="bg-black relative overflow-hidden py-16 md:pt-32 hidden md:block">--}}
 {{--        <div class="max-w-screen-xl w-full mx-auto px-5 container text-left md:text-center mb-20">--}}

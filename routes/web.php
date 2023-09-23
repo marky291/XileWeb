@@ -31,30 +31,28 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
 
-    $castle_order = [28, 15, 16];
-
     return view('index', [
         'server_zeny' => ServerZeny::first(),
-        'castles' => App\Ragnarok\GuildCastle::whereIn('castle_id', $castle_order)
+        'castles' => App\Ragnarok\GuildCastle::whereIn('castle_id', [28, 15, 16])
             ->with('guild', 'guild.members')
             ->get()
-            ->sortBy(function($castle, $key) use ($castle_order) {
-                return array_search((string)$castle->castle_id, $castle_order);
+            ->sortBy(function($castle, $key) {
+                $order = ['28', '15', '16'];
+                return array_search((string)$castle->castle_id, $order);
             })
     ]);
 })->name('home');
 
 Route::get('/warofemperium', function()
 {
-    $castle_order = [28, 15, 16];
-
     return view('warofemperium', [
         'server_zeny' => ServerZeny::first(),
-        'castles' => App\Ragnarok\GuildCastle::whereIn('castle_id', $castle_order)
+        'castles' => App\Ragnarok\GuildCastle::whereIn('castle_id', [28, 15, 16])
             ->with('guild', 'guild.members')
             ->get()
-            ->sortBy(function($castle, $key) use ($castle_order) {
-                return array_search((string)$castle->castle_id, $castle_order);
+            ->sortBy(function($castle, $key) {
+                $order = ['28', '15', '16'];
+                return array_search((string)$castle->castle_id, $order);
             })
     ]);
 })->name('woe');

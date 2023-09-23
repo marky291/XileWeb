@@ -8,6 +8,7 @@ use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -57,11 +58,20 @@ class User extends Authenticatable implements FilamentUser
 
     public function canAccessPanel(Panel $panel): bool
     {
-        return $this->isAdmin();
+        if ($panel->getId() == "admin") {
+            return $this->isAdmin();
+        }
+
+        return true;
     }
 
     public function logins() : BelongsToMany
     {
         return $this->belongsToMany(Login::class, 'user_logins')->using(UserLogin::class);
+    }
+
+    public function userLogins() : HasMany
+    {
+        return $this->hasMany(UserLogin::class);
     }
 }
