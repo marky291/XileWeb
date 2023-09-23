@@ -4,6 +4,7 @@ namespace App\Ragnarok;
 
 use App\Actions\CreateEmblemFromData;
 use App\Emblem;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Cache;
 use League\Flysystem\File;
 
@@ -29,6 +30,10 @@ use League\Flysystem\File;
  */
 class Guild extends RagnarokModel
 {
+    use HasFactory;
+
+    const GM_TEAM = '"XileRO Team"';
+
     /**
      * The connection name for the model.
      *
@@ -54,6 +59,13 @@ class Guild extends RagnarokModel
      * @var array
      */
     protected $fillable = ['name', 'master', 'guild_lv', 'connect_member', 'max_member', 'average_lv', 'exp', 'next_exp', 'skill_point', 'mes1', 'mes2', 'emblem_len', 'emblem_id', 'emblem_data', 'last_master_change'];
+
+    /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
 
     /**
      * Guild can havbe many castles.

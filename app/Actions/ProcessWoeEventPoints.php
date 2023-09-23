@@ -4,6 +4,7 @@ namespace App\Actions;
 
 use App\Ragnarok\GameWoeEvent;
 use App\Ragnarok\GameWoeScore;
+use App\Ragnarok\Guild;
 use App\Ragnarok\GuildCastle;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
@@ -24,12 +25,16 @@ class ProcessWoeEventPoints
 
         if ($events->count() <= 1) return;
 
-        [$guildDurations, $guildAttended] = $this->processEvents($events);
+        $events = $events->reject(function (GameWoeEvent $event) {
+            return $event->guild_name_from_message == Guild::GM_TEAM;
+        });
 
-        $this->updateScores($guildDurations, $guildAttended, $events, $season, $castle);
-
-        if ($sendDiscordNotification) {
-            $this->sendDiscordNotification($castle, $guildDurations, $guildAttended, $events, $season);
+        if ($events->count() > 0) {
+            [$guildDurations, $guildAttended] = $this->processEvents($events);
+            $this->updateScores($guildDurations, $guildAttended, $events, $season, $castle);
+            if ($sendDiscordNotification || $this->isDebug()) {
+                $this->sendDiscordNotification($castle, $guildDurations, $guildAttended, $events, $season);
+            }
         }
     }
 
@@ -41,26 +46,30 @@ class ProcessWoeEventPoints
             ->get();
     }
 
-    private function getCastleDiscordChannel(string $castle)
+    public function getCastleDiscordChannel(string $castle)
     {
-       if ($castle == GuildCastle::CASTLE_KRIEMHILD) {
+       if ($castle == GuildCastle::KRIEMHILD) {
            return config('services.discord.kriemhild_guild_points');
        }
 
-       if ($castle == GuildCastle::CASTLE_SWANHILD) {
+       if ($castle == GuildCastle::SWANHILD) {
            return config('services.discord.swanhild_guild_points');
        }
 
-       if ($castle == GuildCastle::CASTLE_FADHRINGH) {
+       if ($castle == GuildCastle::FADHRINGH) {
            return config('services.discord.fadhringh_guild_points');
        }
 
-       if ($castle == GuildCastle::CASTLE_SKOEGUL) {
+       if ($castle == GuildCastle::SKOEGUL) {
            return config('services.discord.skoegul_guild_points');
        }
 
-       if ($castle == GuildCastle::CASTLE_GONDUL) {
+       if ($castle == GuildCastle::GONDUL) {
           return config('services.discord.gondul_guild_points');
+       }
+
+       if ($castle == GuildCastle::HLJOD) {
+           return config('services.discord.hljod_guild_points');
        }
     }
 
@@ -71,6 +80,7 @@ class ProcessWoeEventPoints
         $lastEvent = null;
 
         $events->each(function ($event) use (&$guildDurations, &$guildAttended, &$lastEvent) {
+
             if ($event->event === GameWoeEvent::ATTENDED) {
                 $guildAttended[$event->guild_id] = ($guildAttended[$event->guild_id] ?? 0) + 1;
             }
@@ -105,6 +115,7 @@ class ProcessWoeEventPoints
 
                 $score = GameWoeScore::firstOrNew(['guild_id' => $guild_id, 'season' => $season, 'castle_name' => $castle]);
                 $guildName = $events->firstWhere('guild_id', $guild_id)->guild_name_from_message ?? '';
+
                 $score->guild_name = $guildName;
                 $score->castle_name = $events->first()->castle;
 
@@ -141,7 +152,12 @@ class ProcessWoeEventPoints
     {
         $webhookUrl = $this->getCastleDiscordChannel($castle);
 
-        $topper = GameWoeScore::with('guild')->where('castle_name', $castle)->orderByDesc('guild_score')->get();
+        $topper = GameWoeScore::with('guild')
+            ->where('castle_name', $castle)
+            ->whereNot('guild_name', Guild::GM_TEAM)
+            ->orderByDesc('guild_score')
+            ->get();
+
         $message = "";
         $pointsAwarded = "";
         $highlights = "";

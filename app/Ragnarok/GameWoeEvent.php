@@ -53,7 +53,8 @@ class GameWoeEvent extends RagnarokModel
         'season',
         'event',
         'guild_id',
-        'player'
+        'player',
+        'created_at'
     ];
 
     public function getGuildNameFromMessageAttribute()

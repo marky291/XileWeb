@@ -40,5 +40,6 @@ return [
         'skoegul_guild_points' => env('DISCORD_SKOEGUL_GUILD_POINTS'),
         'fadhringh_guild_points' => env('DISCORD_FADHRINGH_GUILD_POINTS'),
         'gondul_guild_points' => env('DISCORD_GONDUL_GUILD_POINTS'),
+        'hljod_guild_points' => env('DISCORD_HLJOD_GUILD_POINTS')
     ],
 ];

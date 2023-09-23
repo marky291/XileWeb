@@ -5,6 +5,8 @@ namespace Tests\Unit;
 use App\Actions\ProcessWoeEventPoints;
 use App\Ragnarok\GameWoeEvent;
 use App\Ragnarok\GameWoeScore;
+use App\Ragnarok\Guild;
+use App\Ragnarok\GuildCastle;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
@@ -377,4 +379,171 @@ class ProcessWoeEventPointsTest extends TestCase
         $this->assertEquals(GameWoeScore::POINTS_ATTENDED, $scores[1]->guild_score);
 
     }
+
+    /** @test */
+    public function it_tests_that_the_xilero_gm_team_guild_does_not_record_score()
+    {
+        Guild::factory()->create([
+            'guild_id' => 1,
+            'name' => Guild::GM_TEAM,
+            'master' => 'Marky',
+            'char_id' => '150000'
+        ]);
+
+        GameWoeEvent::create([
+            'castle' => GuildCastle::HLJOD,
+            'event' => GameWoeEvent::STARTED,
+            'guild_id' => 1,
+            'season' => 1,
+            'message' => "The [Swanhild] castle is currently held by the [" . Guild::GM_TEAM . "] guild.",
+            'created_at' => now(),
+            'processed' => false
+        ]);
+
+        GameWoeEvent::create([
+            'castle' => GuildCastle::HLJOD,
+            'event' => GameWoeEvent::ENDED,
+            'guild_id' => 1,
+            'season' => 1,
+            'message' => "The [Swanhild] castle has been conquered by the [" . Guild::GM_TEAM . "] guild.",
+            'created_at' => now()->addMinutes(1),
+            'processed' => false
+        ]);
+
+        (new ProcessWoeEventPoints())->handle(GuildCastle::HLJOD, today(), 1);
+
+        $scores = GameWoeScore::all();
+
+        $this->assertCount(0, $scores);
+    }
+
+    /** @test */
+   public function it_tests_that_the_longest_held_castle_is_vixens()
+   {
+       Guild::factory()->create([
+           'guild_id' => 736,
+           'name' => 'Viexens',
+           'master' => 'Stone Called',
+           'char_id' => '181405'
+       ]);
+       Guild::factory()->create([
+           'guild_id' => 1021,
+           'name' => '"XileRO Team"',
+           'master' => 'Marky',
+           'char_id' => '150000'
+       ]);
+       Guild::factory()->create([
+           'guild_id' => 1039,
+           'name' => 'l M M O R T A L S',
+           'master' => 'Undying',
+           'char_id' => '187465'
+       ]);
+
+       GameWoeEvent::create([
+           'castle' => GuildCastle::SWANHILD,
+           'event' => GameWoeEvent::STARTED,
+           'guild_id' => 1021,
+           'season' => 1,
+           'edition' => 1,
+           'message' => 'The [Swanhild] castle is currently held by the ["XileRO Team"] guild.',
+           'created_at' => now(),
+           'processed' => false
+       ]);
+       GameWoeEvent::create([
+           'castle' => GuildCastle::SWANHILD,
+           'event' => GameWoeEvent::BREAK,
+           'guild_id' => 1039,
+           'edition' => 1,
+           'player' => '187277',
+           'season' => 1,
+           'message' => 'Castle [Swanhild] has been captured by [imAssassin] for Guild [l M M O R T A L S]',
+           'created_at' => now()->addMinutes(5),
+           'processed' => false
+       ]);
+       GameWoeEvent::create([
+           'castle' => GuildCastle::SWANHILD,
+           'event' => GameWoeEvent::BREAK,
+           'player' => '182820',
+           'edition' => 1,
+           'guild_id' => 736,
+           'season' => 1,
+           'message' => 'Castle [Swanhild] has been captured by [Boy Cocaine] for Guild [Viexens]',
+           'created_at' => now()->addMinutes(10),
+           'processed' => false
+       ]);
+       GameWoeEvent::create([
+           'castle' => GuildCastle::SWANHILD,
+           'event' => GameWoeEvent::ATTENDED,
+           'player' => '181405',
+           'edition' => 1,
+           'guild_id' => 736,
+           'season' => 1,
+           'message' => 'Guild [Viexens] has attended with member count greater than size [8].',
+           'created_at' => now()->addMinutes(15),
+           'processed' => false
+       ]);
+       GameWoeEvent::create([
+           'castle' => GuildCastle::SWANHILD,
+           'event' => GameWoeEvent::BREAK,
+           'guild_id' => 1039,
+           'season' => 1,
+           'player' => '187277',
+           'message' => 'Castle [Swanhild] has been captured by [imAssassin] for Guild [l M M O R T A L S]',
+           'edition' => 1,
+           'created_at' => now()->addMinutes(25),
+           'processed' => false
+       ]);
+       GameWoeEvent::create([
+           'castle' => GuildCastle::SWANHILD,
+           'event' => GameWoeEvent::BREAK,
+           'guild_id' => 736,
+           'edition' => 1,
+           'player' => '182820',
+           'season' => 1,
+           'message' => 'Castle [Swanhild] has been captured by [Boy Cocaine] for Guild [Viexens]',
+           'created_at' => now()->addMinutes(30),
+           'processed' => false
+       ]);
+       GameWoeEvent::create([
+           'castle' => GuildCastle::SWANHILD,
+           'event' => GameWoeEvent::ATTENDED,
+           'guild_id' => 736,
+           'edition' => 1,
+           'player' => '181405',
+           'season' => 1,
+           'message' => 'Guild [Viexens] has attended with member count greater than size [8].',
+           'created_at' => now()->addMinutes(60),
+           'processed' => false
+       ]);
+       GameWoeEvent::create([
+           'castle' => GuildCastle::SWANHILD,
+           'event' => GameWoeEvent::ATTENDED,
+           'edition' => 1,
+           'guild_id' => 736,
+           'player' => '181405',
+           'season' => 1,
+           'message' => 'Guild [Viexens] has attended with member count greater than size [8].',
+           'created_at' => now()->addMinutes(65),
+           'processed' => false
+       ]);
+       GameWoeEvent::create([
+           'castle' => GuildCastle::SWANHILD,
+           'event' => GameWoeEvent::ENDED,
+           'edition' => 1,
+           'guild_id' => 736,
+           'season' => 1,
+           'message' => 'The [Swanhild] castle has been conquered by the [Viexens] guild.',
+           'created_at' => now()->addMinutes(70),
+           'processed' => false
+       ]);
+
+       (new ProcessWoeEventPoints())->handle(GuildCastle::SWANHILD, today(), 1);
+
+       $scores = GameWoeScore::all();
+
+       $this->assertCount(2, $scores);
+
+       $this->assertEquals(GameWoeScore::POINTS_LONGEST_HELD + GameWoeScore::POINTS_ATTENDED + GameWoeScore::POINTS_CASTLE_OWNER, $scores[0]->guild_score);
+       $this->assertEquals(GameWoeScore::POINTS_FIRST_BREAK, $scores[1]->guild_score);
+   }
 }
