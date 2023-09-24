@@ -63,11 +63,14 @@ class GameWoeEvent extends RagnarokModel
         $pattern2 = '/Castle \[.*\] has been captured by \[.*\] for Guild \[(.*?)\]/';
         $pattern3 = '/The \[.*\] castle has been conquered by the \[(.*?)\] guild./';
         $pattern4 = '/Guild \[(.*?)\] has attended with member count greater than size \[\d+\]/';
+        $pattern5 = '/\[.*\] of the \[(.*?)\] guild has conquered the \[.*\] stronghold of Hljod!/';
 
         if (preg_match($pattern1, $this->message, $matches) ||
             preg_match($pattern2, $this->message, $matches) ||
             preg_match($pattern3, $this->message, $matches) ||
-            preg_match($pattern4, $this->message, $matches)) {
+            preg_match($pattern4, $this->message, $matches) ||
+            preg_match($pattern5, $this->message, $matches)
+        ) {
             return empty($matches[1]) ? 'Unknown Guild' : $matches[1];
         }
 
@@ -77,9 +80,11 @@ class GameWoeEvent extends RagnarokModel
 
     public function getPlayerNameFromMessageAttribute()
     {
-        $pattern = '/by \[(.*?)\]/';
+        $pattern1 = '/by \[(.*?)\]/';
+        $pattern2 = '/\[(.*?)\] of the \[.*\] guild has conquered the \[.*\] stronghold of Hljod!/';
 
-        if (preg_match($pattern, $this->message, $matches)) {
+        if (preg_match($pattern1, $this->message, $matches) ||
+            preg_match($pattern2, $this->message, $matches)) {
             return $matches[1];
         }
 

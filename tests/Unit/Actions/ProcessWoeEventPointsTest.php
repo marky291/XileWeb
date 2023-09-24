@@ -416,6 +416,52 @@ class ProcessWoeEventPointsTest extends TestCase
 
         $this->assertCount(0, $scores);
     }
+    /** @test */
+    public function it_correctly_displays_woe_2_scores()
+    {
+        Guild::factory()->create([
+            'guild_id' => 736,
+            'name' => 'Viexens',
+            'master' => 'Stone Called',
+            'char_id' => '181405'
+        ]);
+
+        GameWoeEvent::create([
+            'castle' => GuildCastle::HLJOD,
+            'event' => GameWoeEvent::STARTED,
+            'guild_id' => 1053,
+            'season' => 1,
+            'message' => "The [Hljod] castle is currently held by the [Viexens] guild.",
+            'created_at' => now(),
+            'processed' => false
+        ]);
+
+        GameWoeEvent::create([
+            'castle' => GuildCastle::HLJOD,
+            'event' => GameWoeEvent::BREAK,
+            'guild_id' => 736,
+            'season' => 1,
+            'message' => "[Agony] of the [Viexens] guild has conquered the [Nithafjoll 4] stronghold of Hljod!",
+            'created_at' => now()->addMinutes(5),
+            'processed' => false
+        ]);
+
+        GameWoeEvent::create([
+            'castle' => GuildCastle::HLJOD,
+            'event' => GameWoeEvent::ENDED,
+            'guild_id' => 1053,
+            'season' => 1,
+            'message' => "The [Hljod] castle has been conquered by the [Viexens] guild.",
+            'created_at' => now()->addMinutes(10),
+            'processed' => false
+        ]);
+
+        (new ProcessWoeEventPoints())->handle(GuildCastle::HLJOD, today(), 1);
+
+        $scores = GameWoeScore::all();
+
+        $this->assertCount(0, $scores);
+    }
 
     /** @test */
    public function it_tests_that_the_longest_held_castle_is_vixens()
