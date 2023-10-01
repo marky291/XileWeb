@@ -25,10 +25,20 @@ class ProcessWoeEventPoints
 
         if ($events->count() <= 1) return;
 
+        $woeStarted = $events->contains('event', GameWoeEvent::STARTED);
+        $woeEnded = $events->contains('event', GameWoeEvent::ENDED);
+
+        // do not process if woe not completed.
+        if (!$woeStarted || !$woeEnded) {
+            return;
+        }
+
+        // do not process gm team events.
         $events = $events->reject(function (GameWoeEvent $event) {
             return $event->guild_name_from_message == Guild::GM_TEAM;
         });
 
+        // all the other goodies.
         if ($events->count() > 0) {
             [$guildDurations, $guildAttended] = $this->processEvents($events);
             $this->updateScores($guildDurations, $guildAttended, $events, $season, $castle);

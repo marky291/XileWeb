@@ -460,7 +460,7 @@ class ProcessWoeEventPointsTest extends TestCase
 
         $scores = GameWoeScore::all();
 
-        $this->assertCount(0, $scores);
+        $this->assertCount(2, $scores);
     }
 
     /** @test */
@@ -592,4 +592,42 @@ class ProcessWoeEventPointsTest extends TestCase
        $this->assertEquals(GameWoeScore::POINTS_LONGEST_HELD + GameWoeScore::POINTS_ATTENDED + GameWoeScore::POINTS_CASTLE_OWNER, $scores[0]->guild_score);
        $this->assertEquals(GameWoeScore::POINTS_FIRST_BREAK, $scores[1]->guild_score);
    }
+
+
+   /** @test */
+    public function it_does_not_run_if_there_is_no_start_and_end_date()
+    {
+        Guild::factory()->create([
+            'guild_id' => 736,
+            'name' => 'Viexens',
+            'master' => 'Stone Called',
+            'char_id' => '181405'
+        ]);
+
+        GameWoeEvent::create([
+            'castle' => GuildCastle::HLJOD,
+            'event' => GameWoeEvent::STARTED,
+            'guild_id' => 736,
+            'season' => 1,
+            'message' => "The [Hljod] castle is currently held by the [Viexens] guild.",
+            'created_at' => now(),
+            'processed' => false
+        ]);
+
+        GameWoeEvent::create([
+            'castle' => GuildCastle::HLJOD,
+            'event' => GameWoeEvent::BREAK,
+            'guild_id' => 736,
+            'season' => 1,
+            'message' => "[Agony] of the [Viexens] guild has conquered the [Nithafjoll 4] stronghold of Hljod!",
+            'created_at' => now()->addMinutes(5),
+            'processed' => false
+        ]);
+
+        (new ProcessWoeEventPoints())->handle(GuildCastle::HLJOD, today(), 1);
+
+        $scores = GameWoeScore::all();
+
+        $this->assertCount(0, $scores);
+    }
 }

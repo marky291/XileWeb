@@ -19,12 +19,12 @@ class Kernel extends ConsoleKernel
         $schedule->command('horizon:snapshot')->everyFiveMinutes();
 
         // schedule woe point calculations
-        $schedule->job(new PostGuildPointsToDiscordJob('Kriemhild', today()))->everySixHours()->name('Kriemhild Points')->withoutOverlapping();
-        $schedule->job(new PostGuildPointsToDiscordJob('Swanhild', today()))->everySixHours()->name('Swanhild Points')->withoutOverlapping();
-        $schedule->job(new PostGuildPointsToDiscordJob('Fadhringh', today()))->everySixHours()->name('Fadhringh Points')->withoutOverlapping();
-        $schedule->job(new PostGuildPointsToDiscordJob('Skoegul', today()))->everySixHours()->name('Skoegul Points')->withoutOverlapping();
-        $schedule->job(new PostGuildPointsToDiscordJob('Gondul', today()))->everySixHours()->name('Gondul Points')->withoutOverlapping();
-        $schedule->job(new PostGuildPointsToDiscordJob('Hljod', today()))->everySixHours()->name('Hljod Points')->withoutOverlapping();
+        $schedule->job(new PostGuildPointsToDiscordJob('Kriemhild', today()))->hourly()->name('Kriemhild Points')->withoutOverlapping();
+        $schedule->job(new PostGuildPointsToDiscordJob('Swanhild', today()))->hourly()->name('Swanhild Points')->withoutOverlapping();
+        $schedule->job(new PostGuildPointsToDiscordJob('Fadhringh', today()))->hourly()->name('Fadhringh Points')->withoutOverlapping();
+        $schedule->job(new PostGuildPointsToDiscordJob('Skoegul', today()))->hourly()->name('Skoegul Points')->withoutOverlapping();
+        $schedule->job(new PostGuildPointsToDiscordJob('Gondul', today()))->hourly()->name('Gondul Points')->withoutOverlapping();
+        $schedule->job(new PostGuildPointsToDiscordJob('Hljod', today()))->hourly()->name('Hljod Points')->withoutOverlapping();
     }
 
     /**
