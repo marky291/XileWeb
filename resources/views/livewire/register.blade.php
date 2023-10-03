@@ -119,12 +119,12 @@
 					</div>
 				</div>
 
-                <div class="bg-amber-700 bg-amber-300 bg-gray-400 hover:bg-amber-100 hover:bg-gray-300 text-gray-900 hover:bg-white"></div>
+                <div class="col-span-2 lg:col-span-1">
                     <h2 class="mt-0 mb-2 text-2xl font-bold text-gray-100"><span class="mr-2">2.</span> Download Android Client</h2>
-				<p class="my-12 text-amber-500">Play XileRO on the Go, with android, supporting automatic updates and gepard.</p>
+				<p class="text-amber-500 mb-12">Play XileRO on the Go, with android, supporting automatic updates and gepard.</p>
 				<div class="grid grid-cols-5">
 					<div class="col-span-1 hidden md:block">
-                    <i class="fas fa-compact-disc step2-icon text-gray-300"></i>
+                        <i class="fas fa-file-archive step2-icon text-gray-300"></i>
 					</div>
 					<div class="col-span-5 md:col-span-4">
                         @foreach(config('downloads.android') as $item)
