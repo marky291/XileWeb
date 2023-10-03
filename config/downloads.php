@@ -29,6 +29,7 @@ return [
     ],
 
     'android' => [
+        [
             'name' => 'ANDROID FROM GOOGLE DRIVE (3MB)',
             'link' => 'https://drive.google.com/file/d/10hgx13x5PnSWk_u7GTIucbFcWS1asPjg/view?usp=sharing',
             'bttn' => 'btn-primary bg-amber-300 hover:bg-amber-100 text-gray-900',
@@ -38,4 +39,5 @@ return [
            'link' => 'https://mega.nz/file/yWwBnJaC#sKEHPQRw6v16QbxB8VcP2u8TmCzjuQqlwIYbtsIBeOc',
            'bttn' => 'btn-secondary bg-amber-500 hover:bg-amber-300',
         ],
+    ],
 ];
