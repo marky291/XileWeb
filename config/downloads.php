@@ -29,7 +29,8 @@ return [
     ],
 
     'android' => [
-        'name' => 'ANDROID FROM GOOGLE DRIVE (3MB)',
+        [
+            'name' => 'ANDROID FROM GOOGLE DRIVE (3MB)',
             'link' => 'https://drive.google.com/file/d/10hgx13x5PnSWk_u7GTIucbFcWS1asPjg/view?usp=sharing',
             'bttn' => 'btn-primary bg-amber-300 hover:bg-amber-100 text-gray-900',
             'version' => 'v458',
