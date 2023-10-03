@@ -23,25 +23,25 @@ return [
     'full' => [
         [
             'name' => 'Full Client from Google Drive (3GB)',
-            'link' => 'https://drive.google.com/file/d/1Kf6R_IF6VqSy_ZcqspbqgK0LAFAfA11o/view?usp=sharing',
+            'link' => 'https://drive.google.com/file/d/15xWYVMxvpqOHZl8qb-G25_zcuKt9k8Pl/view?usp=sharing',
             'bttn' => 'btn-primary'
         ],
         [
             'name' => 'Full Client from Mega Upload (3GB)',
-            'link' => 'https://mega.nz/file/yDRHCLDA#z671HSFPE5UgIZD1h8oDXOvOrVFc2zFBGyBkJNQiBVE',
+            'link' => 'https://mega.nz/file/OWIwFKrL#X9iuqN5GiRTxkoTJz3z8oC_u3ngtlzvovrDcTVRAcvM',
             'bttn' => 'btn-secondary'
         ],
     ],
 
     'android' => [
         [
-            'name' => 'Android using Google Drive (3mb)',
+            'name' => 'Android using Google Drive (3MB)',
             'link' => 'https://drive.google.com/file/d/10hgx13x5PnSWk_u7GTIucbFcWS1asPjg/view?usp=sharing',
             'bttn' => 'btn-primary',
             'version' => '3.15',
         ],
         [
-           'name' => 'Android using Mega Upload (3mb)',
+           'name' => 'Android using Mega Upload (3MB)',
            'link' => 'https://mega.nz/file/yWwBnJaC#sKEHPQRw6v16QbxB8VcP2u8TmCzjuQqlwIYbtsIBeOc',
            'bttn' => 'btn-secondary',
            'version' => '3.15',
