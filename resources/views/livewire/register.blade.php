@@ -129,11 +129,12 @@
 					<div class="col-span-5 md:col-span-4">
                         @foreach(config('downloads.android') as $item)
                             <a class="no-underline" href="{{ $item['link'] }}" target="_blank" rel="noopener">
-                                <a class="no-underline truncate ... btn text-left {{ $item['bttn'] }}" href="{{ $item['link'] }}" target="_blank" rel="noopener">
+                                <button class="truncate ... flex items-center w-full mb-4 text-left btn py-4 {{ $item['bttn'] }}">
                                     {{ $item['name'] }}
-                                </a>
-                    @endforeach
-                </div>
+                                </button>
+                            </a>
+                        @endforeach
+                    </div>
 				</div>
 
             </div>
