@@ -40,5 +40,5 @@ return [
            'link' => 'https://mega.nz/file/yWwBnJaC#sKEHPQRw6v16QbxB8VcP2u8TmCzjuQqlwIYbtsIBeOc',
            'bttn' => 'btn-secondary bg-amber-500 hover:bg-amber-300',
            'version' => 'v458',
-    ],
+        ],
 ];
