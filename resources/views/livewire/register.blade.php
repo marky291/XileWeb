@@ -103,7 +103,7 @@
             </div>
             <div class="col-span-2 lg:col-span-1">
                 <h2 class="mt-0 mb-2 text-2xl font-bold text-gray-100"><span class="mr-2">2.</span> Download Full Client</h2>
-                <p class="text-amber-500 mb-12">Full downloads ensure an error-free experience.</h3>
+                <p class="text-amber-500 mb-12">Full downloads ensure an error-free experience.</p>
 				<div class="grid grid-cols-5">
 					<div class="col-span-1 hidden md:block">
                         <i class="fas fa-file-archive step2-icon text-gray-300"></i>
