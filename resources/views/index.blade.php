@@ -276,7 +276,7 @@
                             @foreach(config('castles.timezones') as $timezone)
                                 <div class="text-white mb-8 flex rounded">
                                     <div class="mr-3">
-                                        @if($castle->guild->hasEmblem())
+                                        @if(!is_null($castle->guild) && $castle->guild->hasEmblem())
                                             <div class="w-8 h-8 m-0 shadow" style="background: url('{{ $castle->guild->emblem }}'); background-size:contain;"></div>
                                         @else
                                             <img class="h-8 w-8 m-0" src="/assets/emblems/empty.bmp"/>
