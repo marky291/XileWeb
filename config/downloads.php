@@ -36,15 +36,15 @@ return [
     'android' => [
         [
             'name' => 'Android using Google Drive (3MB)',
-            'link' => 'https://drive.google.com/file/d/10hgx13x5PnSWk_u7GTIucbFcWS1asPjg/view?usp=sharing',
+            'link' => 'https://drive.google.com/file/d/1GziXRpBjhkwPr_GvAt_FCD7xKuevQmWb/view?usp=drive_link',
             'bttn' => 'btn-primary',
-            'version' => '3.15',
+            'version' => '462',
         ],
         [
            'name' => 'Android using Mega Upload (3MB)',
-           'link' => 'https://mega.nz/file/yWwBnJaC#sKEHPQRw6v16QbxB8VcP2u8TmCzjuQqlwIYbtsIBeOc',
+           'link' => 'https://mega.nz/file/vCYxBRSL#wW3XhgqDp8gI67xqNjHKo2vAd1a-qHiwxtW4x6L_f2c',
            'bttn' => 'btn-secondary',
-           'version' => '3.15',
+           'version' => '462',
        ]
     ],
 ];
