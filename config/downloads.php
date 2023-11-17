@@ -23,12 +23,12 @@ return [
     'full' => [
         [
             'name' => 'Full Client from Google Drive (3GB)',
-            'link' => 'https://drive.google.com/file/d/15xWYVMxvpqOHZl8qb-G25_zcuKt9k8Pl/view?usp=sharing',
+            'link' => 'https://drive.google.com/file/d/1RDUNM6pWVBMVLzdMVyze5QmdNuc99zKH/view?usp=sharing',
             'bttn' => 'btn-primary'
         ],
         [
             'name' => 'Full Client from Mega Upload (3GB)',
-            'link' => 'https://mega.nz/file/OWIwFKrL#X9iuqN5GiRTxkoTJz3z8oC_u3ngtlzvovrDcTVRAcvM',
+            'link' => 'https://mega.nz',
             'bttn' => 'btn-secondary'
         ],
     ],
