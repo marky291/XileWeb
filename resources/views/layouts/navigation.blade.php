@@ -32,7 +32,7 @@
                     </a>
                     <a target="_blank" rel="noopener"
                        class="btn btn-primary ml-12"
-                       href="https://drive.google.com/file/d/15xWYVMxvpqOHZl8qb-G25_zcuKt9k8Pl/view?usp=sharing"
+                       href="https://drive.google.com/file/d/1RDUNM6pWVBMVLzdMVyze5QmdNuc99zKH/view?usp=sharing"
                        title="Download XileRO">
                         <span
                             class="">
@@ -96,7 +96,7 @@
                         </li>
                         <li class="flex sm:justify-center">
                             <a class="group relative inline-flex border border-red-600 focus:outline-none mt-3 w-full max-w-md"
-                               href="https://drive.google.com/file/d/15xWYVMxvpqOHZl8qb-G25_zcuKt9k8Pl/view?usp=sharing"
+                               href="https://drive.google.com/file/d/1RDUNM6pWVBMVLzdMVyze5QmdNuc99zKH/view?usp=sharing"
                                title="Download XileRO Game Client" aria-label="Download XileRO Game Client">
                                 <span
                                     class="w-full inline-flex items-center justify-center self-stretch px-4 py-2 text-sm text-red-600 text-center font-bold uppercase bg-white ring-1 ring-red-600 ring-offset-1 transform transition-transform group-hover:-translate-y-1 group-hover:-translate-x-1 group-focus:-translate-y-1 group-focus:-translate-x-1">
