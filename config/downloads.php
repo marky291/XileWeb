@@ -18,12 +18,12 @@ return [
     'full' => [
         [
             'name' => 'FULL CLIENT FROM GOOGLE DRIVE (3GB)',
-            'link' => 'https://drive.google.com/file/d/15xWYVMxvpqOHZl8qb-G25_zcuKt9k8Pl/view?usp=sharing',
+            'link' => 'https://drive.google.com/file/d/1RDUNM6pWVBMVLzdMVyze5QmdNuc99zKH/view?usp=sharing',
             'bttn' => 'btn-primary bg-amber-300 hover:bg-amber-100 text-gray-900',
         ],
         [
             'name' => 'FULL CLIENT FROM MEGA UPLOAD (3GB)',
-            'link' => 'https://mega.nz/file/OWIwFKrL#X9iuqN5GiRTxkoTJz3z8oC_u3ngtlzvovrDcTVRAcvM',
+            'link' => 'https://mega.nz',
             'bttn' => 'btn-secondary bg-amber-500 hover:bg-amber-300',
         ],
     ],
