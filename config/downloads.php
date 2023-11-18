@@ -23,7 +23,7 @@ return [
         ],
         [
             'name' => 'FULL CLIENT FROM MEGA UPLOAD (3GB)',
-            'link' => 'https://mega.nz',
+            'link' => 'https://mega.nz/file/zTgFGYxI#NqRoOdcWUuALs579Id1OxGyWEC-VAYysYGKASGt50xY',
             'bttn' => 'btn-secondary bg-amber-500 hover:bg-amber-300',
         ],
     ],
