@@ -31,12 +31,12 @@ return [
     'android' => [
         [
             'name' => 'ANDROID FROM GOOGLE DRIVE (3MB)',
-            'link' => 'https://drive.google.com/file/d/1GziXRpBjhkwPr_GvAt_FCD7xKuevQmWb/view?usp=drive_link',
+            'link' => 'https://drive.google.com/file/d/1I9BBPgi8vZvjDh9AMNmsb62bbJ4HZT70/view?usp=sharing',
             'bttn' => 'btn-primary bg-amber-300 hover:bg-amber-100 text-gray-900',
         ],
         [
            'name' => 'ANDROID FROM MEGA UPLOAD (3MB)',
-           'link' => 'https://mega.nz/file/vCYxBRSL#wW3XhgqDp8gI67xqNjHKo2vAd1a-qHiwxtW4x6L_f2c',
+           'link' => 'https://mega.nz/file/jXwiCBib#8DBjJQm2HX-iT--rV82Pv3WyXomuYzHvwfc-rp9RanA',
            'bttn' => 'btn-secondary bg-amber-500 hover:bg-amber-300',
         ],
     ],
