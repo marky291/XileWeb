@@ -9,7 +9,6 @@
                 <div class="rounded-md bg-red-50 p-4 mb-5">
                     <div class="flex">
                         <div class="flex-shrink-0">
-                            <!-- Heroicon name: x-circle -->
                             <svg class="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                                  fill="currentColor" aria-hidden="true">
                                 <path fill-rule="evenodd"
@@ -54,7 +53,7 @@
                             <input wire:model.live="email"
                                    class="block w-full px-4 py-3 mb-3 leading-tight text-gray-100 bg-gray-800 border border-gray-900 rounded appearance-none focus:outline-none focus:bg-gray-600 focus:border-gray-500 @error('email') border-red-500 @enderror"
                                    id="grid-email" value="{{ old('email') }}" type="email"
-                                   placeholder="account@xileretro.net" required autocomplete="off">
+                                   placeholder="email@xilero.net" required autocomplete="off">
                             @error('email')
                             <p class="mt-4 text-xs italic text-red-500">
                                 {{ $message }}
@@ -92,10 +91,16 @@
                         </div>
                     </div>
                 </div>
-                <div class="flex justify-start">
-                    <button wire:click="register" class="btn btn-primary w-auto py-12 text-left mt-4">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap md:gap-4">
+                    <button wire:click="register" class="btn btn-primary w-auto py-12 justify-center mt-4">
                         <span>Register Account</span>
                     </button>
+                    <a href="{{ route('filament.app.pages.dashboard') }}" class="btn btn-secondary justify-center w-auto py-12 mt-4">
+                        <span>Account Login</span>
+                    </a>
+                    <a href="{{ route('password.request') }}" class="btn btn-secondary w-auto justify-center py-12 mt-4">
+                        <span>Password Reset</span>
+                    </a>
                 </div>
             </form>
         @else
@@ -118,10 +123,10 @@
                 <h4 class="text-gray-100">Get a Headstart</h4>
                 <p>If you are new to XileRO or would like a refresher, we highly recommend checking out the <a
                         class="text-amber-300 hover:text-amber-100"
-                        href="http://wiki.xileretro.net/index.php?title=Newbie_Center" target="_blank" rel="noopener">Newbie
+                        href="http://wiki.xilero.net/index.php?title=Newbie_Center" target="_blank" rel="noopener">Newbie
                         Center Guide</a> for an awesome head start!</p>
                 <hr>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                <form id="logout-form" action="{{ route('filament.app.auth.logout') }}" method="POST">
                     {{ csrf_field() }}
                     <button class="btn btn-secondary bg-amber-500 hover:bg-amber-300 text-gray-900" action="submit">
                         Logout from Website

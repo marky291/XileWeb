@@ -181,6 +181,9 @@ section.landing .feature-bg-img {
 }
 
 @layer components {
+    .markdown p > a {
+        @apply text-amber-500 hover:text-amber-300;
+    }
     .markdown p strong {
         @apply text-gray-100;
     }

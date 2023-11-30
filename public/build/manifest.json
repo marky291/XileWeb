@@ -1,4 +1,16 @@
 {
+  "resources/assets/block-top-bg.png": {
+    "file": "assets/block-top-bg-2303a86c.png",
+    "src": "resources/assets/block-top-bg.png"
+  },
+  "resources/assets/effects/light-blue.png": {
+    "file": "assets/light-blue-e49c4045.png",
+    "src": "resources/assets/effects/light-blue.png"
+  },
+  "resources/assets/effects/yellow-light.png": {
+    "file": "assets/yellow-light-eaec9a85.png",
+    "src": "resources/assets/effects/yellow-light.png"
+  },
   "resources/assets/landing-sitting.jpeg": {
     "file": "assets/landing-sitting-95915df5.jpeg",
     "src": "resources/assets/landing-sitting.jpeg"
@@ -7,8 +19,12 @@
     "file": "assets/landing-sitting-6e119303.png",
     "src": "resources/assets/landing-sitting.png"
   },
+  "resources/assets/line.png": {
+    "file": "assets/line-31da0e5c.png",
+    "src": "resources/assets/line.png"
+  },
   "resources/css/app.css": {
-    "file": "assets/app-58897733.css",
+    "file": "assets/app-43982f70.css",
     "isEntry": true,
     "src": "resources/css/app.css"
   },

@@ -93,17 +93,17 @@
                                 <div class="grid grid-cols-2 col-span-2 col-gap-6 prose">
                                     <ul class="m-0">
                                         <li><a class="text-gray-300 no-underline hover:underline" href="{{ url('/') }}" title="XileRetro Home Page">Home</a></li>
-                                        <li><a target="_blank" rel="noopener" class="text-gray-300 no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Server_Rules" title="XileRetro Server Rules">Rulebook</a></li>
-                                        <li><a target="_blank" rel="noopener" class="text-gray-300 no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Server_Information#Staff" title="Information about XileRetro Staff">The Staff</a></li>
+                                        <li><a target="_blank" rel="noopener" class="text-gray-300 no-underline hover:underline" href="http://wiki.xilero.net/index.php?title=Server_Rules" title="XileRetro Server Rules">Rulebook</a></li>
+                                        <li><a target="_blank" rel="noopener" class="text-gray-300 no-underline hover:underline" href="http://wiki.xilero.net/index.php?title=Server_Information#Staff" title="Information about XileRetro Staff">The Staff</a></li>
                                         <li><a target="_blank" rel="noopener" class="text-gray-300 no-underline hover:underline" href="#steps2play" title="Download XileRetro">Download</a></li>
                                         <li><a target="_blank" rel="noopener" class="text-gray-300 no-underline hover:underline" href="#steps2play" title="Register for XileRetro">Register</a></li>
                                     </ul>
                                     <ul class="m-0">
-                                        <li><a target="_blank" rel="noopener" class="text-gray-300 no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Server_Information" title="XileRetro Server Features">Server Features</a></li>
-                                        <li><a target="_blank" rel="noopener" class="text-gray-300 no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=General_Customs" title="Modified official information of XileRetro">Modified Official</a></li>
-                                        <li><a target="_blank" rel="noopener" class="text-gray-300 no-underline hover:underline" href="https://wiki.xileretro.net/index.php?title=Category:Release_Notes" title="XileRetro Updates and Release Notes">Updates & Release Notes</a></li>
-                                        <li><a target="_blank" rel="noopener" class="text-gray-300 no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Newbie_Center" title="Support Center for XileRetro Newbies">Newbie Center</a></li>
-                                        <li><a target="_blank" rel="noopener noreferrer" class="text-gray-300 no-underline hover:underline" href="http://wiki.xileretro.net/index.php?title=Events" title="XileRetro Events and Activities">Events</a></li>
+                                        <li><a target="_blank" rel="noopener" class="text-gray-300 no-underline hover:underline" href="http://wiki.xilero.net/index.php?title=Server_Information" title="XileRetro Server Features">Server Features</a></li>
+                                        <li><a target="_blank" rel="noopener" class="text-gray-300 no-underline hover:underline" href="http://wiki.xilero.net/index.php?title=General_Customs" title="Modified official information of XileRetro">Modified Official</a></li>
+                                        <li><a target="_blank" rel="noopener" class="text-gray-300 no-underline hover:underline" href="https://wiki.xilero.net/index.php?title=Category:Release_Notes" title="XileRetro Updates and Release Notes">Updates & Release Notes</a></li>
+                                        <li><a target="_blank" rel="noopener" class="text-gray-300 no-underline hover:underline" href="http://wiki.xilero.net/index.php?title=Newbie_Center" title="Support Center for XileRetro Newbies">Newbie Center</a></li>
+                                        <li><a target="_blank" rel="noopener noreferrer" class="text-gray-300 no-underline hover:underline" href="http://wiki.xilero.net/index.php?title=Events" title="XileRetro Events and Activities">Events</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -116,9 +116,9 @@
                         <div class="col-span-2 lg:col-span-1">
                             <h2 class="text-xl font-bold my-6 text-gray-100">Community Loaders</h2>
                             <div class="grid grid-cols-3 screenshots">
-                                <img class="col-span-1 my-0" src="images/loading/loading00.png" title="View XileRetro Wallpaper 1" alt="XileRetro Wallpaper 1">
-                                <img class="col-span-1 my-0" src="images/loading/loading06.png" title="View XileRetro Wallpaper 2" alt="XileRetro Wallpaper 2">
-                                <img class="col-span-1 my-0" src="images/loading/loading08.png" title="View XileRetro Wallpaper 3" alt="XileRetro Wallpaper 3">
+                                <img class="col-span-1 my-0" src="{{ url('images/loading/loading00.png') }}" title="View XileRetro Wallpaper 1" alt="XileRetro Wallpaper 1">
+                                <img class="col-span-1 my-0" src="{{ url('images/loading/loading06.png') }}" title="View XileRetro Wallpaper 2" alt="XileRetro Wallpaper 2">
+                                <img class="col-span-1 my-0" src="{{ url('images/loading/loading08.png') }}" title="View XileRetro Wallpaper 3" alt="XileRetro Wallpaper 3">
                             </div>
                             <div>
                                 <h2 class="text-xl mt-20 font-bold my-6 text-gray-100">Get in Touch</h2>

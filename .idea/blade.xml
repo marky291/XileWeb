@@ -27,6 +27,7 @@
       <data directive="@elsecan" injection="true" prefix="&lt;?php&#10;elseif (app(\Illuminate\Contracts\Auth\Access\Gate::class)-&gt;check(" suffix=")): ?&gt;" />
       <data directive="@elsecanany" injection="true" prefix="&lt;?php&#10;elseif (app(\Illuminate\Contracts\Auth\Access\Gate::class)-&gt;any(" suffix=")): ?&gt;" />
       <data directive="@elsecannot" injection="true" prefix="&lt;?php&#10;elseif (app(\Illuminate\Contracts\Auth\Access\Gate::class)-&gt;denies(" suffix=")): ?&gt;" />
+      <data directive="@elsefeature" injection="true" prefix="&lt;?php feature(" suffix="); ?&gt;" />
       <data directive="@elseguest" injection="true" prefix="&lt;?php&#10;elseif(auth()-&gt;guard(" suffix=")-&gt;guest()): ?&gt;" />
       <data directive="@elseif" injection="true" prefix="&lt;?php&#10;elseif(" suffix="): ?&gt;" />
       <data directive="@empty" injection="true" prefix="&lt;?php&#10;if(empty(" suffix=")): ?&gt;" />
@@ -40,6 +41,7 @@
       <data directive="@endempty" />
       <data directive="@endenv" />
       <data directive="@enderror" />
+      <data directive="@endfeature" />
       <data directive="@endfor" />
       <data directive="@endforeach" />
       <data directive="@endforelse" />
@@ -60,6 +62,7 @@
       <data directive="@endsection" />
       <data directive="@endslot" />
       <data directive="@endswitch" />
+      <data directive="@endteleport" />
       <data directive="@endunless" />
       <data directive="@endverbatim" />
       <data directive="@endwhile" />
@@ -68,6 +71,7 @@
       <data directive="@error" injection="true" prefix="&lt;?php&#10;$__errorArgs = [" suffix="];&#10;$__bag = $errors-&gt;getBag($__errorArgs[1] ?? 'default');&#10;if ($__bag-&gt;has($__errorArgs[0])) :&#10;if (isset($message)) { $__messageOriginal = $message; }&#10;$message = $__bag-&gt;first($__errorArgs[0]); ?&gt;" />
       <data directive="@extends" injection="true" prefix="&lt;?php&#10;echo $__env-&gt;make(" suffix=", \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))-&gt;render(); ?&gt;" />
       <data directive="@extendsfirst" injection="true" prefix="&lt;?php&#10;echo $__env-&gt;first(" suffix=", \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))-&gt;render(); ?&gt;" />
+      <data directive="@feature" injection="true" prefix="&lt;?php feature(" suffix="); ?&gt;" />
       <data directive="@for" injection="true" prefix="&lt;?php&#10;for(" suffix="): ?&gt;" />
       <data directive="@foreach" injection="true" prefix="&lt;?php&#10;foreach(" suffix="): ?&gt;" />
       <data directive="@forelse" injection="true" prefix="&lt;?php&#10;foreach(" suffix="): ?&gt;" />
@@ -91,7 +95,7 @@
       <data directive="@once" />
       <data directive="@overwrite" />
       <data directive="@parent" />
-      <data directive="@persist" injection="true" prefix="&lt;?php _bladeDirective(" suffix="); ?&gt;" />
+      <data directive="@persist" injection="true" prefix="&lt;?php echo e(" suffix="); ?&gt;" />
       <data directive="@php" injection="true" prefix="&lt;?php&#10;(" suffix="); ?&gt;" />
       <data directive="@prepend" injection="true" prefix="&lt;?php&#10;$__env-&gt;startPrepend(" suffix="); ?&gt;" />
       <data directive="@prependonce" injection="true" prefix="&lt;?php&#10;$___phpstorm_prepend_once_params = [" suffix="]; if (! $__env-&gt;hasRenderedOnce($___phpstorm_prepend_once_params[1])): $__env-&gt;markAsRenderedOnce($___phpstorm_prepend_once_params); $__env-&gt;startPrepend($___phpstorm_prepend_once_params[0]); ?&gt;" />
@@ -110,9 +114,12 @@
       <data directive="@stack" injection="true" prefix="&lt;?php&#10;echo $__env-&gt;yieldPushContent(" suffix="); ?&gt;" />
       <data directive="@stop" />
       <data directive="@style" injection="true" prefix="class=&quot;&lt;?php echo \Illuminate\Support\Arr::toCssStyles(" suffix=")?&gt;&quot;" />
+      <data directive="@svg" injection="true" prefix="&lt;?php echo e(svg(" suffix=")); ?&gt;" />
       <data directive="@switch" injection="true" prefix="&lt;?php&#10;switch(" suffix="): ?&gt;" />
+      <data directive="@teleport" injection="true" prefix="&lt;?php echo e(" suffix="); ?&gt;" />
       <data directive="@this" />
       <data directive="@unless" injection="true" prefix="&lt;?php&#10;if (! (" suffix=")): ?&gt;" />
+      <data directive="@unlessfeature" injection="true" prefix="&lt;?php feature(" suffix="); ?&gt;" />
       <data directive="@unset" injection="true" prefix="&lt;?php&#10;unset(" suffix="); ?&gt;" />
       <data directive="@verbatim" />
       <data directive="@vite" injection="true" prefix="&lt;?php echo app('\\Illuminate\\Foundation\\Vite')(" suffix="); ?&gt;" />

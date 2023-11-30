@@ -21,14 +21,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::get('/test', function() {
-//    ProcessWoeEventPoints::run('Kriemhild', today(), season: 1, sendDiscordNotification: true);
-//    ProcessWoeEventPoints::run('Swanhild', today(), season: 1, sendDiscordNotification: true);
-//    ProcessWoeEventPoints::run('Fadhringh', today(), season: 1, sendDiscordNotification: true);
-//    ProcessWoeEventPoints::run('Gondul', today(), season: 1, sendDiscordNotification: true);
-//    ProcessWoeEventPoints::run('Skoegul', today(), season: 1, sendDiscordNotification: true);
-//});
-
 Route::get('/', function () {
 
     return view('index', [
@@ -105,9 +97,8 @@ Route::get('patch/list', function() {
         ->header('Content-Type', 'text/plain');
 });
 
+require __DIR__.'/auth.php';
+
 Route::any('{query}', function() {
     return redirect('/')->with('message', 'Redirected 404.');
 })->where('query', '.*');
-
-
-require __DIR__.'/auth.php';

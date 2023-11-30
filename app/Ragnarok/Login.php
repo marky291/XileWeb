@@ -34,6 +34,7 @@ use Illuminate\Support\Facades\DB;
  * @property int $blocked_unique_id
  *
  * @property int $total_online
+ * @method static create(array $array)
  */
 class Login extends RagnarokModel
 {

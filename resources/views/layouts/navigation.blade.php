@@ -12,16 +12,16 @@
                     <li><a class="hover:bg-gradient-to-bl hover:from-blue-900 hover:to-fuchsia-700 rounded py-3 px-6 text-gray-100 border-gray-500 bg-gray-900 bg-opacity-50"
                            href="#steps2play" title="Register at XileRO">Register</a></li>
                     <li><a class="hover:bg-gradient-to-tr hover:from-blue-900 hover:to-fuchsia-700 rounded py-3 px-6 text-gray-100 border-gray-500 bg-gray-900 bg-opacity-50"
-                           href="http://wiki.xileretro.net/index.php?title=Donation"
+                           href="http://wiki.xilero.net/index.php?title=Donation"
                            title="Donate to XileRO">Donate</a></li>
                     <li><a class="hover:bg-gradient-to-bl hover:from-blue-900 hover:to-fuchsia-700 rounded py-3 px-6 text-gray-100 border-gray-500 bg-gray-900 bg-opacity-50"
                            href="https://discord.gg/hp7CS6k" title="Join XileRO on Discord">Discord</a></li>
                     <li><a class="hover:bg-gradient-to-tr hover:from-blue-900 hover:to-fuchsia-700 rounded py-3 px-6 text-gray-100 border-gray-500 bg-gray-900 bg-opacity-50"
-                           href="http://wiki.xileretro.net/index.php?title=Main_Page" title="XileRO Wiki Page">Wiki</a>
+                           href="http://wiki.xilero.net/index.php?title=Main_Page" title="XileRO Wiki Page">Wiki</a>
                     </li>
                 </ul>
                 <div class="flex-1 flex items-center justify-end">
-                    <a target="_blank" rel="noopener" href="https://wiki.xileretro.net/index.php?search=&title=Special%3ASearch&go=Go"
+                    <a target="_blank" rel="noopener" href="https://wiki.xilero.net/index.php?search=&title=Special%3ASearch&go=Go"
                        title="Search XileRO Wiki">
                         <button id="search_button" aria-label="Search XileRO Wiki">
                             <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -69,7 +69,7 @@
                     <ul>
                         <li>
                             <a class="block w-full py-4 text-rose-800"
-                               href="http://wiki.xileretro.net/index.php?title=Donation" title="Donate to XileRO"
+                               href="http://wiki.xilero.net/index.php?title=Donation" title="Donate to XileRO"
                                aria-label="Donate to XileRO">
                                 Donate
                             </a>
@@ -83,7 +83,7 @@
                         </li>
                         <li>
                             <a class="block w-full py-4 text-rose-800"
-                               href="http://wiki.xileretro.net/index.php?title=Main_Page"
+                               href="http://wiki.xilero.net/index.php?title=Main_Page"
                                title="Access XileRO's Wiki Page" aria-label="Access XileRO's Wiki Page">
                                 Wiki
                             </a>

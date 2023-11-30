@@ -2,6 +2,15 @@
 
 return [
 
+    'character' => [
+        'reset' => [
+            'position' => [
+                'map' => 'prontera',
+                'x' => 156,
+                'y' => 153,
+            ]
+        ]
+    ],
     'hyperdrive' => [
         'ip_address' => '15.197.157.22'
     ],

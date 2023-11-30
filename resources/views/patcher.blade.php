@@ -121,7 +121,7 @@
                 </a>
             </li>
             <li>
-                <a target="_blank" href="https://wiki.xileretro.net/index.php?title=2023-08-06_Update">
+                <a target="_blank" href="https://wiki.xilero.net/index.php?title=2023-08-06_Update">
                     06 <span>August Update</span>
                 </a>
 
@@ -142,7 +142,7 @@
         <h4>July 2023</h4>
         <ul>
             <li>
-                <a target="_blank" href="https://wiki.xileretro.net/index.php?title=2023-07-02_Update">
+                <a target="_blank" href="https://wiki.xilero.net/index.php?title=2023-07-02_Update">
                     02 <span>July Update & Patch</span>
                 </a>
             </li>
@@ -152,7 +152,7 @@
         <h4>June 2023</h4>
         <ul>
             <li>
-                <a target="_blank" href="https://wiki.xileretro.net/index.php?title=2023-07-02_Update">
+                <a target="_blank" href="https://wiki.xilero.net/index.php?title=2023-07-02_Update">
                     30 <span>June Patch</span>
                 </a>
             </li>
@@ -162,7 +162,7 @@
         <h4>April 2023</h4>
         <ul>
             <li>
-                <a target="_blank" href="https://wiki.xileretro.net/index.php?title=2023-04-07_Update">
+                <a target="_blank" href="https://wiki.xilero.net/index.php?title=2023-04-07_Update">
                     07 <span>April Update</span>
                 </a>
             </li>
@@ -172,16 +172,16 @@
         <h4>October 2022</h4>
         <ul>
             <li>
-                <a target="_blank" href="https://wiki.xileretro.net/index.php?title=2022-10-08_Update">
+                <a target="_blank" href="https://wiki.xilero.net/index.php?title=2022-10-08_Update">
                     08 <span>Halloween Mini-Update</span>
                 </a>
             </li>
             <li>
-                <a target="_blank" href="https://wiki.xileretro.net/index.php?title=2022-10-02_Hot_Fix">
+                <a target="_blank" href="https://wiki.xilero.net/index.php?title=2022-10-02_Hot_Fix">
                     02 <span>Hot Fix for Client-Side</span>
             </li>
             <li>
-                <a target="_blank" href="https://wiki.xileretro.net/index.php?title=2022-10-01_Update">
+                <a target="_blank" href="https://wiki.xilero.net/index.php?title=2022-10-01_Update">
                     01 <span>Halloween Update!</span>
             </li>
         </ul>
@@ -198,7 +198,7 @@
         <h4>March 2022</h4>
         <ul>
             <li>
-                <a target="_blank" href="https://wiki.xileretro.net/index.php?title=2022-03-18_Update">
+                <a target="_blank" href="https://wiki.xilero.net/index.php?title=2022-03-18_Update">
                     18 <span>BG Update & New Costumes</span>
                 </a>
             </li>
@@ -208,7 +208,7 @@
     <h4>February 2022</h4>
     <ul>
         <li>
-            <a target="_blank" href="https://wiki.xileretro.net/index.php?title=2022-02-27_Update">
+            <a target="_blank" href="https://wiki.xilero.net/index.php?title=2022-02-27_Update">
                 27 <span>BG Crash Fixes Implemented</span>
             </a>
         </li>
@@ -233,12 +233,12 @@
             </a>
         </li>
         <li>
-            <a target="_blank" href="https://wiki.xileretro.net/index.php?title=2022-02-11_Update">
+            <a target="_blank" href="https://wiki.xilero.net/index.php?title=2022-02-11_Update">
                 11 <span>Hot Fix!</span>
             </a>
         </li>
         <li>
-            <a target="_blank" href="https://wiki.xileretro.net/index.php?title=2022-02-07_Update">
+            <a target="_blank" href="https://wiki.xilero.net/index.php?title=2022-02-07_Update">
                 07 <span>Mini-Release!</span>
             </a>
         </li>
@@ -312,7 +312,7 @@
         </li>
         <li>
             <a target="_blank"
-               href="https://wiki.xileretro.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-1">
+               href="https://wiki.xilero.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-1">
                 27 <span>Halloween Update</span>
             </a>
         </li>
@@ -323,13 +323,13 @@
     <ul>
         <li>
             <a target="_blank"
-               href="https://wiki.xileretro.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-3">
+               href="https://wiki.xilero.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-3">
                 26 <span>Monster Costumes & Kiki Revamp</span>
             </a>
         </li>
         <li>
             <a target="_blank"
-               href="https://wiki.xileretro.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-2">
+               href="https://wiki.xilero.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-2">
                 04 <span>Attendance & Auras/Colornames</span>
             </a>
         </li>
@@ -340,13 +340,13 @@
     <ul>
         <li>
             <a target="_blank"
-               href="https://wiki.xileretro.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-3">
+               href="https://wiki.xilero.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-3">
                 26 <span>Monster Costumes & Kiki Revamp</span>
             </a>
         </li>
         <li>
             <a target="_blank"
-               href="https://wiki.xileretro.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-4">
+               href="https://wiki.xilero.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-4">
                 10 <span>Leveling Content & Ubers Seller</span>
             </a>
         </li>
@@ -357,7 +357,7 @@
     <ul>
         <li>
             <a target="_blank"
-               href="https://wiki.xileretro.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-5">
+               href="https://wiki.xilero.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-5">
                 24 <span>Various fixes and changes</span>
             </a>
         </li>
@@ -368,7 +368,7 @@
         </li>
         <li>
             <a target="_blank"
-               href="https://wiki.xileretro.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-6">
+               href="https://wiki.xilero.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-6">
                 03 <span>Anniversary and BG Update</span>
             </a>
         </li>
@@ -379,7 +379,7 @@
     <ul>
         <li>
             <a target="_blank"
-               href="https://wiki.xileretro.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-7">
+               href="https://wiki.xilero.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-7">
                 10 <span>Elemental Bullets & Player Ladder</span>
             </a>
         </li>
@@ -390,7 +390,7 @@
     <ul>
         <li>
             <a target="_blank"
-               href="https://wiki.xileretro.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-8">
+               href="https://wiki.xilero.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-8">
                 30 <span>Monthlies & Costume Update</span>
             </a>
         </li>
@@ -401,19 +401,19 @@
     <ul>
         <li>
             <a target="_blank"
-               href="https://wiki.xileretro.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-9">
+               href="https://wiki.xilero.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-9">
                 15 <span>New Costume Update</span>
             </a>
         </li>
         <li>
             <a target="_blank"
-               href="https://wiki.xileretro.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-10">
+               href="https://wiki.xilero.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-10">
                 08 <span>Battle Royale Auto Event!</span>
             </a>
         </li>
         <li>
             <a target="_blank"
-               href="https://wiki.xileretro.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-11">
+               href="https://wiki.xilero.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-11">
                 01 <span>PUBG Style GM Event</span>
             </a>
         </li>
@@ -424,25 +424,25 @@
     <ul>
         <li>
             <a target="_blank"
-               href="https://wiki.xileretro.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-12">
+               href="https://wiki.xilero.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-12">
                 22 <span>Various WoE Changes</span>
             </a>
         </li>
         <li>
             <a target="_blank"
-               href="https://wiki.xileretro.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-13">
+               href="https://wiki.xilero.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-13">
                 15 <span>Unique Accessories & Content</span>
             </a>
         </li>
         <li>
             <a target="_blank"
-               href="https://wiki.xileretro.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-14">
+               href="https://wiki.xilero.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-14">
                 08 <span>Holiday and Biolab Content!</span>
             </a>
         </li>
         <li>
             <a target="_blank"
-               href="https://wiki.xileretro.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-15">
+               href="https://wiki.xilero.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-15">
                 01 <span>Snow Removal Update</span>
             </a>
         </li>
@@ -453,7 +453,7 @@
     <ul>
         <li>
             <a target="_blank"
-               href="https://wiki.xileretro.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-16">
+               href="https://wiki.xilero.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-16">
                 09 <span>After Christmas Update</span>
             </a>
         </li>
@@ -464,13 +464,13 @@
     <ul>
         <li>
             <a target="_blank"
-               href="https://wiki.xileretro.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-17">
+               href="https://wiki.xilero.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-17">
                 19 <span>Christmas Update</span>
             </a>
         </li>
         <li>
             <a target="_blank"
-               href="https://wiki.xileretro.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-18">
+               href="https://wiki.xilero.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-18">
                 06 <span>Weekly Update</span>
             </a>
         </li>
@@ -481,13 +481,13 @@
     <ul>
         <li>
             <a target="_blank"
-               href="https://wiki.xileretro.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-19">
+               href="https://wiki.xilero.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-19">
                 23 <span>WoE 2.0 Update</span>
             </a>
         </li>
         <li>
             <a target="_blank"
-               href="https://wiki.xileretro.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-20">
+               href="https://wiki.xilero.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-20">
                 10 <span>Bi-Weekly Update</span>
             </a>
         </li>
@@ -498,19 +498,19 @@
     <ul>
         <li>
             <a target="_blank"
-               href="https://wiki.xileretro.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-21">
+               href="https://wiki.xilero.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-21">
                 27 <span>Bi-Weekly Update</span>
             </a>
         </li>
         <li>
             <a target="_blank"
-               href="https://wiki.xileretro.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-22">
+               href="https://wiki.xilero.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-22">
                 13 <span>Weekly Update</span>
             </a>
         </li>
         <li>
             <a target="_blank"
-               href="https://wiki.xileretro.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-23">
+               href="https://wiki.xilero.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-23">
                 02 <span> Weekly Update</span>
             </a>
         </li>
@@ -521,19 +521,19 @@
     <ul>
         <li>
             <a target="_blank"
-               href="https://wiki.xileretro.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-24">
+               href="https://wiki.xilero.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-24">
                 22 <span>Weekly Update</span>
             </a>
         </li>
         <li>
             <a target="_blank"
-               href="https://wiki.xileretro.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-25">
+               href="https://wiki.xilero.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-25">
                 11 <span>Weekly Update</span>
             </a>
         </li>
         <li>
             <a target="_blank"
-               href="https://wiki.xileretro.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-26">
+               href="https://wiki.xilero.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-26">
                 04 <span> Weekly Update</span>
             </a>
         </li>
@@ -544,13 +544,13 @@
     <ul>
         <li>
             <a target="_blank"
-               href="https://wiki.xileretro.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-27">
+               href="https://wiki.xilero.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-27">
                 17 <span>Weekly Update</span>
             </a>
         </li>
         <li>
             <a target="_blank"
-               href="https://wiki.xileretro.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-28">
+               href="https://wiki.xilero.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-28">
                 07 <span> 2-Step Weekly Update - Part 2</span>
             </a>
         </li>
@@ -561,19 +561,19 @@
     <ul>
         <li>
             <a target="_blank"
-               href="https://wiki.xileretro.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-29">
+               href="https://wiki.xilero.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-29">
                 24 <span>Weekly Update</span>
             </a>
         </li>
         <li>
             <a target="_blank"
-               href="https://wiki.xileretro.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-30">
+               href="https://wiki.xilero.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-30">
                 13 <span>2-Step Weekly Update - Part 1</span>
             </a>
         </li>
         <li>
             <a target="_blank"
-               href="https://wiki.xileretro.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-31">
+               href="https://wiki.xilero.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-31">
                 03 <span>Weekly Update</span>
             </a>
         </li>
@@ -584,25 +584,25 @@
     <ul>
         <li>
             <a target="_blank"
-               href="https://wiki.xileretro.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-32">
+               href="https://wiki.xilero.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-32">
                 26 <span>Weekly Update</span>
             </a>
         </li>
         <li>
             <a target="_blank"
-               href="https://wiki.xileretro.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-33">
+               href="https://wiki.xilero.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-33">
                 20 <span>Weekly Update</span>
             </a>
         </li>
         <li>
             <a target="_blank"
-               href="https://wiki.xileretro.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-34">
+               href="https://wiki.xilero.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-34">
                 13 <span>Weekly Update</span>
             </a>
         </li>
         <li>
             <a target="_blank"
-               href="https://wiki.xileretro.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-35">
+               href="https://wiki.xilero.net/index.php?title=Updates_Changelog&fbclid=IwAR2F9bzjEltJ5rFj2brduv33ytC3FIsRuao9xTgoDw4dId0CmhaoVO6Gd9M#cite_note-35">
                 05 <span>First update after launch!</span>
             </a>
         </li>

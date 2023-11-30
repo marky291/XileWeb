@@ -1,13 +1,13 @@
 <x-app-layout>
 
-    <section class="shadow bg-clash-bg bg-right py-20 pt-80">
+    <section class="shadow bg-clash-bg bg-right md:py-20 pb-12 md:pt-80 px-12 pt-40">
         <div class="section-div text-gray-100">
-            <span class="text-[140px] center-letter">X</span>
-            <span class="text-[140px] center-letter">I</span>
-            <span class="text-[140px] center-letter">L</span>
-            <span class="text-[140px] center-letter">E</span>
-            <span class="text-[140px] center-letter">R</span>
-            <span class="text-[140px] center-letter">O</span>
+            <span class="text-[100px] md:text-[140px] center-letter">X</span>
+            <span class="text-[100px] md:text-[140px] center-letter">I</span>
+            <span class="text-[100px] md:text-[140px] center-letter">L</span>
+            <span class="text-[100px] md:text-[140px] center-letter">E</span>
+            <span class="text-[100px] md:text-[140px] center-letter">R</span>
+            <span class="text-[100px] md:text-[140px] center-letter">O</span>
         </div>
     </section>
 
@@ -60,14 +60,14 @@
     @endif
 
 
-    <section id="steps2play" class="bg-clash-bg relative overflow-hidden py-12 px-24">
+    <section id="steps2play" class="bg-clash-bg relative overflow-hidden py-12 md:px-24">
         <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
             <livewire:register lazy />
         </div>
     </section>
 
-    <div class="line"></div>
     <div class="hidden md:block">
+        <div class="line"></div>
         <x-latest-post-preview lazy/>
     </div>
     <div class="line"></div>
@@ -88,7 +88,7 @@
             <p class="mt-6 text-gray-300 leading-relaxed">Welcome to the world of Xilero, where unique adventures await! If you're new to our server or looking to enhance your gameplay experience, you've come to the right place. Our Getting Started guides are crafted to help players of all levels navigate the distinct features and mechanics that set Xilero apart.</p>
             <div class="grid grid-cols-4 gap-12 mt-14">
                 <div class="col-span-4 md:col-span-2 lg:col-span-1 block-home">
-                    <a title="Learn more about Server Information & Features on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xileretro.net/index.php?title=Server_Information">
+                    <a title="Learn more about Server Information & Features on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xilero.net/index.php?title=Server_Information">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
                                 <img class="object-cover w-full rounded h-44" style="margin:0" src="{{ asset('assets/getting-started/server-information.jpeg') }}" alt="Server Information & Features">
@@ -98,7 +98,7 @@
                     </a>
                 </div>
                 <div class="col-span-4 md:col-span-2 lg:col-span-1 block-home hover:shadow-md hover:shadow-violet-500">
-                    <a title="Essential Starter Packages & Guides for New Players" target="_blank" rel="noopener" href="https://wiki.xileretro.net/index.php?title=Newbie_Center">
+                    <a title="Essential Starter Packages & Guides for New Players" target="_blank" rel="noopener" href="https://wiki.xilero.net/index.php?title=Newbie_Center">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
                                 <img class="object-cover w-full rounded h-44" style="margin:0" src="{{ asset('assets/getting-started/starter-packages.jpeg') }}" alt="Starter Packages & Guids Image">
@@ -108,7 +108,7 @@
                     </a>
                 </div>
                 <div class="col-span-4 md:col-span-2 lg:col-span-1 block-home hover:shadow-md hover:shadow-violet-500">
-                    <a title="Discover Best Leveling Areas & Progression Tips on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xileretro.net/index.php?title=Leveling_Spots">
+                    <a title="Discover Best Leveling Areas & Progression Tips on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xilero.net/index.php?title=Leveling_Spots">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
                                 <img class="object-cover w-full rounded h-44" style="margin:0" src="{{ asset('assets/getting-started/leveling-areas.jpeg') }}" alt="Leveling Areas & Progression Image">
@@ -128,7 +128,7 @@
                     </a>
                 </div>
                 <div class="col-span-4 md:col-span-2 lg:col-span-1 block-home hover:shadow-md hover:shadow-violet-500">
-                    <a title="Learn about the Donation Help & Rewards on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xileretro.net/index.php?title=Donation">
+                    <a title="Learn about the Donation Help & Rewards on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xilero.net/index.php?title=Donation">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
                                 <img class="object-cover w-full rounded h-44" style="margin:0" src="{{ asset('assets/getting-started/donation-help.jpeg') }}" alt="Donation Help & Rewards">
@@ -138,7 +138,7 @@
                     </a>
                 </div>
                 <div class="col-span-4 md:col-span-2 lg:col-span-1 block-home hover:shadow-md hover:shadow-violet-500">
-                    <a title="Explore the MVP Ranking System on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xileretro.net/index.php?title=MVP">
+                    <a title="Explore the MVP Ranking System on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xilero.net/index.php?title=MVP">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
                                 <img class="object-cover w-full rounded h-44" style="margin:0" src="{{ asset('assets/getting-started/mvp-ranking.jpeg') }}" alt="MVP Ranking System Image">
@@ -148,7 +148,7 @@
                     </a>
                 </div>
                 <div class="col-span-4 md:col-span-2 lg:col-span-1 block-home hover:shadow-md hover:shadow-violet-500">
-                    <a title="Discover Randomised Weapons Loots on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xileretro.net/index.php?title=MVP">
+                    <a title="Discover Randomised Weapons Loots on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xilero.net/index.php?title=MVP">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
                                 <img class="object-cover w-full rounded h-44" style="margin:0" src="{{ asset('assets/getting-started/randomized-weapon-loots.jpeg') }}" alt="Randomised Weapon Loot Image">
@@ -158,7 +158,7 @@
                     </a>
                 </div>
                 <div class="col-span-4 md:col-span-2 lg:col-span-1 block-home hover:shadow-md hover:shadow-violet-500">
-                    <a title="Explore the Wikipedia Knowledge Base on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xileretro.net/index.php?title=MVP">
+                    <a title="Explore the Wikipedia Knowledge Base on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xilero.net/index.php?title=MVP">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
                                 <img class="object-cover w-full rounded h-44" style="margin:0" src="{{ asset('assets/getting-started/wikipedia-knowledge.jpeg') }}" alt="Wikipedia Knowledge Base">
@@ -181,7 +181,7 @@
                     <svg class="text-rose-500 w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                         <h3 class="mt-5 text-xl font-bold">Donate</h3>
                         <p class="mt-4 text-gray-700 text-sm leading-relaxed">Earn ubers by supporting the server and get rewarded just remember we only reward uber tokens that can be spent in the uber store and nothing else.</p>
-                        <a class="group relative inline-flex border border-red-600 focus:outline-none mt-6" href="https://wiki.xileretro.net/index.php?title=Donation">
+                        <a class="group relative inline-flex border border-red-600 focus:outline-none mt-6" href="https://wiki.xilero.net/index.php?title=Donation">
                             <span class="w-full inline-flex items-center justify-center self-stretch px-4 py-2 text-sm text-red-600 text-center font-bold uppercase bg-white ring-1 ring-red-600 ring-offset-1 transform transition-transform group-hover:-translate-y-1 group-hover:-translate-x-1 group-focus:-translate-y-1 group-focus:-translate-x-1">
                                 Donate Now
                             </span>
@@ -191,7 +191,7 @@
                         <svg class="w-8 h-8 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"></path></svg>
                         <h3 class="mt-5 text-xl font-bold">Zeny Purchase</h3>
                         <p class="mt-4 text-gray-700 text-sm leading-relaxed">Don't want to ever donate? Well you do not have too just spend some time in game, get to know others and you will have enough zeny to purchase ubers in no time.</p>
-                        <a class="group relative inline-flex border border-red-600 focus:outline-none mt-6" href="https://wiki.xileretro.net/index.php?title=Donation">
+                        <a class="group relative inline-flex border border-red-600 focus:outline-none mt-6" href="https://wiki.xilero.net/index.php?title=Donation">
                             <span class="w-full inline-flex items-center justify-center self-stretch px-4 py-2 text-sm text-red-600 text-center font-bold uppercase bg-white ring-1 ring-red-600 ring-offset-1 transform transition-transform group-hover:-translate-y-1 group-hover:-translate-x-1 group-focus:-translate-y-1 group-focus:-translate-x-1">
                                 Learn How
                             </span>
@@ -223,7 +223,7 @@
                 <ul class="mt-10 relative grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     @foreach (config('donation.items') as $item)
                         <li class="block-home p-6">
-                            <a id="{{ Str::slug($item['name']) }}" title="Uber Shop Item {{ $item['name'] }}" aria-label="Uber Shop Item {{ $item['name'] }}" href="https://wiki.xileretro.net/index.php?title=Donation" class="flex">
+                            <a id="{{ Str::slug($item['name']) }}" title="Uber Shop Item {{ $item['name'] }}" aria-label="Uber Shop Item {{ $item['name'] }}" href="https://wiki.xilero.net/index.php?title=Donation" class="flex">
                                 <div class="relative shrink-0 bg-breeze flex items-center justify-center rounded-lg overflow-hidden" style="height:100px; width:75px;">
                                     {{-- <span class="absolute w-full h-full inset-0 bg-gradient-to-b from-[rgba(255,255,255,.2)] to-[rgba(255,255,255,0)]"></span> --}}
                                     <img src="/images/donations/{{ $item['image'] }}" alt="{{ $item['name'] }} Item" class="relative" width="75" height="100">
@@ -441,7 +441,7 @@
             </div>
             <div class="grid grid-cols-4 gap-12 mt-14">
                 <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-gray-900 hover:bg-gray-800 rounded">
-                    <a target="_blank" href="https://wiki.xileretro.net/index.php?title=Server_Information">
+                    <a target="_blank" href="https://wiki.xilero.net/index.php?title=Server_Information">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
                                 <img class="object-cover w-full rounded h-44" style="margin:0" src="https://swall.teahub.io/photos/small/99-999290_ragnarok-online-valkyrie.jpg" alt="Server information Image">
