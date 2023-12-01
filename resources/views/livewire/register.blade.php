@@ -98,9 +98,9 @@
                     <a href="{{ route('filament.app.pages.dashboard') }}" class="btn btn-secondary justify-center w-auto py-12 mt-4">
                         <span>Account Login</span>
                     </a>
-{{--                    <a href="{{ route('password.request') }}" class="btn btn-secondary w-auto justify-center py-12 mt-4">--}}
-{{--                        <span>Password Reset</span>--}}
-{{--                    </a>--}}
+                    <a href="{{ route('password.request') }}" class="btn btn-secondary w-auto justify-center py-12 mt-4">
+                        <span>Password Reset</span>
+                    </a>
                 </div>
             </form>
         @else
