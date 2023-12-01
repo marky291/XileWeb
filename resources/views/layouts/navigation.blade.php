@@ -12,7 +12,7 @@
                     <li><a class="hover:bg-gradient-to-bl hover:from-blue-900 hover:to-fuchsia-700 rounded py-3 px-6 text-gray-100 border-gray-500 bg-gray-900 bg-opacity-50"
                            href="#steps2play" title="Register at XileRO">Register</a></li>
                     <li><a class="hover:bg-gradient-to-tr hover:from-blue-900 hover:to-fuchsia-700 rounded py-3 px-6 text-gray-100 border-gray-500 bg-gray-900 bg-opacity-50"
-                           href="http://wiki.xilero.net/index.php?title=Donation"
+                           href="https://discord.com/channels/702319926110584943/1150037346415284284"
                            title="Donate to XileRO">Donate</a></li>
                     <li><a class="hover:bg-gradient-to-bl hover:from-blue-900 hover:to-fuchsia-700 rounded py-3 px-6 text-gray-100 border-gray-500 bg-gray-900 bg-opacity-50"
                            href="https://discord.gg/hp7CS6k" title="Join XileRO on Discord">Discord</a></li>
@@ -69,7 +69,7 @@
                     <ul>
                         <li>
                             <a class="block w-full py-4 text-rose-800"
-                               href="http://wiki.xilero.net/index.php?title=Donation" title="Donate to XileRO"
+                               href="https://discord.com/channels/702319926110584943/1150037346415284284" title="Donate to XileRO"
                                aria-label="Donate to XileRO">
                                 Donate
                             </a>
