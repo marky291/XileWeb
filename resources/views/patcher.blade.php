@@ -26,7 +26,7 @@
         font-size: 12px;
         color: #A68CD7;
         background-position: center top;
-        background-image: url('{{ asset('assets/patcher/background2.png') }}');
+        background-image: url('{{ asset('assets/patcher/background2-1.png') }}');
     }
 
     h5 {
