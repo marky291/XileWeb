@@ -25,7 +25,7 @@
         font-family: Arial, Helvetica, sans-serif;
         font-size: 12px;
         color: #A68CD7;
-        background-position: center top;
+        background-position: left;
         background-image: url('{{ asset('assets/patcher/background2.png') }}');
     }
 
