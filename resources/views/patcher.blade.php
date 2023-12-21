@@ -26,7 +26,7 @@
         font-size: 12px;
         color: #A68CD7;
         background-position: center top;
-        background-image: url('{{ asset('assets/patcher/background2-1.png') }}');
+        background-image: url('{{ asset('assets/patcher/background2.png') }}');
     }
 
     h5 {
@@ -47,7 +47,7 @@
     }
 
     span {
-        color: #6B88C0;
+        color: #366EB5;
         text-decoration: underline;
         margin-left: 10px;
         font-weight: normal;
@@ -70,7 +70,7 @@
 
     .description {
         margin-left: 25px;
-        color: #E6D0EE;
+        color: #FFFFFF;
         font-weight: normal;
     }
 </style>
