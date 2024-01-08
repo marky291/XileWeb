@@ -21,9 +21,9 @@ class Kernel extends ConsoleKernel
         // schedule woe point calculations
         $schedule->job(new PostGuildPointsToDiscordJob('Kriemhild', today()))->hourly()->name('Kriemhild Points')->withoutOverlapping();
         $schedule->job(new PostGuildPointsToDiscordJob('Swanhild', today()))->hourly()->name('Swanhild Points')->withoutOverlapping();
-        $schedule->job(new PostGuildPointsToDiscordJob('Fadhringh', today()))->hourly()->name('Fadhringh Points')->withoutOverlapping();
-        $schedule->job(new PostGuildPointsToDiscordJob('Skoegul', today()))->hourly()->name('Skoegul Points')->withoutOverlapping();
-        $schedule->job(new PostGuildPointsToDiscordJob('Gondul', today()))->hourly()->name('Gondul Points')->withoutOverlapping();
+        // $schedule->job(new PostGuildPointsToDiscordJob('Fadhringh', today()))->hourly()->name('Fadhringh Points')->withoutOverlapping();
+        // $schedule->job(new PostGuildPointsToDiscordJob('Skoegul', today()))->hourly()->name('Skoegul Points')->withoutOverlapping();
+        // $schedule->job(new PostGuildPointsToDiscordJob('Gondul', today()))->hourly()->name('Gondul Points')->withoutOverlapping();
         $schedule->job(new PostGuildPointsToDiscordJob('Hljod', today()))->hourly()->name('Hljod Points')->withoutOverlapping();
     }
 
