@@ -23,11 +23,8 @@ async def on_ready():
 
 @tasks.loop(minutes=1)
 async def update_activity():
-    # Set the time zone to Frankfurt, Germany
-    frankfurt_timezone = pytz.timezone('Europe/Berlin')
-
     # Get the current time in the specified time zone
-    current_time = datetime.now(frankfurt_timezone)
+    current_time = datetime.utcnow()
 
     # Format the time as a string
     time_str = current_time.strftime('%I:%M %p')
