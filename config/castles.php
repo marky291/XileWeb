@@ -24,8 +24,13 @@ return [
         ],
         'Swanhild' => [
             'open' => true,
-            'time' => '15:00',
-            'day' => ['Friday']
+            'time' => '03:00',
+            'day' => ['Thursday']
+        ],
+        'Cyr' => [
+            'open' => true,
+            'time' => '01:00',
+            'day' => ['Saturday']
         ],
         'Fadhgridh' => [
             'open' => false,
