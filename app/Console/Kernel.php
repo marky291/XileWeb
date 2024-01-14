@@ -25,6 +25,7 @@ class Kernel extends ConsoleKernel
         // $schedule->job(new PostGuildPointsToDiscordJob('Skoegul', today()))->hourly()->name('Skoegul Points')->withoutOverlapping();
         // $schedule->job(new PostGuildPointsToDiscordJob('Gondul', today()))->hourly()->name('Gondul Points')->withoutOverlapping();
         $schedule->job(new PostGuildPointsToDiscordJob('Hljod', today()))->hourly()->name('Hljod Points')->withoutOverlapping();
+        $schedule->job(new PostGuildPointsToDiscordJob('Cyr', today()))->hourly()->name('Cyr Points')->withoutOverlapping();
     }
 
     /**

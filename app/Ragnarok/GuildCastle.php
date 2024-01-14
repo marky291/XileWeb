@@ -37,6 +37,7 @@ class GuildCastle extends RagnarokModel
     const GONDUL = 'Gondul';
     const FADHRINGH = 'Fadhringh';
     const HLJOD = 'Hljod';
+    const CYR = 'Cyr';
 
     /**
      * The connection name for the model.

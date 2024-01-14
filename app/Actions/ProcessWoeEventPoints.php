@@ -81,6 +81,9 @@ class ProcessWoeEventPoints
        if ($castle == GuildCastle::HLJOD) {
            return config('services.discord.hljod_guild_points');
        }
+        if ($castle == GuildCastle::CYR) {
+            return config('services.discord.cyr_guild_points');
+        }
     }
 
     private function processEvents($events): array

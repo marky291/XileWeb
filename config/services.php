@@ -41,6 +41,7 @@ return [
         'fadhringh_guild_points' => env('DISCORD_FADHRINGH_GUILD_POINTS'),
         'gondul_guild_points' => env('DISCORD_GONDUL_GUILD_POINTS'),
         'hljod_guild_points' => env('DISCORD_HLJOD_GUILD_POINTS'),
+        'cyr_guild_points' => env('DISCORD_CYR_GUILD_POINTS'),
         'server_time_token' => env('DISCORD_SERVER_TIME_TOKEN')
     ],
 ];
