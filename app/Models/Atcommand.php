@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Ragnarok;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class DonationLog extends Model
+class Atcommand extends Model
 {
     use HasFactory;
 
@@ -21,17 +21,12 @@ class DonationLog extends Model
      *
      * @var string
      */
-    protected $table = 'donationlog';
+    protected $table = 'atcommandlog';
 
     /**
      * The primary key for the model.
      *
      * @var string
      */
-    protected $primaryKey = 'id';
-
-    public function login()
-    {
-        return $this->belongsTo(Login::class, 'account_id', 'account_id');
-    }
+    protected $primaryKey = 'atcommand_id';
 }
