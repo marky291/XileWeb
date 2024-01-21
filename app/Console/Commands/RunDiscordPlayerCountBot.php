@@ -7,7 +7,7 @@ use Illuminate\Console\Command;
 use Log;
 use Symfony\Component\Process\Process;
 
-class RunDiscordPlayerCountBot extends Command
+class RunDiscordPlayerCountBot extends XileDiscordBot
 {
     /**
      * The name and signature of the console command.

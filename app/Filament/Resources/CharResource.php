@@ -89,10 +89,10 @@ class CharResource extends Resource
 
         return $form
             ->schema([
-                Forms\Components\TextInput::make('account_id'),
+                Forms\Components\TextInput::make('account_id')->readOnly(),
                 Forms\Components\TextInput::make('name'),
                 Forms\Components\Select::make('class')->options($classOptions),
-                Forms\Components\TextInput::make('last_login'),
+                Forms\Components\TextInput::make('last_login')->readOnly(),
             ]);
     }
 
@@ -101,13 +101,10 @@ class CharResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('account_id'),
-                Tables\Columns\TextColumn::make('login.userid')->searchable(),
-                Tables\Columns\TextColumn::make('name')->label('Character')->searchable(),
+                Tables\Columns\TextColumn::make('login.userid')->searchable()->copyable(),
+                Tables\Columns\TextColumn::make('name')->label('Character')->searchable()->copyable(),
                 Tables\Columns\TextColumn::make('class'),
                 Tables\Columns\TextColumn::make('last_login'),
-            ])
-            ->filters([
-                //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

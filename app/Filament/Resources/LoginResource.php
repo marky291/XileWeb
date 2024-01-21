@@ -34,7 +34,7 @@ class LoginResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('account_id')->unique(ignoreRecord: true),
+                Forms\Components\TextInput::make('account_id')->unique(ignoreRecord: true)->readOnly(),
                 Forms\Components\TextInput::make('userid')->unique(ignoreRecord: true),
                 Forms\Components\TextInput::make('email')->unique(ignoreRecord: true),
                 Forms\Components\TextInput::make('user_pass'),
@@ -44,6 +44,8 @@ class LoginResource extends Resource
                         $set('user_pass', MakeHashedLoginPassword::run($state));
                     }),
                 ),
+                Forms\Components\TextInput::make('last_ip')->readOnly(),
+                Forms\Components\DatePicker::make('lastlogin')->readOnly(),
             ]);
     }
 
@@ -52,10 +54,11 @@ class LoginResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('account_id'),
-                Tables\Columns\TextColumn::make('userid')->searchable(),
+                Tables\Columns\TextColumn::make('userid')->searchable()->copyable(),
                 Tables\Columns\TextColumn::make('email')->searchable(),
                 Tables\Columns\TextColumn::make('chars_count')->counts('chars'),
                 Tables\Columns\TextColumn::make('group_id')->sortable(),
+                Tables\Columns\TextColumn::make('last_ip')->searchable()->copyable(),
                 Tables\Columns\TextColumn::make('lastlogin'),
             ])
             ->filters([

@@ -22,12 +22,18 @@ class LoginRelationManager extends RelationManager
         return $form
             ->schema([
                 Forms\Components\TextInput::make('account_id')
+                    ->unique(ignoreRecord: true)
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('userid')
+                    ->unique(ignoreRecord: true)
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('group_id')
                     ->required()
                     ->numeric(),
                 Forms\Components\TextInput::make('email')
+                    ->unique(ignoreRecord: true)
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('user_pass')->hintAction(

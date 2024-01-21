@@ -8,7 +8,7 @@ use Symfony\Component\Process\Process;
 use Illuminate\Support\Facades\Log;
 use function Symfony\Component\String\u;
 
-class RunDiscordUberCostBot extends Command
+class RunDiscordUberCostBot extends XileDiscordBot
 {
     /**
      * The name and signature of the console command.

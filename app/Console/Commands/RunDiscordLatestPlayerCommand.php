@@ -6,7 +6,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\Process\Process;
 
-class RunDiscordLatestPlayerCommand extends Command
+class RunDiscordLatestPlayerCommand extends XileDiscordBot
 {
     /**
      * The name and signature of the console command.

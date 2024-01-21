@@ -6,7 +6,7 @@ use Illuminate\Console\Command;
 use Symfony\Component\Process\Process;
 use Log;
 
-class RunDiscordServerTimeBot extends Command
+class RunDiscordServerTimeBot extends XileDiscordBot
 {
     /**
      * The name and signature of the console command.
@@ -57,6 +57,6 @@ class RunDiscordServerTimeBot extends Command
             Log::error("Error running Discord Server Time Bot: " . $process->getErrorOutput());
         }
 
-        $this->info('Discord Uber Cost Bot executed successfully.');
+        $this->info('Discord Server Time Bot executed successfully.');
     }
 }
