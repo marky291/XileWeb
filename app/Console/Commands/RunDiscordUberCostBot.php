@@ -2,13 +2,11 @@
 
 namespace App\Console\Commands;
 
-use App\Ragnarok\ServerZeny;
 use Illuminate\Console\Command;
-use Symfony\Component\Process\Process;
 use Illuminate\Support\Facades\Log;
-use function Symfony\Component\String\u;
+use Symfony\Component\Process\Process;
 
-class RunDiscordUberCostBot extends XileDiscordBot
+class RunDiscordUberCostBot extends Command
 {
     /**
      * The name and signature of the console command.

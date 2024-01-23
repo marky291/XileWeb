@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console;
 
+use App\Console\Commands\Log;
+use App\Console\Commands\Process;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 

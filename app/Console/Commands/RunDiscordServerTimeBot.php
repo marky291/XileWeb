@@ -3,10 +3,10 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\Process\Process;
-use Log;
 
-class RunDiscordServerTimeBot extends XileDiscordBot
+class RunDiscordServerTimeBot extends Command
 {
     /**
      * The name and signature of the console command.

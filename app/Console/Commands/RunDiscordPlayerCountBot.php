@@ -2,12 +2,11 @@
 
 namespace App\Console\Commands;
 
-use App\Ragnarok\Char;
 use Illuminate\Console\Command;
-use Log;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\Process\Process;
 
-class RunDiscordPlayerCountBot extends XileDiscordBot
+class RunDiscordPlayerCountBot extends Command
 {
     /**
      * The name and signature of the console command.
