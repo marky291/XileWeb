@@ -49,8 +49,8 @@ async def update_activity():
     # Format the time as a string
     time_str = current_time.strftime('%I:%M %p')
 
-    # Display the time until the next WoE in hours along with the simplified next WoE time
-    next_woe_str = f'({next_woe_time.strftime("%-I %p")})'  # %I without leading zero with a space
+    # Display the time until the next WoE in hours along with the next WoE time
+    next_woe_str = f'({next_woe_time.strftime("%H:%M %p")})'  # %I without leading zero with a space
     activity_text = f'{time_difference_hours} hours {next_woe_str}'
 
     activity = discord.Activity(name=activity_text, type=discord.ActivityType.watching)
