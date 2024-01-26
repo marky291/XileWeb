@@ -8,16 +8,20 @@ import json
 
 token = sys.argv[1]
 url = sys.argv[2]
-woe_times_data = json.loads(sys.argv[3])
+woe_times_data_json = sys.argv[3]
 
-# Convert any integers to strings and filter out invalid time strings
+# Convert JSON string to a Python dictionary
+woe_times_data = json.loads(woe_times_data_json)
+
+# Convert the received data into the correct format for further processing
 woe_times_data = {
-    castle: str(time) for castle, time in woe_times_data.items()
-    if isinstance(time, (str, int)) and (isinstance(time, str) and len(time) == 5 and time[2] == ':')
+    castle: {
+        'time': datetime.strptime(details['time'], '%H:%M') if isinstance(details['time'], str) else details['time'],
+        'day': details.get('day', [None])[0]
+    }
+    for castle, details in woe_times_data.items()
+    if details.get('time')
 }
-
-# Parse the valid time strings into datetime objects
-woe_times_data = {castle: datetime.strptime(time, '%H:%M') for castle, time in woe_times_data.items()}
 
 intents = discord.Intents.default()
 intents.presences = True
@@ -34,28 +38,36 @@ async def on_ready():
 async def update_activity():
     global woe_times_data  # Declare woe_times_data as a global variable
 
-    # Get the current time
-    current_time = datetime.now()
+    if woe_times_data:
+        current_time = datetime.now()
 
-    # Subtract 1 hour from each WoE time
-    woe_times_data = {castle: time + timedelta(hours=-1) for castle, time in woe_times_data.items()}
+        # Create a new dictionary to store modified times
+        modified_woe_times = {castle: {'time': time['time'] - timedelta(hours=1), 'day': time['day']} for castle, time in woe_times_data.items()}
 
-    # Find the next WoE time
-    next_woe_time = min(woe_times_data.values())
+        # Filter out entries where 'day' is None or not present using modified_woe_times
+        valid_entries = [(details['time'], details['day']) for castle, details in modified_woe_times.items() if details['day'] is not None and details['time']]
 
-    # Calculate the time difference in hours
-    time_difference_hours = (next_woe_time - current_time).seconds // 3600
+        if valid_entries:
+            # Find the next WoE time and day
+            next_woe_time, next_woe_day = min(valid_entries)
 
-    # Format the time as a string
-    time_str = current_time.strftime('%I:%M %p')
+            # Calculate the time difference in hours
+            time_difference_hours = (next_woe_time - current_time).seconds // 3600
 
-    # Display the time until the next WoE in hours along with the next WoE time
-    next_woe_str = f'({next_woe_time.strftime("%H:%M %p")})'  # %I without leading zero with a space
-    activity_text = f'{time_difference_hours} hours {next_woe_str}'
+            # Format the time as a string
+            time_str = current_time.strftime('%I:%M %p')
 
-    activity = discord.Activity(name=activity_text, type=discord.ActivityType.watching)
+            # Display the time until the next WoE in hours along with the next WoE time and day
+            next_woe_str = f'({next_woe_time.strftime("%H:%M %p")})'
+            activity_text = f'in {time_difference_hours}hr. {next_woe_str}'
 
-    await client.change_presence(activity=activity)
+            activity = discord.Activity(name=activity_text, type=discord.ActivityType.watching)
+
+            await client.change_presence(activity=activity)
+        else:
+            print("No valid WoE times data available.")
+    else:
+        print("No WoE times data available.")
 
 try:
     client.run(token)
