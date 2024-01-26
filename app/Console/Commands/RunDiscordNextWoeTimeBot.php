@@ -26,7 +26,7 @@ class RunDiscordNextWoeTimeBot extends Command
      */
     public function handle()
     {
-        $pronteraTimes = config('castle.prontera');
+        $pronteraTimes = config('castles.prontera');
 
         // Create an array to store all Prontera times
         $allPronteraTimes = [];
@@ -35,18 +35,29 @@ class RunDiscordNextWoeTimeBot extends Command
         foreach ($pronteraTimes as $castle => $castleDetails) {
             // Check if the castle is open
             if ($castleDetails['open']) {
-                // Add the time to the array
-                $allPronteraTimes[] = $castleDetails['time'];
+                // Add castle name and time to the array
+                $allPronteraTimes[$castle] = $castleDetails['time'];
             }
         }
 
-        // Now, $allPronteraTimes is an array containing all open times for Prontera
-        print_r($allPronteraTimes);
+        // Find the minimum WoE time
+        $nextWoeTime = min($allPronteraTimes);
 
-        dd($allPronteraTimes);
+        // Get the current time
+        $currentTime = now();
 
+        // Calculate the time difference
+        $timeDifference = $currentTime->diffInHours($nextWoeTime);
+
+        // Display the time until the next WoE in hours
+        $this->info("Next WoE in {$timeDifference} hours");
+
+        // Pass the information to the Discord bot
         RunDiscordPythonBot::run($this, "Next Woe Time", [
-            ''
+            'nextWoeTime' => $nextWoeTime,
+            'timeDifference' => $timeDifference,
         ]);
+
+        RunDiscordPythonBot::run($this, "Next Woe Time", $allPronteraTimes);
     }
 }
