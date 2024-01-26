@@ -1,16 +1,19 @@
 <?php
 
-namespace App\Console;
+namespace App\Actions;
 
-use App\Console\Commands\Log;
-use App\Console\Commands\Process;
 use Illuminate\Console\Command;
-use Illuminate\Support\Str;
+use Lorisleiva\Actions\Concerns\AsAction;
+use Illuminate\Support\Facades\Log;
+use Symfony\Component\Process\Process;
 
-class XileDiscordBot extends Command
+class RunDiscordPythonBot
 {
-    public function RunBot(string $botName, string $discordToken)
+    use AsAction;
+
+    public function handle(Command $command, string $botName, array $data = [])
     {
+
         set_time_limit(0);
         pcntl_async_signals(true); // Enable signal handling
 
@@ -19,7 +22,7 @@ class XileDiscordBot extends Command
         $token = config("services.discord.{$botNameSlug}");
         $url = route('api.discord');
 
-        $process = new Process(['python3', $scriptPath, $token, $url]);
+        $process = new Process(array_merge(['python3', $scriptPath, $token, $url], $data));
         $process->setOptions(['create_process_group' => true]);
         $process->setTimeout(3600);
 
@@ -32,16 +35,18 @@ class XileDiscordBot extends Command
             $process->stop();
         });
 
-        $process->mustRun(function ($type, $buffer, $botName) {
+        $process->mustRun(function ($type, $buffer, $botName, $command) {
             $logMethod = Process::ERR === $type ? 'error' : 'info';
             Log::$logMethod("Discord {$botName} Bot: " . $buffer);
-            $this->output->write($buffer);
+            $command->output->write($buffer);
         });
 
         if (!$process->isSuccessful()) {
             Log::error("Error running Discord {$botName} Bot: " . $process->getErrorOutput());
+
+            $command->info("Discord {$botName} Bot Failed.");
         }
 
-        $this->info("Discord {$botName} Bot executed successfully.");
+        $command->info("Discord {$botName} Bot executed successfully.")u
     }
 }
