@@ -34,7 +34,7 @@ async def on_ready():
     print(f'Logged in as {client.user}')
     update_activity.start()
 
-@tasks.loop(minutes=1)
+@tasks.loop(minutes=60)
 async def update_activity():
     global woe_times_data  # Declare woe_times_data as a global variable
 
