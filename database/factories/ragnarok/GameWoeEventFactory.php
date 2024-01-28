@@ -4,6 +4,7 @@ namespace Database\Factories\ragnarok;
 
 use App\Enum\WoeEventType;
 use App\Ragnarok\GameWoeEvent;
+use App\Ragnarok\Guild;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -76,6 +77,21 @@ class GameWoeEventFactory extends Factory
             'player' => 150000,
             'discord_sent' => 0,
             'processed' => 0,
+        ]);
+    }
+
+    public function attended(): static
+    {
+        $guild = Guild::factory()->create();
+
+        return $this->state(fn (array $attributes) => [
+            'castle' => 'Kriemhild',
+            'event' => GameWoeEvent::ATTENDED,
+            'guild_id' => $guild->getKey(),
+            'season' => 1,
+            'message' => "Guild [{$guild->name}}] has attended with member count greater than size [8].",
+            'created_at' => now(),
+            'processed' => false
         ]);
     }
 }
