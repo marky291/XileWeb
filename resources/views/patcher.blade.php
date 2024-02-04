@@ -24,14 +24,14 @@
         background-color: #000000;
         font-family: Arial, Helvetica, sans-serif;
         font-size: 12px;
-        color: #A68CD7;
-        background-position: left;
-        background-image: url('{{ asset('assets/patcher/background2-2.png') }}');
+        color: #E6C17B;
+        background-position: center top;
+        background-image: url('{{ asset('assets/patcher/background.jpg') }}');
     }
 
     h5 {
         padding: 15px 0px;
-        border-bottom: 1px solid #280243;
+        border-bottom: 1px solid #524a3a;
     }
 
     ul {
@@ -42,12 +42,12 @@
     }
 
     a {
-        color: #476BB1;
+        color: #f7b948;
         text-decoration: none;
     }
 
     span {
-        color: #366EB5;
+        color: #e7c585;
         text-decoration: underline;
         margin-left: 10px;
         font-weight: normal;
@@ -65,12 +65,12 @@
     }
 
     .month {
-        border-bottom: 1px solid #280243;
+        border-bottom: 1px solid #524a3a;
     }
 
     .description {
         margin-left: 25px;
-        color: #FFFFFF;
+        color: #e7d7b8;
         font-weight: normal;
     }
 </style>
