@@ -70,7 +70,7 @@ class GuildCastle extends RagnarokModel
     /**
      * @var array
      */
-    protected $fillable = ['guild_id', 'economy', 'defense', 'triggerE', 'triggerD', 'nextTime', 'payTime', 'createTime', 'visibleC', 'visibleG0', 'visibleG1', 'visibleG2', 'visibleG3', 'visibleG4', 'visibleG5', 'visibleG6', 'visibleG7'];
+    protected $fillable = ['guild_id', 'castle_id', 'economy', 'defense', 'triggerE', 'triggerD', 'nextTime', 'payTime', 'createTime', 'visibleC', 'visibleG0', 'visibleG1', 'visibleG2', 'visibleG3', 'visibleG4', 'visibleG5', 'visibleG6', 'visibleG7'];
 
     /**
      * Each castle belongs to one guild.
@@ -85,44 +85,121 @@ class GuildCastle extends RagnarokModel
         return $query->whereIn('castle_id', [15, 16, 17, 18, 19]);
     }
 
-    public function getNameAttribute()
+    public function getNameAttribute(): string
     {
-        switch ($this->castle_id) {
-            case 0: return 'Neuschwanstein';
-            case 1: return 'Hohenschwangau';
-            case 2: return 'Nuenberg';
-            case 3: return 'Wuerzburg';
-            case 4: return 'Rothenburg';
-            case 5: return 'Repherion';
-            case 6: return 'Eeyolbriggar';
-            case 7: return 'Yesnelph';
-            case 8: return 'Bergel';
-            case 9: return 'Mersetzdeitz';
-            case 10: return 'Bright Arbor';
-            case 11: return 'Scarlet Palace';
-            case 12: return 'Holy Shadow';
-            case 13: return 'Sacred Altar';
-            case 14: return 'Bamboo Grove Hill';
-            case 15: return 'Kriemhild';
-            case 16: return 'Swanhild';
-            case 17: return 'Fadhgridh';
-            case 18: return 'Skoegul';
-            case 19: return 'Gondul';
-            case 20: return 'Novice Castle 1';
-            case 21: return 'Novice Castle 2';
-            case 22: return 'Novice Castle 3';
-            case 23: return 'Novice Castle 4';
-            case 24: return 'Guild vs Guild';
-            case 25: return 'Himinn';
-            case 26: return 'Andlangr';
-            case 27: return 'Viblainn';
-            case 28: return 'Hljod';
-            case 29: return 'Skidbladnir';
-            case 30: return 'Mardol';
-            case 31: return 'Cyr';
-            case 32: return 'Horn';
-            case 33: return 'Gefn';
-            case 34: return 'Bandis';
+        return CastleName::getNameById($this->castle_id) ?? 'Unknown Castle';
+    }
+
+    public static function getCastleNameById(int $id): ?string
+    {
+        return CastleName::getNameById($id);
+    }
+
+    public static function getCastleIdByName(string $name): ?int
+    {
+        return CastleName::getIdByName($name);
+    }
+}
+
+enum CastleName: int {
+    case Neuschwanstein = 0;
+    case Hohenschwangau = 1;
+    case Nuernberg = 2;
+    case Wuerzburg = 3;
+    case Rothenburg = 4;
+    case Repherion = 5;
+    case Eeyolbriggar = 6;
+    case Yesnelph = 7;
+    case Bergel = 8;
+    case Mersetzdeitz = 9;
+    case BrightArbor = 10;
+    case ScarletPalace = 11;
+    case HolyShadow = 12;
+    case SacredAltar = 13;
+    case BambooGroveHill = 14;
+    case Kriemhild = 15;
+    case Swanhild = 16;
+    case Fadhgridh = 17;
+    case Skoegul = 18;
+    case Gondul = 19;
+    case NoviceCastle1 = 20;
+    case NoviceCastle2 = 21;
+    case NoviceCastle3 = 22;
+    case NoviceCastle4 = 23;
+    case GuildVsGuild = 24;
+    case Himinn = 25;
+    case Andlangr = 26;
+    case Viblainn = 27;
+    case Hljod = 28;
+    case Skidbladnir = 29;
+    case Mardol = 30;
+    case Cyr = 31;
+    case Horn = 32;
+    case Gefn = 33;
+    case Bandis = 34;
+
+    public function getName(): string {
+        return match($this) {
+            self::Neuschwanstein => 'Neuschwanstein',
+            self::Hohenschwangau => 'Hohenschwangau',
+            self::Nuernberg => 'Nuernberg',
+            self::Wuerzburg => 'Wuerzburg',
+            self::Rothenburg => 'Rothenburg',
+            self::Repherion => 'Repherion',
+            self::Eeyolbriggar => 'Eeyolbriggar',
+            self::Yesnelph => 'Yesnelph',
+            self::Bergel => 'Bergel',
+            self::Mersetzdeitz => 'Mersetzdeitz',
+            self::BrightArbor => 'Bright Arbor',
+            self::ScarletPalace => 'Scarlet Palace',
+            self::HolyShadow => 'Holy Shadow',
+            self::SacredAltar => 'Sacred Altar',
+            self::BambooGroveHill => 'Bamboo Grove Hill',
+            self::Kriemhild => 'Kriemhild',
+            self::Swanhild => 'Swanhild',
+            self::Fadhgridh => 'Fadhgridh',
+            self::Skoegul => 'Skoegul',
+            self::Gondul => 'Gondul',
+            self::Himinn => 'Himinn',
+            self::Andlangr => 'Andlangr',
+            self::Viblainn => 'Viblainn',
+            self::Hljod => 'Hljod',
+            self::Skidbladnir => 'Skidbladnir',
+            self::Mardol => 'Mardol',
+            self::Cyr => 'Cyr',
+            self::Horn => 'Horn',
+            self::Gefn => 'Gefn',
+            self::Bandis => 'Bandis',
+            // Add cases for any additional castles with their names here
+            default => 'Unknown Castle'
+        };
+    }
+
+    public function getEdition(): int {
+        return match($this) {
+            // First edition castles based on the updated list
+            self::Neuschwanstein, self::Hohenschwangau, self::Nuernberg, self::Wuerzburg,
+            self::Rothenburg, self::Repherion, self::Eeyolbriggar, self::Yesnelph, self::Bergel,
+            self::Mersetzdeitz, self::BrightArbor, self::ScarletPalace, self::HolyShadow, self::SacredAltar,
+            self::BambooGroveHill, self::Kriemhild, self::Swanhild, self::Fadhgridh, self::Skoegul,
+            self::Gondul => 1,
+            // Second edition castles
+            self::Himinn, self::Andlangr, self::Viblainn, self::Hljod, self::Skidbladnir,
+            self::Mardol, self::Cyr, self::Horn, self::Gefn, self::Bandis => 2,
+            default => 0 // All other castles default to edition 0 because failure..
+        };
+    }
+
+    public static function getNameById(int $id): ?string {
+        return self::tryFrom($id)?->getName();
+    }
+
+    public static function getIdByName(string $name): ?int {
+        foreach (self::cases() as $case) {
+            if ($case->getName() === $name) {
+                return $case->value;
+            }
         }
+        return null;
     }
 }
