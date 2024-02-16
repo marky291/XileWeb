@@ -35,16 +35,16 @@ return [
 
     'android' => [
         [
-            'name' => 'Android using Google Drive (3MB)',
-            'link' => 'https://drive.google.com/file/d/1I9BBPgi8vZvjDh9AMNmsb62bbJ4HZT70/view?usp=sharing',
+            'name' => 'v474 - Android using Google Drive (3MB)',
+            'link' => 'https://cdn.discordapp.com/attachments/1146035000064614420/1207726900563284048/XileRetro2_v474_20240215193132.apk?ex=65e0b253&is=65ce3d53&hm=21c180a885b70fe4fb6a95175bdd4d87d09e24a31341bff9dee20dfa0c36a809&',
             'bttn' => 'btn-primary',
-            'version' => '464',
+            'version' => '474',
         ],
         [
-           'name' => 'Android using Mega Upload (3MB)',
-           'link' => 'https://mega.nz/file/jXwiCBib#8DBjJQm2HX-iT--rV82Pv3WyXomuYzHvwfc-rp9RanA',
+           'name' => 'v474 - Android using Mega Upload (3MB)',
+           'link' => 'https://cdn.discordapp.com/attachments/1146035000064614420/1207726900563284048/XileRetro2_v474_20240215193132.apk?ex=65e0b253&is=65ce3d53&hm=21c180a885b70fe4fb6a95175bdd4d87d09e24a31341bff9dee20dfa0c36a809&',
            'bttn' => 'btn-secondary',
-           'version' => '464',
+           'version' => '474',
        ]
     ],
 ];
