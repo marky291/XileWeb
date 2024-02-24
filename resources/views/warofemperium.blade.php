@@ -22,33 +22,33 @@
                                 </div>
                                 <div class="grid grid-cols-{{$castles->count()}} gap-5">
                                     @foreach ($castles as $castle)
-                                        <div class="mb-4 bg-gray-900 bg-opacity-70 rounded p-5">
-                                            <h3 class="text-amber-500 text-2xl mb-8 half-border">{{ $castle->name }}</h3>
-                                            @foreach(config('castles.timezones') as $timezone)
-                                                <div class="text-white mb-8 flex rounded">
-                                                    <div class="mr-3">
-                                                        @if(!is_null($castle->guild)->hasEmblem())
-                                                            <div class="w-8 h-8 m-0 shadow" style="background: url('{{ url($castle->guild->emblem) }}'); background-size:contain;"></div>
-                                                        @else
-                                                            <img class="h-8 w-8 m-0" src="/assets/emblems/empty.bmp"/>
-                                                        @endif
-                                                    </div>
-                                                    <div class="">
-                                                        <h4 class="text-white font-bold mb-1">{{ $timezone }}</h4>
-                                                        @foreach(config("castles.prontera.{$castle->name}.day") as $day)
-                                                                <?php
-                                                                $date = new DateTime();
-                                                                $date->modify("next {$day}");
-                                                                $time = DateTime::createFromFormat("H:i", config("castles.prontera.{$castle->name}.time"));
-                                                                $date->setTime($time->format('H'), $time->format('i'))->modify(config('castles.modifier'));
-                                                                ?>
-                                                            <p class="mt-1 text-gray-400">{{ $date->setTimezone(new DateTimeZone($timezone))->format("l, H:i A") }}</p>
-                                                        @endforeach
-                                                    </div>
+                                    <div class="mb-4 block-home bg-opacity-70 rounded p-5">
+                                        <h3 class="text-amber-200 text-2xl mb-8 half-border">{{ $castle->name }}</h3>
+                                        @foreach(config('castles.timezones') as $timezone)
+                                            <div class="text-white mb-8 flex rounded">
+                                                <div class="mr-3">
+                                                    @if(!is_null($castle->guild) && $castle->guild->hasEmblem())
+                                                        <div class="w-8 h-8 m-0 shadow" style="background: url('{{ $castle->guild->emblem }}'); background-size:contain;"></div>
+                                                    @else
+                                                        <img class="h-8 w-8 m-0" src="/assets/emblems/empty.bmp"/>
+                                                    @endif
                                                 </div>
-                                            @endforeach
-                                        </div>
-                                    @endforeach
+                                                <div class="">
+                                                    <h4 class="text-white font-bold mb-1">{{ $timezone }}</h4>
+                                                    @foreach(config("castles.prontera.{$castle->name}.day") as $day)
+                                                            <?php
+                                                            $date = new DateTime();
+                                                            $date->modify("next {$day}");
+                                                            $time = DateTime::createFromFormat("H:i", config("castles.prontera.{$castle->name}.time"));
+                                                            $date->setTime($time->format('H'), $time->format('i'))->modify(config('castles.modifier'));
+                                                            ?>
+                                                        <p class="mt-1 text-gray-400">{{ $date->setTimezone(new DateTimeZone($timezone))->format("l, H:i A") }}</p>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @endforeach
                                 </div>
                             </div>
                         </div>
