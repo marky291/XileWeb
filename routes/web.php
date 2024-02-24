@@ -49,11 +49,11 @@ Route::get('/warofemperium', function()
 
     return view('warofemperium', [
         'server_zeny' => $server_zeny,
-        'castles' => App\Ragnarok\GuildCastle::whereIn('castle_id', [28, 15, 16])
+        'castles' => App\Ragnarok\GuildCastle::whereIn('castle_id', [28, 31, 15, 16])
             ->with('guild', 'guild.members')
             ->get()
             ->sortBy(function($castle, $key) {
-                $order = ['28', '15', '16'];
+                $order = ['28', '31', '15', '16'];
                 return array_search((string)$castle->castle_id, $order);
             })
     ]);
