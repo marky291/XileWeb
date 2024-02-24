@@ -7,6 +7,7 @@ use App\Jobs\GuildMessagesToDiscord;
 use App\Models\Patch;
 use App\Ragnarok\ServerZeny;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
@@ -23,8 +24,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
 
+    $server_zeny = Cache::remember('server_zeny', now()->addMinutes(60), function() {
+        return ServerZeny::first();
+    });
+
     return view('index', [
-        'server_zeny' => ServerZeny::first(),
+        'server_zeny' => $server_zeny,
         'castles' => App\Ragnarok\GuildCastle::whereIn('castle_id', [28, 31, 15, 16])
             ->with('guild', 'guild.members')
             ->get()
@@ -37,8 +42,13 @@ Route::get('/', function () {
 
 Route::get('/warofemperium', function()
 {
+
+    $server_zeny = Cache::remember('server_zeny', now()->addMinutes(60), function() {
+        return ServerZeny::first();
+    });
+
     return view('warofemperium', [
-        'server_zeny' => ServerZeny::first(),
+        'server_zeny' => $server_zeny,
         'castles' => App\Ragnarok\GuildCastle::whereIn('castle_id', [28, 15, 16])
             ->with('guild', 'guild.members')
             ->get()

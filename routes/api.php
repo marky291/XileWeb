@@ -22,9 +22,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/discord', function () {
-    return Cache::remember('discord', 0, function() {
 
-        $uberCost = ServerZeny::first()->total_uber_cost ?? 0;
+    $server_zeny = Cache::remember('server_zeny', now()->addMinutes(60), function() {
+        return ServerZeny::first();
+    });
+
+    return Cache::remember('discord', now()->addMinute(), function() use ($server_zeny) {
+
+        $uberCost = $server_zeny->total_uber_cost ?? 0;
         $playerCount = Char::query()->online()->count() ?? 0;
         $latestCharacter = Char::latest('char_id')->first();
 
