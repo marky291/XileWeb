@@ -27,8 +27,8 @@ return [
             'bttn' => 'btn-primary'
         ],
         [
-            'name' => 'Full Client from Mega Upload (3GB)',
-            'link' => 'https://mega.nz/file/zTgFGYxI#NqRoOdcWUuALs579Id1OxGyWEC-VAYysYGKASGt50xY',
+            'name' => 'Full Client from Mega Upload v7 (3GB)',
+            'link' => 'https://mega.nz/file/6Z8VHQBS#SAT83vSU9-hMJbWkp_QfQdiX_KI-tNGQr75vfsity6c',
             'bttn' => 'btn-secondary'
         ],
     ],
