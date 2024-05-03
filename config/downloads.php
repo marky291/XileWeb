@@ -22,7 +22,7 @@ return [
 
     'full' => [
         [
-            'name' => 'Full Client from Google Drive (3GB)',
+            'name' => 'Full Client from Google Drive v6 (3GB)',
             'link' => 'https://drive.google.com/file/d/1RDUNM6pWVBMVLzdMVyze5QmdNuc99zKH/view?usp=sharing',
             'bttn' => 'btn-primary'
         ],
