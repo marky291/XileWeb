@@ -35,16 +35,16 @@ return [
 
     'android' => [
         [
-            'name' => 'v474 - Android using Google Drive (3MB)',
-            'link' => 'https://cdn.discordapp.com/attachments/1146035000064614420/1207726900563284048/XileRetro2_v474_20240215193132.apk?ex=65e0b253&is=65ce3d53&hm=21c180a885b70fe4fb6a95175bdd4d87d09e24a31341bff9dee20dfa0c36a809&',
+            'name' => 'v477 - Android Direct Download (3MB)',
+            'link' => 'https://cdn.discordapp.com/attachments/1146035000064614420/1221481279971786772/XileRetro2_v477_20240324175902.apk?ex=6635abd7&is=66345a57&hm=4dff81df69d59c08a9dc647dafc98d96521ae6923c3708f7cdf74a779d6eb9b9&',
             'bttn' => 'btn-primary',
-            'version' => '474',
+            'version' => '477',
         ],
         [
-           'name' => 'v474 - Android using Mega Upload (3MB)',
-           'link' => 'https://cdn.discordapp.com/attachments/1146035000064614420/1207726900563284048/XileRetro2_v474_20240215193132.apk?ex=65e0b253&is=65ce3d53&hm=21c180a885b70fe4fb6a95175bdd4d87d09e24a31341bff9dee20dfa0c36a809&',
+           'name' => 'v477 - Android Direct Download (3MB)',
+           'link' => 'https://cdn.discordapp.com/attachments/1146035000064614420/1221481279971786772/XileRetro2_v477_20240324175902.apk?ex=6635abd7&is=66345a57&hm=4dff81df69d59c08a9dc647dafc98d96521ae6923c3708f7cdf74a779d6eb9b9&',
            'bttn' => 'btn-secondary',
-           'version' => '474',
+           'version' => '477',
        ]
     ],
 ];
