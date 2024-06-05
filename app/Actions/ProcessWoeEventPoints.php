@@ -8,6 +8,7 @@ use App\Ragnarok\Guild;
 use App\Ragnarok\GuildCastle;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class ProcessWoeEventPoints
@@ -19,17 +20,33 @@ class ProcessWoeEventPoints
         return false;
     }
 
-    public function handle(string $castle, \DateTime $dateTime, int $season, bool $sendDiscordNotification = false)
+    public function handle(string $castle, \DateTime $dateTime, int $season = null, bool $sendDiscordNotification = false)
     {
-        $events = $this->fetchEvents($castle, $season, $dateTime);
+        // Determine the current season based on the month if not provided
+        $currentSeason = $season ?? (int)$dateTime->format('n');
 
-        if ($events->count() <= 1) return;
+        $events = $this->fetchEvents($castle, $currentSeason, $dateTime);
+
+        if ($events->count() <= 1) {
+            Log::info('Not enough events to process.', ['events_count' => $events->count()]);
+            return;
+        }
+
+        // Check if events are in correct order
+        if (!$this->isEventOrderValid($events)) {
+            Log::info('Events are out of order.', ['events' => $events]);
+            return;
+        }
 
         $woeStarted = $events->contains('event', GameWoeEvent::STARTED);
         $woeEnded = $events->contains('event', GameWoeEvent::ENDED);
 
         // do not process if woe not completed.
         if (!$woeStarted || !$woeEnded) {
+            Log::info('WOE not completed. Missing STARTED or ENDED event.', [
+                'woeStarted' => $woeStarted,
+                'woeEnded' => $woeEnded
+            ]);
             return;
         }
 
@@ -38,13 +55,53 @@ class ProcessWoeEventPoints
             return $event->guild_name_from_message == Guild::GM_TEAM;
         });
 
+        Log::info('Processing events.', ['events' => $events]);
+
         // all the other goodies.
         if ($events->count() > 0) {
             [$guildDurations, $guildAttended] = $this->processEvents($events);
-            $this->updateScores($guildDurations, $guildAttended, $events, $season, $castle);
+            $this->updateScores($guildDurations, $guildAttended, $events, $currentSeason, $castle);
             if ($sendDiscordNotification || $this->isDebug()) {
-                $this->sendDiscordNotification($castle, $guildDurations, $guildAttended, $events, $season);
+                $this->sendDiscordNotification($castle, $guildDurations, $guildAttended, $events, $currentSeason);
             }
+        }
+    }
+
+    private function isEventOrderValid($events)
+    {
+        $startedEvent = $events->firstWhere('event', GameWoeEvent::STARTED);
+        $endedEvent = $events->firstWhere('event', GameWoeEvent::ENDED);
+
+        return $startedEvent && $endedEvent && $startedEvent->created_at->lessThan($endedEvent->created_at);
+    }
+
+    public function getCastleDiscordChannel(string $castle)
+    {
+        if ($castle == GuildCastle::KRIEMHILD) {
+            return config('services.discord.kriemhild_guild_points');
+        }
+
+        if ($castle == GuildCastle::SWANHILD) {
+            return config('services.discord.swanhild_guild_points');
+        }
+
+        if ($castle == GuildCastle::FADHRINGH) {
+            return config('services.discord.fadhringh_guild_points');
+        }
+
+        if ($castle == GuildCastle::SKOEGUL) {
+            return config('services.discord.skoegul_guild_points');
+        }
+
+        if ($castle == GuildCastle::GONDUL) {
+            return config('services.discord.gondul_guild_points');
+        }
+
+        if ($castle == GuildCastle::HLJOD) {
+            return config('services.discord.hljod_guild_points');
+        }
+        if ($castle == GuildCastle::CYR) {
+            return config('services.discord.cyr_guild_points');
         }
     }
 
@@ -54,36 +111,6 @@ class ProcessWoeEventPoints
             ->whereDate('created_at', $dateTime->format('Y-m-d'))
             ->orderBy('created_at')
             ->get();
-    }
-
-    public function getCastleDiscordChannel(string $castle)
-    {
-       if ($castle == GuildCastle::KRIEMHILD) {
-           return config('services.discord.kriemhild_guild_points');
-       }
-
-       if ($castle == GuildCastle::SWANHILD) {
-           return config('services.discord.swanhild_guild_points');
-       }
-
-       if ($castle == GuildCastle::FADHRINGH) {
-           return config('services.discord.fadhringh_guild_points');
-       }
-
-       if ($castle == GuildCastle::SKOEGUL) {
-           return config('services.discord.skoegul_guild_points');
-       }
-
-       if ($castle == GuildCastle::GONDUL) {
-          return config('services.discord.gondul_guild_points');
-       }
-
-       if ($castle == GuildCastle::HLJOD) {
-           return config('services.discord.hljod_guild_points');
-       }
-        if ($castle == GuildCastle::CYR) {
-            return config('services.discord.cyr_guild_points');
-        }
     }
 
     private function processEvents($events): array
@@ -167,6 +194,7 @@ class ProcessWoeEventPoints
         $topper = GameWoeScore::with('guild')
             ->where('castle_name', $castle)
             ->whereNot('guild_name', Guild::GM_TEAM)
+            ->where('season', $season)
             ->orderByDesc('guild_score')
             ->get();
 
@@ -179,31 +207,33 @@ class ProcessWoeEventPoints
         })->last();
 
         if ($winningGuildEvent && $winningGuildEvent->guild_name_from_message) {
-            $pointsAwarded .= "`{$winningGuildEvent->guild_name_from_message}`: **" . GameWoeScore::POINTS_CASTLE_OWNER . "** points    [__Castle Owner__] \n";
+            $pointsAwarded .= "- `{$winningGuildEvent->guild_name_from_message}`  won  **" . GameWoeScore::POINTS_CASTLE_OWNER . "** Points as [__Castle Owner__]\n";
         }
 
         $longestDurationGuildId = array_search(max($guildDurations), $guildDurations);
         if ($longestDurationGuildId) {
             $guildName = $events->firstWhere('guild_id', $longestDurationGuildId)->guild_name_from_message ?? '';
-            $pointsAwarded .= "`{$guildName}`: **" . GameWoeScore::POINTS_LONGEST_HELD . "** points    [__Longest Castle Defense__] \n";
+            $pointsAwarded .= "- `{$guildName}`  earned  **" . GameWoeScore::POINTS_LONGEST_HELD . "** Points for [__Longest Castle Defense__] \n";
         }
 
         $firstBreakGuild = optional($events->firstWhere('event', GameWoeEvent::BREAK));
         if ($firstBreakGuild && $firstBreakGuild->guild_name_from_message) {
-            $pointsAwarded .= "`{$firstBreakGuild->guild_name_from_message}`: **" . GameWoeScore::POINTS_FIRST_BREAK . "** points    [__First Castle Break__] \n";
+            $pointsAwarded .= "- `{$firstBreakGuild->guild_name_from_message}`  took  **" . GameWoeScore::POINTS_FIRST_BREAK . "** Points for [__First Castle Break__]\n";
         }
 
         foreach ($guildAttended as $guild_id => $count) {
             $guildName = $events->firstWhere('guild_id', $guild_id)->guild_name_from_message ?? '';
-            $pointsAwarded .= "`{$guildName}`: **" . GameWoeScore::POINTS_ATTENDED . "** points    [__Attendance__] \n";
+            $pointsAwarded .= "- `{$guildName}`  saw  **" . GameWoeScore::POINTS_ATTENDED . "** Point for [__Attendance__]\n";
         }
 
         if (!empty($pointsAwarded)) {
-            $message .= ">>> **Points Awarded:**\n$pointsAwarded\n────────────────────────────────\n";
+            $message .= "-----------------------------------------------------------------------------\n";
+            $message .= ">>> \n**Events:**\n$pointsAwarded\n";
         }
 
-        $message .= "**Current Scores:**\n";
-        foreach ($topper as $top) {
+        $message .= "**{$castle} Leaderboard:**\n";
+        foreach ($topper as $index => $top) {
+            $index = $index + 1;
             // Calculate original score by subtracting points earned during this event
             $pointsEarned = 0;
             if ($top->guild_id == $longestDurationGuildId) $pointsEarned += GameWoeScore::POINTS_LONGEST_HELD;
@@ -212,14 +242,19 @@ class ProcessWoeEventPoints
             if ($winningGuildEvent && $top->guild_id == $winningGuildEvent->guild_id) $pointsEarned += GameWoeScore::POINTS_CASTLE_OWNER;
 
             $originalScore = $top->guild_score - $pointsEarned;
-            $message .= "`{$top->guild_name}`: **{$originalScore} -> {$top->guild_score}** points\n";
+            $message .= "#{$index}. `{$top->guild_name}`  with  `{$top->guild_score} Points Total` ({$originalScore})\n";
         }
 
         $firstBreakGuild = optional($events->firstWhere('event', GameWoeEvent::BREAK));
-        if ($firstBreakGuild && $firstBreakGuild->getPlayerNameFromMessageAttribute()) {
-            $highlights .= "────────────────────────────────\n";
-            $highlights .= "**Highlights:**\n";
-            $highlights .= "First Castle Break by player: **" . $firstBreakGuild->getPlayerNameFromMessageAttribute() . "**\n";
+        $mostBreaksGuildId = !empty($breakCounts) ? array_search(max($breakCounts), $breakCounts) : null;
+
+        if ($firstBreakGuild || $mostBreaksGuildId) {
+//            $highlights .= "────────────────────────────────\n";
+            $highlights .= "\n**{$castle} Highlights:**\n";
+        }
+
+        if ($firstBreakGuild) {
+            $highlights .= "- First Castle Break by player: `" . $firstBreakGuild->getPlayerNameFromMessageAttribute() . "`\n";
         }
 
         $breakCounts = [];
@@ -228,11 +263,10 @@ class ProcessWoeEventPoints
                 $breakCounts[$event->guild_id] = ($breakCounts[$event->guild_id] ?? 0) + 1;
             }
         }
-        $mostBreaksGuildId = !empty($breakCounts) ? array_search(max($breakCounts), $breakCounts) : null;
 
         if ($mostBreaksGuildId) {
             $mostBreaksGuildName = $events->firstWhere('guild_id', $mostBreaksGuildId)->guild_name_from_message ?? '';
-            $highlights .= "Guild with Most Breaks: **{$mostBreaksGuildName}**\n";
+            $highlights .= "- Guild with Most Breaks: **{$mostBreaksGuildName}**\n";
         }
 
         if (!empty($highlights)) {
@@ -243,8 +277,10 @@ class ProcessWoeEventPoints
             dd($message);
         }
 
+        $message .= "\n-----------------------------------------------------------------------------\n";
+
         Http::post($webhookUrl, [
-            'content' => $message
+            'content' => $message,
         ]);
     }
 }

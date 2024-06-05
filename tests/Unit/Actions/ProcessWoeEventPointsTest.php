@@ -41,23 +41,23 @@ class ProcessWoeEventPointsTest extends TestCase
     public function test_multiple_events_same_guilds()
     {
         GameWoeEvent::create([
-            'castle' => 'Kriemhild',
+            'castle' => GuildCastle::KRIEMHILD,
             'event' => GameWoeEvent::STARTED,
             'guild_id' => 1,
-            'message' => 'Guild [Guild1]',
+            'message' => 'The [Swanhild] castle is currently held by the [PHP Unit Test] guild.',
             'created_at' => Carbon::now(),
             'processed' => false
         ]);
         GameWoeEvent::create([
-            'castle' => 'Kriemhild',
+            'castle' => GuildCastle::KRIEMHILD,
             'event' => GameWoeEvent::ENDED,
             'guild_id' => 1,
-            'message' => 'Guild [Guild2]',
+            'message' => 'The [Swanhild] castle has been conquered by the [PHP Unit Test] guild.',
             'created_at' => Carbon::now()->addSeconds(2),
             'processed' => false
         ]);
         $action = new ProcessWoeEventPoints();
-        $action->handle('Kriemhild', new \DateTime(), 1);
+        $action->handle('Kriemhild', new \DateTime(), 1, false);
         $this->assertDatabaseCount('game_woe_scores', 1);
     }
 
@@ -171,7 +171,7 @@ class ProcessWoeEventPointsTest extends TestCase
             'event' => GameWoeEvent::STARTED,
             'guild_id' => 1,
             'message' => 'Guild [Guild2]',
-            'created_at' => now()->addSeconds(20),
+            'created_at' => now(),
             'processed' => false
         ]);
 
@@ -193,6 +193,7 @@ class ProcessWoeEventPointsTest extends TestCase
         $this->assertNotNull($gameWoeScore);
         $this->assertEquals(GameWoeScore::POINTS_CASTLE_OWNER + GameWoeScore::POINTS_LONGEST_HELD, $gameWoeScore->guild_score);
     }
+
 
     /** @test */
     public function it_does_not_carry_score_across_two_castles()
@@ -629,5 +630,181 @@ class ProcessWoeEventPointsTest extends TestCase
         $scores = GameWoeScore::all();
 
         $this->assertCount(0, $scores);
+    }
+
+    public function test_no_woe_events()
+    {
+        $action = new ProcessWoeEventPoints();
+        $action->handle('NonExistentCastle', new \DateTime(), 1, false);
+        $this->assertDatabaseCount('game_woe_scores', 0);
+    }
+
+    public function test_events_without_end_event()
+    {
+        GameWoeEvent::create([
+            'castle' => 'Kriemhild',
+            'event' => GameWoeEvent::STARTED,
+            'guild_id' => 1,
+            'message' => 'Guild [Guild1]',
+            'created_at' => Carbon::now(),
+            'processed' => false
+        ]);
+        $action = new ProcessWoeEventPoints();
+        $action->handle('Kriemhild', new \DateTime(), 1);
+        $this->assertDatabaseCount('game_woe_scores', 0);
+    }
+
+    public function test_events_without_start_event()
+    {
+        GameWoeEvent::create([
+            'castle' => 'Kriemhild',
+            'event' => GameWoeEvent::ENDED,
+            'guild_id' => 1,
+            'message' => 'Guild [Guild1]',
+            'created_at' => Carbon::now(),
+            'processed' => false
+        ]);
+        $action = new ProcessWoeEventPoints();
+        $action->handle('Kriemhild', new \DateTime(), 1);
+        $this->assertDatabaseCount('game_woe_scores', 0);
+    }
+
+    public function test_events_spanning_multiple_days()
+    {
+        GameWoeEvent::create([
+            'castle' => 'Kriemhild',
+            'event' => GameWoeEvent::STARTED,
+            'guild_id' => 1,
+            'message' => 'Guild [Guild1]',
+            'created_at' => Carbon::now()->subDay(),
+            'processed' => false
+        ]);
+        GameWoeEvent::create([
+            'castle' => 'Kriemhild',
+            'event' => GameWoeEvent::ENDED,
+            'guild_id' => 1,
+            'message' => 'Guild [Guild1]',
+            'created_at' => Carbon::now(),
+            'processed' => false
+        ]);
+        $action = new ProcessWoeEventPoints();
+        $action->handle('Kriemhild', new \DateTime(), 1);
+        $this->assertDatabaseCount('game_woe_scores', 0);
+    }
+
+    public function test_discord_notification_sending()
+    {
+        Http::fake();
+
+        GameWoeEvent::create([
+            'castle' => GuildCastle::KRIEMHILD,
+            'event' => GameWoeEvent::STARTED,
+            'guild_id' => 1,
+            'message' => 'Guild [Guild1]',
+            'created_at' => Carbon::now(),
+            'processed' => false
+        ]);
+        GameWoeEvent::create([
+            'castle' => GuildCastle::KRIEMHILD,
+            'event' => GameWoeEvent::ENDED,
+            'guild_id' => 1,
+            'message' => 'Guild [Guild1]',
+            'created_at' => Carbon::now()->addSeconds(20),
+            'processed' => false
+        ]);
+
+        $action = new ProcessWoeEventPoints();
+        $action->handle('Kriemhild', new \DateTime(), 1, true);
+
+        Http::assertSent(function ($request) {
+            return $request->url() == config('services.discord.kriemhild_guild_points');
+        });
+    }
+
+    /** @test */
+    public function it_handles_scores_based_on_the_current_month_as_season()
+    {
+        // Simulate events for the month of March
+        $march = Carbon::createFromDate(null, 3, 1);
+
+        // Create events for Guild1 in March
+        GameWoeEvent::create([
+            'castle' => GuildCastle::KRIEMHILD,
+            'event' => GameWoeEvent::STARTED,
+            'guild_id' => 1,
+            'message' => 'Guild [Guild1]',
+            'created_at' => $march,
+            'processed' => false,
+            'season' => 3,
+        ]);
+
+        GameWoeEvent::create([
+            'castle' => GuildCastle::KRIEMHILD,
+            'event' => GameWoeEvent::ENDED,
+            'guild_id' => 1,
+            'message' => 'Guild [Guild1]',
+            'created_at' => $march->copy()->addMinutes(10),
+            'processed' => false,
+            'season' => 3,
+        ]);
+
+        // Process events for March
+        $action = new ProcessWoeEventPoints();
+        $action->handle(GuildCastle::KRIEMHILD, $march, 3);
+
+        // Assert scores for March
+        $marchScore = GameWoeScore::firstWhere(['guild_id' => 1, 'season' => 3, 'castle_name' => GuildCastle::KRIEMHILD]);
+        $this->assertNotNull($marchScore);
+        $this->assertEquals(GameWoeScore::POINTS_CASTLE_OWNER + GameWoeScore::POINTS_LONGEST_HELD, $marchScore->guild_score);
+
+        // Simulate events for the month of April
+        $april = Carbon::createFromDate(null, 4, 1);
+
+        // Create events for Guild1 and Guild2 in April
+        GameWoeEvent::create([
+            'castle' => GuildCastle::KRIEMHILD,
+            'event' => GameWoeEvent::STARTED,
+            'guild_id' => 1,
+            'message' => 'Guild [Guild1]',
+            'created_at' => $april,
+            'processed' => false,
+            'season' => 4,
+        ]);
+
+        GameWoeEvent::create([
+            'castle' => GuildCastle::KRIEMHILD,
+            'event' => GameWoeEvent::BREAK,
+            'guild_id' => 2,
+            'message' => 'Guild [Guild2]',
+            'created_at' => $april->copy()->addMinutes(5),
+            'processed' => false,
+            'season' => 4,
+        ]);
+
+        GameWoeEvent::create([
+            'castle' => GuildCastle::KRIEMHILD,
+            'event' => GameWoeEvent::ENDED,
+            'guild_id' => 2,
+            'message' => 'Guild [Guild2]',
+            'created_at' => $april->copy()->addMinutes(14),
+            'processed' => false,
+            'season' => 4,
+        ]);
+
+        // Process events for April
+        $action->handle(GuildCastle::KRIEMHILD, $april, 4);
+
+        // Assert scores for April
+        $aprilScore = GameWoeScore::firstWhere(['guild_id' => 2, 'season' => 4, 'castle_name' => GuildCastle::KRIEMHILD]);
+        $this->assertNotNull($aprilScore);
+        $this->assertEquals(
+            GameWoeScore::POINTS_CASTLE_OWNER + GameWoeScore::POINTS_LONGEST_HELD + GameWoeScore::POINTS_FIRST_BREAK,
+            $aprilScore->guild_score
+        );
+
+        // Ensure scores are not carried over from March to April
+        $marchScoreAfterApril = GameWoeScore::firstWhere(['guild_id' => 1, 'season' => 3, 'castle_name' => GuildCastle::KRIEMHILD]);
+        $this->assertNotNull($marchScoreAfterApril);
+        $this->assertEquals(GameWoeScore::POINTS_CASTLE_OWNER + GameWoeScore::POINTS_LONGEST_HELD, $marchScoreAfterApril->guild_score);
     }
 }
