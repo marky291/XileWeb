@@ -2,9 +2,8 @@
 
 namespace App\Console;
 
-use App\Actions\ProcessWoeEventPoints;
-use App\Jobs\GuildMessagesToDiscord;
-use App\Jobs\PostGuildPointsToDiscordJob;
+use App\WoeEvents\WoeEventScheduleJob;
+use App\WoeEvents\WoeEventDiscordChannelResolver;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -18,14 +17,20 @@ class Kernel extends ConsoleKernel
         //$schedule->command('inspire')->everyFiveSeconds();
         $schedule->command('horizon:snapshot')->everyFiveMinutes();
 
-        // schedule woe point calculations
-        $schedule->job(new PostGuildPointsToDiscordJob('Kriemhild', today()))->hourly()->name('Kriemhild Points')->withoutOverlapping();
-        $schedule->job(new PostGuildPointsToDiscordJob('Swanhild', today()))->hourly()->name('Swanhild Points')->withoutOverlapping();
-        // $schedule->job(new PostGuildPointsToDiscordJob('Fadhringh', today()))->hourly()->name('Fadhringh Points')->withoutOverlapping();
-        // $schedule->job(new PostGuildPointsToDiscordJob('Skoegul', today()))->hourly()->name('Skoegul Points')->withoutOverlapping();
-        // $schedule->job(new PostGuildPointsToDiscordJob('Gondul', today()))->hourly()->name('Gondul Points')->withoutOverlapping();
-        $schedule->job(new PostGuildPointsToDiscordJob('Hljod', today()))->hourly()->name('Hljod Points')->withoutOverlapping();
-        $schedule->job(new PostGuildPointsToDiscordJob('Cyr', today()))->hourly()->name('Cyr Points')->withoutOverlapping();
+        $castles = [
+            'Kriemhild',
+            'Swanhild',
+            // 'Fadhringh',
+            // 'Skoegul',
+            // 'Gondul',
+            'Hljod',
+            'Cyr',
+        ];
+
+        // schedule woe event messages
+        foreach ($castles as $castle) {
+            $schedule->job(new WoeEventScheduleJob())->hourly()->name("{$castle} Points")->withoutOverlapping();
+        }
     }
 
     /**

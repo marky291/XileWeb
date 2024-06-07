@@ -2,6 +2,7 @@
 
 namespace Database\Factories\ragnarok;
 
+use App\Ragnarok\GameWoeScore;
 use App\Ragnarok\Guild;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -11,6 +12,13 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class GameWoeScoreFactory extends Factory
 {
     /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = GameWoeScore::class;
+
+    /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
@@ -18,7 +26,8 @@ class GameWoeScoreFactory extends Factory
     public function definition(): array
     {
         return [
-            'season' => 1,
+            'guild_name' => $this->faker->name,
+            'season' => now()->format('n'),
             'guild_id' => Guild::factory(),
             'guild_score' => 0,
         ];

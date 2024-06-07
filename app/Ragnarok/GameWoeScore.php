@@ -46,6 +46,7 @@ class GameWoeScore extends RagnarokModel
         'guild_id',
         'guild_score',
         'guild_name',
+        'previous_score',
         'season',
     ];
 
