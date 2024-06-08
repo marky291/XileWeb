@@ -18,7 +18,7 @@ class WoeEventDiscordMessageTest extends TestCase
     public function testHandle()
     {
         // Arrange
-        $castle = 'Kriemhhild';
+        $castle = 'Kriemhild';
 
         $scoring = $this->getMockBuilder(WoeEventScoreRecorder::class)
             ->onlyMethods(['leaderboard'])
@@ -64,12 +64,12 @@ class WoeEventDiscordMessageTest extends TestCase
 
         // Assert
         $expectedMessage = ">>> -----------------------------------------------------------------------------\n";
-        $expectedMessage .= "\n**Kriemhhild Events:**\n";
+        $expectedMessage .= "\n**Kriemhild Events:**\n";
         $expectedMessage .= "- `Xeleros Brothers`  won  **100** Points as [__Castle Owner__]\n";
         $expectedMessage .= "- `LongestHoldGuild`  earned  **50** Points for [__Longest Castle Defense__] \n";
         $expectedMessage .= "- `FirstBreakGuild`  took  **25** Points for [__First Castle Break__]\n";
         $expectedMessage .= "- `AttendeeGuild`  saw  **10** Point for [__Attendance__]\n";
-        $expectedMessage .= "**Kriemhhild Leaderboard:**\n";
+        $expectedMessage .= "\n**Kriemhild Leaderboard:**\n";
         $expectedMessage .= "#1. `Xeleros Brothers`  with  `200 Points Total` (null)\n";
         $expectedMessage .= "\n-----------------------------------------------------------------------------\n";
 
@@ -79,7 +79,7 @@ class WoeEventDiscordMessageTest extends TestCase
     public function testHandleNoEvents()
     {
         // Arrange
-        $castle = 'Kriemhhild';
+        $castle = 'Kriemhild';
 
         $scoring = $this->getMockBuilder(WoeEventScoreRecorder::class)
             ->onlyMethods(['leaderboard'])
@@ -102,7 +102,7 @@ class WoeEventDiscordMessageTest extends TestCase
     public function testHandleOnlyWinningGuild()
     {
         // Arrange
-        $castle = 'Kriemhhild';
+        $castle = 'Kriemhild';
 
         $scoring = $this->getMockBuilder(WoeEventScoreRecorder::class)
             ->onlyMethods(['leaderboard'])
@@ -128,7 +128,7 @@ class WoeEventDiscordMessageTest extends TestCase
 
         // Assert
         $expectedMessage = ">>> -----------------------------------------------------------------------------\n";
-        $expectedMessage .= "\n**Kriemhhild Events:**\n";
+        $expectedMessage .= "\n**Kriemhild Events:**\n";
         $expectedMessage .= "- `Xeleros Brothers`  won  **100** Points as [__Castle Owner__]\n";
         $expectedMessage .= "\n-----------------------------------------------------------------------------\n";
 
@@ -138,7 +138,7 @@ class WoeEventDiscordMessageTest extends TestCase
     public function testHandleOnlyLongestHoldGuild()
     {
         // Arrange
-        $castle = 'Kriemhhild';
+        $castle = 'Kriemhild';
 
         $scoring = $this->getMockBuilder(WoeEventScoreRecorder::class)
             ->onlyMethods(['leaderboard'])
@@ -164,7 +164,7 @@ class WoeEventDiscordMessageTest extends TestCase
 
         // Assert
         $expectedMessage = ">>> -----------------------------------------------------------------------------\n";
-        $expectedMessage .= "\n**Kriemhhild Events:**\n";
+        $expectedMessage .= "\n**Kriemhild Events:**\n";
         $expectedMessage .= "- `LongestHoldGuild`  earned  **50** Points for [__Longest Castle Defense__] \n";
         $expectedMessage .= "\n-----------------------------------------------------------------------------\n";
 
@@ -174,7 +174,7 @@ class WoeEventDiscordMessageTest extends TestCase
     public function testHandleOnlyFirstBreakGuild()
     {
         // Arrange
-        $castle = 'Kriemhhild';
+        $castle = 'Kriemhild';
 
         $scoring = $this->getMockBuilder(WoeEventScoreRecorder::class)
             ->onlyMethods(['leaderboard'])
@@ -200,7 +200,7 @@ class WoeEventDiscordMessageTest extends TestCase
 
         // Assert
         $expectedMessage = ">>> -----------------------------------------------------------------------------\n";
-        $expectedMessage .= "\n**Kriemhhild Events:**\n";
+        $expectedMessage .= "\n**Kriemhild Events:**\n";
         $expectedMessage .= "- `FirstBreakGuild`  took  **25** Points for [__First Castle Break__]\n";
         $expectedMessage .= "\n-----------------------------------------------------------------------------\n";
 
@@ -210,7 +210,7 @@ class WoeEventDiscordMessageTest extends TestCase
     public function testHandleMultipleAttendees()
     {
         // Arrange
-        $castle = 'Kriemhhild';
+        $castle = 'Kriemhild';
 
         $scoring = $this->getMockBuilder(WoeEventScoreRecorder::class)
             ->onlyMethods(['leaderboard'])
@@ -238,7 +238,7 @@ class WoeEventDiscordMessageTest extends TestCase
 
         // Assert
         $expectedMessage = ">>> -----------------------------------------------------------------------------\n";
-        $expectedMessage .= "\n**Kriemhhild Events:**\n";
+        $expectedMessage .= "\n**Kriemhild Events:**\n";
         $expectedMessage .= "- `AttendeeGuild1`  saw  **10** Point for [__Attendance__]\n";
         $expectedMessage .= "- `AttendeeGuild2`  saw  **10** Point for [__Attendance__]\n";
         $expectedMessage .= "\n-----------------------------------------------------------------------------\n";
@@ -249,7 +249,7 @@ class WoeEventDiscordMessageTest extends TestCase
     public function testHandleNoAttendees()
     {
         // Arrange
-        $castle = 'Kriemhhild';
+        $castle = 'Kriemhild';
 
         $scoring = $this->getMockBuilder(WoeEventScoreRecorder::class)
             ->onlyMethods(['leaderboard'])
@@ -275,7 +275,7 @@ class WoeEventDiscordMessageTest extends TestCase
 
         // Assert
         $expectedMessage = ">>> -----------------------------------------------------------------------------\n";
-        $expectedMessage .= "\n**Kriemhhild Events:**\n";
+        $expectedMessage .= "\n**Kriemhild Events:**\n";
         $expectedMessage .= "- `Xeleros Brothers`  won  **100** Points as [__Castle Owner__]\n";
         $expectedMessage .= "\n-----------------------------------------------------------------------------\n";
 
@@ -285,7 +285,7 @@ class WoeEventDiscordMessageTest extends TestCase
     public function testHandleMultipleLeaderboardEntries()
     {
         // Arrange
-        $castle = 'Kriemhhild';
+        $castle = 'Kriemhild';
 
         $scoring = $this->getMockBuilder(WoeEventScoreRecorder::class)
             ->onlyMethods(['leaderboard'])
@@ -340,9 +340,9 @@ class WoeEventDiscordMessageTest extends TestCase
 
         // Assert
         $expectedMessage = ">>> -----------------------------------------------------------------------------\n";
-        $expectedMessage .= "\n**Kriemhhild Events:**\n";
+        $expectedMessage .= "\n**Kriemhild Events:**\n";
         $expectedMessage .= "- `Xeleros Brothers`  won  **100** Points as [__Castle Owner__]\n";
-        $expectedMessage .= "**Kriemhhild Leaderboard:**\n";
+        $expectedMessage .= "\n**Kriemhild Leaderboard:**\n";
         $expectedMessage .= "#1. `Xeleros Brothers`  with  `200 Points Total` (null)\n";
         $expectedMessage .= "#2. `SecondPlaceGuild`  with  `150 Points Total` (null)\n";
         $expectedMessage .= "#3. `ThirdPlaceGuild`  with  `100 Points Total` (null)\n";
@@ -354,7 +354,7 @@ class WoeEventDiscordMessageTest extends TestCase
     public function testHandleNoLeaderboardEntriesButEventsPresent()
     {
         // Arrange
-        $castle = 'Kriemhhild';
+        $castle = 'Kriemhild';
 
         $scoring = $this->getMockBuilder(WoeEventScoreRecorder::class)
             ->onlyMethods(['leaderboard'])
@@ -389,7 +389,7 @@ class WoeEventDiscordMessageTest extends TestCase
 
         // Assert
         $expectedMessage = ">>> -----------------------------------------------------------------------------\n";
-        $expectedMessage .= "\n**Kriemhhild Events:**\n";
+        $expectedMessage .= "\n**Kriemhild Events:**\n";
         $expectedMessage .= "- `Xeleros Brothers`  won  **100** Points as [__Castle Owner__]\n";
         $expectedMessage .= "- `LongestHoldGuild`  earned  **50** Points for [__Longest Castle Defense__] \n";
         $expectedMessage .= "- `FirstBreakGuild`  took  **25** Points for [__First Castle Break__]\n";
@@ -492,7 +492,7 @@ class WoeEventDiscordMessageTest extends TestCase
         $expectedMessage .= "- `Bimbingan OrangTua`  won  **4** Points as [__Castle Owner__]\n";
         $expectedMessage .= "- `Gantz`  earned  **3** Points for [__Longest Castle Defense__] \n";
         $expectedMessage .= "- `Gantz`  took  **2** Points for [__First Castle Break__]\n";
-        $expectedMessage .= "**Kriemhild Leaderboard:**\n";
+        $expectedMessage .= "\n**Kriemhild Leaderboard:**\n";
         $expectedMessage .= "#1. `Bimbingan OrangTua`  with  `204 Points Total` (null)\n";
         $expectedMessage .= "#2. `Gantz`  with  `155 Points Total` (null)\n";
         $expectedMessage .= "\n-----------------------------------------------------------------------------\n";

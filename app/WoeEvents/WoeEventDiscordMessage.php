@@ -40,7 +40,7 @@ class WoeEventDiscordMessage
         $leaderboard = $scoring->leaderboard($castle, now()->format('n'));
 
         if ($leaderboard->count()) {
-            $message .= "**{$castle} Leaderboard:**\n";
+            $message .= "\n**{$castle} Leaderboard:**\n";
 
             /** @var GameWoeScore $gameWoeScore */
             foreach ($scoring->leaderboard($castle, now()->format('n')) as $index => $gameWoeScore) {
