@@ -3,6 +3,7 @@
 namespace App\WoeEvents;
 
 use App\Actions\ProcessWoeEventPoints;
+use App\Exceptions\WoeEventNotEnoughEventsToProcessException;
 use DateTime;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -34,12 +35,16 @@ class WoeEventScheduleJob implements ShouldQueue
             'Cyr',
         ];
 
-        // schedule woe event messages
-        foreach ($castles as $castle) {
-            $discord_webhook = WoeEventDiscordChannelResolver::run($castle);
-            $points = ProcessWoeEventPoints::run($castle);
-            $message = WoeEventDiscordMessage::run($points, $castle);
-            WoeEventDiscordChannelSender::run($discord_webhook, $message);
+        Try {
+            // schedule woe event messages
+            foreach ($castles as $castle) {
+                $discord_webhook = WoeEventDiscordChannelResolver::run($castle);
+                $points = ProcessWoeEventPoints::run($castle);
+                $message = WoeEventDiscordMessage::run($points, $castle);
+                WoeEventDiscordChannelSender::run($discord_webhook, $message);
+            }
+        } catch (WoeEventNotEnoughEventsToProcessException $e) {
+            //throw $th;
         }
     }
 }
