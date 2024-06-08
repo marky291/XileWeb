@@ -17,7 +17,7 @@ class WoeEventDiscordMessage
 
         if ($scoring->hasEvents()) {
             $message .= ">>> -----------------------------------------------------------------------------\n";
-            $message .= "\n**{$castle} Events:**";
+            $message .= "\n**{$castle} Events:**\n";
         }
 
         if ($scoring->winning_guild) {

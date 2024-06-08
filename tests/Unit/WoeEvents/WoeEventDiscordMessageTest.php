@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\WoeEvents;
 
+use App\Ragnarok\GameWoeEvent;
 use App\Ragnarok\GameWoeScore;
 use App\Ragnarok\Guild;
 use App\WoeEvents\WoeEventDiscordMessage;
@@ -63,7 +64,7 @@ class WoeEventDiscordMessageTest extends TestCase
 
         // Assert
         $expectedMessage = ">>> -----------------------------------------------------------------------------\n";
-        $expectedMessage .= "\n**Kriemhhild Events:**";
+        $expectedMessage .= "\n**Kriemhhild Events:**\n";
         $expectedMessage .= "- `Xeleros Brothers`  won  **100** Points as [__Castle Owner__]\n";
         $expectedMessage .= "- `LongestHoldGuild`  earned  **50** Points for [__Longest Castle Defense__] \n";
         $expectedMessage .= "- `FirstBreakGuild`  took  **25** Points for [__First Castle Break__]\n";
@@ -127,7 +128,7 @@ class WoeEventDiscordMessageTest extends TestCase
 
         // Assert
         $expectedMessage = ">>> -----------------------------------------------------------------------------\n";
-        $expectedMessage .= "\n**Kriemhhild Events:**";
+        $expectedMessage .= "\n**Kriemhhild Events:**\n";
         $expectedMessage .= "- `Xeleros Brothers`  won  **100** Points as [__Castle Owner__]\n";
         $expectedMessage .= "\n-----------------------------------------------------------------------------\n";
 
@@ -163,7 +164,7 @@ class WoeEventDiscordMessageTest extends TestCase
 
         // Assert
         $expectedMessage = ">>> -----------------------------------------------------------------------------\n";
-        $expectedMessage .= "\n**Kriemhhild Events:**";
+        $expectedMessage .= "\n**Kriemhhild Events:**\n";
         $expectedMessage .= "- `LongestHoldGuild`  earned  **50** Points for [__Longest Castle Defense__] \n";
         $expectedMessage .= "\n-----------------------------------------------------------------------------\n";
 
@@ -199,7 +200,7 @@ class WoeEventDiscordMessageTest extends TestCase
 
         // Assert
         $expectedMessage = ">>> -----------------------------------------------------------------------------\n";
-        $expectedMessage .= "\n**Kriemhhild Events:**";
+        $expectedMessage .= "\n**Kriemhhild Events:**\n";
         $expectedMessage .= "- `FirstBreakGuild`  took  **25** Points for [__First Castle Break__]\n";
         $expectedMessage .= "\n-----------------------------------------------------------------------------\n";
 
@@ -237,7 +238,7 @@ class WoeEventDiscordMessageTest extends TestCase
 
         // Assert
         $expectedMessage = ">>> -----------------------------------------------------------------------------\n";
-        $expectedMessage .= "\n**Kriemhhild Events:**";
+        $expectedMessage .= "\n**Kriemhhild Events:**\n";
         $expectedMessage .= "- `AttendeeGuild1`  saw  **10** Point for [__Attendance__]\n";
         $expectedMessage .= "- `AttendeeGuild2`  saw  **10** Point for [__Attendance__]\n";
         $expectedMessage .= "\n-----------------------------------------------------------------------------\n";
@@ -274,7 +275,7 @@ class WoeEventDiscordMessageTest extends TestCase
 
         // Assert
         $expectedMessage = ">>> -----------------------------------------------------------------------------\n";
-        $expectedMessage .= "\n**Kriemhhild Events:**";
+        $expectedMessage .= "\n**Kriemhhild Events:**\n";
         $expectedMessage .= "- `Xeleros Brothers`  won  **100** Points as [__Castle Owner__]\n";
         $expectedMessage .= "\n-----------------------------------------------------------------------------\n";
 
@@ -339,7 +340,7 @@ class WoeEventDiscordMessageTest extends TestCase
 
         // Assert
         $expectedMessage = ">>> -----------------------------------------------------------------------------\n";
-        $expectedMessage .= "\n**Kriemhhild Events:**";
+        $expectedMessage .= "\n**Kriemhhild Events:**\n";
         $expectedMessage .= "- `Xeleros Brothers`  won  **100** Points as [__Castle Owner__]\n";
         $expectedMessage .= "**Kriemhhild Leaderboard:**\n";
         $expectedMessage .= "#1. `Xeleros Brothers`  with  `200 Points Total` (null)\n";
@@ -388,11 +389,112 @@ class WoeEventDiscordMessageTest extends TestCase
 
         // Assert
         $expectedMessage = ">>> -----------------------------------------------------------------------------\n";
-        $expectedMessage .= "\n**Kriemhhild Events:**";
+        $expectedMessage .= "\n**Kriemhhild Events:**\n";
         $expectedMessage .= "- `Xeleros Brothers`  won  **100** Points as [__Castle Owner__]\n";
         $expectedMessage .= "- `LongestHoldGuild`  earned  **50** Points for [__Longest Castle Defense__] \n";
         $expectedMessage .= "- `FirstBreakGuild`  took  **25** Points for [__First Castle Break__]\n";
         $expectedMessage .= "- `AttendeeGuild`  saw  **10** Point for [__Attendance__]\n";
+        $expectedMessage .= "\n-----------------------------------------------------------------------------\n";
+
+        $this->assertEquals($expectedMessage, $message);
+    }
+
+    public function testHandleWithProvidedData()
+    {
+        // Arrange
+        $castle = 'Kriemhild';
+
+        // Create real instances of Guild
+        $winningGuild = Guild::updateOrCreate(
+            ['guild_id' => 1322],
+            ['name' => 'Bimbingan OrangTua', 'char_id' => 333333, 'master' => 'Master3']
+        );
+
+        $longestHoldGuild = Guild::updateOrCreate(
+            ['guild_id' => 1149],
+            ['name' => 'Gantz', 'char_id' => 222222, 'master' => 'Master2']
+        );
+
+        $firstBreakGuild = Guild::updateOrCreate(
+            ['guild_id' => 1149],
+            ['name' => 'Gantz', 'char_id' => 222222, 'master' => 'Master2']
+        );
+
+        // Create real instances of GameWoeEvent
+        $firstBreakEvent = GameWoeEvent::factory()->create([
+            'id' => 2,
+            'message' => 'Castle [Kriemhild] has been captured by [Suzuki] of the [Gantz] guild',
+            'castle' => 'Kriemhild',
+            'edition' => 1,
+            'season' => 1,
+            'event' => 'break',
+            'guild_id' => 1149,
+            'player' => 196979,
+            'created_at' => '2024-06-08 14:02:37',
+            'updated_at' => '2024-06-08 23:11:37'
+        ]);
+
+        $winningEvent = GameWoeEvent::factory()->create([
+            'id' => 6,
+            'message' => 'The [Kriemhild] castle has been conquered by the [Bimbingan OrangTua] guild.',
+            'castle' => 'Kriemhild',
+            'edition' => 2,
+            'season' => 1,
+            'event' => 'end',
+            'guild_id' => 1322,
+            'created_at' => '2024-06-08 15:00:01',
+            'updated_at' => '2024-06-08 23:11:37'
+        ]);
+
+        // Set up the WoeEventScoreRecorder
+        $scoring = new WoeEventScoreRecorder();
+        $scoring->castle = $castle;
+        $scoring->season = 6;
+        $scoring->winning_guild = $winningGuild;
+        $scoring->winning_award = 4;
+        $scoring->longest_hold_guild = $longestHoldGuild;
+        $scoring->longest_hold_award = 3;
+        $scoring->first_break_guild = $firstBreakGuild;
+        $scoring->first_break_event = $firstBreakEvent;
+        $scoring->first_break_award = 2;
+        $scoring->attendee_award = 0;
+
+        // Create real instances of GameWoeScore and populate the leaderboard
+        GameWoeScore::factory()->create([
+            'castle_name' => $castle,
+            'guild_name' => $winningGuild->name,
+            'season' => 6,
+            'guild_score' => 200,
+            'guild_id' => $winningGuild->guild_id
+        ]);
+        GameWoeScore::factory()->create([
+            'castle_name' => $castle,
+            'guild_name' => $longestHoldGuild->name,
+            'season' => 6,
+            'guild_score' => 150,
+            'guild_id' => $longestHoldGuild->guild_id
+        ]);
+
+        // Populate total scores for the leaderboard
+        GameWoeScore::where('guild_id', $longestHoldGuild->guild_id)
+            ->update(['guild_score' => 150 + 3 + 2]); // Adding the longest hold and first break awards
+        GameWoeScore::where('guild_id', $winningGuild->guild_id)
+            ->update(['guild_score' => 200 + 4]); // Adding the castle owner award
+
+        $woeEventDiscordMessage = new WoeEventDiscordMessage();
+
+        // Act
+        $message = $woeEventDiscordMessage->handle($scoring, $castle);
+
+        // Assert
+        $expectedMessage = ">>> -----------------------------------------------------------------------------\n";
+        $expectedMessage .= "\n**Kriemhild Events:**\n";
+        $expectedMessage .= "- `Bimbingan OrangTua`  won  **4** Points as [__Castle Owner__]\n";
+        $expectedMessage .= "- `Gantz`  earned  **3** Points for [__Longest Castle Defense__] \n";
+        $expectedMessage .= "- `Gantz`  took  **2** Points for [__First Castle Break__]\n";
+        $expectedMessage .= "**Kriemhild Leaderboard:**\n";
+        $expectedMessage .= "#1. `Bimbingan OrangTua`  with  `204 Points Total` (null)\n";
+        $expectedMessage .= "#2. `Gantz`  with  `155 Points Total` (null)\n";
         $expectedMessage .= "\n-----------------------------------------------------------------------------\n";
 
         $this->assertEquals($expectedMessage, $message);

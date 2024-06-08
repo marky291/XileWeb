@@ -161,7 +161,7 @@ class ProcessWoeEventPointsTest extends TestCase
             'season' => now()->format('n'),
             'message' => 'Guild [Guild1]',
             'created_at' => now(),
-            'processed' => false
+            'processed' => false,
         ]);
 
         GameWoeEvent::create([
@@ -206,7 +206,7 @@ class ProcessWoeEventPointsTest extends TestCase
         ]);
 
        $action = new ProcessWoeEventPoints(new WoeEventScoreRecorder());
-        $action->handle('Kriemhild', today(), 1, false);
+        $action->handle('Kriemhild', today());
 
         $guild1Score = GameWoeScore::firstWhere('guild_id', 1);
         $guild2Score = GameWoeScore::firstWhere('guild_id', 2);
@@ -729,7 +729,7 @@ class ProcessWoeEventPointsTest extends TestCase
     {
         $this->expectException(WoeEventNotEnoughEventsToProcessException::class);
        $action = new ProcessWoeEventPoints(new WoeEventScoreRecorder());
-        $action->handle('NonExistentCastle', new \DateTime(), 1, false);
+        $action->handle('NonExistentCastle', now());
         $this->assertDatabaseCount('game_woe_scores', 0);
     }
 
@@ -745,7 +745,7 @@ class ProcessWoeEventPointsTest extends TestCase
             'processed' => false
         ]);
        $action = new ProcessWoeEventPoints(new WoeEventScoreRecorder());
-        $action->handle('Kriemhild', new \DateTime(), 1);
+        $action->handle('Kriemhild', now());
         $this->assertDatabaseCount('game_woe_scores', 0);
     }
 
@@ -793,7 +793,7 @@ class ProcessWoeEventPointsTest extends TestCase
             'processed' => false
         ]);
        $action = new ProcessWoeEventPoints(new WoeEventScoreRecorder());
-        $action->handle('Kriemhild', new \DateTime(), 1);
+        $action->handle('Kriemhild', now());
         $this->assertDatabaseCount('game_woe_scores', 1);
     }
 
@@ -901,4 +901,129 @@ class ProcessWoeEventPointsTest extends TestCase
         $this->assertNotNull($marchScoreAfterApril);
         $this->assertEquals(GameWoeScore::POINTS_CASTLE_OWNER + GameWoeScore::POINTS_LONGEST_HELD, $marchScoreAfterApril->guild_score);
     }
+
+    public function test_woe_events_with_real_database_data()
+    {
+        // Creating guilds for the test
+        Guild::factory()->create([
+            'guild_id' => 1140,
+            'name' => "LatinEvolution",
+            'master' => 'Master1',
+            'char_id' => '111111'
+        ]);
+
+        Guild::factory()->create([
+            'guild_id' => 1149,
+            'name' => "Gantz",
+            'master' => 'Master2',
+            'char_id' => '222222'
+        ]);
+
+        Guild::factory()->create([
+            'guild_id' => 1322,
+            'name' => "Bimbingan OrangTua",
+            'master' => 'Master3',
+            'char_id' => '333333'
+        ]);
+
+        // Creating the events
+        GameWoeEvent::create([
+            'id' => 57,
+            'message' => 'The [Kriemhild] castle is currently held by the [LatinEvolution] guild.',
+            'castle' => 'Kriemhild',
+            'guild_id' => 1140,
+            'season' => 1,
+            'event' => 'start',
+            'edition' => 2,
+            'processed' => false,
+            'created_at' => '2024-06-08 14:00:02',
+            'updated_at' => '2024-06-08 14:00:02'
+        ]);
+
+        GameWoeEvent::create([
+            'id' => 58,
+            'message' => 'Castle [Kriemhild] has been captured by [Suzuki] of the [Gantz] guild',
+            'castle' => 'Kriemhild',
+            'guild_id' => 1149,
+            'season' => 1,
+            'event' => 'break',
+            'edition' => 1,
+            'processed' => false,
+            'player' => 196979,
+            'created_at' => '2024-06-08 14:02:37',
+            'updated_at' => '2024-06-08 14:02:37'
+        ]);
+
+        GameWoeEvent::create([
+            'id' => 59,
+            'message' => 'Castle [Kriemhild] has been captured by [Tea +] of the [Bimbingan OrangTua] guild',
+            'castle' => 'Kriemhild',
+            'guild_id' => 1322,
+            'season' => 1,
+            'event' => 'break',
+            'edition' => 1,
+            'processed' => false,
+            'player' => 153865,
+            'created_at' => '2024-06-08 14:39:11',
+            'updated_at' => '2024-06-08 14:39:11'
+        ]);
+
+        GameWoeEvent::create([
+            'id' => 60,
+            'message' => 'Castle [Kriemhild] has been captured by [Suzuki] of the [Gantz] guild',
+            'castle' => 'Kriemhild',
+            'guild_id' => 1149,
+            'season' => 1,
+            'event' => 'break',
+            'edition' => 1,
+            'processed' => false,
+            'player' => 196979,
+            'created_at' => '2024-06-08 14:48:03',
+            'updated_at' => '2024-06-08 14:48:03'
+        ]);
+
+        GameWoeEvent::create([
+            'id' => 61,
+            'message' => 'Castle [Kriemhild] has been captured by [Ling] of the [Bimbingan OrangTua] guild',
+            'castle' => 'Kriemhild',
+            'guild_id' => 1322,
+            'season' => 1,
+            'event' => 'break',
+            'edition' => 1,
+            'processed' => false,
+            'player' => 211371,
+            'created_at' => '2024-06-08 14:57:30',
+            'updated_at' => '2024-06-08 14:57:30'
+        ]);
+
+        GameWoeEvent::create([
+            'id' => 62,
+            'message' => 'The [Kriemhild] castle has been conquered by the [Bimbingan OrangTua] guild.',
+            'castle' => 'Kriemhild',
+            'guild_id' => 1322,
+            'season' => 1,
+            'event' => 'end',
+            'edition' => 2,
+            'processed' => false,
+            'created_at' => '2024-06-08 15:00:01',
+            'updated_at' => '2024-06-08 15:00:01'
+        ]);
+
+        // Process the events
+        $action = new ProcessWoeEventPoints(new WoeEventScoreRecorder());
+        $recorder = $action->handle('Kriemhild');
+
+        // Assert the scores
+        $scores = GameWoeScore::all();
+
+        $this->assertCount(2, $scores);
+
+        $latinEvolutionScore = GameWoeScore::firstWhere('guild_id', 1140);
+        $gantzScore = GameWoeScore::firstWhere('guild_id', 1149);
+        $bimbinganOrangTuaScore = GameWoeScore::firstWhere('guild_id', 1322);
+
+        $this->assertEquals(GameWoeScore::POINTS_FIRST_BREAK + GameWoeScore::POINTS_LONGEST_HELD, $gantzScore->guild_score);
+        $this->assertEquals(GameWoeScore::POINTS_CASTLE_OWNER, $bimbinganOrangTuaScore->guild_score);
+    }
+
 }
