@@ -22,12 +22,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/discord', function () {
-
-    $server_zeny = Cache::remember('server_zeny', now()->addMinutes(60), function() {
-        return ServerZeny::first();
-    });
-
-    return Cache::remember('discord', now()->addMinute(), function() use ($server_zeny) {
+    return Cache::remember('discord', now()->addMinute(), function()
+    {
+        $server_zeny = Cache::remember('server_zeny', now()->addMinutes(60), function() {
+            return ServerZeny::first();
+        });
 
         $uberCost = $server_zeny->total_uber_cost ?? 0;
         $playerCount = Char::query()->online()->count() ?? 0;
