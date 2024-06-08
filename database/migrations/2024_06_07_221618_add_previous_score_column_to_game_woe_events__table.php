@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('game_woe_scores', function (Blueprint $table) {
-            $table->integer('previous_score')->default(0)->after('guild_score');
-        });
+        if (app()->runningUnitTests()) {
+            Schema::table('game_woe_scores', function (Blueprint $table) {
+                $table->integer('previous_score')->default(0)->after('guild_score');
+            });
+        }
     }
 
     /**
