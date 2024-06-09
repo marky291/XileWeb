@@ -52,7 +52,7 @@ class WoeEventDiscordMessage
         $globalLeaderboard = $scoring->globalLeaderboard(now()->format('n'));
 
         if ($globalLeaderboard->count()) {
-            $message .= "\n**Global Leaderboard:**\n";
+            $message .= "\n**Season Leaderboard:**\n";
 
             /** @var GameWoeScore $gameWoeScore */
             foreach ($scoring->globalLeaderboard(now()->format('n')) as $index => $gameWoeScore) {
