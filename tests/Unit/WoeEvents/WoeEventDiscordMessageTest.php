@@ -49,6 +49,7 @@ class WoeEventDiscordMessageTest extends TestCase
             'guild_name' => $winningGuild->name,
             'season' => now()->format('n'),
             'guild_score' => 200,
+            'previous_score' => '0',
             'guild_id' => $winningGuild->guild_id
         ]);
         $leaderboard->push($gameWoeScore);
@@ -70,7 +71,7 @@ class WoeEventDiscordMessageTest extends TestCase
         $expectedMessage .= "- `FirstBreakGuild`  took  **25** Points for [__First Castle Break__]\n";
         $expectedMessage .= "- `AttendeeGuild`  saw  **10** Point for [__Attendance__]\n";
         $expectedMessage .= "\n**Kriemhild Leaderboard:**\n";
-        $expectedMessage .= "#1. `Xeleros Brothers`  with  `200 Points Total` (null)\n";
+        $expectedMessage .= "#1. `Xeleros Brothers`  with  `200 Points Total` (0)\n";
         $expectedMessage .= "\n-----------------------------------------------------------------------------\n";
 
         $this->assertEquals($expectedMessage, $message);
@@ -309,6 +310,7 @@ class WoeEventDiscordMessageTest extends TestCase
             'guild_name' => $winningGuild->name,
             'season' => now()->format('n'),
             'guild_score' => 200,
+            'previous_score' => '0',
             'guild_id' => $winningGuild->guild_id
         ]);
         $gameWoeScore2 = GameWoeScore::factory()->create([
@@ -316,6 +318,7 @@ class WoeEventDiscordMessageTest extends TestCase
             'guild_name' => $secondPlaceGuild->name,
             'season' => now()->format('n'),
             'guild_score' => 150,
+            'previous_score' => '0',
             'guild_id' => $secondPlaceGuild->guild_id
         ]);
         $gameWoeScore3 = GameWoeScore::factory()->create([
@@ -323,6 +326,7 @@ class WoeEventDiscordMessageTest extends TestCase
             'guild_name' => $thirdPlaceGuild->name,
             'season' => now()->format('n'),
             'guild_score' => 100,
+            'previous_score' => '0',
             'guild_id' => $thirdPlaceGuild->guild_id
         ]);
         $leaderboard->push($gameWoeScore1);
@@ -343,9 +347,9 @@ class WoeEventDiscordMessageTest extends TestCase
         $expectedMessage .= "\n**Kriemhild Events:**\n";
         $expectedMessage .= "- `Xeleros Brothers`  won  **100** Points as [__Castle Owner__]\n";
         $expectedMessage .= "\n**Kriemhild Leaderboard:**\n";
-        $expectedMessage .= "#1. `Xeleros Brothers`  with  `200 Points Total` (null)\n";
-        $expectedMessage .= "#2. `SecondPlaceGuild`  with  `150 Points Total` (null)\n";
-        $expectedMessage .= "#3. `ThirdPlaceGuild`  with  `100 Points Total` (null)\n";
+        $expectedMessage .= "#1. `Xeleros Brothers`  with  `200 Points Total` (0)\n";
+        $expectedMessage .= "#2. `SecondPlaceGuild`  with  `150 Points Total` (0)\n";
+        $expectedMessage .= "#3. `ThirdPlaceGuild`  with  `100 Points Total` (0)\n";
         $expectedMessage .= "\n-----------------------------------------------------------------------------\n";
 
         $this->assertEquals($expectedMessage, $message);
@@ -464,6 +468,7 @@ class WoeEventDiscordMessageTest extends TestCase
             'castle_name' => $castle,
             'guild_name' => $winningGuild->name,
             'season' => 6,
+            'previous_score' => '0',
             'guild_score' => 200,
             'guild_id' => $winningGuild->guild_id
         ]);
@@ -472,6 +477,7 @@ class WoeEventDiscordMessageTest extends TestCase
             'guild_name' => $longestHoldGuild->name,
             'season' => 6,
             'guild_score' => 150,
+            'previous_score' => '0',
             'guild_id' => $longestHoldGuild->guild_id
         ]);
 
@@ -493,8 +499,8 @@ class WoeEventDiscordMessageTest extends TestCase
         $expectedMessage .= "- `Gantz`  earned  **3** Points for [__Longest Castle Defense__] \n";
         $expectedMessage .= "- `Gantz`  took  **2** Points for [__First Castle Break__]\n";
         $expectedMessage .= "\n**Kriemhild Leaderboard:**\n";
-        $expectedMessage .= "#1. `Bimbingan OrangTua`  with  `204 Points Total` (null)\n";
-        $expectedMessage .= "#2. `Gantz`  with  `155 Points Total` (null)\n";
+        $expectedMessage .= "#1. `Bimbingan OrangTua`  with  `204 Points Total` (0)\n";
+        $expectedMessage .= "#2. `Gantz`  with  `155 Points Total` (0)\n";
         $expectedMessage .= "\n-----------------------------------------------------------------------------\n";
 
         $this->assertEquals($expectedMessage, $message);

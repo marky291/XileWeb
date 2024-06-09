@@ -1035,7 +1035,15 @@ class ProcessWoeEventPointsTest extends TestCase
         $this->createGuild(1365, "FrateIIi", "Master4", '444444');
         $this->createGuild(1241, "Unity", "Master5", '555555');
 
-        // Creating the events
+        // Creating the events for Kriemhild
+        $this->createEvent(57, 'The [Kriemhild] castle is currently held by the [LatinEvolution] guild.', 'Kriemhild', 1140, 1, 'start', 2, true, '2024-06-08 14:00:02');
+        $this->createEvent(58, 'Castle [Kriemhild] has been captured by [Suzuki] of the [Gantz] guild', 'Kriemhild', 1149, 1, 'break', 1, true, '2024-06-08 14:02:37', 196979);
+        $this->createEvent(59, 'Castle [Kriemhild] has been captured by [Tea +] of the [Bimbingan OrangTua] guild', 'Kriemhild', 1322, 1, 'break', 1, true, '2024-06-08 14:39:11', 153865);
+        $this->createEvent(60, 'Castle [Kriemhild] has been captured by [Suzuki] of the [Gantz] guild', 'Kriemhild', 1149, 1, 'break', 1, true, '2024-06-08 14:48:03', 196979);
+        $this->createEvent(61, 'Castle [Kriemhild] has been captured by [Ling] of the [Bimbingan OrangTua] guild', 'Kriemhild', 1322, 1, 'break', 1, true, '2024-06-08 14:57:30', 211371);
+        $this->createEvent(62, 'The [Kriemhild] castle has been conquered by the [Bimbingan OrangTua] guild.', 'Kriemhild', 1322, 1, 'end', 2, true, '2024-06-08 15:00:01');
+
+        // Creating the events for Hljod
         $this->createEvent(63, 'The [Hljod] castle is currently held by the [Gantz] guild.', 'Hljod', 1149, 1, 'start', 2, false, '2024-06-09 14:00:03');
         $this->createEvent(64, '[Ling] of the [Bimbingan OrangTua] guild has conquered the [Nithafjoll 4] stronghold of Hljod!', 'Hljod', 1322, 1, 'break', 1, false, '2024-06-09 14:36:37', 211371);
         $this->createEvent(65, '[Zenitsu] of the [FrateIIi] guild has conquered the [Nithafjoll 4] stronghold of Hljod!', 'Hljod', 1365, 1, 'break', 1, false, '2024-06-09 14:43:06', 219332);
