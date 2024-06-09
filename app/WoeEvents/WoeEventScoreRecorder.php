@@ -47,4 +47,13 @@ class WoeEventScoreRecorder
             ->orderByDesc('guild_score')
             ->get();
     }
+
+    public function globalLeaderboard(string $season): Collection
+    {
+        return GameWoeScore::with('guild')
+            ->whereNot('guild_name', Guild::GM_TEAM)
+            ->where('season', $season)
+            ->orderByDesc('guild_score')
+            ->get();
+    }
 }

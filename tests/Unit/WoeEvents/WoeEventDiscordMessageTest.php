@@ -74,6 +74,9 @@ class WoeEventDiscordMessageTest extends TestCase
         $expectedMessage .= "- `AttendeeGuild`  saw  **10** Point for [__Attendance__]\n";
         $expectedMessage .= "\n**Kriemhild Leaderboard:**\n";
         $expectedMessage .= "#1. `Xeleros Brothers`  with  `200 Points Total` (0)\n";
+        $expectedMessage .= "\n";
+        $expectedMessage .= "**Global Leaderboard:**\n";
+        $expectedMessage .= "#1. `Xeleros Brothers`  with  `200 Points Total` (0)\n";
         $expectedMessage .= "\n-----------------------------------------------------------------------------\n";
 
         $this->assertEquals($expectedMessage, $message);
@@ -352,6 +355,11 @@ class WoeEventDiscordMessageTest extends TestCase
         $expectedMessage .= "#1. `Xeleros Brothers`  with  `200 Points Total` (0)\n";
         $expectedMessage .= "#2. `SecondPlaceGuild`  with  `150 Points Total` (0)\n";
         $expectedMessage .= "#3. `ThirdPlaceGuild`  with  `100 Points Total` (0)\n";
+        $expectedMessage .= "\n";
+        $expectedMessage .= "**Global Leaderboard:**\n";
+        $expectedMessage .= "#1. `Xeleros Brothers`  with  `200 Points Total` (0)\n";
+        $expectedMessage .= "#2. `SecondPlaceGuild`  with  `150 Points Total` (0)\n";
+        $expectedMessage .= "#3. `ThirdPlaceGuild`  with  `100 Points Total` (0)\n";
         $expectedMessage .= "\n-----------------------------------------------------------------------------\n";
 
         $this->assertEquals($expectedMessage, $message);
@@ -501,6 +509,10 @@ class WoeEventDiscordMessageTest extends TestCase
         $expectedMessage .= "- `Gantz`  earned  **3** Points for [__Longest Castle Defense__] \n";
         $expectedMessage .= "- `Gantz`  took  **2** Points for [__First Castle Break__]\n";
         $expectedMessage .= "\n**Kriemhild Leaderboard:**\n";
+        $expectedMessage .= "#1. `Bimbingan OrangTua`  with  `204 Points Total` (0)\n";
+        $expectedMessage .= "#2. `Gantz`  with  `155 Points Total` (0)\n";
+        $expectedMessage .= "\n";
+        $expectedMessage .= "**Global Leaderboard:**\n";
         $expectedMessage .= "#1. `Bimbingan OrangTua`  with  `204 Points Total` (0)\n";
         $expectedMessage .= "#2. `Gantz`  with  `155 Points Total` (0)\n";
         $expectedMessage .= "\n-----------------------------------------------------------------------------\n";

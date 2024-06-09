@@ -49,6 +49,18 @@ class WoeEventDiscordMessage
             }
         }
 
+        $globalLeaderboard = $scoring->globalLeaderboard(now()->format('n'));
+
+        if ($globalLeaderboard->count()) {
+            $message .= "\n**Global Leaderboard:**\n";
+
+            /** @var GameWoeScore $gameWoeScore */
+            foreach ($scoring->globalLeaderboard(now()->format('n')) as $index => $gameWoeScore) {
+                $index = $index + 1;
+                $message .= "#{$index}. `{$gameWoeScore->guild->name}`  with  `{$gameWoeScore->guild_score} Points Total` ({$gameWoeScore->previous_score})\n";
+            }
+        }
+
 
 //        $firstBreakGuild = optional($events->firstWhere('event', GameWoeEvent::BREAK));
 //        $mostBreaksGuildId = !empty($breakCounts) ? array_search(max($breakCounts), $breakCounts) : null;
