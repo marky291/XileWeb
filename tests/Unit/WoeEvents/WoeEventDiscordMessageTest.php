@@ -5,6 +5,8 @@ namespace Tests\Unit\WoeEvents;
 use App\Ragnarok\GameWoeEvent;
 use App\Ragnarok\GameWoeScore;
 use App\Ragnarok\Guild;
+use App\WoeEvents\WoeEventDiscordChannelResolver;
+use App\WoeEvents\WoeEventDiscordChannelSender;
 use App\WoeEvents\WoeEventDiscordMessage;
 use App\WoeEvents\WoeEventScoreRecorder;
 use Illuminate\Foundation\Testing\RefreshDatabase;

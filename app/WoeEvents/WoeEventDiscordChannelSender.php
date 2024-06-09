@@ -9,10 +9,17 @@ class WoeEventDiscordChannelSender
 {
     use AsAction;
 
-    public function handle(string $webhookUrl, string $message)
+    public function handle(WoeEventScoreRecorder $recorder, string $webhookUrl, string $message)
     {
         Http::post($webhookUrl, [
-            'content' => $message,
+            'content' => '',
+            'embeds' => [
+                [
+                    'title' => "Guild of the Month (Season {$recorder->season})",
+                    'description' => $message,
+                    'color' => hexdec('FF0000'),
+                ],
+            ],
         ]);
     }
 }

@@ -40,9 +40,10 @@ class WoeEventScheduleJob implements ShouldQueue
         foreach ($castles as $castle) {
             try {
                 $discord_webhook = WoeEventDiscordChannelResolver::run($castle);
-                $points = ProcessWoeEventPoints::run($castle);
-                $message = WoeEventDiscordMessage::run($points, $castle);
-                WoeEventDiscordChannelSender::run($discord_webhook, $message);
+                /** @var WoeEventScoreRecorder $recorder */
+                $recorder = ProcessWoeEventPoints::run($castle);
+                $message = WoeEventDiscordMessage::run($recorder, $castle);
+                WoeEventDiscordChannelSender::run($recorder, $discord_webhook, $message);
             } catch (WoeEventNotEnoughEventsToProcessException $e) {
                 // Swallow the exception, no action is taken, and the loop continues
             } catch (Exception $exception) {
