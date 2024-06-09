@@ -45,7 +45,7 @@ class WoeEventDiscordMessage
             /** @var GameWoeScore $gameWoeScore */
             foreach ($scoring->leaderboard($castle, now()->format('n')) as $index => $gameWoeScore) {
                 $index = $index + 1;
-                $message .= "#{$index}. `{$gameWoeScore->guild->name}`  with  `{$gameWoeScore->guild_score} Points Total` (null)\n";
+                $message .= "#{$index}. `{$gameWoeScore->guild->name}`  with  `{$gameWoeScore->guild_score} Points Total` ({$gameWoeScore->previous_score})\n";
             }
         }
 

@@ -153,10 +153,13 @@ class ProcessWoeEventPoints
             foreach (array_unique($mergedGuilds) as $guild_id) {
                 if ($guild_id == 0) continue;
 
-                $score = GameWoeScore::firstOrNew(['guild_id' => $guild_id, 'season' => $season, 'castle_name' => $castle]);
-                $guildName = $events->firstWhere('guild_id', $guild_id)->guild_name_from_message ?? 'Unknown Guild';
+                $guild = Guild::firstWhere('guild_id', $guild_id);
 
-                $score->guild_name = $guildName;
+                throw_if(!$guild, new \Exception("Guild not found for guild_id: {$guild_id}"));
+
+                $score = GameWoeScore::firstOrNew(['guild_id' => $guild_id, 'season' => $season, 'castle_name' => $castle]);
+
+                $score->guild_name = $guild->name;
                 $score->castle_name = $events->first()->castle;
                 $score->previous_score = $score->guild_score ?? 0;
 

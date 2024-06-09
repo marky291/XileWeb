@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property int|mixed $guild_score
+ * @property int|mixed $previous_score
  * @property \Illuminate\Config\Repository|\Illuminate\Contracts\Foundation\Application|\Illuminate\Foundation\Application|mixed $season
  * @method static firstOrNew(array $array)
  */
