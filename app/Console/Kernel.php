@@ -17,20 +17,7 @@ class Kernel extends ConsoleKernel
         //$schedule->command('inspire')->everyFiveSeconds();
         $schedule->command('horizon:snapshot')->everyFiveMinutes();
 
-        $castles = [
-            'Kriemhild',
-            'Swanhild',
-            // 'Fadhringh',
-            // 'Skoegul',
-            // 'Gondul',
-            'Hljod',
-            'Cyr',
-        ];
-
-        // schedule woe event messages
-        foreach ($castles as $castle) {
-            $schedule->job(new WoeEventScheduleJob())->hourly()->name("{$castle} Points")->withoutOverlapping();
-        }
+        $schedule->job(new WoeEventScheduleJob())->hourly()->name("Guild of the Month")->withoutOverlapping();
     }
 
     /**

@@ -1026,4 +1026,84 @@ class ProcessWoeEventPointsTest extends TestCase
         $this->assertEquals(GameWoeScore::POINTS_CASTLE_OWNER, $bimbinganOrangTuaScore->guild_score);
     }
 
+    public function test_woe_events_with_real_database_data_for_hljod()
+    {
+        // Creating guilds for the test
+        $this->createGuild(1140, "LatinEvolution", "Master1", '111111');
+        $this->createGuild(1149, "Gantz", "Master2", '222222');
+        $this->createGuild(1322, "Bimbingan OrangTua", "Master3", '333333');
+        $this->createGuild(1365, "FrateIIi", "Master4", '444444');
+        $this->createGuild(1241, "Unity", "Master5", '555555');
+
+        // Creating the events
+        $this->createEvent(63, 'The [Hljod] castle is currently held by the [Gantz] guild.', 'Hljod', 1149, 1, 'start', 2, false, '2024-06-09 14:00:03');
+        $this->createEvent(64, '[Ling] of the [Bimbingan OrangTua] guild has conquered the [Nithafjoll 4] stronghold of Hljod!', 'Hljod', 1322, 1, 'break', 1, false, '2024-06-09 14:36:37', 211371);
+        $this->createEvent(65, '[Zenitsu] of the [FrateIIi] guild has conquered the [Nithafjoll 4] stronghold of Hljod!', 'Hljod', 1365, 1, 'break', 1, false, '2024-06-09 14:43:06', 219332);
+        $this->createEvent(66, '[Ling] of the [Bimbingan OrangTua] guild has conquered the [Nithafjoll 4] stronghold of Hljod!', 'Hljod', 1322, 1, 'break', 1, false, '2024-06-09 14:49:14', 211371);
+        $this->createEvent(67, '[Andres Bonifacio] of the [Unity] guild has conquered the [Nithafjoll 4] stronghold of Hljod!', 'Hljod', 1241, 1, 'break', 1, false, '2024-06-09 14:56:59', 182246);
+        $this->createEvent(68, '[Ling] of the [Bimbingan OrangTua] guild has conquered the [Nithafjoll 4] stronghold of Hljod!', 'Hljod', 1322, 1, 'break', 1, false, '2024-06-09 14:58:28', 211371);
+        $this->createEvent(69, 'The [Hljod] castle has been conquered by the [Bimbingan OrangTua] guild.', 'Hljod', 1322, 1, 'end', 2, false, '2024-06-09 15:00:01');
+
+        // Process the events
+        $action = new ProcessWoeEventPoints(new WoeEventScoreRecorder());
+        $recorder = $action->handle('Hljod');
+
+        // Assert the scores
+        $scores = GameWoeScore::all();
+
+        $this->assertCount(2, $scores); // Ensure all guilds that participated are accounted for
+
+        $latinEvolutionScore = GameWoeScore::firstWhere('guild_id', 1140);
+        $gantzScore = GameWoeScore::firstWhere('guild_id', 1149);
+        $bimbinganOrangTuaScore = GameWoeScore::firstWhere('guild_id', 1322);
+        $frateIIiScore = GameWoeScore::firstWhere('guild_id', 1365);
+        $unityScore = GameWoeScore::firstWhere('guild_id', 1241);
+
+        $this->assertEquals(GameWoeScore::POINTS_LONGEST_HELD, $gantzScore->guild_score);
+        $this->assertEquals(GameWoeScore::POINTS_CASTLE_OWNER + GameWoeScore::POINTS_FIRST_BREAK, $bimbinganOrangTuaScore->guild_score);
+    }
+
+    /**
+     * Helper method to create a guild.
+     */
+    private function createGuild(int $guildId, string $name, string $master, string $charId)
+    {
+        Guild::factory()->create([
+            'guild_id' => $guildId,
+            'name' => $name,
+            'master' => $master,
+            'char_id' => $charId
+        ]);
+    }
+
+    /**
+     * Helper method to create an event.
+     */
+    private function createEvent(
+        int $id,
+        string $message,
+        string $castle,
+        int $guildId,
+        int $season,
+        string $event,
+        int $edition,
+        bool $processed,
+        string $createdAt,
+        int $player = null
+    )
+    {
+        GameWoeEvent::create([
+            'id' => $id,
+            'message' => $message,
+            'castle' => $castle,
+            'guild_id' => $guildId,
+            'season' => $season,
+            'event' => $event,
+            'edition' => $edition,
+            'processed' => $processed,
+            'created_at' => $createdAt,
+            'updated_at' => $createdAt,
+            'player' => $player
+        ]);
+    }
 }
