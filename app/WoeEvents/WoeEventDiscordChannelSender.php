@@ -15,7 +15,7 @@ class WoeEventDiscordChannelSender
             'content' => '',
             'embeds' => [
                 [
-                    'title' => "<a:verifiyblue:1079199354172219562> Guild of the Month (Season {$recorder->season})",
+                    'title' => "Guild of the Month (Season {$recorder->season})",
                     'description' => $message,
                     'color' => hexdec('FF0000'),
                 ],
