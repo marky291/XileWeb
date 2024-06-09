@@ -54,10 +54,9 @@ class WoeEventDiscordMessage
         if ($globalLeaderboard->count()) {
             $message .= "\n**Season Leaderboard:**\n";
 
-            /** @var GameWoeScore $gameWoeScore */
-            foreach ($scoring->globalLeaderboard(now()->format('n')) as $index => $gameWoeScore) {
+            foreach ($globalLeaderboard as $index => $gameWoeScore) {
                 $index = $index + 1;
-                $message .= "#{$index}. `{$gameWoeScore->guild->name}`  with  `{$gameWoeScore->guild_score} Points Total` ({$gameWoeScore->previous_score})\n";
+                $message .= "#{$index}. `{$gameWoeScore->guild->name}`  with  `{$gameWoeScore->total_score} Points Total`\n";
             }
         }
 

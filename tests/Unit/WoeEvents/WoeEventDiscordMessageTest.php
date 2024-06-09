@@ -76,7 +76,7 @@ class WoeEventDiscordMessageTest extends TestCase
         $expectedMessage .= "#1. `Xeleros Brothers`  with  `200 Points Total` (0)\n";
         $expectedMessage .= "\n";
         $expectedMessage .= "**Season Leaderboard:**\n";
-        $expectedMessage .= "#1. `Xeleros Brothers`  with  `200 Points Total` (0)\n";
+        $expectedMessage .= "#1. `Xeleros Brothers`  with  `200 Points Total`\n";
         $expectedMessage .= "\n-----------------------------------------------------------------------------\n";
 
         $this->assertEquals($expectedMessage, $message);
@@ -357,9 +357,9 @@ class WoeEventDiscordMessageTest extends TestCase
         $expectedMessage .= "#3. `ThirdPlaceGuild`  with  `100 Points Total` (0)\n";
         $expectedMessage .= "\n";
         $expectedMessage .= "**Season Leaderboard:**\n";
-        $expectedMessage .= "#1. `Xeleros Brothers`  with  `200 Points Total` (0)\n";
-        $expectedMessage .= "#2. `SecondPlaceGuild`  with  `150 Points Total` (0)\n";
-        $expectedMessage .= "#3. `ThirdPlaceGuild`  with  `100 Points Total` (0)\n";
+        $expectedMessage .= "#1. `Xeleros Brothers`  with  `200 Points Total`\n";
+        $expectedMessage .= "#2. `SecondPlaceGuild`  with  `150 Points Total`\n";
+        $expectedMessage .= "#3. `ThirdPlaceGuild`  with  `100 Points Total`\n";
         $expectedMessage .= "\n-----------------------------------------------------------------------------\n";
 
         $this->assertEquals($expectedMessage, $message);
@@ -513,8 +513,8 @@ class WoeEventDiscordMessageTest extends TestCase
         $expectedMessage .= "#2. `Gantz`  with  `155 Points Total` (0)\n";
         $expectedMessage .= "\n";
         $expectedMessage .= "**Season Leaderboard:**\n";
-        $expectedMessage .= "#1. `Bimbingan OrangTua`  with  `204 Points Total` (0)\n";
-        $expectedMessage .= "#2. `Gantz`  with  `155 Points Total` (0)\n";
+        $expectedMessage .= "#1. `Bimbingan OrangTua`  with  `204 Points Total`\n";
+        $expectedMessage .= "#2. `Gantz`  with  `155 Points Total`\n";
         $expectedMessage .= "\n-----------------------------------------------------------------------------\n";
 
         $this->assertEquals($expectedMessage, $message);

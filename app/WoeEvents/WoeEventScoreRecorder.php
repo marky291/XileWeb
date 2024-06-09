@@ -51,9 +51,11 @@ class WoeEventScoreRecorder
     public function globalLeaderboard(string $season): Collection
     {
         return GameWoeScore::with('guild')
+            ->selectRaw('guild_id, SUM(guild_score) as total_score')
             ->whereNot('guild_name', Guild::GM_TEAM)
             ->where('season', $season)
-            ->orderByDesc('guild_score')
+            ->groupBy('guild_id')
+            ->orderByDesc('total_score')
             ->get();
     }
 }
