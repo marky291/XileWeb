@@ -35,14 +35,14 @@ return [
 
     'android' => [
         [
-            'name' => 'v477 - Android Direct Download (3MB)',
-            'link' => 'https://cdn.discordapp.com/attachments/1146035000064614420/1221481279971786772/XileRetro2_v477_20240324175902.apk?ex=6635abd7&is=66345a57&hm=4dff81df69d59c08a9dc647dafc98d96521ae6923c3708f7cdf74a779d6eb9b9&',
+            'name' => 'v481 - Android using OneDrive (3MB)',
+            'link' => 'https://1drv.ms/u/s!AnRDrmhMUJLagYmiT7yPunSom4_tnGY?e=n8Yihy',
             'bttn' => 'btn-primary',
             'version' => '477',
         ],
         [
-           'name' => 'v477 - Android Direct Download (3MB)',
-           'link' => 'https://cdn.discordapp.com/attachments/1146035000064614420/1221481279971786772/XileRetro2_v477_20240324175902.apk?ex=6635abd7&is=66345a57&hm=4dff81df69d59c08a9dc647dafc98d96521ae6923c3708f7cdf74a779d6eb9b9&',
+           'name' => 'v481 - Android using OneDrive (3MB)',
+           'link' => 'https://1drv.ms/u/s!AnRDrmhMUJLagYmiT7yPunSom4_tnGY?e=n8Yihy',
            'bttn' => 'btn-secondary',
            'version' => '477',
        ]
