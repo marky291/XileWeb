@@ -24,12 +24,12 @@
     "src": "resources/assets/line.png"
   },
   "resources/css/app.css": {
-    "file": "assets/app-ef6e169e.css",
+    "file": "assets/app-32f72fe6.css",
     "isEntry": true,
     "src": "resources/css/app.css"
   },
   "resources/js/app.js": {
-    "file": "assets/app-dbe23e4c.js",
+    "file": "assets/app-33584bf2.js",
     "isEntry": true,
     "src": "resources/js/app.js"
   }

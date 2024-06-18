@@ -4,31 +4,39 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d8b13a84-8bef-423e-8a9a-7f2cbe046dda" name="Changes" comment="PostCSS Configuration for TailwindCSS">
-      <change beforePath="$PROJECT_DIR$/.idea/blade.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/blade.xml" afterDir="false" />
+    <list default="true" id="d8b13a84-8bef-423e-8a9a-7f2cbe046dda" name="Changes" comment="Global Leaderboard">
+      <change afterPath="$PROJECT_DIR$/app/WoeEvents/WoeEventGlobalLeaderboardMessageGenerator.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/.env.example" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/laravel-idea.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/laravel-idea.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/phpspec.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/phpspec.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Filament/Resources/CharResource/Pages/EditChar.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Filament/Resources/CharResource/Pages/EditChar.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/NewPasswordController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/NewPasswordController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Providers/Filament/AppPanelProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/Filament/AppPanelProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Ragnarok/Login.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Ragnarok/Login.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/WoeEvents/WoeEventDiscordChannelResolver.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/WoeEvents/WoeEventDiscordChannelResolver.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/WoeEvents/WoeEventDiscordMessage.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/WoeEvents/WoeEventDiscordMessage.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/mail.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/mail.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/xilero.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/xilero.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/build/assets/app-58897733.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/build/assets/app-ef6e169e.css" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/public/build/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/build/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/filament/filament/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/filament/filament/app.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/filament/forms/forms.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/filament/forms/forms.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/filament/support/support.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/filament/support/support.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/filament/filament/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/filament/filament/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/filament/filament/echo.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/filament/filament/echo.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/filament/forms/components/color-picker.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/filament/forms/components/color-picker.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/filament/forms/components/date-time-picker.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/filament/forms/components/date-time-picker.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/filament/forms/components/file-upload.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/filament/forms/components/file-upload.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/filament/forms/components/key-value.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/filament/forms/components/key-value.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/filament/forms/components/markdown-editor.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/filament/forms/components/markdown-editor.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/filament/forms/components/rich-editor.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/filament/forms/components/rich-editor.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/filament/forms/components/select.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/filament/forms/components/select.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/filament/forms/components/tags-input.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/filament/forms/components/tags-input.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/filament/forms/components/textarea.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/filament/forms/components/textarea.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/filament/notifications/notifications.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/filament/notifications/notifications.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/filament/support/async-alpine.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/filament/support/async-alpine.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/filament/support/support.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/filament/support/support.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/filament/tables/components/table.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/filament/tables/components/table.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/filament/widgets/components/chart.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/filament/widgets/components/chart.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/resources/css/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/navigation.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/navigation.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/livewire/register.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/register.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/patcher.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/patcher.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/warofemperium.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/warofemperium.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/post.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/post.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,13 +50,25 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;marky291&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;git@github.com:marky291/XileWeb.git&quot;,
+    &quot;accountId&quot;: &quot;9df8d144-bd9c-49fe-9413-a83e06e051c3&quot;
+  }
+}</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/vendor/laravel/breeze/stubs/inertia-react-ts/resources/js/Pages/Welcome.tsx" root0="SKIP_INSPECTION" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="/usr/local/Cellar/php/8.2.5/bin/php">
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP">
     <include_path>
       <path value="$PROJECT_DIR$/vendor/graham-campbell/result-type" />
       <path value="$PROJECT_DIR$/vendor/dragonmantank/cron-expression" />
@@ -205,6 +225,11 @@
       <path value="$PROJECT_DIR$/vendor/aws/aws-crt-php" />
       <path value="$PROJECT_DIR$/vendor/aws/aws-sdk-php" />
       <path value="$PROJECT_DIR$/vendor/mtdowling/jmespath.php" />
+      <path value="$PROJECT_DIR$/vendor/league/csv" />
+      <path value="$PROJECT_DIR$/vendor/carbonphp/carbon-doctrine-types" />
+      <path value="$PROJECT_DIR$/vendor/anourvalar/eloquent-serialize" />
+      <path value="$PROJECT_DIR$/vendor/openspout/openspout" />
+      <path value="$PROJECT_DIR$/vendor/spatie/error-solutions" />
     </include_path>
   </component>
   <component name="ProjectColorInfo">{
@@ -217,12 +242,47 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;PHPUnit.GameWoeEventTest.executor&quot;: &quot;Run&quot;,
+    &quot;PHPUnit.ProcessWoeEventPointsTest.executor&quot;: &quot;Run&quot;,
+    &quot;PHPUnit.ProcessWoeEventPointsTest.it_does_not_carry_score_across_two_castles.executor&quot;: &quot;Run&quot;,
+    &quot;PHPUnit.ProcessWoeEventPointsTest.it_does_not_run_if_there_is_no_start_and_end_date.executor&quot;: &quot;Run&quot;,
+    &quot;PHPUnit.ProcessWoeEventPointsTest.it_handles_scores_based_on_the_current_month_as_season.executor&quot;: &quot;Run&quot;,
+    &quot;PHPUnit.ProcessWoeEventPointsTest.it_tests_that_the_longest_held_castle_is_vixens.executor&quot;: &quot;Debug&quot;,
+    &quot;PHPUnit.ProcessWoeEventPointsTest.it_tests_that_the_xilero_gm_team_guild_does_not_record_score.executor&quot;: &quot;Run&quot;,
+    &quot;PHPUnit.ProcessWoeEventPointsTest.test_correct_event_order.executor&quot;: &quot;Run&quot;,
+    &quot;PHPUnit.ProcessWoeEventPointsTest.test_discord_notification_sending.executor&quot;: &quot;Run&quot;,
+    &quot;PHPUnit.ProcessWoeEventPointsTest.test_events_spanning_multiple_days.executor&quot;: &quot;Run&quot;,
+    &quot;PHPUnit.ProcessWoeEventPointsTest.test_events_without_end_event.executor&quot;: &quot;Run&quot;,
+    &quot;PHPUnit.ProcessWoeEventPointsTest.test_events_without_start_event.executor&quot;: &quot;Run&quot;,
+    &quot;PHPUnit.ProcessWoeEventPointsTest.test_it_handles_scores_based_on_the_current_month_as_season.executor&quot;: &quot;Run&quot;,
+    &quot;PHPUnit.ProcessWoeEventPointsTest.test_multiple_events_same_guilds.executor&quot;: &quot;Run&quot;,
+    &quot;PHPUnit.ProcessWoeEventPointsTest.test_no_events.executor&quot;: &quot;Run&quot;,
+    &quot;PHPUnit.ProcessWoeEventPointsTest.test_no_woe_events.executor&quot;: &quot;Run&quot;,
+    &quot;PHPUnit.ProcessWoeEventPointsTest.test_points_are_calculated_correctly.executor&quot;: &quot;Run&quot;,
+    &quot;PHPUnit.ProcessWoeEventPointsTest.test_simultaneous_events.executor&quot;: &quot;Run&quot;,
+    &quot;PHPUnit.ProcessWoeEventPointsTest.test_single_event.executor&quot;: &quot;Run&quot;,
+    &quot;PHPUnit.ProcessWoeEventPointsTest.test_with_multiple_guilds.executor&quot;: &quot;Run&quot;,
+    &quot;PHPUnit.ProcessWoeEventPointsTest.test_with_provided_game_woe_events_data.executor&quot;: &quot;Run&quot;,
+    &quot;PHPUnit.ProcessWoeEventPointsTest.test_woe_events_with_real_database_data.executor&quot;: &quot;Run&quot;,
+    &quot;PHPUnit.ProcessWoeEventPointsTest.test_woe_events_with_real_database_data_for_hljod.executor&quot;: &quot;Run&quot;,
+    &quot;PHPUnit.WoeEventDiscordMessageTest.executor&quot;: &quot;Run&quot;,
+    &quot;PHPUnit.WoeEventDiscordMessageTest.testHandle.executor&quot;: &quot;Run&quot;,
+    &quot;PHPUnit.WoeEventDiscordMessageTest.testHandleMultipleLeaderboardEntries.executor&quot;: &quot;Run&quot;,
+    &quot;PHPUnit.WoeEventDiscordMessageTest.testHandleNoEvents.executor&quot;: &quot;Run&quot;,
+    &quot;PHPUnit.WoeEventDiscordMessageTest.testHandleWithProvidedData.executor&quot;: &quot;Run&quot;,
+    &quot;PHPUnit.WoeEventScheduleJobTest (1).executor&quot;: &quot;Run&quot;,
+    &quot;PHPUnit.WoeEventScheduleJobTest.executor&quot;: &quot;Run&quot;,
+    &quot;PHPUnit.WoeEventScheduleJobTest.testHandleLogsOtherExceptions.executor&quot;: &quot;Run&quot;,
+    &quot;PHPUnit.WoeEventScheduleJobTest.testHandleProcessesMultipleCastles.executor&quot;: &quot;Run&quot;,
+    &quot;PHPUnit.WoeEventScheduleJobTest.testHandleSuccessfullyProcessesEvents.executor&quot;: &quot;Run&quot;,
+    &quot;PHPUnit.WoeEventScheduleJobTest.test_HandleSuccessfullyProcessesEvents.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.laravel-idea.update-module-directories&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;auto.test.manager.delay&quot;: &quot;2000&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/markhester/Desktop/XileRO/XileWeb2/public/assets/patcher&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/markhester/Herd/XileWeb&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -241,21 +301,59 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/public/assets/patcher" />
       <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/public/assets/patcher" />
       <recent name="$PROJECT_DIR$/database/factories/ragnarok" />
       <recent name="$PROJECT_DIR$/resources/views" />
       <recent name="$PROJECT_DIR$/public" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/tests/Unit/WoeEvents" />
       <recent name="$PROJECT_DIR$/resources/views/livewire" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="PHPUnit.WoeEventScheduleJobTest.testHandleProcessesMultipleCastles">
     <configuration name="Main" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner configuration_file="$PROJECT_DIR$/phpunit.xml" scope="XML" use_alternative_configuration_file="true" />
       <method v="2" />
     </configuration>
+    <configuration name="WoeEventScheduleJobTest" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Unit\WoeEvents\WoeEventScheduleJobTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Unit/WoeEvents/WoeEventScheduleJobTest.php" scope="Class" />
+      <method v="2" />
+    </configuration>
+    <configuration name="WoeEventScheduleJobTest.testHandleLogsOtherExceptions" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Unit\WoeEvents\WoeEventScheduleJobTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Unit/WoeEvents/WoeEventScheduleJobTest.php" method="testHandleLogsOtherExceptions" scope="Method" />
+      <method v="2" />
+    </configuration>
+    <configuration name="WoeEventScheduleJobTest.testHandleProcessesMultipleCastles" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Unit\WoeEvents\WoeEventScheduleJobTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Unit/WoeEvents/WoeEventScheduleJobTest.php" method="testHandleProcessesMultipleCastles" scope="Method" />
+      <method v="2" />
+    </configuration>
+    <configuration name="WoeEventScheduleJobTest.testHandleSuccessfullyProcessesEvents" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Unit\WoeEvents\WoeEventScheduleJobTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Unit/WoeEvents/WoeEventScheduleJobTest.php" method="testHandleSuccessfullyProcessesEvents" scope="Method" />
+      <method v="2" />
+    </configuration>
+    <configuration name="WoeEventScheduleJobTest.test_HandleSuccessfullyProcessesEvents" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Unit\WoeEvents\WoeEventScheduleJobTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Unit/WoeEvents/WoeEventScheduleJobTest.php" method="test_HandleSuccessfullyProcessesEvents" scope="Method" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="PHPUnit.WoeEventScheduleJobTest.testHandleProcessesMultipleCastles" />
+        <item itemvalue="PHPUnit.WoeEventScheduleJobTest.testHandleLogsOtherExceptions" />
+        <item itemvalue="PHPUnit.WoeEventScheduleJobTest.testHandleSuccessfullyProcessesEvents" />
+        <item itemvalue="PHPUnit.WoeEventScheduleJobTest" />
+        <item itemvalue="PHPUnit.WoeEventScheduleJobTest.test_HandleSuccessfullyProcessesEvents" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-PS-241.17890.8" />
+        <option value="bundled-php-predefined-ba97393d7c68-48a1a656d44e-com.jetbrains.php.sharedIndexes-PS-241.17890.8" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -287,6 +385,15 @@
       <workItem from="1700084065372" duration="489000" />
       <workItem from="1700084578037" duration="1057000" />
       <workItem from="1701386020922" duration="1756000" />
+      <workItem from="1717606386780" duration="98000" />
+      <workItem from="1717606492928" duration="2712000" />
+      <workItem from="1717609256066" duration="36022000" />
+      <workItem from="1717930700109" duration="8483000" />
+      <workItem from="1718466803306" duration="6742000" />
+      <workItem from="1718621476251" duration="596000" />
+      <workItem from="1718625025452" duration="14000" />
+      <workItem from="1718625049074" duration="6000" />
+      <workItem from="1718740625957" duration="1682000" />
     </task>
     <task id="LOCAL-00001" summary="Fix random number on uber cost">
       <option name="closed" value="true" />
@@ -496,7 +603,143 @@
       <option name="project" value="LOCAL" />
       <updated>1698730499057</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Update Woe Points Processing">
+      <option name="closed" value="true" />
+      <created>1717613240256</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1717613240256</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Update Woe Points Processing">
+      <option name="closed" value="true" />
+      <created>1717803581775</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1717803581775</updated>
+    </task>
+    <task id="LOCAL-00029" summary="Only run in test">
+      <option name="closed" value="true" />
+      <created>1717806806491</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1717806806491</updated>
+    </task>
+    <task id="LOCAL-00030" summary="Fix season checks">
+      <option name="closed" value="true" />
+      <created>1717889130160</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1717889130160</updated>
+    </task>
+    <task id="LOCAL-00031" summary="Fix test">
+      <option name="closed" value="true" />
+      <created>1717889357861</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1717889357861</updated>
+    </task>
+    <task id="LOCAL-00032" summary="Catch exceptions for no events to process">
+      <option name="closed" value="true" />
+      <created>1717889725606</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1717889725607</updated>
+    </task>
+    <task id="LOCAL-00033" summary="Fix failed job table">
+      <option name="closed" value="true" />
+      <created>1717890409245</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1717890409245</updated>
+    </task>
+    <task id="LOCAL-00034" summary="API Cache change">
+      <option name="closed" value="true" />
+      <created>1717891189076</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1717891189076</updated>
+    </task>
+    <task id="LOCAL-00035" summary="Message previous score">
+      <option name="closed" value="true" />
+      <created>1717891747363</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1717891747363</updated>
+    </task>
+    <task id="LOCAL-00036" summary="Fix looping of job">
+      <option name="closed" value="true" />
+      <created>1717948673732</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1717948673732</updated>
+    </task>
+    <task id="LOCAL-00037" summary="Fix exception that stops job processing">
+      <option name="closed" value="true" />
+      <created>1717949664128</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1717949664128</updated>
+    </task>
+    <task id="LOCAL-00038" summary="Fix channel Send">
+      <option name="closed" value="true" />
+      <created>1717950474828</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1717950474828</updated>
+    </task>
+    <task id="LOCAL-00039" summary="Add symbol">
+      <option name="closed" value="true" />
+      <created>1717950664723</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1717950664723</updated>
+    </task>
+    <task id="LOCAL-00040" summary="Global Leaderboard">
+      <option name="closed" value="true" />
+      <created>1717951235080</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1717951235080</updated>
+    </task>
+    <task id="LOCAL-00041" summary="Season Leadboard">
+      <option name="closed" value="true" />
+      <created>1717951292425</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1717951292425</updated>
+    </task>
+    <task id="LOCAL-00042" summary="Global Leaderboard">
+      <option name="closed" value="true" />
+      <created>1717951892732</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1717951892732</updated>
+    </task>
+    <task id="LOCAL-00043" summary="Global Leaderboard">
+      <option name="closed" value="true" />
+      <created>1717952513045</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1717952513045</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -516,19 +759,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Fix random number on uber cost" />
-    <MESSAGE value="Mobile website fixes" />
-    <MESSAGE value="CSS FIXES" />
-    <MESSAGE value="Sitemap" />
-    <MESSAGE value="WOE Section" />
-    <MESSAGE value="Donation ubers from website" />
-    <MESSAGE value="Compiled css" />
-    <MESSAGE value="Admin Dashboard." />
-    <MESSAGE value="Admin Dashboard Filament" />
-    <MESSAGE value="Remove the guild emblems" />
-    <MESSAGE value="Fix url bug" />
-    <MESSAGE value="do not set header as img." />
-    <MESSAGE value="Header for emblems" />
     <MESSAGE value="Dont hide user pass." />
     <MESSAGE value="Donation Log and Posting" />
     <MESSAGE value="redirect routes" />
@@ -540,7 +770,21 @@
     <MESSAGE value="Site updates" />
     <MESSAGE value="newsfeed" />
     <MESSAGE value="PostCSS Configuration for TailwindCSS" />
-    <option name="LAST_COMMIT_MESSAGE" value="PostCSS Configuration for TailwindCSS" />
+    <MESSAGE value="Update Woe Points Processing" />
+    <MESSAGE value="Only run in test" />
+    <MESSAGE value="Fix season checks" />
+    <MESSAGE value="Fix test" />
+    <MESSAGE value="Catch exceptions for no events to process" />
+    <MESSAGE value="Fix failed job table" />
+    <MESSAGE value="API Cache change" />
+    <MESSAGE value="Message previous score" />
+    <MESSAGE value="Fix looping of job" />
+    <MESSAGE value="Fix exception that stops job processing" />
+    <MESSAGE value="Fix channel Send" />
+    <MESSAGE value="Add symbol" />
+    <MESSAGE value="Season Leadboard" />
+    <MESSAGE value="Global Leaderboard" />
+    <option name="LAST_COMMIT_MESSAGE" value="Global Leaderboard" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -550,11 +794,19 @@
           <line>7</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/config/services.php</url>
+          <line>42</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
     <select />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/XileWeb@ProcessWoeEventPointsTest.xml" NAME="ProcessWoeEventPointsTest Coverage Results" MODIFIED="1717607022957" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="PhpCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>
