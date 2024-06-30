@@ -15,7 +15,7 @@ class GameWoeScore extends RagnarokModel
 {
     use HasFactory;
 
-    public const POINTS_CASTLE_OWNER = 4;
+    public const POINTS_CASTLE_OWNER = 3;
     public const POINTS_LONGEST_HELD = 3;
     public const POINTS_FIRST_BREAK = 2;
     public const POINTS_ATTENDED = 1;
