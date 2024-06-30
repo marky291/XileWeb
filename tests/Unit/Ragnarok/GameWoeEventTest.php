@@ -36,4 +36,13 @@ class GameWoeEventTest extends TestCase
 
         $this->assertEquals('Test2', $event->player_name_from_message);
     }
+
+    public function test_attendence_message_member_count()
+    {
+        $event = GameWoeEvent::factory()->make([
+            'message' => 'Guild [.Bounty-Hunters.] has attended castle [Skoegul] with member count [8].',
+        ]);
+
+        $this->assertEquals(8, $event->attendenceEventMemberCount());
+    }
 }

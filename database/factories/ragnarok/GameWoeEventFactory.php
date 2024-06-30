@@ -35,6 +35,7 @@ class GameWoeEventFactory extends Factory
             'player' => 150000,
             'discord_sent' => 0,
             'processed' => 0,
+            'event_rid' => null,
         ];
     }
 

@@ -519,4 +519,74 @@ class WoeEventDiscordMessageTest extends TestCase
 
         $this->assertEquals($expectedMessage, $message);
     }
+
+    public function testHandleMostKillsGuild()
+    {
+        // Arrange
+        $castle = 'Kriemhild';
+
+        $scoring = $this->getMockBuilder(WoeEventScoreRecorder::class)
+            ->onlyMethods(['leaderboard'])
+            ->getMock();
+
+        // Create real instances of Guild
+        $winningGuild = Guild::factory()->create(['name' => 'Xeleros Brothers']);
+        $longestHoldGuild = Guild::factory()->create(['name' => 'LongestHoldGuild']);
+        $firstBreakGuild = Guild::factory()->create(['name' => 'FirstBreakGuild']);
+        $attendeeGuild = Guild::factory()->create(['name' => 'AttendeeGuild']);
+        $mostKillsGuild = Guild::factory()->create(['name' => 'MostKillsGuild']);
+
+        // Set the properties of WoeEventScoreRecorder
+        $scoring->castle = $castle;
+        $scoring->season = now()->format('n');
+        $scoring->winning_guild = $winningGuild;
+        $scoring->winning_award = 100;
+        $scoring->longest_hold_guild = $longestHoldGuild;
+        $scoring->longest_hold_award = 50;
+        $scoring->first_break_guild = $firstBreakGuild;
+        $scoring->first_break_award = 25;
+        $scoring->attendee_award = 10;
+        $scoring->most_kills_guild = $mostKillsGuild;
+        $scoring->most_kills_award = 20;
+        $scoring->addAttendee($attendeeGuild);
+
+        // Create real instances of GameWoeScore and populate the leaderboard
+        $leaderboard = new Collection();
+        $gameWoeScore = GameWoeScore::factory()->create([
+            'castle_name' => $castle,
+            'guild_name' => $winningGuild->name,
+            'season' => now()->format('n'),
+            'guild_score' => 200,
+            'previous_score' => '0',
+            'guild_id' => $winningGuild->guild_id
+        ]);
+        $leaderboard->push($gameWoeScore);
+
+        // Mock the leaderboard method
+        $scoring->method('leaderboard')
+            ->willReturn($leaderboard);
+
+        $woeEventDiscordMessage = new WoeEventDiscordMessage();
+
+        // Act
+        $message = $woeEventDiscordMessage->handle($scoring, $castle);
+
+        // Assert
+        $expectedMessage = ">>> -----------------------------------------------------------------------------\n";
+        $expectedMessage .= "\n**Kriemhild Events:**\n";
+        $expectedMessage .= "- `Xeleros Brothers`  won  **100** Points as [__Castle Owner__]\n";
+        $expectedMessage .= "- `LongestHoldGuild`  earned  **50** Points for [__Longest Castle Defense__] \n";
+        $expectedMessage .= "- `FirstBreakGuild`  took  **25** Points for [__First Castle Break__]\n";
+        $expectedMessage .= "- `AttendeeGuild`  saw  **10** Point for [__Attendance__]\n";
+        $expectedMessage .= "- `MostKillsGuild`  earned  **20** Points for [__Most Kills__]\n";
+        $expectedMessage .= "\n**Kriemhild Leaderboard:**\n";
+        $expectedMessage .= "#1. `Xeleros Brothers`  with  `200 Points Total` (0)\n";
+        $expectedMessage .= "\n";
+        $expectedMessage .= "**Season Leaderboard:**\n";
+        $expectedMessage .= "#1. `Xeleros Brothers`  with  `200 Points Total`\n";
+        $expectedMessage .= "\n-----------------------------------------------------------------------------\n";
+
+        $this->assertEquals($expectedMessage, $message);
+    }
+
 }

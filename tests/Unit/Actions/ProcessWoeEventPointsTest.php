@@ -168,7 +168,7 @@ class ProcessWoeEventPointsTest extends TestCase
             'castle' => 'Kriemhild',
             'event' => GameWoeEvent::ATTENDED,
             'guild_id' => 2,
-            'message' => 'Guild [Guild1]',
+            'message' => 'Guild [Guild1] has attended castle [Kriemhild] with member count [4].',
             'season' => now()->format('n'),
             'created_at' => now()->addSeconds(5),
             'processed' => false
@@ -348,7 +348,7 @@ class ProcessWoeEventPointsTest extends TestCase
             'event' => GameWoeEvent::ATTENDED,
             'guild_id' => 1,
             'season' => now()->format('n'),
-            'message' => 'Guild [Viexens] has attended with member count greater than size [8].',
+            'message' => 'Guild [Viexens] has attended castle [Skoegul] with member count [8].',
             'created_at' => now()->addMinutes(1),
             'processed' => false
         ]);
@@ -357,7 +357,7 @@ class ProcessWoeEventPointsTest extends TestCase
             'event' => GameWoeEvent::ATTENDED,
             'guild_id' => 2,
             'season' => now()->format('n'),
-            'message' => 'Guild [.Bounty-Hunters.] has attended with member count greater than size [8].',
+            'message' => 'Guild [.Bounty-Hunters.] has attended castle [Skoegul] with member count [8].',
             'created_at' => now()->addMinutes(2),
             'processed' => false
         ]);
@@ -366,7 +366,7 @@ class ProcessWoeEventPointsTest extends TestCase
             'event' => GameWoeEvent::ATTENDED,
             'guild_id' => 2,
             'season' => now()->format('n'),
-            'message' => 'Guild [.Bounty-Hunters.] has attended with member count greater than size [8].',
+            'message' => 'Guild [.Bounty-Hunters.] has attended castle [Skoegul] with member count [8].',
             'created_at' => now()->addMinutes(3),
             'processed' => false
         ]);
@@ -375,7 +375,7 @@ class ProcessWoeEventPointsTest extends TestCase
             'event' => GameWoeEvent::ATTENDED,
             'guild_id' => 2,
             'season' => now()->format('n'),
-            'message' => 'Guild [.Bounty-Hunters.] has attended with member count greater than size [8].',
+            'message' => 'Guild [.Bounty-Hunters.] has attended castle [Skoegul] with member count [8].',
             'created_at' => now()->addMinutes(4),
             'processed' => false
         ]);
@@ -384,7 +384,7 @@ class ProcessWoeEventPointsTest extends TestCase
             'event' => GameWoeEvent::ATTENDED,
             'guild_id' => 2,
             'season' => now()->format('n'),
-            'message' => 'Guild [.Bounty-Hunters.] has attended with member count greater than size [8].',
+            'message' => 'Guild [.Bounty-Hunters.] has attended castle [Skoegul] with member count [8].',
             'created_at' => now()->addMinutes(5),
             'processed' => false
         ]);
@@ -393,7 +393,7 @@ class ProcessWoeEventPointsTest extends TestCase
             'event' => GameWoeEvent::ATTENDED,
             'guild_id' => 2,
             'season' => now()->format('n'),
-            'message' => 'Guild [.Bounty-Hunters.] has attended with member count greater than size [8].',
+            'message' => 'Guild [.Bounty-Hunters.] has attended castle [Skoegul] with member count [8].',
             'created_at' => now()->addMinutes(6),
             'processed' => false
         ]);
@@ -402,7 +402,7 @@ class ProcessWoeEventPointsTest extends TestCase
             'event' => GameWoeEvent::ATTENDED,
             'guild_id' => 2,
             'season' => now()->format('n'),
-            'message' => 'Guild [.Bounty-Hunters.] has attended with member count greater than size [8].',
+            'message' => 'Guild [.Bounty-Hunters.] has attended castle [Skoegul] with member count [8].',
             'created_at' => now()->addMinutes(7),
             'processed' => false
         ]);
@@ -411,7 +411,7 @@ class ProcessWoeEventPointsTest extends TestCase
             'event' => GameWoeEvent::ATTENDED,
             'guild_id' => 2,
             'season' => now()->format('n'),
-            'message' => 'Guild [.Bounty-Hunters.] has attended with member count greater than size [8].',
+            'message' => 'Guild [.Bounty-Hunters.] has attended castle [Skoegul] with member count [8].',
             'created_at' => now()->addMinutes(8),
             'processed' => false
         ]);
@@ -420,7 +420,7 @@ class ProcessWoeEventPointsTest extends TestCase
             'event' => GameWoeEvent::ATTENDED,
             'guild_id' => 2,
             'season' => now()->format('n'),
-            'message' => 'Guild [.Bounty-Hunters.] has attended with member count greater than size [8].',
+            'message' => 'Guild [.Bounty-Hunters.] has attended castle [Skoegul] with member count [8].',
             'created_at' => now()->addMinutes(9),
             'processed' => false
         ]);
@@ -429,7 +429,7 @@ class ProcessWoeEventPointsTest extends TestCase
             'event' => GameWoeEvent::ATTENDED,
             'guild_id' => 2,
             'season' => now()->format('n'),
-            'message' => 'Guild [.Bounty-Hunters.] has attended with member count greater than size [8].',
+            'message' => 'Guild [.Bounty-Hunters.] has attended castle [Skoegul] with member count [8].',
             'created_at' => now()->addMinutes(10),
             'processed' => false
         ]);
@@ -438,7 +438,7 @@ class ProcessWoeEventPointsTest extends TestCase
             'event' => GameWoeEvent::ATTENDED,
             'guild_id' => 2,
             'season' => now()->format('n'),
-            'message' => 'Guild [.Bounty-Hunters.] has attended with member count greater than size [8].',
+            'message' => 'Guild [.Bounty-Hunters.] has attended castle [Skoegul] with member count [8].',
             'created_at' => now()->addMinutes(11),
             'processed' => false
         ]);
@@ -616,7 +616,7 @@ class ProcessWoeEventPointsTest extends TestCase
            'edition' => 1,
            'guild_id' => 736,
            'season' => now()->format('n'),
-           'message' => 'Guild [Viexens] has attended with member count greater than size [8].',
+           'message' => 'Guild [Viexens] has attended castle [Swanhild] with member count [8].',
            'created_at' => now()->addMinutes(15),
            'processed' => false
        ]);
@@ -649,7 +649,7 @@ class ProcessWoeEventPointsTest extends TestCase
            'edition' => 1,
            'player' => '181405',
            'season' => now()->format('n'),
-           'message' => 'Guild [Viexens] has attended with member count greater than size [8].',
+           'message' => 'Guild [Viexens] has attended castle [Swanhild] with member count [8].',
            'created_at' => now()->addMinutes(60),
            'processed' => false
        ]);
@@ -660,7 +660,7 @@ class ProcessWoeEventPointsTest extends TestCase
            'guild_id' => 736,
            'player' => '181405',
            'season' => now()->format('n'),
-           'message' => 'Guild [Viexens] has attended with member count greater than size [8].',
+           'message' => 'Guild [Viexens] has attended castle [Swanhild] with member count [8].',
            'created_at' => now()->addMinutes(65),
            'processed' => false
        ]);
@@ -681,6 +681,7 @@ class ProcessWoeEventPointsTest extends TestCase
 
        $this->assertCount(2, $scores);
 
+       // Scores will order based on the guild score, so the array could be mixed if your test points are weird.
        $this->assertEquals(GameWoeScore::POINTS_LONGEST_HELD + GameWoeScore::POINTS_ATTENDED + GameWoeScore::POINTS_CASTLE_OWNER, $scores[0]->guild_score);
        $this->assertEquals(GameWoeScore::POINTS_FIRST_BREAK, $scores[1]->guild_score);
    }
@@ -1114,4 +1115,364 @@ class ProcessWoeEventPointsTest extends TestCase
             'player' => $player
         ]);
     }
+
+    public function test_guild_with_most_kills_gets_point()
+    {
+        Guild::factory()->create([
+            'guild_id' => 1,
+            'name' => "Xeleros Brothers",
+            'master' => 'Marky',
+            'char_id' => '150000'
+        ]);
+
+        // Create initial events for a guild
+        GameWoeEvent::create([
+            'castle' => 'Kriemhild',
+            'event' => GameWoeEvent::STARTED,
+            'guild_id' => 1,
+            'season' => now()->format('n'),
+            'message' => 'Guild [Guild2]',
+            'created_at' => now(),
+            'processed' => false
+        ]);
+
+        GameWoeEvent::create([
+            'castle' => 'Kriemhild',
+            'event' => GameWoeEvent::KILLED,
+            'guild_id' => 1,
+            'season' => now()->format('n'),
+            'message' => 'Player [Killer Player] of guild [Xeleros Brother] has killed [Dead Player]!',
+            'created_at' => now(),
+            'processed' => false,
+            'event_rid' => 2000000
+        ]);
+
+        GameWoeEvent::create([
+            'castle' => 'Kriemhild',
+            'event' => GameWoeEvent::ENDED,
+            'guild_id' => 1,
+            'season' => now()->format('n'),
+            'message' => 'Guild [Guild2]',
+            'created_at' => now()->addSeconds(20),
+            'processed' => false
+        ]);
+
+        // Act
+        $action = new ProcessWoeEventPoints(new WoeEventScoreRecorder());
+        $action->handle('Kriemhild', today(), 1);
+
+        // Assert
+        $gameWoeScore = GameWoeScore::first();
+        $this->assertNotNull($gameWoeScore);
+        $this->assertEquals(GameWoeScore::POINTS_CASTLE_OWNER + GameWoeScore::POINTS_LONGEST_HELD + GameWoeScore::POINTS_GUILD_MOST_KILLS, $gameWoeScore->guild_score);
+    }
+
+    public function test_guild_with_most_kills_earns_most_kills_point()
+    {
+        Guild::factory()->create([
+            'guild_id' => 1,
+            'name' => "Xeleros Brothers",
+            'master' => 'Marky',
+            'char_id' => '150000'
+        ]);
+
+        Guild::factory()->create([
+            'guild_id' => 2,
+            'name' => "Rohan Legends",
+            'master' => 'Rohan',
+            'char_id' => '150001'
+        ]);
+
+        // Create initial events for both guilds
+        GameWoeEvent::create([
+            'castle' => 'Kriemhild',
+            'event' => GameWoeEvent::STARTED,
+            'guild_id' => 1,
+            'season' => now()->format('n'),
+            'message' => 'Guild [Xeleros Brothers]',
+            'created_at' => now(),
+            'processed' => false
+        ]);
+
+        GameWoeEvent::create([
+            'castle' => 'Kriemhild',
+            'event' => GameWoeEvent::KILLED,
+            'guild_id' => 1,
+            'season' => now()->format('n'),
+            'message' => 'Player [Killer Player 1] of guild [Xeleros Brothers] has killed [Dead Player 1]!',
+            'created_at' => now()->addSeconds(10),
+            'processed' => false,
+            'event_rid' => 2000001
+        ]);
+
+        GameWoeEvent::create([
+            'castle' => 'Kriemhild',
+            'event' => GameWoeEvent::KILLED,
+            'guild_id' => 1,
+            'season' => now()->format('n'),
+            'message' => 'Player [Killer Player 2] of guild [Xeleros Brothers] has killed [Dead Player 2]!',
+            'created_at' => now()->addSeconds(20),
+            'processed' => false,
+            'event_rid' => 2000002
+        ]);
+
+        GameWoeEvent::create([
+            'castle' => 'Kriemhild',
+            'event' => GameWoeEvent::KILLED,
+            'guild_id' => 2,
+            'season' => now()->format('n'),
+            'message' => 'Player [Killer Player 3] of guild [Rohan Legends] has killed [Dead Player 3]!',
+            'created_at' => now()->addSeconds(30),
+            'processed' => false,
+            'event_rid' => 2000003
+        ]);
+
+        GameWoeEvent::create([
+            'castle' => 'Kriemhild',
+            'event' => GameWoeEvent::ENDED,
+            'guild_id' => 1,
+            'season' => now()->format('n'),
+            'message' => 'Guild [Xeleros Brothers]',
+            'created_at' => now()->addSeconds(40),
+            'processed' => false
+        ]);
+
+        // Act
+        $action = new ProcessWoeEventPoints(new WoeEventScoreRecorder());
+        $recorder = $action->handle('Kriemhild', today());
+
+        // Assert
+        $gameWoeScore = GameWoeScore::where('guild_id', 1)->first();
+        $this->assertNotNull($gameWoeScore);
+        $expectedScore = GameWoeScore::POINTS_CASTLE_OWNER + GameWoeScore::POINTS_LONGEST_HELD + GameWoeScore::POINTS_GUILD_MOST_KILLS;
+        $this->assertEquals($expectedScore, $gameWoeScore->guild_score);
+
+        $gameWoeScoreRohan = GameWoeScore::where('guild_id', 2)->first();
+        $this->assertNull($gameWoeScoreRohan); // Rohan Legends shouldn't have any points since they didn't own the castle or hold it the longest.
+    }
+
+    public function test_tie_in_kills()
+    {
+        Guild::factory()->create([
+            'guild_id' => 1,
+            'name' => "Xeleros Brothers",
+            'master' => 'Marky',
+            'char_id' => '150000'
+        ]);
+
+        Guild::factory()->create([
+            'guild_id' => 2,
+            'name' => "Rohan Legends",
+            'master' => 'Rohan',
+            'char_id' => '150001'
+        ]);
+
+        // Create initial events for both guilds
+        GameWoeEvent::create([
+            'castle' => 'Kriemhild',
+            'event' => GameWoeEvent::STARTED,
+            'guild_id' => 1,
+            'season' => now()->format('n'),
+            'message' => 'Guild [Xeleros Brothers]',
+            'created_at' => now(),
+            'processed' => false
+        ]);
+
+        GameWoeEvent::create([
+            'castle' => 'Kriemhild',
+            'event' => GameWoeEvent::KILLED,
+            'guild_id' => 1,
+            'season' => now()->format('n'),
+            'message' => 'Player [Killer Player 1] of guild [Xeleros Brothers] has killed [Dead Player 1]!',
+            'created_at' => now()->addSeconds(10),
+            'processed' => false,
+            'event_rid' => 2000001
+        ]);
+
+        GameWoeEvent::create([
+            'castle' => 'Kriemhild',
+            'event' => GameWoeEvent::KILLED,
+            'guild_id' => 2,
+            'season' => now()->format('n'),
+            'message' => 'Player [Killer Player 2] of guild [Rohan Legends] has killed [Dead Player 2]!',
+            'created_at' => now()->addSeconds(20),
+            'processed' => false,
+            'event_rid' => 2000002
+        ]);
+
+        GameWoeEvent::create([
+            'castle' => 'Kriemhild',
+            'event' => GameWoeEvent::KILLED,
+            'guild_id' => 1,
+            'season' => now()->format('n'),
+            'message' => 'Player [Killer Player 3] of guild [Xeleros Brothers] has killed [Dead Player 3]!',
+            'created_at' => now()->addSeconds(30),
+            'processed' => false,
+            'event_rid' => 2000003
+        ]);
+
+        GameWoeEvent::create([
+            'castle' => 'Kriemhild',
+            'event' => GameWoeEvent::KILLED,
+            'guild_id' => 2,
+            'season' => now()->format('n'),
+            'message' => 'Player [Killer Player 4] of guild [Rohan Legends] has killed [Dead Player 4]!',
+            'created_at' => now()->addSeconds(40),
+            'processed' => false,
+            'event_rid' => 2000004
+        ]);
+
+        GameWoeEvent::create([
+            'castle' => 'Kriemhild',
+            'event' => GameWoeEvent::ENDED,
+            'guild_id' => 1,
+            'season' => now()->format('n'),
+            'message' => 'Guild [Xeleros Brothers]',
+            'created_at' => now()->addSeconds(50),
+            'processed' => false
+        ]);
+
+        // Act
+        $action = new ProcessWoeEventPoints(new WoeEventScoreRecorder());
+        $recorder = $action->handle('Kriemhild', today());
+
+        // Assert
+        $gameWoeScore1 = GameWoeScore::where('guild_id', 1)->first();
+        $gameWoeScore2 = GameWoeScore::where('guild_id', 2)->first();
+
+        $this->assertNotNull($gameWoeScore1);
+        $this->assertNotNull($gameWoeScore2);
+
+        $expectedScore1 = GameWoeScore::POINTS_CASTLE_OWNER + GameWoeScore::POINTS_LONGEST_HELD + GameWoeScore::POINTS_GUILD_MOST_KILLS;
+        $expectedScore2 = GameWoeScore::POINTS_GUILD_MOST_KILLS;
+
+        $this->assertEquals($expectedScore1, $gameWoeScore1->guild_score);
+        $this->assertEquals($expectedScore2, $gameWoeScore2->guild_score);
+    }
+
+    public function test_no_kills()
+    {
+        Guild::factory()->create([
+            'guild_id' => 1,
+            'name' => "Xeleros Brothers",
+            'master' => 'Marky',
+            'char_id' => '150000'
+        ]);
+
+        // Create initial events for a guild
+        GameWoeEvent::create([
+            'castle' => 'Kriemhild',
+            'event' => GameWoeEvent::STARTED,
+            'guild_id' => 1,
+            'season' => now()->format('n'),
+            'message' => 'Guild [Xeleros Brothers]',
+            'created_at' => now(),
+            'processed' => false
+        ]);
+
+        GameWoeEvent::create([
+            'castle' => 'Kriemhild',
+            'event' => GameWoeEvent::ENDED,
+            'guild_id' => 1,
+            'season' => now()->format('n'),
+            'message' => 'Guild [Xeleros Brothers]',
+            'created_at' => now()->addSeconds(20),
+            'processed' => false
+        ]);
+
+        // Act
+        $action = new ProcessWoeEventPoints(new WoeEventScoreRecorder());
+        $recorder = $action->handle('Kriemhild', today());
+
+        // Assert
+        $gameWoeScore = GameWoeScore::first();
+        $this->assertNotNull($gameWoeScore);
+        $expectedScore = GameWoeScore::POINTS_CASTLE_OWNER + GameWoeScore::POINTS_LONGEST_HELD;
+        $this->assertEquals($expectedScore, $gameWoeScore->guild_score);
+    }
+
+    public function test_guild_with_most_kills_gets_point_even_without_castle()
+    {
+        Guild::factory()->create([
+            'guild_id' => 1,
+            'name' => "Xeleros Brothers",
+            'master' => 'Marky',
+            'char_id' => '150000'
+        ]);
+
+        Guild::factory()->create([
+            'guild_id' => 2,
+            'name' => "Rohan Legends",
+            'master' => 'Rohan',
+            'char_id' => '150001'
+        ]);
+
+        Guild::factory()->create([
+            'guild_id' => 3,
+            'name' => "Mighty Warriors",
+            'master' => 'Warrior',
+            'char_id' => '150002'
+        ]);
+
+        // Create initial events for the guilds
+        GameWoeEvent::create([
+            'castle' => 'Kriemhild',
+            'event' => GameWoeEvent::STARTED,
+            'guild_id' => 1,
+            'season' => now()->format('n'),
+            'message' => 'Guild [Xeleros Brothers]',
+            'created_at' => now(),
+            'processed' => false
+        ]);
+
+        GameWoeEvent::create([
+            'castle' => 'Kriemhild',
+            'event' => GameWoeEvent::KILLED,
+            'guild_id' => 2,
+            'season' => now()->format('n'),
+            'message' => 'Player [Killer Player 1] of guild [Rohan Legends] has killed [Dead Player 1]!',
+            'created_at' => now()->addSeconds(10),
+            'processed' => false,
+            'event_rid' => 2000001
+        ]);
+
+        GameWoeEvent::create([
+            'castle' => 'Kriemhild',
+            'event' => GameWoeEvent::KILLED,
+            'guild_id' => 2,
+            'season' => now()->format('n'),
+            'message' => 'Player [Killer Player 2] of guild [Rohan Legends] has killed [Dead Player 2]!',
+            'created_at' => now()->addSeconds(20),
+            'processed' => false,
+            'event_rid' => 2000002
+        ]);
+
+        GameWoeEvent::create([
+            'castle' => 'Kriemhild',
+            'event' => GameWoeEvent::ENDED,
+            'guild_id' => 1,
+            'season' => now()->format('n'),
+            'message' => 'Guild [Xeleros Brothers]',
+            'created_at' => now()->addSeconds(30),
+            'processed' => false
+        ]);
+
+        // Act
+        $action = new ProcessWoeEventPoints(new WoeEventScoreRecorder());
+        $recorder = $action->handle('Kriemhild', today());
+
+        // Assert
+        $gameWoeScore1 = GameWoeScore::where('guild_id', 1)->first();
+        $gameWoeScore2 = GameWoeScore::where('guild_id', 2)->first();
+
+        $this->assertNotNull($gameWoeScore1);
+        $this->assertNotNull($gameWoeScore2);
+
+        $expectedScore1 = GameWoeScore::POINTS_CASTLE_OWNER + GameWoeScore::POINTS_LONGEST_HELD;
+        $expectedScore2 = GameWoeScore::POINTS_GUILD_MOST_KILLS;
+
+        $this->assertEquals($expectedScore1, $gameWoeScore1->guild_score);
+        $this->assertEquals($expectedScore2, $gameWoeScore2->guild_score);
+    }
+
 }

@@ -19,6 +19,7 @@ class GameWoeScore extends RagnarokModel
     public const POINTS_LONGEST_HELD = 3;
     public const POINTS_FIRST_BREAK = 2;
     public const POINTS_ATTENDED = 1;
+    public const POINTS_GUILD_MOST_KILLS = 1;
     public const POINTS_ABSENSE = -2;
 
     /**

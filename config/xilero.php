@@ -15,6 +15,7 @@ return [
         'ip_address' => '15.197.157.22'
     ],
     'woe_events' => [
+        'required_attendance' => 3,
         'season' => 1,
         'send_discord' => "18:00",
     ],

@@ -4,39 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d8b13a84-8bef-423e-8a9a-7f2cbe046dda" name="Changes" comment="Global Leaderboard">
-      <change afterPath="$PROJECT_DIR$/app/WoeEvents/WoeEventGlobalLeaderboardMessageGenerator.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/.env.example" afterDir="false" />
+    <list default="true" id="d8b13a84-8bef-423e-8a9a-7f2cbe046dda" name="Changes" comment="Readable patch note.">
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/phpspec.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/phpspec.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/WoeEvents/WoeEventDiscordChannelResolver.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/WoeEvents/WoeEventDiscordChannelResolver.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Actions/ProcessWoeEventPoints.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Actions/ProcessWoeEventPoints.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Ragnarok/GameWoeEvent.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Ragnarok/GameWoeEvent.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Ragnarok/GameWoeScore.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Ragnarok/GameWoeScore.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/WoeEvents/WoeEventDiscordMessage.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/WoeEvents/WoeEventDiscordMessage.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/build/assets/app-ef6e169e.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/build/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/build/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/filament/filament/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/filament/filament/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/filament/forms/forms.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/filament/forms/forms.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/filament/support/support.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/filament/support/support.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/filament/filament/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/filament/filament/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/filament/filament/echo.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/filament/filament/echo.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/filament/forms/components/color-picker.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/filament/forms/components/color-picker.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/filament/forms/components/date-time-picker.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/filament/forms/components/date-time-picker.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/filament/forms/components/file-upload.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/filament/forms/components/file-upload.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/filament/forms/components/key-value.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/filament/forms/components/key-value.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/filament/forms/components/markdown-editor.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/filament/forms/components/markdown-editor.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/filament/forms/components/rich-editor.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/filament/forms/components/rich-editor.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/filament/forms/components/select.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/filament/forms/components/select.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/filament/forms/components/tags-input.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/filament/forms/components/tags-input.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/filament/forms/components/textarea.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/filament/forms/components/textarea.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/filament/notifications/notifications.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/filament/notifications/notifications.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/filament/support/async-alpine.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/filament/support/async-alpine.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/filament/support/support.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/filament/support/support.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/filament/tables/components/table.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/filament/tables/components/table.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/filament/widgets/components/chart.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/filament/widgets/components/chart.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/resources/css/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/post.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/post.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/WoeEvents/WoeEventScoreRecorder.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/WoeEvents/WoeEventScoreRecorder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/xilero.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/xilero.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/factories/ragnarok/GameWoeEventFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/ragnarok/GameWoeEventFactory.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Unit/Actions/ProcessWoeEventPointsTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Unit/Actions/ProcessWoeEventPointsTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Unit/Ragnarok/GameWoeEventTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Unit/Ragnarok/GameWoeEventTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Unit/WoeEvents/WoeEventDiscordMessageTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Unit/WoeEvents/WoeEventDiscordMessageTest.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -240,65 +220,74 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;PHPUnit.GameWoeEventTest.executor&quot;: &quot;Run&quot;,
-    &quot;PHPUnit.ProcessWoeEventPointsTest.executor&quot;: &quot;Run&quot;,
-    &quot;PHPUnit.ProcessWoeEventPointsTest.it_does_not_carry_score_across_two_castles.executor&quot;: &quot;Run&quot;,
-    &quot;PHPUnit.ProcessWoeEventPointsTest.it_does_not_run_if_there_is_no_start_and_end_date.executor&quot;: &quot;Run&quot;,
-    &quot;PHPUnit.ProcessWoeEventPointsTest.it_handles_scores_based_on_the_current_month_as_season.executor&quot;: &quot;Run&quot;,
-    &quot;PHPUnit.ProcessWoeEventPointsTest.it_tests_that_the_longest_held_castle_is_vixens.executor&quot;: &quot;Debug&quot;,
-    &quot;PHPUnit.ProcessWoeEventPointsTest.it_tests_that_the_xilero_gm_team_guild_does_not_record_score.executor&quot;: &quot;Run&quot;,
-    &quot;PHPUnit.ProcessWoeEventPointsTest.test_correct_event_order.executor&quot;: &quot;Run&quot;,
-    &quot;PHPUnit.ProcessWoeEventPointsTest.test_discord_notification_sending.executor&quot;: &quot;Run&quot;,
-    &quot;PHPUnit.ProcessWoeEventPointsTest.test_events_spanning_multiple_days.executor&quot;: &quot;Run&quot;,
-    &quot;PHPUnit.ProcessWoeEventPointsTest.test_events_without_end_event.executor&quot;: &quot;Run&quot;,
-    &quot;PHPUnit.ProcessWoeEventPointsTest.test_events_without_start_event.executor&quot;: &quot;Run&quot;,
-    &quot;PHPUnit.ProcessWoeEventPointsTest.test_it_handles_scores_based_on_the_current_month_as_season.executor&quot;: &quot;Run&quot;,
-    &quot;PHPUnit.ProcessWoeEventPointsTest.test_multiple_events_same_guilds.executor&quot;: &quot;Run&quot;,
-    &quot;PHPUnit.ProcessWoeEventPointsTest.test_no_events.executor&quot;: &quot;Run&quot;,
-    &quot;PHPUnit.ProcessWoeEventPointsTest.test_no_woe_events.executor&quot;: &quot;Run&quot;,
-    &quot;PHPUnit.ProcessWoeEventPointsTest.test_points_are_calculated_correctly.executor&quot;: &quot;Run&quot;,
-    &quot;PHPUnit.ProcessWoeEventPointsTest.test_simultaneous_events.executor&quot;: &quot;Run&quot;,
-    &quot;PHPUnit.ProcessWoeEventPointsTest.test_single_event.executor&quot;: &quot;Run&quot;,
-    &quot;PHPUnit.ProcessWoeEventPointsTest.test_with_multiple_guilds.executor&quot;: &quot;Run&quot;,
-    &quot;PHPUnit.ProcessWoeEventPointsTest.test_with_provided_game_woe_events_data.executor&quot;: &quot;Run&quot;,
-    &quot;PHPUnit.ProcessWoeEventPointsTest.test_woe_events_with_real_database_data.executor&quot;: &quot;Run&quot;,
-    &quot;PHPUnit.ProcessWoeEventPointsTest.test_woe_events_with_real_database_data_for_hljod.executor&quot;: &quot;Run&quot;,
-    &quot;PHPUnit.WoeEventDiscordMessageTest.executor&quot;: &quot;Run&quot;,
-    &quot;PHPUnit.WoeEventDiscordMessageTest.testHandle.executor&quot;: &quot;Run&quot;,
-    &quot;PHPUnit.WoeEventDiscordMessageTest.testHandleMultipleLeaderboardEntries.executor&quot;: &quot;Run&quot;,
-    &quot;PHPUnit.WoeEventDiscordMessageTest.testHandleNoEvents.executor&quot;: &quot;Run&quot;,
-    &quot;PHPUnit.WoeEventDiscordMessageTest.testHandleWithProvidedData.executor&quot;: &quot;Run&quot;,
-    &quot;PHPUnit.WoeEventScheduleJobTest (1).executor&quot;: &quot;Run&quot;,
-    &quot;PHPUnit.WoeEventScheduleJobTest.executor&quot;: &quot;Run&quot;,
-    &quot;PHPUnit.WoeEventScheduleJobTest.testHandleLogsOtherExceptions.executor&quot;: &quot;Run&quot;,
-    &quot;PHPUnit.WoeEventScheduleJobTest.testHandleProcessesMultipleCastles.executor&quot;: &quot;Run&quot;,
-    &quot;PHPUnit.WoeEventScheduleJobTest.testHandleSuccessfullyProcessesEvents.executor&quot;: &quot;Run&quot;,
-    &quot;PHPUnit.WoeEventScheduleJobTest.test_HandleSuccessfullyProcessesEvents.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.laravel-idea.update-module-directories&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;auto.test.manager.delay&quot;: &quot;2000&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/markhester/Herd/XileWeb&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.folding&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Users/markhester/Applications/PhpStorm.app/Contents/plugins/javascript-impl/jsLanguageServicesImpl/external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "PHPUnit.GameWoeEventTest.executor": "Run",
+    "PHPUnit.GameWoeEventTest.test_attendence_message_member_count.executor": "Run",
+    "PHPUnit.ProcessWoeEventPointsTest.executor": "Run",
+    "PHPUnit.ProcessWoeEventPointsTest.it_does_not_carry_score_across_two_castles.executor": "Run",
+    "PHPUnit.ProcessWoeEventPointsTest.it_does_not_run_if_there_is_no_start_and_end_date.executor": "Run",
+    "PHPUnit.ProcessWoeEventPointsTest.it_gives_1_point_to_attended_guild_with_multiple_attendences.executor": "Run",
+    "PHPUnit.ProcessWoeEventPointsTest.it_handles_scores_based_on_the_current_month_as_season.executor": "Run",
+    "PHPUnit.ProcessWoeEventPointsTest.it_tests_that_the_longest_held_castle_is_vixens.executor": "Debug",
+    "PHPUnit.ProcessWoeEventPointsTest.it_tests_that_the_xilero_gm_team_guild_does_not_record_score.executor": "Run",
+    "PHPUnit.ProcessWoeEventPointsTest.test_correct_event_order.executor": "Run",
+    "PHPUnit.ProcessWoeEventPointsTest.test_discord_notification_sending.executor": "Run",
+    "PHPUnit.ProcessWoeEventPointsTest.test_events_spanning_multiple_days.executor": "Run",
+    "PHPUnit.ProcessWoeEventPointsTest.test_events_without_end_event.executor": "Run",
+    "PHPUnit.ProcessWoeEventPointsTest.test_events_without_start_event.executor": "Run",
+    "PHPUnit.ProcessWoeEventPointsTest.test_guild_with_most_kills_earns_most_kills_point.executor": "Run",
+    "PHPUnit.ProcessWoeEventPointsTest.test_guild_with_most_kills_gets_point.executor": "Run",
+    "PHPUnit.ProcessWoeEventPointsTest.test_guild_with_most_kills_gets_point_even_without_castle.executor": "Run",
+    "PHPUnit.ProcessWoeEventPointsTest.test_it_handles_scores_based_on_the_current_month_as_season.executor": "Run",
+    "PHPUnit.ProcessWoeEventPointsTest.test_multiple_events_same_guilds.executor": "Run",
+    "PHPUnit.ProcessWoeEventPointsTest.test_multiple_guilds_different_kill_counts.executor": "Run",
+    "PHPUnit.ProcessWoeEventPointsTest.test_no_events.executor": "Run",
+    "PHPUnit.ProcessWoeEventPointsTest.test_no_kills.executor": "Run",
+    "PHPUnit.ProcessWoeEventPointsTest.test_no_woe_events.executor": "Run",
+    "PHPUnit.ProcessWoeEventPointsTest.test_points_are_calculated_correctly.executor": "Run",
+    "PHPUnit.ProcessWoeEventPointsTest.test_simultaneous_events.executor": "Run",
+    "PHPUnit.ProcessWoeEventPointsTest.test_single_event.executor": "Run",
+    "PHPUnit.ProcessWoeEventPointsTest.test_tie_in_kills.executor": "Run",
+    "PHPUnit.ProcessWoeEventPointsTest.test_with_multiple_guilds.executor": "Run",
+    "PHPUnit.ProcessWoeEventPointsTest.test_with_provided_game_woe_events_data.executor": "Run",
+    "PHPUnit.ProcessWoeEventPointsTest.test_woe_events_with_real_database_data.executor": "Run",
+    "PHPUnit.ProcessWoeEventPointsTest.test_woe_events_with_real_database_data_for_hljod.executor": "Run",
+    "PHPUnit.WoeEventDiscordMessageTest.executor": "Run",
+    "PHPUnit.WoeEventDiscordMessageTest.testHandle.executor": "Run",
+    "PHPUnit.WoeEventDiscordMessageTest.testHandleMostKillsGuild.executor": "Run",
+    "PHPUnit.WoeEventDiscordMessageTest.testHandleMultipleLeaderboardEntries.executor": "Run",
+    "PHPUnit.WoeEventDiscordMessageTest.testHandleNoEvents.executor": "Run",
+    "PHPUnit.WoeEventDiscordMessageTest.testHandleWithProvidedData.executor": "Run",
+    "PHPUnit.WoeEventScheduleJobTest (1).executor": "Run",
+    "PHPUnit.WoeEventScheduleJobTest.executor": "Run",
+    "PHPUnit.WoeEventScheduleJobTest.testHandleLogsOtherExceptions.executor": "Run",
+    "PHPUnit.WoeEventScheduleJobTest.testHandleProcessesMultipleCastles.executor": "Run",
+    "PHPUnit.WoeEventScheduleJobTest.testHandleSuccessfullyProcessesEvents.executor": "Run",
+    "PHPUnit.WoeEventScheduleJobTest.test_HandleSuccessfullyProcessesEvents.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.laravel-idea.update-module-directories": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "auto.test.manager.delay": "2000",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "/Users/markhester/Herd/XileWeb",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "editor.preferences.folding",
+    "ts.external.directory.path": "/Users/markhester/Applications/PhpStorm.app/Contents/plugins/javascript-impl/jsLanguageServicesImpl/external",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;mariadb&quot;,
-      &quot;mysql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mariadb",
+      "mysql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
@@ -312,46 +301,46 @@
       <recent name="$PROJECT_DIR$/resources/views/livewire" />
     </key>
   </component>
-  <component name="RunManager" selected="PHPUnit.WoeEventScheduleJobTest.testHandleProcessesMultipleCastles">
+  <component name="RunManager" selected="PHPUnit.WoeEventDiscordMessageTest">
+    <configuration name="GameWoeEventTest" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Unit\Ragnarok\GameWoeEventTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Unit/Ragnarok/GameWoeEventTest.php" scope="Class" />
+      <method v="2" />
+    </configuration>
     <configuration name="Main" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner configuration_file="$PROJECT_DIR$/phpunit.xml" scope="XML" use_alternative_configuration_file="true" />
       <method v="2" />
     </configuration>
-    <configuration name="WoeEventScheduleJobTest" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
-      <TestRunner class="Tests\Unit\WoeEvents\WoeEventScheduleJobTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Unit/WoeEvents/WoeEventScheduleJobTest.php" scope="Class" />
+    <configuration name="ProcessWoeEventPointsTest" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Unit\ProcessWoeEventPointsTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Unit/Actions/ProcessWoeEventPointsTest.php" scope="Class" />
       <method v="2" />
     </configuration>
-    <configuration name="WoeEventScheduleJobTest.testHandleLogsOtherExceptions" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
-      <TestRunner class="Tests\Unit\WoeEvents\WoeEventScheduleJobTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Unit/WoeEvents/WoeEventScheduleJobTest.php" method="testHandleLogsOtherExceptions" scope="Method" />
+    <configuration name="ProcessWoeEventPointsTest.test_guild_with_most_kills_gets_point_even_without_castle" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Unit\ProcessWoeEventPointsTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Unit/Actions/ProcessWoeEventPointsTest.php" method="test_guild_with_most_kills_gets_point_even_without_castle" scope="Method" />
       <method v="2" />
     </configuration>
-    <configuration name="WoeEventScheduleJobTest.testHandleProcessesMultipleCastles" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
-      <TestRunner class="Tests\Unit\WoeEvents\WoeEventScheduleJobTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Unit/WoeEvents/WoeEventScheduleJobTest.php" method="testHandleProcessesMultipleCastles" scope="Method" />
+    <configuration name="WoeEventDiscordMessageTest" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Unit\WoeEvents\WoeEventDiscordMessageTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Unit/WoeEvents/WoeEventDiscordMessageTest.php" scope="Class" />
       <method v="2" />
     </configuration>
-    <configuration name="WoeEventScheduleJobTest.testHandleSuccessfullyProcessesEvents" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
-      <TestRunner class="Tests\Unit\WoeEvents\WoeEventScheduleJobTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Unit/WoeEvents/WoeEventScheduleJobTest.php" method="testHandleSuccessfullyProcessesEvents" scope="Method" />
-      <method v="2" />
-    </configuration>
-    <configuration name="WoeEventScheduleJobTest.test_HandleSuccessfullyProcessesEvents" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
-      <TestRunner class="Tests\Unit\WoeEvents\WoeEventScheduleJobTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Unit/WoeEvents/WoeEventScheduleJobTest.php" method="test_HandleSuccessfullyProcessesEvents" scope="Method" />
+    <configuration name="WoeEventDiscordMessageTest.testHandleMostKillsGuild" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Unit\WoeEvents\WoeEventDiscordMessageTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Unit/WoeEvents/WoeEventDiscordMessageTest.php" method="testHandleMostKillsGuild" scope="Method" />
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="PHPUnit.WoeEventScheduleJobTest.testHandleProcessesMultipleCastles" />
-        <item itemvalue="PHPUnit.WoeEventScheduleJobTest.testHandleLogsOtherExceptions" />
-        <item itemvalue="PHPUnit.WoeEventScheduleJobTest.testHandleSuccessfullyProcessesEvents" />
-        <item itemvalue="PHPUnit.WoeEventScheduleJobTest" />
-        <item itemvalue="PHPUnit.WoeEventScheduleJobTest.test_HandleSuccessfullyProcessesEvents" />
+        <item itemvalue="PHPUnit.WoeEventDiscordMessageTest" />
+        <item itemvalue="PHPUnit.GameWoeEventTest" />
+        <item itemvalue="PHPUnit.ProcessWoeEventPointsTest" />
+        <item itemvalue="PHPUnit.WoeEventDiscordMessageTest.testHandleMostKillsGuild" />
+        <item itemvalue="PHPUnit.ProcessWoeEventPointsTest.test_guild_with_most_kills_gets_point_even_without_castle" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-PS-241.17890.8" />
-        <option value="bundled-php-predefined-ba97393d7c68-48a1a656d44e-com.jetbrains.php.sharedIndexes-PS-241.17890.8" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-PS-241.18034.69" />
+        <option value="bundled-php-predefined-ba97393d7c68-48a1a656d44e-com.jetbrains.php.sharedIndexes-PS-241.18034.69" />
       </set>
     </attachedChunks>
   </component>
@@ -393,7 +382,9 @@
       <workItem from="1718621476251" duration="596000" />
       <workItem from="1718625025452" duration="14000" />
       <workItem from="1718625049074" duration="6000" />
-      <workItem from="1718740625957" duration="1682000" />
+      <workItem from="1718740625957" duration="3013000" />
+      <workItem from="1719092010283" duration="4024000" />
+      <workItem from="1719565441152" duration="3874000" />
     </task>
     <task id="LOCAL-00001" summary="Fix random number on uber cost">
       <option name="closed" value="true" />
@@ -739,7 +730,15 @@
       <option name="project" value="LOCAL" />
       <updated>1717952513045</updated>
     </task>
-    <option name="localTasksCounter" value="44" />
+    <task id="LOCAL-00044" summary="Readable patch note.">
+      <option name="closed" value="true" />
+      <created>1718742636358</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1718742636358</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -759,7 +758,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Dont hide user pass." />
     <MESSAGE value="Donation Log and Posting" />
     <MESSAGE value="redirect routes" />
     <MESSAGE value="resource" />
@@ -784,7 +782,8 @@
     <MESSAGE value="Add symbol" />
     <MESSAGE value="Season Leadboard" />
     <MESSAGE value="Global Leaderboard" />
-    <option name="LAST_COMMIT_MESSAGE" value="Global Leaderboard" />
+    <MESSAGE value="Readable patch note." />
+    <option name="LAST_COMMIT_MESSAGE" value="Readable patch note." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @method static where(array $array)
  * @method static whereIn(string $string, $pluck)
+ * @property
  */
 class GameWoeEvent extends RagnarokModel
 {
@@ -17,6 +18,7 @@ class GameWoeEvent extends RagnarokModel
     public const STARTED = 'start';
     public const ENDED = 'end';
     public const ATTENDED = 'attend';
+    public const KILLED = 'killed';
 
     /**
      * The connection name for the model.
@@ -97,6 +99,18 @@ class GameWoeEvent extends RagnarokModel
 
         if (preg_match($pattern, $this->message, $matches)) {
             return $matches[1];
+        }
+
+        return null;
+    }
+
+    // Accessor method to extract attendence member count
+    public function attendenceEventMemberCount()
+    {
+        $pattern = '/member count \[(\d+)\]/';
+
+        if (preg_match($pattern, $this->message, $matches)) {
+            return (int) $matches[1];
         }
 
         return null;

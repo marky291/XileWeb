@@ -6,7 +6,6 @@ use App\Ragnarok\GameWoeEvent;
 use App\Ragnarok\GameWoeScore;
 use App\Ragnarok\Guild;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Optional;
 
 class WoeEventScoreRecorder
 {
@@ -22,6 +21,8 @@ class WoeEventScoreRecorder
     public int $winning_award = 0;
     public ?GameWoeEvent $winning_event = null;
     public int $attendee_award = 0;
+    public ?Guild $most_kills_guild = null;
+    public int $most_kills_award = 0;
 
     public function __construct()
     {
@@ -35,7 +36,7 @@ class WoeEventScoreRecorder
 
     public function hasEvents(): bool
     {
-        return $this->winning_guild || $this->longest_hold_guild || $this->first_break_guild || $this->attendee->isNotEmpty();
+        return $this->winning_guild || $this->longest_hold_guild || $this->first_break_guild || $this->attendee->isNotEmpty() || $this->most_kills_guild;
     }
 
     public function leaderboard(string $castle, string $season): Collection

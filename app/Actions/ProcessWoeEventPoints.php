@@ -33,6 +33,11 @@ class ProcessWoeEventPoints
      *
      * @throws \Throwable
      */
+    /**
+     * Handles the processing of WOE event points.
+     *
+     * @throws \Throwable
+     */
     public function handle(string $castle, Carbon $season = null)
     {
         $currentSeason = $season->month ?? now()->format('n');
@@ -67,8 +72,8 @@ class ProcessWoeEventPoints
         Log::info('Processing events.', ['events' => $events]);
 
         if ($events->count() > 0) {
-            [$guildDurations, $guildAttended] = $this->processEvents($events);
-            $this->updateScores($guildDurations, $guildAttended, $events, $currentSeason, $castle);
+            [$guildDurations, $guildAttended, $guildKills] = $this->processEvents($events);
+            $this->updateScores($guildDurations, $guildAttended, $guildKills, $events, $currentSeason, $castle);
             return $this->scoreRecorder;
         }
 
@@ -110,39 +115,55 @@ class ProcessWoeEventPoints
     /**
      * Processes the events to calculate durations and attendance.
      */
+    /**
+     * Processes the events to calculate durations, attendance, and kills.
+     */
     private function processEvents($events): array
     {
         $guildDurations = [];
         $guildAttended = [];
+        $guildKills = [];
         $lastEvent = null;
 
-        $events->each(function ($event) use (&$guildDurations, &$guildAttended, &$lastEvent) {
+        $events->each(function ($event) use (&$guildDurations, &$guildAttended, &$guildKills, &$lastEvent) {
             if ($event->event === GameWoeEvent::ATTENDED) {
-                $guildAttended[$event->guild_id] = ($guildAttended[$event->guild_id] ?? 0) + 1;
-                return;
-            }
+                if ($event->attendenceEventMemberCount() >= config('xilero.woe_events.required_attendance')) {
+                    $guildAttended[$event->guild_id] = ($guildAttended[$event->guild_id] ?? 0) + 1;
+                }
+            } elseif ($event->event === GameWoeEvent::KILLED) {
+                $guildKills[$event->guild_id] = ($guildKills[$event->guild_id] ?? 0) + 1;
+            } else {
+                if ($lastEvent) {
+                    $duration = $event->created_at->diffInSeconds($lastEvent->created_at);
+                    $guildDurations[$lastEvent->guild_id] = ($guildDurations[$lastEvent->guild_id] ?? 0) + $duration;
+                }
 
-            if ($lastEvent) {
-                $duration = $event->created_at->diffInSeconds($lastEvent->created_at);
-                $guildDurations[$lastEvent->guild_id] = ($guildDurations[$lastEvent->guild_id] ?? 0) + $duration;
+                $lastEvent = $event;
             }
-
-            $lastEvent = $event;
         });
 
-        return [$guildDurations, $guildAttended];
+        return [$guildDurations, $guildAttended, $guildKills];
     }
 
     /**
      * Updates the scores based on the processed events.
      */
-    private function updateScores($guildDurations, $guildAttended, $events, $season, $castle): void
+    /**
+     * Updates the scores based on the processed events.
+     */
+    /**
+     * Updates the scores based on the processed events.
+     */
+    private function updateScores($guildDurations, $guildAttended, $guildKills, $events, $season, $castle): void
     {
-        DB::transaction(function () use ($guildDurations, $guildAttended, $season, $events, $castle) {
-            $longestDurationGuildId = array_search(max($guildDurations), $guildDurations);
+        DB::transaction(function () use ($guildDurations, $guildAttended, $guildKills, $season, $events, $castle) {
+            $longestDurationGuildId = array_search(max($guildDurations ?: [0]), $guildDurations, true);
+            $maxKills = max($guildKills ?: [0]);
+            $mostKillsGuildIds = array_keys($guildKills, $maxKills, true);
+
             $firstBreakGuild = $events->firstWhere('event', GameWoeEvent::BREAK);
             $winningGuildEvent = $events->firstWhere('event', GameWoeEvent::ENDED);
-            $mergedGuilds = array_merge(array_keys($guildAttended), array_keys($guildDurations));
+            $mergedGuilds = array_merge(array_keys($guildAttended), array_keys($guildDurations), array_keys($guildKills));
 
             // Ensure the guild from the 'STARTED' event is also included
             $startedGuildEvent = $events->firstWhere('event', GameWoeEvent::STARTED);
@@ -187,6 +208,12 @@ class ProcessWoeEventPoints
                     $this->scoreRecorder->winning_guild = Guild::firstWhere('guild_id', $guild_id);
                     $this->scoreRecorder->winning_event = $winningGuildEvent;
                     $this->scoreRecorder->winning_award = GameWoeScore::POINTS_CASTLE_OWNER;
+                }
+
+                if (in_array($guild_id, $mostKillsGuildIds)) {
+                    $score->guild_score += GameWoeScore::POINTS_GUILD_MOST_KILLS;
+                    $this->scoreRecorder->most_kills_guild = Guild::firstWhere('guild_id', $guild_id);
+                    $this->scoreRecorder->most_kills_award = GameWoeScore::POINTS_GUILD_MOST_KILLS;
                 }
 
                 if ($score->exists || $score->guild_score > 0) {
