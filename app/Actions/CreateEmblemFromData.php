@@ -34,6 +34,14 @@ class CreateEmblemFromData
                 if (($r & 0xf8 == 0xf8) && ($g == 0) && ($b & 0xf8 == 0xf8)) {
                     $a = 127;
                 } // alpha = 255 on 0xFF00FF
+
+                // Clamp each value to its valid range
+                $r = max(0, min(255, $r));
+                $g = max(0, min(255, $g));
+                $b = max(0, min(255, $b));
+                $a = max(0, min(127, $a));
+
+                // Allocate the color with the clamped values
                 $pal[$n++] = imagecolorallocatealpha($imres, $r, $g, $b, $a);
             }
         }
