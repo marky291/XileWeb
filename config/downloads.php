@@ -35,16 +35,16 @@ return [
 
     'android' => [
         [
-            'name' => 'v481 - Android using OneDrive (3MB)',
-            'link' => 'https://1drv.ms/u/s!AnRDrmhMUJLagYmiT7yPunSom4_tnGY?e=n8Yihy',
+            'name' => 'v511 - Android using Direct (3MB)',
+            'link' => 'https://discordapp.com/channels/702319926110584943/1213304912029679677/1295784731199143956',
             'bttn' => 'btn-primary',
-            'version' => '477',
+            'version' => '511',
         ],
         [
-           'name' => 'v481 - Android using OneDrive (3MB)',
-           'link' => 'https://1drv.ms/u/s!AnRDrmhMUJLagYmiT7yPunSom4_tnGY?e=n8Yihy',
+           'name' => 'v511 - Android using Direct (3MB)',
+           'link' => 'https://discordapp.com/channels/702319926110584943/1213304912029679677/1295784731199143956',
            'bttn' => 'btn-secondary',
-           'version' => '477',
+           'version' => '511',
        ]
     ],
 ];
