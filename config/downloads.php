@@ -36,13 +36,13 @@ return [
     'android' => [
         [
             'name' => 'v511 - Android using Direct (3MB)',
-            'link' => 'https://discordapp.com/channels/702319926110584943/1213304912029679677/1295784731199143956',
+            'link' => 'https://xilero.net/download/XileRetro2_v511b_20241015191945.apk',
             'bttn' => 'btn-primary',
             'version' => '511',
         ],
         [
            'name' => 'v511 - Android using Direct (3MB)',
-           'link' => 'https://discordapp.com/channels/702319926110584943/1213304912029679677/1295784731199143956',
+           'link' => 'https://xilero.net/download/XileRetro2_v511b_20241015191945.apk',
            'bttn' => 'btn-secondary',
            'version' => '511',
        ]
