@@ -36,15 +36,15 @@ return [
     'android' => [
         [
             'name' => 'v511 - Android using Direct (3MB)',
-            'link' => 'https://xilero.net/download/XileRetro2_v511b_20241015191945.apk',
+            'link' => 'https://xilero.net/download/XileRetro2_v511c_20241016014001.apk',
             'bttn' => 'btn-primary',
-            'version' => '511',
+            'version' => '511.2',
         ],
         [
            'name' => 'v511 - Android using Direct (3MB)',
-           'link' => 'https://xilero.net/download/XileRetro2_v511b_20241015191945.apk',
+           'link' => 'https://xilero.net/download/XileRetro2_v511c_20241016014001.apk',
            'bttn' => 'btn-secondary',
-           'version' => '511',
+           'version' => '511.2',
        ]
     ],
 ];
