@@ -5,7 +5,7 @@ return [
     'lite' => [
         [
             'name' => 'Download Lite Client from Google Drive (2GB)',
-            'link' => 'https://drive.google.com/file/d/1mIFNtP8PLLrZUuwa9Ws8VUW9j2Q2XdOr/view?usp=sharing',
+            'link' => 'https://drive.google.com/file/d/1vRuWdZyEv_ouPa_pk9G1OZi8UwH4FvrN/view?usp=drive_link',
             'bttn' => 'btn-primary',
         ],
         [
@@ -22,13 +22,13 @@ return [
 
     'full' => [
         [
-            'name' => 'Full Client from Google Drive v7 (3GB)',
-            'link' => 'https://mega.nz/file/6Z8VHQBS#SAT83vSU9-hMJbWkp_QfQdiX_KI-tNGQr75vfsity6c',
+            'name' => 'Full Client from Google Drive v8 (3GB)',
+            'link' => 'https://drive.google.com/file/d/1vRuWdZyEv_ouPa_pk9G1OZi8UwH4FvrN/view?usp=drive_link',
             'bttn' => 'btn-primary'
         ],
         [
-            'name' => 'Full Client from Mega v7 (3GB)',
-            'link' => 'https://mega.nz/file/6Z8VHQBS#SAT83vSU9-hMJbWkp_QfQdiX_KI-tNGQr75vfsity6c',
+            'name' => 'Full Client from Mega v8 (3GB)',
+            'link' => 'https://mega.nz/file/mc0S1TbA#0gIqKxDO8bcWpNPCltAcc1YgOCkmQPvEe0jCfRBXiN0',
             'bttn' => 'btn-secondary'
         ],
     ],
