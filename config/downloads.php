@@ -35,14 +35,14 @@ return [
 
     'android' => [
         [
-            'name' => 'v511.2 - Android using Direct (3MB)',
-            'link' => 'https://xilero.net/download/XileRetro2_v511c_20241016014001.apk',
+            'name' => 'v526 - Android using Discord (3MB)',
+            'link' => 'https://cdn.discordapp.com/attachments/1213304912029679677/1337133059316781159/XileRetro2_v526_20250206182933.apk?ex=67f812b4&is=67f6c134&hm=73c0b8b873597d5aa3931ebf3717abf504c3be31c1d62d7c9d35d9aef0dbc114&',
             'bttn' => 'btn-primary',
             'version' => '511.2',
         ],
         [
-           'name' => 'v511.2 - Android using Direct (3MB)',
-           'link' => 'https://xilero.net/download/XileRetro2_v511c_20241016014001.apk',
+           'name' => 'v526 - Android using Discord (3MB)',
+           'link' => 'https://cdn.discordapp.com/attachments/1213304912029679677/1337133059316781159/XileRetro2_v526_20250206182933.apk?ex=67f812b4&is=67f6c134&hm=73c0b8b873597d5aa3931ebf3717abf504c3be31c1d62d7c9d35d9aef0dbc114&',
            'bttn' => 'btn-secondary',
            'version' => '511.2',
        ]
