@@ -2,25 +2,19 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Select;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Actions\EditAction;
-use App\Filament\Resources\CharResource\Pages\ListChars;
 use App\Filament\Resources\CharResource\Pages\CreateChar;
 use App\Filament\Resources\CharResource\Pages\EditChar;
-use App\Filament\Resources\CharResource\Pages;
-use App\Filament\Resources\CharResource\RelationManagers;
+use App\Filament\Resources\CharResource\Pages\ListChars;
 use App\Filament\Resources\LoginResource\RelationManagers\LoginRelationManager;
 use App\Ragnarok\Char;
-use Filament\Forms;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Filters\Filter;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class CharResource extends Resource
 {
@@ -28,11 +22,11 @@ class CharResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Player Management';
+    protected static ?string $navigationGroup = 'Player Management';
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-cog-6-tooth';
+    protected static ?string $navigationIcon = 'heroicon-o-cog-6-tooth';
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
         $classOptions = [
             // Novice / 1st Class
@@ -93,9 +87,8 @@ class CharResource extends Resource
             '4229' => 'Baby Rebellion',
         ];
 
-
-        return $schema
-            ->components([
+        return $form
+            ->schema([
                 TextInput::make('account_id')->readOnly(),
                 TextInput::make('name'),
                 Select::make('class')->options($classOptions),
@@ -113,23 +106,20 @@ class CharResource extends Resource
                 TextColumn::make('class'),
                 TextColumn::make('last_login'),
             ])
-            ->recordActions([
+            ->actions([
                 EditAction::make(),
             ])
-            ->toolbarActions([
-//                Tables\Actions\BulkActionGroup::make([
-//                    Tables\Actions\DeleteBulkAction::make(),
-//                ]),
-            ])
-            ->emptyStateActions([
-                //Tables\Actions\CreateAction::make(),
+            ->bulkActions([
+                //                Tables\Actions\BulkActionGroup::make([
+                //                    Tables\Actions\DeleteBulkAction::make(),
+                //                ]),
             ]);
     }
 
     public static function getRelations(): array
     {
         return [
-            LoginRelationManager::class
+            LoginRelationManager::class,
         ];
     }
 

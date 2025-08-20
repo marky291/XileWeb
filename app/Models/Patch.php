@@ -12,6 +12,8 @@ class Patch extends Model
     protected $fillable = [
         'number',
         'type',
-        'patch_name'
+        'patch_name',
+        'file',
+        'comments',
     ];
 }

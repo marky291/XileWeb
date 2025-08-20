@@ -2,30 +2,26 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Forms\Components\TextInput;
-use Filament\Schemas\Components\Utilities\Get;
-use Filament\Schemas\Components\Utilities\Set;
-use Filament\Forms\Components\DatePicker;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Actions\EditAction;
-use App\Filament\Resources\LoginResource\Pages\ListLogins;
-use App\Filament\Resources\LoginResource\Pages\CreateLogin;
-use App\Filament\Resources\LoginResource\Pages\EditLogin;
 use App\Actions\MakeHashedLoginPassword;
 use App\Filament\Resources\CharResource\RelationManagers\CharRelationManager;
 use App\Filament\Resources\DonationUberResource\RelationManagers\DonationUberRelationManager;
-use App\Filament\Resources\LoginResource\Pages;
-use App\Filament\Resources\LoginResource\RelationManagers;
+use App\Filament\Resources\LoginResource\Pages\CreateLogin;
+use App\Filament\Resources\LoginResource\Pages\EditLogin;
+use App\Filament\Resources\LoginResource\Pages\ListLogins;
 use App\Ragnarok\Login;
 use Filament\Actions\Action;
-use Filament\Forms;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Get;
+use Filament\Forms\Components\Set;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class LoginResource extends Resource
 {
@@ -33,14 +29,14 @@ class LoginResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'userid';
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Player Management';
+    protected static ?string $navigationGroup = 'Player Management';
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-cog-6-tooth';
+    protected static ?string $navigationIcon = 'heroicon-o-cog-6-tooth';
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return $schema
-            ->components([
+        return $form
+            ->schema([
                 TextInput::make('account_id')->unique(ignoreRecord: true)->readOnly(),
                 TextInput::make('userid')->unique(ignoreRecord: true),
                 TextInput::make('email')->unique(ignoreRecord: true),
@@ -72,16 +68,13 @@ class LoginResource extends Resource
                 Filter::make('Staff')->query(fn (Builder $query): Builder => $query->where('group_id', '>', 1)),
                 Filter::make('Streamers')->query(fn (Builder $query): Builder => $query->where('group_id', '=', 1)),
             ])
-            ->recordActions([
+            ->actions([
                 EditAction::make(),
             ])
-            ->toolbarActions([
-//                Tables\Actions\BulkActionGroup::make([
-//                    Tables\Actions\DeleteBulkAction::make(),
-//                ]),
-            ])
-            ->emptyStateActions([
-                //Tables\Actions\CreateAction::make(),
+            ->bulkActions([
+                //                Tables\Actions\BulkActionGroup::make([
+                //                    Tables\Actions\DeleteBulkAction::make(),
+                //                ]),
             ]);
     }
 
@@ -89,7 +82,7 @@ class LoginResource extends Resource
     {
         return [
             CharRelationManager::class,
-            DonationUberRelationManager::class
+            DonationUberRelationManager::class,
         ];
     }
 

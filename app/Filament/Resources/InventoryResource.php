@@ -2,34 +2,27 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Actions\EditAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\CreateAction;
-use App\Filament\Resources\InventoryResource\Pages\ListInventories;
 use App\Filament\Resources\InventoryResource\Pages\CreateInventory;
 use App\Filament\Resources\InventoryResource\Pages\EditInventory;
-use App\Filament\Resources\InventoryResource\Pages;
-use App\Filament\Resources\InventoryResource\RelationManagers;
+use App\Filament\Resources\InventoryResource\Pages\ListInventories;
 use App\Models\Inventory;
-use Filament\Forms;
+use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class InventoryResource extends Resource
 {
     protected static ?string $model = Inventory::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return $schema
-            ->components([
+        return $form
+            ->schema([
                 //
             ]);
     }
@@ -43,26 +36,23 @@ class InventoryResource extends Resource
             ->filters([
                 //
             ])
-            ->recordActions([
+            ->actions([
                 EditAction::make(),
             ])
-            ->toolbarActions([
+            ->bulkActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),
-            ])
-            ->emptyStateActions([
-                CreateAction::make(),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -70,5 +60,5 @@ class InventoryResource extends Resource
             'create' => CreateInventory::route('/create'),
             'edit' => EditInventory::route('/{record}/edit'),
         ];
-    }    
+    }
 }

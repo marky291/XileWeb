@@ -2,29 +2,26 @@
 
 namespace App\Filament\Resources\LoginResource\RelationManagers;
 
-use Filament\Schemas\Schema;
-use Filament\Forms\Components\TextInput;
-use Filament\Actions\Action;
-use Filament\Schemas\Components\Utilities\Get;
-use Filament\Schemas\Components\Utilities\Set;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Actions\EditAction;
 use App\Actions\MakeHashedLoginPassword;
-use Filament\Forms;
+use Filament\Actions\Action;
+use Filament\Forms\Components\Get;
+use Filament\Forms\Components\Set;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class LoginRelationManager extends RelationManager
 {
     protected static string $relationship = 'login';
 
-    public function form(Schema $schema): Schema
+    public function form(Form $form): Form
     {
-        return $schema
-            ->components([
+        return $form
+            ->schema([
                 TextInput::make('account_id')
                     ->unique(ignoreRecord: true)
                     ->required()
@@ -62,19 +59,16 @@ class LoginRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                //Tables\Actions\CreateAction::make(),
+                // Tables\Actions\CreateAction::make(),
             ])
-            ->recordActions([
+            ->actions([
                 EditAction::make(),
-                //Tables\Actions\DeleteAction::make(),
+                // Tables\Actions\DeleteAction::make(),
             ])
-            ->toolbarActions([
-//                Tables\Actions\BulkActionGroup::make([
-//                    Tables\Actions\DeleteBulkAction::make(),
-//                ]),
-            ])
-            ->emptyStateActions([
-                //Tables\Actions\CreateAction::make(),
+            ->bulkActions([
+                //                Tables\Actions\BulkActionGroup::make([
+                //                    Tables\Actions\DeleteBulkAction::make(),
+                //                ]),
             ]);
     }
 }

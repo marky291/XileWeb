@@ -2,24 +2,21 @@
 
 namespace App\Filament\Resources\CharResource\RelationManagers;
 
-use Filament\Schemas\Schema;
 use Filament\Forms\Components\TextInput;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Forms;
+use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class CharRelationManager extends RelationManager
 {
     protected static string $relationship = 'chars';
 
-    public function form(Schema $schema): Schema
+    public function form(Form $form): Form
     {
-        return $schema
-            ->components([
+        return $form
+            ->schema([
                 TextInput::make('account_id')
                     ->required()
                     ->maxLength(255),
@@ -39,19 +36,16 @@ class CharRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                //Tables\Actions\CreateAction::make(),
+                // Tables\Actions\CreateAction::make(),
             ])
-            ->recordActions([
-//                Tables\Actions\EditAction::make(),
-//                Tables\Actions\DeleteAction::make(),
+            ->actions([
+                //                Tables\Actions\EditAction::make(),
+                //                Tables\Actions\DeleteAction::make(),
             ])
-            ->toolbarActions([
-//                Tables\Actions\BulkActionGroup::make([
-//                    Tables\Actions\DeleteBulkAction::make(),
-//                ]),
-            ])
-            ->emptyStateActions([
-                //Tables\Actions\CreateAction::make(),
+            ->bulkActions([
+                //                Tables\Actions\BulkActionGroup::make([
+                //                    Tables\Actions\DeleteBulkAction::make(),
+                //                ]),
             ]);
     }
 }

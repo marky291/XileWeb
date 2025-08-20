@@ -2,41 +2,37 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Utilities\Get;
-use Filament\Schemas\Components\Utilities\Set;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Actions\EditAction;
-use App\Filament\Resources\DonationUberResource\Pages\ListDonationUbers;
 use App\Filament\Resources\DonationUberResource\Pages\CreateDonationUber;
 use App\Filament\Resources\DonationUberResource\Pages\EditDonationUber;
-use App\Filament\Resources\DonationUberResource\Pages;
-use App\Filament\Resources\DonationUberResource\RelationManagers;
+use App\Filament\Resources\DonationUberResource\Pages\ListDonationUbers;
 use App\Filament\Resources\LoginResource\RelationManagers\LoginRelationManager;
 use App\Ragnarok\DonationUber;
 use Filament\Actions\Action;
-use Filament\Forms;
+use Filament\Forms\Components\Get;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Set;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class DonationUberResource extends Resource
 {
     protected static ?string $model = DonationUber::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-shopping-cart';
+    protected static ?string $navigationIcon = 'heroicon-o-shopping-cart';
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Uber System';
+    protected static ?string $navigationGroup = 'Uber System';
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return $schema
-            ->components([
+        return $form
+            ->schema([
                 TextInput::make('account_id'),
                 TextInput::make('username')->alphaNum(),
                 TextInput::make('current_ubers')->numeric(),
@@ -47,8 +43,8 @@ class DonationUberResource extends Resource
                             $set('pending_ubers', $state += $get('pending_ubers'));
                             $set('ubers', null);
                         })
-                    )
-                ])
+                    ),
+                ]),
             ]);
     }
 
@@ -64,23 +60,20 @@ class DonationUberResource extends Resource
             ->filters([
                 Filter::make('Has Pending Ubers')->query(fn (Builder $query): Builder => $query->where('pending_ubers', '>', 0)),
             ])
-            ->recordActions([
+            ->actions([
                 EditAction::make(),
             ])
-            ->toolbarActions([
-//                Tables\Actions\BulkActionGroup::make([
-//                    Tables\Actions\DeleteBulkAction::make(),
-//                ]),
-            ])
-            ->emptyStateActions([
-                //Tables\Actions\CreateAction::make(),
+            ->bulkActions([
+                //                Tables\Actions\BulkActionGroup::make([
+                //                    Tables\Actions\DeleteBulkAction::make(),
+                //                ]),
             ]);
     }
 
     public static function getRelations(): array
     {
         return [
-            LoginRelationManager::class
+            LoginRelationManager::class,
         ];
     }
 

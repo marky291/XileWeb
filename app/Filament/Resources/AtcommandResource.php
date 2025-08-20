@@ -2,37 +2,31 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Actions\EditAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\CreateAction;
-use App\Filament\Resources\AtcommandResource\Pages\ListAtcommands;
 use App\Filament\Resources\AtcommandResource\Pages\CreateAtcommand;
 use App\Filament\Resources\AtcommandResource\Pages\EditAtcommand;
-use App\Filament\Resources\AtcommandResource\Pages;
-use App\Filament\Resources\AtcommandResource\RelationManagers;
+use App\Filament\Resources\AtcommandResource\Pages\ListAtcommands;
 use App\Models\Atcommand;
-use Filament\Forms;
+use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class AtcommandResource extends Resource
 {
     protected static ?string $model = Atcommand::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Logs';
+    protected static ?string $navigationGroup = 'Logs';
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return $schema
-            ->components([
+        return $form
+            ->schema([
                 //
             ]);
     }
@@ -43,25 +37,22 @@ class AtcommandResource extends Resource
             ->defaultSort('atcommand_date', 'desc')
             ->columns([
                 TextColumn::make('account_id'),
-//                Tables\Columns\TextColumn::make('char_id'),
+                //                Tables\Columns\TextColumn::make('char_id'),
                 TextColumn::make('char_name')->searchable(),
                 TextColumn::make('map')->sortable(),
                 TextColumn::make('command'),
-                TextColumn::make('atcommand_date')->sortable()
+                TextColumn::make('atcommand_date')->sortable(),
             ])
             ->filters([
                 //
             ])
-            ->recordActions([
+            ->actions([
                 EditAction::make(),
             ])
-            ->toolbarActions([
+            ->bulkActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),
-            ])
-            ->emptyStateActions([
-                CreateAction::make(),
             ]);
     }
 
