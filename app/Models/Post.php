@@ -11,9 +11,9 @@ class Post extends Model
 
     protected $fillable = [
         'title',
-        'body',
-        'blurb',
         'slug',
+        'patcher_notice',
+        'article_content',
     ];
 
     public function getRouteKeyName(): string

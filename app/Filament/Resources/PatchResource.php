@@ -8,12 +8,15 @@ use App\Filament\Resources\PatchResource\Pages\ListPatches;
 use App\Models\Patch;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\BulkActionGroup;
@@ -103,6 +106,56 @@ class PatchResource extends Resource
                             ->helperText('Optional notes about this patch (max 255 characters)'),
                     ]),
 
+                Section::make('Create Announcement Post')
+                    ->description('Optionally create a news post to announce this patch to players')
+                    ->icon('heroicon-o-newspaper')
+                    ->collapsed()
+                    ->schema([
+                        Toggle::make('create_post')
+                            ->label('Create announcement post for this patch')
+                            ->helperText('Enable this to create a news post that players can read')
+                            ->live()
+                            ->default(false),
+
+                        Grid::make(1)
+                            ->schema([
+                                TextInput::make('post_title')
+                                    ->label('Post Title')
+                                    ->placeholder('e.g., Patch #'.$next_number.' - Halloween Update')
+                                    ->required()
+                                    ->maxLength(255)
+                                    ->helperText('The title of the announcement post'),
+
+                                Textarea::make('post_patcher_notice')
+                                    ->label('Patcher Notice')
+                                    ->placeholder('Short notice about this patch for the game patcher...')
+                                    ->rows(3)
+                                    ->required()
+                                    ->maxLength(500)
+                                    ->helperText('This text appears in the game patcher - keep it brief and informative'),
+
+                                MarkdownEditor::make('post_article_content')
+                                    ->label('Full Article')
+                                    ->required()
+                                    ->placeholder('Full patch notes and details for the website...')
+                                    ->toolbarButtons([
+                                        'heading',
+                                        'bold',
+                                        'italic',
+                                        'strike',
+                                        'link',
+                                        'orderedList',
+                                        'unorderedList',
+                                        'table',
+                                        'undo',
+                                        'redo',
+                                    ])
+                                    ->helperText('Complete article content for the website (supports Markdown formatting)'),
+                            ])
+                            ->visible(fn (Get $get): bool => $get('create_post') === true),
+                    ])
+                    ->visibleOn('create'),
+
                 Section::make('Recent Patches')
                     ->description('Last 5 patches for reference')
                     ->icon('heroicon-o-clock')
@@ -189,6 +242,13 @@ class PatchResource extends Resource
 
                         return strlen($state) > 50 ? $state : null;
                     }),
+                TextColumn::make('post.title')
+                    ->label('Announcement')
+                    ->placeholder('No post')
+                    ->limit(30)
+                    ->tooltip(fn ($record) => $record->post ? $record->post->title : null)
+                    ->url(fn ($record) => $record->post ? "/posts/{$record->post->slug}" : null)
+                    ->openUrlInNewTab(),
                 TextColumn::make('created_at')
                     ->label('Uploaded')
                     ->dateTime()
