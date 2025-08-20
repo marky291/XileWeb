@@ -113,8 +113,8 @@ class Char extends RagnarokModel
     /**
      * Scope a query to only include popular users.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param Builder $query
+     * @return Builder
      */
     public function scopeOnline($query) : Builder
     {

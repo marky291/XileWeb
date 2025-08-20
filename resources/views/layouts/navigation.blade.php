@@ -9,14 +9,14 @@
                     </a>
                 </div>
                 <ul aria-label="Desktop Navigation Menu" class="relative hidden lg:flex lg:items-center lg:justify-center lg:gap-6 xl:gap-10">
-                    <li><a class="hover:bg-gradient-to-bl hover:from-blue-900 hover:to-fuchsia-700 rounded py-3 px-6 text-gray-100 border-gray-500 bg-gray-900 bg-opacity-50"
+                    <li><a class="hover:bg-linear-to-bl hover:from-blue-900 hover:to-fuchsia-700 rounded-xs py-3 px-6 text-gray-100 border-gray-500 bg-gray-900/50"
                            href="#steps2play" title="Register at XileRO">Register</a></li>
-                    <li><a class="hover:bg-gradient-to-tr hover:from-blue-900 hover:to-fuchsia-700 rounded py-3 px-6 text-gray-100 border-gray-500 bg-gray-900 bg-opacity-50"
+                    <li><a class="hover:bg-linear-to-tr hover:from-blue-900 hover:to-fuchsia-700 rounded-xs py-3 px-6 text-gray-100 border-gray-500 bg-gray-900/50"
                            href="https://discord.com/channels/702319926110584943/1150037346415284284"
                            title="Donate to XileRO">Donate</a></li>
-                    <li><a class="hover:bg-gradient-to-bl hover:from-blue-900 hover:to-fuchsia-700 rounded py-3 px-6 text-gray-100 border-gray-500 bg-gray-900 bg-opacity-50"
+                    <li><a class="hover:bg-linear-to-bl hover:from-blue-900 hover:to-fuchsia-700 rounded-xs py-3 px-6 text-gray-100 border-gray-500 bg-gray-900/50"
                            href="https://discord.gg/hp7CS6k" title="Join XileRO on Discord">Discord</a></li>
-                    <li><a class="hover:bg-gradient-to-tr hover:from-blue-900 hover:to-fuchsia-700 rounded py-3 px-6 text-gray-100 border-gray-500 bg-gray-900 bg-opacity-50"
+                    <li><a class="hover:bg-linear-to-tr hover:from-blue-900 hover:to-fuchsia-700 rounded-xs py-3 px-6 text-gray-100 border-gray-500 bg-gray-900/50"
                            href="http://wiki.xilero.net/index.php?title=Main_Page" title="XileRO Wiki Page">Wiki</a>
                     </li>
                 </ul>
@@ -95,7 +95,7 @@
                             </a>
                         </li>
                         <li class="flex sm:justify-center">
-                            <a class="group relative inline-flex border border-red-600 focus:outline-none mt-3 w-full max-w-md"
+                            <a class="group relative inline-flex border border-red-600 focus:outline-hidden mt-3 w-full max-w-md"
                                href="https://drive.google.com/file/d/1RDUNM6pWVBMVLzdMVyze5QmdNuc99zKH/view?usp=sharing"
                                title="Download XileRO Game Client" aria-label="Download XileRO Game Client">
                                 <span

@@ -2,6 +2,8 @@
 
 namespace App\Livewire;
 
+use Filament\Actions\Contracts\HasActions;
+use Filament\Actions\Concerns\InteractsWithActions;
 use App\Ragnarok\Login;
 use App\Ragnarok\Vending;
 use App\Ragnarok\VendingItems;
@@ -17,8 +19,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 
-class ServerVendings extends Component implements HasForms, HasTable
+class ServerVendings extends Component implements HasForms, HasTable, HasActions
 {
+    use InteractsWithActions;
     use InteractsWithTable;
     use InteractsWithForms;
 
@@ -51,10 +54,10 @@ class ServerVendings extends Component implements HasForms, HasTable
             ->filters([
                 Filter::make('Less than 1m')->query(fn (Builder $query): Builder => $query->where('price', '<', 1000000)),
             ])
-            ->actions([
+            ->recordActions([
                 // ...
             ])
-            ->bulkActions([
+            ->toolbarActions([
                 // ...
             ]);
     }

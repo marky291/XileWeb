@@ -16,7 +16,7 @@
                                     Username
                                 </label>
                                 <input wire:model.live="username"
-                                       class="block w-full px-4 py-3 mb-3 leading-tight text-gray-100 bg-gray-800 border border-gray-900 rounded appearance-none focus:outline-none focus:bg-gray-600 focus:border-gray-500 @error('username') border-red-500 @enderror"
+                                       class="block w-full px-4 py-3 mb-3 leading-tight text-gray-100 bg-gray-800 border border-gray-900 rounded appearance-none focus:outline-hidden focus:bg-gray-600 focus:border-gray-500 @error('username') border-red-500 @enderror"
                                        id="grid-username" value="{{ old('username') }}" type="text" placeholder="Username"
                                        autocomplete="off">
                                 @error('username')
@@ -33,7 +33,7 @@
                                     Uber Amount
                                 </label>
                                 <input wire:model.live="uber_amount"
-                                       class="block w-full px-4 py-3 mb-3 leading-tight text-gray-100 bg-gray-800 border border-gray-900 rounded appearance-none focus:outline-none focus:bg-gray-600 focus:border-gray-500 @error('uber_amount') border-red-500 @enderror"
+                                       class="block w-full px-4 py-3 mb-3 leading-tight text-gray-100 bg-gray-800 border border-gray-900 rounded appearance-none focus:outline-hidden focus:bg-gray-600 focus:border-gray-500 @error('uber_amount') border-red-500 @enderror"
                                        id="grid-uber_amount" value="{{ old('uber_amount') }}" type="text" placeholder="0"
                                        autocomplete="off">
                                 @error('uber_amount')

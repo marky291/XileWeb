@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Database\Factories\ragnarok;
+namespace Database\Factories\Ragnarok;
 
 use App\Ragnarok\DonationUber;
 use Illuminate\Database\Eloquent\Factories\Factory;

@@ -2,11 +2,18 @@
 
 namespace App\Filament\Resources;
 
+use Filament\Schemas\Schema;
+use Filament\Actions\EditAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\CreateAction;
+use App\Filament\Resources\InventoryResource\Pages\ListInventories;
+use App\Filament\Resources\InventoryResource\Pages\CreateInventory;
+use App\Filament\Resources\InventoryResource\Pages\EditInventory;
 use App\Filament\Resources\InventoryResource\Pages;
 use App\Filament\Resources\InventoryResource\RelationManagers;
 use App\Models\Inventory;
 use Filament\Forms;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -17,12 +24,12 @@ class InventoryResource extends Resource
 {
     protected static ?string $model = Inventory::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 //
             ]);
     }
@@ -36,16 +43,16 @@ class InventoryResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
+            ->recordActions([
+                EditAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ])
             ->emptyStateActions([
-                Tables\Actions\CreateAction::make(),
+                CreateAction::make(),
             ]);
     }
     
@@ -59,9 +66,9 @@ class InventoryResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListInventories::route('/'),
-            'create' => Pages\CreateInventory::route('/create'),
-            'edit' => Pages\EditInventory::route('/{record}/edit'),
+            'index' => ListInventories::route('/'),
+            'create' => CreateInventory::route('/create'),
+            'edit' => EditInventory::route('/{record}/edit'),
         ];
     }    
 }

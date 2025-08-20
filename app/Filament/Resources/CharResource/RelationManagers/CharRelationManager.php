@@ -2,8 +2,10 @@
 
 namespace App\Filament\Resources\CharResource\RelationManagers;
 
+use Filament\Schemas\Schema;
+use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Forms;
-use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -14,11 +16,11 @@ class CharRelationManager extends RelationManager
 {
     protected static string $relationship = 'chars';
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('account_id')
+        return $schema
+            ->components([
+                TextInput::make('account_id')
                     ->required()
                     ->maxLength(255),
             ]);
@@ -29,9 +31,9 @@ class CharRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('account_id')
             ->columns([
-                Tables\Columns\TextColumn::make('account_id'),
-                Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('last_login'),
+                TextColumn::make('account_id'),
+                TextColumn::make('name'),
+                TextColumn::make('last_login'),
             ])
             ->filters([
                 //
@@ -39,11 +41,11 @@ class CharRelationManager extends RelationManager
             ->headerActions([
                 //Tables\Actions\CreateAction::make(),
             ])
-            ->actions([
+            ->recordActions([
 //                Tables\Actions\EditAction::make(),
 //                Tables\Actions\DeleteAction::make(),
             ])
-            ->bulkActions([
+            ->toolbarActions([
 //                Tables\Actions\BulkActionGroup::make([
 //                    Tables\Actions\DeleteBulkAction::make(),
 //                ]),

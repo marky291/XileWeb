@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Validation\ValidationException;
 use App\Actions\MakeHashedLoginPassword;
 use App\Http\Controllers\Controller;
 use App\Ragnarok\Login;
@@ -28,7 +29,7 @@ class NewPasswordController extends Controller
     /**
      * Handle an incoming new password request.
      *
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     public function store(Request $request): RedirectResponse
     {

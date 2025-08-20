@@ -2,11 +2,20 @@
 
 namespace App\Filament\Resources;
 
+use Filament\Schemas\Schema;
+use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\EditAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\CreateAction;
+use App\Filament\Resources\PostResource\Pages\ListPosts;
+use App\Filament\Resources\PostResource\Pages\CreatePost;
+use App\Filament\Resources\PostResource\Pages\EditPost;
 use App\Filament\Resources\PostResource\Pages;
 use App\Filament\Resources\PostResource\RelationManagers;
 use App\Models\Post;
 use Filament\Forms;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -19,19 +28,19 @@ class PostResource extends Resource
 {
     protected static ?string $model = Post::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $navigationGroup = 'Website';
+    protected static string | \UnitEnum | null $navigationGroup = 'Website';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->columns(1)
-            ->schema([
-                Forms\Components\TextInput::make('title')->required()->live()
+            ->components([
+                TextInput::make('title')->required()->live()
                     ->afterStateUpdated(fn ($state, callable $set) => $set('slug', Str::slug($state))),
-                Forms\Components\TextInput::make('slug'),
-                Forms\Components\TextInput::make('blurb')->required(),
+                TextInput::make('slug'),
+                TextInput::make('blurb')->required(),
                 MarkdownEditor::make('body')->required(),
             ]);
     }
@@ -40,22 +49,22 @@ class PostResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('title'),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('title'),
+                TextColumn::make('created_at')
             ])
             ->filters([
                 //
             ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
+            ->recordActions([
+                EditAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ])
             ->emptyStateActions([
-                Tables\Actions\CreateAction::make(),
+                CreateAction::make(),
             ]);
     }
 
@@ -69,9 +78,9 @@ class PostResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPosts::route('/'),
-            'create' => Pages\CreatePost::route('/create'),
-            'edit' => Pages\EditPost::route('/{record}/edit'),
+            'index' => ListPosts::route('/'),
+            'create' => CreatePost::route('/create'),
+            'edit' => EditPost::route('/{record}/edit'),
         ];
     }
 }

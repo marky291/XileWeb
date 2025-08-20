@@ -2,12 +2,21 @@
 
 namespace App\Filament\Resources;
 
+use Filament\Schemas\Schema;
+use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\EditAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\CreateAction;
+use App\Filament\Resources\FeatureResource\Pages\ListFeatures;
+use App\Filament\Resources\FeatureResource\Pages\CreateFeature;
+use App\Filament\Resources\FeatureResource\Pages\EditFeature;
 use App\Filament\Resources\FeatureResource\Pages;
 use App\Filament\Resources\FeatureResource\RelationManagers;
 use App\Models\Feature;
 use Faker\Provider\Text;
 use Filament\Forms;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -18,17 +27,17 @@ class FeatureResource extends Resource
 {
     protected static ?string $model = Feature::class;
 
-    protected static ?string $navigationGroup = 'Website';
+    protected static string | \UnitEnum | null $navigationGroup = 'Website';
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('name'),
-                Forms\Components\TextInput::make('scope'),
-                Forms\Components\TextInput::make('value'),
+        return $schema
+            ->components([
+                TextInput::make('name'),
+                TextInput::make('scope'),
+                TextInput::make('value'),
             ]);
     }
 
@@ -36,23 +45,23 @@ class FeatureResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('scope'),
-                Tables\Columns\TextColumn::make('value'),
+                TextColumn::make('name'),
+                TextColumn::make('scope'),
+                TextColumn::make('value'),
             ])
             ->filters([
                 //
             ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
+            ->recordActions([
+                EditAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ])
             ->emptyStateActions([
-                Tables\Actions\CreateAction::make(),
+                CreateAction::make(),
             ]);
     }
 
@@ -66,9 +75,9 @@ class FeatureResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListFeatures::route('/'),
-            'create' => Pages\CreateFeature::route('/create'),
-            'edit' => Pages\EditFeature::route('/{record}/edit'),
+            'index' => ListFeatures::route('/'),
+            'create' => CreateFeature::route('/create'),
+            'edit' => EditFeature::route('/{record}/edit'),
         ];
     }
 }

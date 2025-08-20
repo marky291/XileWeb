@@ -181,7 +181,7 @@
                     <svg class="text-rose-500 w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                         <h3 class="mt-5 text-xl font-bold">Donate</h3>
                         <p class="mt-4 text-gray-700 text-sm leading-relaxed">Earn ubers by supporting the server and get rewarded just remember we only reward uber tokens that can be spent in the uber store and nothing else.</p>
-                        <a class="group relative inline-flex border border-red-600 focus:outline-none mt-6" href="https://wiki.xilero.net/index.php?title=Donation">
+                        <a class="group relative inline-flex border border-red-600 focus:outline-hidden mt-6" href="https://wiki.xilero.net/index.php?title=Donation">
                             <span class="w-full inline-flex items-center justify-center self-stretch px-4 py-2 text-sm text-red-600 text-center font-bold uppercase bg-white ring-1 ring-red-600 ring-offset-1 transform transition-transform group-hover:-translate-y-1 group-hover:-translate-x-1 group-focus:-translate-y-1 group-focus:-translate-x-1">
                                 Donate Now
                             </span>
@@ -191,7 +191,7 @@
                         <svg class="w-8 h-8 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"></path></svg>
                         <h3 class="mt-5 text-xl font-bold">Zeny Purchase</h3>
                         <p class="mt-4 text-gray-700 text-sm leading-relaxed">Don't want to ever donate? Well you do not have too just spend some time in game, get to know others and you will have enough zeny to purchase ubers in no time.</p>
-                        <a class="group relative inline-flex border border-red-600 focus:outline-none mt-6" href="https://wiki.xilero.net/index.php?title=Donation">
+                        <a class="group relative inline-flex border border-red-600 focus:outline-hidden mt-6" href="https://wiki.xilero.net/index.php?title=Donation">
                             <span class="w-full inline-flex items-center justify-center self-stretch px-4 py-2 text-sm text-red-600 text-center font-bold uppercase bg-white ring-1 ring-red-600 ring-offset-1 transform transition-transform group-hover:-translate-y-1 group-hover:-translate-x-1 group-focus:-translate-y-1 group-focus:-translate-x-1">
                                 Learn How
                             </span>

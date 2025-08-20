@@ -2,11 +2,19 @@
 
 namespace App\Filament\Resources;
 
+use Filament\Schemas\Schema;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\EditAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\CreateAction;
+use App\Filament\Resources\AtcommandResource\Pages\ListAtcommands;
+use App\Filament\Resources\AtcommandResource\Pages\CreateAtcommand;
+use App\Filament\Resources\AtcommandResource\Pages\EditAtcommand;
 use App\Filament\Resources\AtcommandResource\Pages;
 use App\Filament\Resources\AtcommandResource\RelationManagers;
 use App\Models\Atcommand;
 use Filament\Forms;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -17,14 +25,14 @@ class AtcommandResource extends Resource
 {
     protected static ?string $model = Atcommand::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $navigationGroup = 'Logs';
+    protected static string | \UnitEnum | null $navigationGroup = 'Logs';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 //
             ]);
     }
@@ -34,26 +42,26 @@ class AtcommandResource extends Resource
         return $table
             ->defaultSort('atcommand_date', 'desc')
             ->columns([
-                Tables\Columns\TextColumn::make('account_id'),
+                TextColumn::make('account_id'),
 //                Tables\Columns\TextColumn::make('char_id'),
-                Tables\Columns\TextColumn::make('char_name')->searchable(),
-                Tables\Columns\TextColumn::make('map')->sortable(),
-                Tables\Columns\TextColumn::make('command'),
-                Tables\Columns\TextColumn::make('atcommand_date')->sortable()
+                TextColumn::make('char_name')->searchable(),
+                TextColumn::make('map')->sortable(),
+                TextColumn::make('command'),
+                TextColumn::make('atcommand_date')->sortable()
             ])
             ->filters([
                 //
             ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
+            ->recordActions([
+                EditAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ])
             ->emptyStateActions([
-                Tables\Actions\CreateAction::make(),
+                CreateAction::make(),
             ]);
     }
 
@@ -67,9 +75,9 @@ class AtcommandResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListAtcommands::route('/'),
-            'create' => Pages\CreateAtcommand::route('/create'),
-            'edit' => Pages\EditAtcommand::route('/{record}/edit'),
+            'index' => ListAtcommands::route('/'),
+            'create' => CreateAtcommand::route('/create'),
+            'edit' => EditAtcommand::route('/{record}/edit'),
         ];
     }
 }

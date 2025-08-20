@@ -8,7 +8,7 @@
             @if ($error)
                 <div class="rounded-md bg-red-50 p-4 mb-5">
                     <div class="flex">
-                        <div class="flex-shrink-0">
+                        <div class="shrink-0">
                             <svg class="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                                  fill="currentColor" aria-hidden="true">
                                 <path fill-rule="evenodd"
@@ -34,7 +34,7 @@
                                 Username
                             </label>
                             <input wire:model.live="username"
-                                   class="block w-full px-4 py-3 mb-3 leading-tight text-gray-100 bg-gray-800 border border-gray-900 rounded appearance-none focus:outline-none focus:bg-gray-600 focus:border-gray-500 @error('username') border-red-500 @enderror"
+                                   class="block w-full px-4 py-3 mb-3 leading-tight text-gray-100 bg-gray-800 border border-gray-900 rounded-xs appearance-none focus:outline-hidden focus:bg-gray-600 focus:border-gray-500 @error('username') border-red-500 @enderror"
                                    id="grid-username" value="{{ old('username') }}" type="text" placeholder="username"
                                    autocomplete="off">
                             @error('username')
@@ -51,7 +51,7 @@
                                 Email Address
                             </label>
                             <input wire:model.live="email"
-                                   class="block w-full px-4 py-3 mb-3 leading-tight text-gray-100 bg-gray-800 border border-gray-900 rounded appearance-none focus:outline-none focus:bg-gray-600 focus:border-gray-500 @error('email') border-red-500 @enderror"
+                                   class="block w-full px-4 py-3 mb-3 leading-tight text-gray-100 bg-gray-800 border border-gray-900 rounded-xs appearance-none focus:outline-hidden focus:bg-gray-600 focus:border-gray-500 @error('email') border-red-500 @enderror"
                                    id="grid-email" value="{{ old('email') }}" type="email"
                                    placeholder="email@xilero.net" required autocomplete="off">
                             @error('email')
@@ -68,7 +68,7 @@
                                 Password
                             </label>
                             <input wire:model="password"
-                                   class="block w-full px-4 py-3 mb-3 leading-tight text-gray-100 bg-gray-800 border border-gray-900 rounded appearance-none focus:outline-none focus:bg-gray-600 focus:border-gray-500 @error('password') border-red-500 @enderror"
+                                   class="block w-full px-4 py-3 mb-3 leading-tight text-gray-100 bg-gray-800 border border-gray-900 rounded-xs appearance-none focus:outline-hidden focus:bg-gray-600 focus:border-gray-500 @error('password') border-red-500 @enderror"
                                    id="grid-password" type="password" placeholder="******************" required
                                    autocomplete="off">
                             @error('password')
@@ -85,7 +85,7 @@
                                 Confirm Password
                             </label>
                             <input wire:model="password_confirmation"
-                                   class="block w-full px-4 py-3 mb-3 leading-tight text-gray-100 bg-gray-800 border border-gray-900 rounded appearance-none focus:outline-none focus:bg-gray-600 focus:border-gray-500"
+                                   class="block w-full px-4 py-3 mb-3 leading-tight text-gray-100 bg-gray-800 border border-gray-900 rounded-xs appearance-none focus:outline-hidden focus:bg-gray-600 focus:border-gray-500"
                                    id="grid-password-confirm" type="password" placeholder="******************" required
                                    autocomplete="off">
                         </div>

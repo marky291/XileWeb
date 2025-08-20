@@ -2,12 +2,22 @@
 
 namespace App\Filament\Resources;
 
+use Filament\Schemas\Schema;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\FileUpload;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\EditAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\CreateAction;
+use App\Filament\Resources\PatchResource\Pages\ListPatches;
+use App\Filament\Resources\PatchResource\Pages\CreatePatch;
+use App\Filament\Resources\PatchResource\Pages\EditPatch;
 use App\Filament\Resources\PatchResource\Pages;
 use App\Filament\Resources\PatchResource\RelationManagers;
 use App\Models\Patch;
 use Filament\Forms;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -20,23 +30,23 @@ class PatchResource extends Resource
 {
     protected static ?string $model = Patch::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    protected static ?string $navigationGroup = 'Patch';
-    public static function form(Form $form): Form
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | \UnitEnum | null $navigationGroup = 'Patch';
+    public static function form(Schema $schema): Schema
     {
         $last_patch = Patch::latest('number')->first();
 
-        return $form
-            ->columns(1)->schema([
+        return $schema
+            ->columns(1)->components([
                 Select::make('type')->label('Patch Type')
                     ->options([
                         'FLD' => 'FLD',
                         'GRF' => 'GRF',
                     ])->required(),
-                Forms\Components\TextInput::make('number')->label('Patch Number')->default($last_patch->number + 1)->readOnlyOn('create')->unique(),
-                Forms\Components\FileUpload::make('patch_name')->label('Patch File')
+                TextInput::make('number')->label('Patch Number')->default($last_patch->number + 1)->readOnlyOn('create')->unique(),
+                FileUpload::make('patch_name')->label('Patch File')
                     ->required()->preserveFilenames()->unique(),
-                Forms\Components\TextInput::make('comments'),
+                TextInput::make('comments'),
         ]);
     }
 
@@ -49,31 +59,31 @@ class PatchResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('number')
+                TextColumn::make('number')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('type')
+                TextColumn::make('type')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('patch_name')
+                TextColumn::make('patch_name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('comments'),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('comments'),
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable(),
             ])
             ->filters([
                 //
             ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
+            ->recordActions([
+                EditAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ])
             ->emptyStateActions([
-                Tables\Actions\CreateAction::make(),
+                CreateAction::make(),
             ]);
     }
 
@@ -87,9 +97,9 @@ class PatchResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPatches::route('/'),
-            'create' => Pages\CreatePatch::route('/create'),
-            'edit' => Pages\EditPatch::route('/{record}/edit'),
+            'index' => ListPatches::route('/'),
+            'create' => CreatePatch::route('/create'),
+            'edit' => EditPatch::route('/{record}/edit'),
         ];
     }
 }

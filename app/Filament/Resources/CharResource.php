@@ -2,12 +2,19 @@
 
 namespace App\Filament\Resources;
 
+use Filament\Schemas\Schema;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Select;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\EditAction;
+use App\Filament\Resources\CharResource\Pages\ListChars;
+use App\Filament\Resources\CharResource\Pages\CreateChar;
+use App\Filament\Resources\CharResource\Pages\EditChar;
 use App\Filament\Resources\CharResource\Pages;
 use App\Filament\Resources\CharResource\RelationManagers;
 use App\Filament\Resources\LoginResource\RelationManagers\LoginRelationManager;
 use App\Ragnarok\Char;
 use Filament\Forms;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Filters\Filter;
@@ -21,11 +28,11 @@ class CharResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
-    protected static ?string $navigationGroup = 'Player Management';
+    protected static string | \UnitEnum | null $navigationGroup = 'Player Management';
 
-    protected static ?string $navigationIcon = 'heroicon-o-cog-6-tooth';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-cog-6-tooth';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
         $classOptions = [
             // Novice / 1st Class
@@ -87,12 +94,12 @@ class CharResource extends Resource
         ];
 
 
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('account_id')->readOnly(),
-                Forms\Components\TextInput::make('name'),
-                Forms\Components\Select::make('class')->options($classOptions),
-                Forms\Components\TextInput::make('last_login')->readOnly(),
+        return $schema
+            ->components([
+                TextInput::make('account_id')->readOnly(),
+                TextInput::make('name'),
+                Select::make('class')->options($classOptions),
+                TextInput::make('last_login')->readOnly(),
             ]);
     }
 
@@ -100,16 +107,16 @@ class CharResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('account_id'),
-                Tables\Columns\TextColumn::make('login.userid')->searchable()->copyable(),
-                Tables\Columns\TextColumn::make('name')->label('Character')->searchable()->copyable(),
-                Tables\Columns\TextColumn::make('class'),
-                Tables\Columns\TextColumn::make('last_login'),
+                TextColumn::make('account_id'),
+                TextColumn::make('login.userid')->searchable()->copyable(),
+                TextColumn::make('name')->label('Character')->searchable()->copyable(),
+                TextColumn::make('class'),
+                TextColumn::make('last_login'),
             ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
+            ->recordActions([
+                EditAction::make(),
             ])
-            ->bulkActions([
+            ->toolbarActions([
 //                Tables\Actions\BulkActionGroup::make([
 //                    Tables\Actions\DeleteBulkAction::make(),
 //                ]),
@@ -129,9 +136,9 @@ class CharResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListChars::route('/'),
-            'create' => Pages\CreateChar::route('/create'),
-            'edit' => Pages\EditChar::route('/{record}/edit'),
+            'index' => ListChars::route('/'),
+            'create' => CreateChar::route('/create'),
+            'edit' => EditChar::route('/{record}/edit'),
         ];
     }
 }

@@ -1,251 +1,306 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
+@plugin '@tailwindcss/forms';
+@plugin '@tailwindcss/typography';
 
-/*@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');*/
+@source '../../vendor/filament/**/*.blade.php';
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 
-#footer .copyright {
-    border-top: 1px solid #DFE1E5;
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-gray-50: #fafafa;
+  --color-gray-100: #f4f4f5;
+  --color-gray-200: #e4e4e7;
+  --color-gray-300: #d4d4d8;
+  --color-gray-400: #a1a1aa;
+  --color-gray-500: #71717a;
+  --color-gray-600: #52525b;
+  --color-gray-700: #3f3f46;
+  --color-gray-800: #27272a;
+  --color-gray-900: #18181b;
+  --color-gray-950: #09090b;
+
+  --color-clash-bg: #0b0d16;
+  --color-clash-foot: #04060c;
+
+  --font-sans:
+    Figtree, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 }
 
-hr.default {
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
+@utility markdown {
+  @apply text-gray-100;
+  & code {
+    @apply text-gray-100;
+  }
+  & p > a {
+    @apply text-amber-500 hover:text-amber-300;
+  }
+  & p strong {
+    @apply text-gray-100;
+  }
+  & ul li code {
+    @apply text-gray-100;
+  }
+  & ul li strong {
+    @apply text-gray-100;
+  }
+  & h2 {
+    @apply text-gray-100;
+  }
+  & h3 {
+    @apply text-gray-100;
+  }
+}
+
+@utility btn-primary {
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+  color: #ffffff !important;
+  font-size: 12px;
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  box-shadow:
+    0 0 22px 5px rgba(59, 36, 151, 0.2),
+    0 10px 15px 4px rgba(0, 0, 0, 0.3);
+
+  @apply bg-linear-to-br from-blue-900 to-fuchsia-700 hover:bg-linear-to-bl hover:from-blue-900 hover:to-fuchsia-700;
+}
+
+@utility btn-secondary {
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+  color: #ffffff !important;
+  font-size: 12px;
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  box-shadow:
+    0 0 22px 5px rgba(59, 36, 151, 0.2),
+    0 10px 15px 4px rgba(0, 0, 0, 0.3);
+
+  @apply bg-linear-to-br from-blue-900 to-fuchsia-700 hover:bg-linear-to-bl hover:from-blue-900 hover:to-fuchsia-700;
+}
+
+@utility btn-discord {
+  @apply items-center w-full border-none text-left bg-indigo-600 hover:bg-indigo-400 cursor-pointer text-white border font-bold;
+}
+
+@utility xilero-button {
+  @apply items-center w-full border-none text-left bg-amber-500 hover:bg-gray-100 cursor-pointer text-gray-900 border text-gray-900;
+}
+
+@layer utilities {
+  /*@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');*/
+
+  #footer .copyright {
+    border-top: 1px solid #dfe1e5;
+  }
+
+  hr.default {
     height: 1px;
-    background: #DFE1E5;
-}
+    background: #dfe1e5;
+  }
 
-.btn {
+  .btn {
     @apply px-4;
     @apply py-4;
     @apply font-bold;
-    @apply rounded;
+    @apply rounded-sm;
     @apply font-normal;
-}
-.line {
+  }
+  .line {
     display: block;
     background: url(../assets/line.png) center no-repeat;
     width: 100%;
     overflow-x: hidden;
     height: 86px;
-}
+  }
 
-.section-div {
+  .section-div {
     display: flex;
     justify-content: center;
     align-items: center;
-}
+  }
 
-.center-letter {
+  .center-letter {
     display: inline-flex;
     justify-content: center;
     align-items: center;
     width: 140px; /* The width should match the font size to work properly */
-}
+  }
 
-.block-home {
+  .block-home {
     background: url(../assets/block-top-bg.png) center top repeat-x;
     background-color: #12141f;
-    box-shadow: 0 10px 15px 4px rgba(0,0,0,.3);
+    box-shadow: 0 10px 15px 4px rgba(0, 0, 0, 0.3);
     border: 1px solid #191b2e;
     @apply hover:shadow-md hover:shadow-violet-500 transition duration-300 ease-in-out;
-}
+  }
 
-.effect-light-yellow-bang {
-    background: url("../assets/effects/yellow-light.png");
+  .effect-light-yellow-bang {
+    background: url('../assets/effects/yellow-light.png');
     width: 300px;
     height: 300px;
 
     animation: reverse-spin 2s linear infinite;
 
     @keyframes spin {
-        from {
-            transform: rotate(360deg);
-        }
-        to {
-            transform: rotate(0deg);
-        }
+      from {
+        transform: rotate(360deg);
+      }
+      to {
+        transform: rotate(0deg);
+      }
     }
-}
+  }
 
-.effect-light-blue-bang {
-    background: url("../assets/effects/light-blue.png");
+  .effect-light-blue-bang {
+    background: url('../assets/effects/light-blue.png');
     width: 350px;
     height: 350px;
 
     animation: spin 15s linear infinite;
 
     @keyframes spin {
-        from {
-            transform: rotate(0deg);
-        }
-        to {
-            transform: rotate(360deg);
-        }
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
     }
-}
+  }
 
-.text-branding {
+  .text-branding {
     color: #a52a2a;
-}
+  }
 
-section.landing {
+  section.landing {
     background-size: cover;
     background: url('../assets/landing-sitting.jpeg');
-}
-section.landing .feature-bg-img {
+  }
+  section.landing .feature-bg-img {
     background: url('../assets/landing-sitting.png');
-}
+  }
 
-.step2-icon {
+  .step2-icon {
     font-size: 110px;
-}
-.fa-compact-disc.step2-icon {
+  }
+  .fa-compact-disc.step2-icon {
     font-size: 90px;
-}
+  }
 
-.loading-screen {
+  .loading-screen {
     margin: 0 auto 0 auto;
-}
+  }
 
-.status {
+  .status {
     @apply col-span-1;
     @apply px-6;
     @apply py-1;
-    @apply rounded;
-}
-.status.online {
+    @apply rounded-sm;
+  }
+  .status.online {
     @apply text-white;
     @apply bg-green-700;
-}
-.status.offline {
+  }
+  .status.offline {
     @apply text-white;
     @apply bg-red-700;
-}
-.status.players {
+  }
+  .status.players {
     @apply text-gray-800;
     @apply bg-gray-200;
-}
+  }
 
-.half-border {
+  .half-border {
     padding: 0 0 1.7ch 0;
     display: inline-block;
-    position:relative;
-}
-.half-border:after{
-    content:"";
-    width:100%;
-    height:4px;
-    left:0;
-    bottom:0;
-    position:absolute;
-    z-index:9;
-    background:linear-gradient(to right, #f59e0c 80%, #f59e0c8f 20%);
-}
+    position: relative;
+  }
+  .half-border:after {
+    content: '';
+    width: 100%;
+    height: 4px;
+    left: 0;
+    bottom: 0;
+    position: absolute;
+    z-index: 9;
+    background: linear-gradient(to right, #f59e0c 80%, #f59e0c8f 20%);
+  }
 
-#steps2play-top-border {
-    height:50px;
-    background:#f4f5f78a;
+  #steps2play-top-border {
+    height: 50px;
+    background: #f4f5f78a;
     clip-path: polygon(100% 100%, 100% 0, 0 100%);
-}
-#steps2play-bottom-border {
-    height:50px;
-    background:#f4f5f78a;
+  }
+  #steps2play-bottom-border {
+    height: 50px;
+    background: #f4f5f78a;
     clip-path: polygon(100% 0, 0 0, 0 100%);
-}
+  }
 
-
-.important-title {
+  .important-title {
     display: flex;
     flex-direction: row;
-}
-.important-title:before, .important-title:after{
-    content: "";
+  }
+  .important-title:before,
+  .important-title:after {
+    content: '';
     flex: 1 1;
     border-bottom: 1px solid white;
     margin: auto;
-}
-.important-title:before {
-    margin-right: 40px
-}
-.important-title:after {
-    margin-left: 40px
-}
+  }
+  .important-title:before {
+    margin-right: 40px;
+  }
+  .important-title:after {
+    margin-left: 40px;
+  }
 
-.bg-radial-gradient {
-    background-image: radial-gradient(50% 50% at 50% 50%,#eb4432 0,hsla(0,0%,100%,0) 100%);
-}
+  .bg-radial-gradient {
+    background-image: radial-gradient(
+      50% 50% at 50% 50%,
+      #eb4432 0,
+      hsla(0, 0%, 100%, 0) 100%
+    );
+  }
 
-.animate-cube {
-    -webkit-animation: cube 6s ease-in-out infinite!important;
-    animation: cube 6s ease-in-out infinite!important;
+  .animate-cube {
+    -webkit-animation: cube 6s ease-in-out infinite !important;
+    animation: cube 6s ease-in-out infinite !important;
+  }
 }
 
 @layer components {
-    .markdown {
-        @apply text-gray-100;
-    }
-    .markdown code {
-        @apply text-gray-100;
-    }
-    .markdown p > a {
-        @apply text-amber-500 hover:text-amber-300;
-    }
-    .markdown p strong {
-        @apply text-gray-100;
-    }
-    .markdown ul li code {
-        @apply text-gray-100;
-    }
-    .markdown ul li strong {
-        @apply text-gray-100;
-    }
-    .markdown h2 {
-        @apply text-gray-100;
-    }
-    .markdown h3 {
-        @apply text-gray-100;
-    }
     h2 {
         @apply text-white text-4xl mb-7;
-    }
-    .btn-primary {
-        transition: all 0.3s ease;
-        cursor: pointer;
-        border: none;
-        color: #ffffff!important;
-        font-size: 12px;
-        position: relative;
-        z-index: 1;
-        text-align: center;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        box-shadow: 0 0 22px 5px rgba(59,36,151,.2), 0 10px 15px 4px rgba(0,0,0,.3);
-
-        @apply bg-gradient-to-br from-blue-900 to-fuchsia-700 hover:bg-gradient-to-bl hover:from-blue-900 hover:to-fuchsia-700;
-    }
-
-    .btn-secondary {
-        transition: all 0.3s ease;
-        cursor: pointer;
-        border: none;
-        color: #ffffff!important;
-        font-size: 12px;
-        position: relative;
-        z-index: 1;
-        text-align: center;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        box-shadow: 0 0 22px 5px rgba(59,36,151,.2), 0 10px 15px 4px rgba(0,0,0,.3);
-
-        @apply bg-gradient-to-br from-blue-900 to-fuchsia-700 hover:bg-gradient-to-bl hover:from-blue-900 hover:to-fuchsia-700;
-    }
-
-
-    .btn-discord {
-        @apply items-center w-full border-none text-left bg-indigo-600 hover:bg-indigo-400 cursor-pointer text-white border font-bold;
-    }
-
-    .xilero-button {
-        @apply items-center w-full border-none text-left bg-amber-500 hover:bg-gray-100 cursor-pointer text-gray-900 border text-gray-900;
     }
 }
