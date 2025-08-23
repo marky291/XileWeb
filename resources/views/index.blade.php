@@ -2,10 +2,9 @@
 
     <section class="shadow bg-clash-bg bg-right md:py-20 pb-12 md:pt-80 px-12 pt-40">
         <div class="section-div text-gray-100">
-            <span class="text-[100px] md:text-[140px] center-letter">X</span>
-            <span class="text-[100px] md:text-[140px] center-letter">I</span>
-            <span class="text-[100px] md:text-[140px] center-letter">L</span>
+            <span class="text-[100px] md:text-[140px] center-letter">R</span>
             <span class="text-[100px] md:text-[140px] center-letter">E</span>
+            <span class="text-[100px] md:text-[140px] center-letter">T</span>
             <span class="text-[100px] md:text-[140px] center-letter">R</span>
             <span class="text-[100px] md:text-[140px] center-letter">O</span>
         </div>
