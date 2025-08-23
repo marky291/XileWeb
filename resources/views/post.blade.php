@@ -1,7 +1,7 @@
 <x-app-layout>
 
     @section("title", "XileRO | Update: " . $post->title)
-    @section('description', $post->blurb)
+    @section('description', $post->patcher_notice)
     @section('keywords', 'XileRO, Updates, Changelog')
 
     <section class="shadow md:pt-16 bg-gray-800">
@@ -13,7 +13,7 @@
                         <h1 class="mb-6 text-white text-3xl">{{ $post->title }}</h1>
 
                         <x-markdown class="markdown text-gray-100">
-                            {{ $post->body }}
+                            {{ $post->article_content }}
                         </x-markdown>
                     </div>
                 </div>

@@ -23,6 +23,7 @@ use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
@@ -64,14 +65,14 @@ class PatchResource extends Resource
                                     ->default('FLD')
                                     ->helperText('FLD patches to the Root folder, GRF patches to the GRF file')
                                     ->required(),
-                                TextInput::make('number')
-                                    ->label('Patch Number')
-                                    ->default($next_number)
-                                    ->disabled()
-                                    ->dehydrated()
-                                    ->prefix('#')
-                                    ->helperText('Auto-incremented patch version number'),
                             ]),
+                        TextInput::make('number')
+                            ->label('Patch Number')
+                            ->default($next_number)
+                            ->disabled()
+                            ->dehydrated()
+                            ->prefix('#')
+                            ->helperText('Auto-incremented patch version number'),
                     ]),
 
                 Section::make('Upload Patch File')
@@ -256,7 +257,12 @@ class PatchResource extends Resource
                     ->since(),
             ])
             ->filters([
-                //
+                SelectFilter::make('type')
+                    ->label('Patch Type')
+                    ->options([
+                        'FLD' => 'FLD - Root Folder',
+                        'GRF' => 'GRF - GRF File',
+                    ]),
             ])
             ->actions([
                 Action::make('download')

@@ -19,6 +19,9 @@ class CreatePatch extends CreateRecord
         unset($data['post_title']);
         unset($data['post_patcher_notice']);
         unset($data['post_article_content']);
+        
+        // All patches are for XileRO (x9) client
+        $data['client'] = 'x9';
 
         return $data;
     }
@@ -29,10 +32,11 @@ class CreatePatch extends CreateRecord
         $formData = $this->form->getState();
 
         if ($formData['create_post'] ?? false) {
-            // Create the post with auto-generated slug
+            // Create the post with auto-generated slug (always x9 client)
             $post = Post::create([
                 'title' => $formData['post_title'],
                 'slug' => Str::slug($formData['post_title']),
+                'client' => 'x9', // All posts are for XileRO (x9)
                 'patcher_notice' => $formData['post_patcher_notice'],
                 'article_content' => $formData['post_article_content'],
             ]);

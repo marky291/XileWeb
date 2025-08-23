@@ -9,7 +9,19 @@ class MyAccountDetails extends Component
 {
     public function characters()
     {
-        return Login::find(auth()->user()->userLogins()->pluck('login_account_id')->first())->chars;
+        $loginAccountId = auth()->user()->userLogins()->pluck('login_account_id')->first();
+        
+        if (!$loginAccountId) {
+            return collect(); // Return empty collection if no login account
+        }
+        
+        $login = Login::find($loginAccountId);
+        
+        if (!$login) {
+            return collect(); // Return empty collection if login not found
+        }
+        
+        return $login->chars;
     }
 
     public function render()

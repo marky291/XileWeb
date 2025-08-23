@@ -9,15 +9,33 @@ class Post extends Model
 {
     use HasFactory;
 
+    const CLIENT_RETRO = 'retro';
+    const CLIENT_X9 = 'x9';
+
+    const CLIENTS = [
+        self::CLIENT_RETRO => 'Retro (Classic)',
+        self::CLIENT_X9 => 'XileRO (Direct x9)',
+    ];
+
     protected $fillable = [
         'title',
         'slug',
+        'client',
         'patcher_notice',
         'article_content',
+    ];
+
+    protected $casts = [
+        'client' => 'string',
     ];
 
     public function getRouteKeyName(): string
     {
         return 'slug';
+    }
+
+    public function getClientLabelAttribute(): string
+    {
+        return self::CLIENTS[$this->client] ?? $this->client;
     }
 }

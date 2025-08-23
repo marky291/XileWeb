@@ -17,4 +17,12 @@ class EditPatch extends EditRecord
             DeleteAction::make(),
         ];
     }
+    
+    protected function mutateFormDataBeforeSave(array $data): array
+    {
+        // Ensure patches remain for XileRO (x9) client
+        $data['client'] = 'x9';
+        
+        return $data;
+    }
 }

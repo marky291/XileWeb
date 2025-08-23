@@ -4,11 +4,15 @@
             <h2>Welcome {{ Str::ucfirst(auth()->user()->name) }}!</h2>
 
             <div class="grid grid-cols-4 gap-6">
-                @foreach($this->characters() as $character)
+                @forelse($this->characters() as $character)
                     <div class="h-50 w-25 border rounded p-4">
                         <p class="text-gray-100 text-center">{{ $character->name }}</p>
                     </div>
-                @endforeach
+                @empty
+                    <div class="col-span-4">
+                        <p class="text-gray-400">No characters found. Please create a game account first.</p>
+                    </div>
+                @endforelse
             </div>
 
 {{--            {{ auth()->user()->userLogins()->pluck('login_account_id')->first() }}--}}

@@ -76,7 +76,26 @@ Route::resource('posts', PostController::class)->only('show');
 
 Route::get('patch/notice', function () {
     $rawPosts = DB::table('posts')
-        ->select('id', 'slug', 'title', 'blurb', 'created_at', DB::raw('MONTH(created_at) as month, YEAR(created_at) as year'))
+        ->select('id', 'slug', 'title', 'patcher_notice', 'created_at', DB::raw('MONTH(created_at) as month, YEAR(created_at) as year'))
+        ->where('client', 'x9') // All posts are for XileRO (x9) client
+        ->orderBy('created_at', 'DESC')
+        ->get();
+
+    $groupedPosts = $rawPosts->groupBy(function ($date) {
+        return Carbon::parse($date->created_at)->format('F Y'); // grouping by month and year
+    });
+
+    $response = response()->view('patcher', ['groupedPosts' => $groupedPosts]);
+    $response->headers->set('Content-Security-Policy', "frame-ancestors https://xilero.net https://xileretro.net http://patch.xileretro.net");
+
+    return $response;
+});
+
+// Alias route for clarity - both routes show the same XileRO posts
+Route::get('x9/patch/notice', function () {
+    $rawPosts = DB::table('posts')
+        ->select('id', 'slug', 'title', 'patcher_notice', 'created_at', DB::raw('MONTH(created_at) as month, YEAR(created_at) as year'))
+        ->where('client', 'x9') // All posts are for XileRO (x9) client
         ->orderBy('created_at', 'DESC')
         ->get();
 
