@@ -3,7 +3,6 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -13,11 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('patches', function (Blueprint $table) {
-            $table->enum('client', ['retro', 'x9'])->default('x9')->after('type');
+            $table->text('comments')->nullable()->change();
         });
-
-        // Update existing patches to 'retro' for backward compatibility
-        DB::table('patches')->update(['client' => 'retro']);
     }
 
     /**
@@ -26,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('patches', function (Blueprint $table) {
-            $table->dropColumn('client');
+            $table->text('comments')->nullable(false)->change();
         });
     }
 };

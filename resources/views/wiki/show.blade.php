@@ -1,7 +1,7 @@
 <x-app-layout>
-    @section("title", "XileRO | Update: " . $post->title)
-    @section('description', $post->patcher_notice)
-    @section('keywords', 'XileRO, Updates, Changelog')
+    @section("title", "XileRO | Wiki: " . $title)
+    @section('description', 'XileRO Wiki - Your comprehensive guide to XileRO')
+    @section('keywords', 'XileRO, Wiki, Guide, Tutorial')
 
     {{-- Progress Bar --}}
     <div id="reading-progress" class="fixed top-0 left-0 w-0 h-1 bg-amber-500 z-50"></div>
@@ -18,14 +18,24 @@
                     Home
                 </a>
                 <span class="mx-3 text-gray-500">/</span>
-                <a href="/posts" class="hover:text-amber-500 transition-colors flex items-center">
+                <a href="/wiki" class="hover:text-amber-500 transition-colors flex items-center">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2.5 2.5 0 00-2.5-2.5H15"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253z"></path>
                     </svg>
-                    Updates
+                    Wiki
                 </a>
-                <span class="mx-3 text-gray-500">/</span>
-                <span class="text-amber-500 font-semibold">{{ $post->title }}</span>
+                @if(count($breadcrumbs) > 0)
+                    @foreach($breadcrumbs as $index => $breadcrumb)
+                        <span class="mx-3 text-gray-500">/</span>
+                        @if($index < count($breadcrumbs) - 1)
+                            <a href="{{ $breadcrumb['url'] }}" class="hover:text-amber-500 transition-colors">
+                                {{ $breadcrumb['name'] }}
+                            </a>
+                        @else
+                            <span class="text-amber-500 font-semibold">{{ $breadcrumb['name'] }}</span>
+                        @endif
+                    @endforeach
+                @endif
             </nav>
             
             {{-- Page Title --}}
@@ -34,12 +44,12 @@
                     <div class="flex items-center gap-4 mb-4 mt-4">
                         <div class="w-12 h-12 bg-amber-600 rounded flex items-center justify-center flex-shrink-0">
                             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2.5 2.5 0 00-2.5-2.5H15"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253z"></path>
                             </svg>
                         </div>
                         <div>
-                            <h1 class="text-3xl lg:text-4xl font-bold text-gray-100 leading-tight">{{ $post->title }}</h1>
-                            <p class="text-lg text-gray-300">{{ $post->patcher_notice ?: 'Latest updates and changes to XileRO' }}</p>
+                            <h1 class="text-3xl lg:text-4xl font-bold text-gray-100 leading-tight">{{ $title }}</h1>
+                            <p class="text-lg text-gray-300">Your comprehensive guide to XileRO</p>
                         </div>
                     </div>
                     
@@ -49,7 +59,7 @@
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
-                            <span>Published {{ $post->created_at->format('M j, Y') }}</span>
+                            <span>Updated {{ \Carbon\Carbon::createFromTimestamp(filemtime(resource_path("wiki/{$path}.md")))->format('M j, Y') }}</span>
                         </div>
                         <div class="flex items-center" id="read-time">
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -61,7 +71,7 @@
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
                             </svg>
-                            <span class="px-3 py-1 border border-amber-600 text-amber-400 rounded text-xs font-medium">Update</span>
+                            <span class="px-3 py-1 border border-amber-600 text-amber-400 rounded text-xs font-medium">Guide</span>
                         </div>
                     </div>
                 </div>
@@ -111,37 +121,37 @@
                         <div class="bg-gray-900 border border-gray-800 rounded p-6">
                             <h3 class="text-lg font-bold text-gray-100 mb-4">Quick Navigation</h3>
                             <div class="space-y-2">
-                                <a href="/posts" class="flex items-center px-3 py-2.5 text-gray-300 hover:text-amber-500 hover:bg-gray-800 rounded transition-colors duration-200">
+                                <a href="/wiki" class="flex items-center px-3 py-2.5 text-gray-300 hover:text-amber-500 hover:bg-gray-800 rounded transition-colors duration-200">
                                     <div class="w-6 h-6 bg-amber-600 rounded flex items-center justify-center mr-3">
                                         <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2.5 2.5 0 00-2.5-2.5H15"></path>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"></path>
                                         </svg>
                                     </div>
-                                    <span class="font-medium">All Updates</span>
+                                    <span class="font-medium">Wiki Home</span>
                                 </a>
-                                <a href="/wiki" class="flex items-center px-3 py-2.5 text-gray-300 hover:text-amber-500 hover:bg-gray-800 rounded transition-colors duration-200">
-                                    <div class="w-6 h-6 bg-blue-600 rounded flex items-center justify-center mr-3">
+                                <a href="/wiki/getting-started" class="flex items-center px-3 py-2.5 text-gray-300 hover:text-amber-500 hover:bg-gray-800 rounded transition-colors duration-200">
+                                    <div class="w-6 h-6 bg-green-600 rounded flex items-center justify-center mr-3">
                                         <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253z"></path>
                                         </svg>
                                     </div>
-                                    <span class="font-medium">Wiki</span>
+                                    <span class="font-medium">Getting Started</span>
                                 </a>
-                                <a href="/download" class="flex items-center px-3 py-2.5 text-gray-300 hover:text-amber-500 hover:bg-gray-800 rounded transition-colors duration-200">
-                                    <div class="w-6 h-6 bg-green-600 rounded flex items-center justify-center mr-3">
+                                <a href="/wiki/server-info" class="flex items-center px-3 py-2.5 text-gray-300 hover:text-amber-500 hover:bg-gray-800 rounded transition-colors duration-200">
+                                    <div class="w-6 h-6 bg-blue-600 rounded flex items-center justify-center mr-3">
                                         <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                                         </svg>
                                     </div>
-                                    <span class="font-medium">Download</span>
+                                    <span class="font-medium">Server Info</span>
                                 </a>
-                                <a href="/donate" class="flex items-center px-3 py-2.5 text-gray-300 hover:text-amber-500 hover:bg-gray-800 rounded transition-colors duration-200">
+                                <a href="/wiki/commands" class="flex items-center px-3 py-2.5 text-gray-300 hover:text-amber-500 hover:bg-gray-800 rounded transition-colors duration-200">
                                     <div class="w-6 h-6 bg-purple-600 rounded flex items-center justify-center mr-3">
                                         <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                                         </svg>
                                     </div>
-                                    <span class="font-medium">Donate</span>
+                                    <span class="font-medium">Commands</span>
                                 </a>
                             </div>
                         </div>
@@ -168,16 +178,16 @@
                 {{-- Main Content --}}
                 <main class="col-span-12 lg:col-span-9">
                     <div class="bg-gray-900 border border-gray-800 rounded p-6 lg:p-8">
-                        <article class="prose prose-lg max-w-none post-content">
+                        <article class="prose prose-lg max-w-none wiki-content">
                             <x-markdown class="markdown">
-                                {{ $post->article_content }}
+                                {!! $content !!}
                             </x-markdown>
                         </article>
 
                         {{-- Article Rating --}}
                         <div class="mt-12 pt-8 border-t border-gray-700">
                             <div class="bg-gray-800 border border-gray-700 rounded p-6">
-                                <h4 class="text-lg font-semibold text-gray-100 mb-4">Was this update helpful?</h4>
+                                <h4 class="text-lg font-semibold text-gray-100 mb-4">Was this article helpful?</h4>
                                 <div class="flex items-center gap-4">
                                     <button onclick="rateArticle(true)" class="flex items-center px-4 py-2 border border-green-600 text-green-400 hover:bg-green-600 hover:text-white rounded transition-colors duration-200">
                                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -206,13 +216,13 @@
                                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                         </svg>
-                                        <span>Published {{ $post->created_at->format('F j, Y') }}</span>
+                                        <span>Last updated {{ \Carbon\Carbon::createFromTimestamp(filemtime(resource_path("wiki/{$path}.md")))->format('F j, Y') }}</span>
                                     </div>
                                     <div class="flex items-center text-sm text-gray-400">
                                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                                         </svg>
-                                        <span>{{ str_word_count(strip_tags($post->article_content)) }} words</span>
+                                        <span>{{ str_word_count(strip_tags($content)) }} words</span>
                                     </div>
                                 </div>
                                 <div class="flex justify-end">
@@ -248,15 +258,15 @@
 
     {{-- Flat Styling --}}
     <style>
-        /* Flat post content */
-        .post-content {
+        /* Flat wiki content */
+        .wiki-content {
             @apply text-gray-300 leading-7;
             font-size: 16px;
             line-height: 1.75;
         }
 
         /* Clean headings */
-        .post-content h1 {
+        .wiki-content h1 {
             @apply text-3xl font-bold text-gray-100 mt-0 mb-8 pb-4 border-b-2 border-gray-700;
             color: rgb(243 244 246) !important; /* gray-100 */
             font-size: 1.875rem !important; /* text-3xl */
@@ -265,7 +275,7 @@
             margin-bottom: 2rem !important;
         }
 
-        .post-content h2 {
+        .wiki-content h2 {
             @apply text-2xl font-bold text-gray-100 mt-10 mb-6 first:mt-0 pb-2 border-b border-gray-700;
             color: rgb(243 244 246) !important; /* gray-100 */
             font-size: 1.5rem !important; /* text-2xl */
@@ -274,7 +284,7 @@
             margin-bottom: 1.5rem !important;
         }
 
-        .post-content h3 {
+        .wiki-content h3 {
             @apply text-xl font-bold text-gray-100 mt-8 mb-5;
             color: rgb(243 244 246) !important; /* gray-100 */
             font-size: 1.25rem !important; /* text-xl */
@@ -283,7 +293,7 @@
             margin-bottom: 1.25rem !important;
         }
 
-        .post-content h4 {
+        .wiki-content h4 {
             @apply text-lg font-semibold text-gray-100 mt-6 mb-4;
             color: rgb(243 244 246) !important; /* gray-100 */
             font-size: 1.125rem !important; /* text-lg */
@@ -293,91 +303,91 @@
         }
 
         /* Paragraph styling */
-        .post-content p {
+        .wiki-content p {
             @apply mb-6 text-gray-300 text-base leading-7;
         }
 
         /* Lists */
-        .post-content ul,
-        .post-content ol {
+        .wiki-content ul,
+        .wiki-content ol {
             @apply mb-6 text-gray-300;
         }
 
-        .post-content ul {
+        .wiki-content ul {
             @apply list-disc pl-6;
         }
 
-        .post-content ol {
+        .wiki-content ol {
             @apply list-decimal pl-6;
         }
 
-        .post-content li {
+        .wiki-content li {
             @apply mb-2 leading-7;
         }
 
         /* Links */
-        .post-content a {
+        .wiki-content a {
             @apply text-amber-400 hover:text-amber-300 focus:text-amber-300 visited:text-amber-500 active:text-amber-200 underline font-semibold transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-opacity-50 rounded-sm;
             color: rgb(251 191 36) !important; /* amber-400 */
         }
 
-        .post-content a:hover {
+        .wiki-content a:hover {
             color: rgb(252 211 77) !important; /* amber-300 */
         }
 
-        .post-content a:focus {
+        .wiki-content a:focus {
             color: rgb(252 211 77) !important; /* amber-300 */
         }
 
-        .post-content a:visited {
+        .wiki-content a:visited {
             color: rgb(245 158 11) !important; /* amber-500 */
         }
 
-        .post-content a:active {
+        .wiki-content a:active {
             color: rgb(254 240 138) !important; /* amber-200 */
         }
 
         /* Code styling */
-        .post-content code {
+        .wiki-content code {
             @apply bg-gray-800 text-gray-100 px-2 py-1 rounded font-mono text-sm border border-gray-700;
         }
 
-        .post-content pre {
+        .wiki-content pre {
             @apply bg-gray-800 border border-gray-700 rounded p-6 overflow-x-auto mb-6;
         }
 
-        .post-content pre code {
+        .wiki-content pre code {
             @apply bg-transparent p-0 border-0 text-gray-100;
         }
 
         /* Flat tables */
-        .post-content table {
+        .wiki-content table {
             @apply w-full border-collapse mb-8 bg-gray-800 border border-gray-700 rounded;
         }
 
-        .post-content table th {
+        .wiki-content table th {
             @apply bg-gray-700 text-gray-100 font-bold text-left p-4 border-b border-gray-600;
         }
 
-        .post-content table td {
+        .wiki-content table td {
             @apply text-gray-300 p-4 border-b border-gray-700;
         }
 
-        .post-content table tr:last-child td {
+        .wiki-content table tr:last-child td {
             @apply border-b-0;
         }
 
-        .post-content table tr:hover {
+        .wiki-content table tr:hover {
             @apply bg-gray-700;
         }
 
         /* Blockquotes */
-        .post-content blockquote {
+        .wiki-content blockquote {
             @apply border-l-4 border-amber-500 pl-6 py-4 bg-gray-800 text-gray-300 my-6 italic;
         }
 
         /* Dividers */
-        .post-content hr {
+        .wiki-content hr {
             @apply border-gray-700 my-8;
         }
 
@@ -410,7 +420,7 @@
     {{-- Simple JavaScript --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const content = document.querySelector('.post-content');
+            const content = document.querySelector('.wiki-content');
             const toc = document.getElementById('toc');
             const progressBar = document.getElementById('reading-progress');
             const backToTopBtn = document.getElementById('back-to-top');

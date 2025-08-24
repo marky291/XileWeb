@@ -14,14 +14,16 @@ class CreatePatch extends CreateRecord
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
+        // Calculate the correct patch number for the selected client
+        $client = $data['client'];
+        $maxNumber = \App\Models\Patch::where('client', $client)->max('number');
+        $data['number'] = $maxNumber ? $maxNumber + 1 : 1;
+
         // Remove post-related fields from patch data
         unset($data['create_post']);
         unset($data['post_title']);
         unset($data['post_patcher_notice']);
         unset($data['post_article_content']);
-        
-        // All patches are for XileRO (x9) client
-        $data['client'] = 'x9';
 
         return $data;
     }
@@ -32,11 +34,11 @@ class CreatePatch extends CreateRecord
         $formData = $this->form->getState();
 
         if ($formData['create_post'] ?? false) {
-            // Create the post with auto-generated slug (always x9 client)
+            // Create the post with auto-generated slug using the selected client
             $post = Post::create([
                 'title' => $formData['post_title'],
                 'slug' => Str::slug($formData['post_title']),
-                'client' => 'x9', // All posts are for XileRO (x9)
+                'client' => $this->record->client, // Use the client selected for the patch
                 'patcher_notice' => $formData['post_patcher_notice'],
                 'article_content' => $formData['post_article_content'],
             ]);

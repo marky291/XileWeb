@@ -32,6 +32,14 @@ class PostResource extends Resource
         return $form
             ->columns(1)
             ->schema([
+                Select::make('client')
+                    ->label('Client')
+                    ->options(Post::CLIENTS)
+                    ->native(false)
+                    ->selectablePlaceholder(false)
+                    ->default(Post::CLIENT_XILERO)
+                    ->helperText('Select which client this post is for')
+                    ->required(),
                 TextInput::make('title')
                     ->required()
                     ->helperText('The title of the post'),
@@ -54,6 +62,18 @@ class PostResource extends Resource
     {
         return $table
             ->columns([
+                TextColumn::make('client')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'retro' => 'danger',
+                        'xilero' => 'success',
+                        default => 'gray',
+                    })
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                        'retro' => 'Retro',
+                        'xilero' => 'XileRO',
+                        default => $state,
+                    }),
                 TextColumn::make('title')
                     ->searchable()
                     ->sortable(),
@@ -71,7 +91,9 @@ class PostResource extends Resource
                     ->since(),
             ])
             ->filters([
-                //
+                SelectFilter::make('client')
+                    ->label('Client')
+                    ->options(Post::CLIENTS),
             ])
             ->actions([
                 EditAction::make(),
@@ -80,7 +102,8 @@ class PostResource extends Resource
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->defaultSort('created_at', 'desc');
     }
 
     public static function getRelations(): array

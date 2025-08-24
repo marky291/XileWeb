@@ -11,11 +11,12 @@ class Patch extends Model
     use HasFactory;
 
     const CLIENT_RETRO = 'retro';
-    const CLIENT_X9 = 'x9';
+
+    const CLIENT_XILERO = 'xilero';
 
     const CLIENTS = [
         self::CLIENT_RETRO => 'Retro (Classic)',
-        self::CLIENT_X9 => 'XileRO (Direct x9)',
+        self::CLIENT_XILERO => 'XileRO',
     ];
 
     protected $fillable = [

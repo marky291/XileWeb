@@ -3,7 +3,6 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -12,11 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Update all patches to x9
-        DB::table('patches')->update(['client' => 'x9']);
-        
-        // Update all posts to x9
-        DB::table('posts')->update(['client' => 'x9']);
+        Schema::dropIfExists('features');
     }
 
     /**
@@ -24,6 +19,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        // No reversal needed as we're standardizing on x9
+        // Cannot recreate the features table without knowing its structure
+        // This migration is not reversible
     }
 };

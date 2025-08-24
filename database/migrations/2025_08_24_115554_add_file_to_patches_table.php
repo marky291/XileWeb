@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('patches', function (Blueprint $table) {
-            $table->foreignId('post_id')->nullable()->after('comments')->constrained()->nullOnDelete();
+            $table->string('file');
         });
     }
 
@@ -22,8 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('patches', function (Blueprint $table) {
-            $table->dropForeign(['post_id']);
-            $table->dropColumn('post_id');
+            $table->string('file');
         });
     }
 };

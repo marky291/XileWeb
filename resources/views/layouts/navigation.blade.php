@@ -17,8 +17,8 @@
                     <li><a class="hover:bg-linear-to-bl hover:from-blue-900 hover:to-fuchsia-700 rounded-xs py-3 px-6 text-gray-100 border-gray-500 bg-gray-900/50"
                            href="https://discord.gg/hp7CS6k" title="Join XileRO on Discord">Discord</a></li>
                     <li><a class="hover:bg-linear-to-tr hover:from-blue-900 hover:to-fuchsia-700 rounded-xs py-3 px-6 text-gray-100 border-gray-500 bg-gray-900/50"
-                           href="http://wiki.xilero.net/index.php?title=Main_Page" title="XileRO Wiki Page">Wiki</a>
-                    </li>
+                            href="http://wiki.xilero.net/index.php?title=Main_Page" title="XileRO Wiki Page">Wiki</a>
+                     </li>
                 </ul>
                 <div class="flex-1 flex items-center justify-end">
                     <a target="_blank" rel="noopener" href="https://wiki.xilero.net/index.php?search=&title=Special%3ASearch&go=Go"

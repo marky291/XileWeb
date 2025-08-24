@@ -25,6 +25,7 @@ use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 
@@ -42,9 +43,6 @@ class PatchResource extends Resource
 
     public static function form(Form $form): Form
     {
-        $last_patch = Patch::latest('number')->first();
-        $next_number = $last_patch ? $last_patch->number + 1 : 1;
-        $recent_patches = Patch::latest('number')->take(5)->get();
 
         return $form
             ->schema([
@@ -65,11 +63,30 @@ class PatchResource extends Resource
                                     ->default('FLD')
                                     ->helperText('FLD patches to the Root folder, GRF patches to the GRF file')
                                     ->required(),
+                                Select::make('client')
+                                    ->label('Client')
+                                    ->options(Patch::CLIENTS)
+                                    ->native(false)
+                                    ->selectablePlaceholder(false)
+                                    ->default(Patch::CLIENT_XILERO)
+                                    ->helperText('Select which client this patch is for')
+                                    ->live()
+                                    ->afterStateUpdated(function ($state, $set) {
+                                        $client = $state ?: Patch::CLIENT_XILERO;
+                                        $maxNumber = Patch::where('client', $client)->max('number');
+                                        $nextNumber = $maxNumber ? $maxNumber + 1 : 1;
+                                        $set('number', $nextNumber);
+                                    })
+                                    ->required(),
                             ]),
                         TextInput::make('number')
                             ->label('Patch Number')
-                            ->default($next_number)
-                            ->disabled()
+                            ->default(function (Get $get) {
+                                $client = $get('client') ?: Patch::CLIENT_XILERO;
+                                $maxNumber = Patch::where('client', $client)->max('number');
+                                return $maxNumber ? $maxNumber + 1 : 1;
+                            })
+                            ->readOnly()
                             ->dehydrated()
                             ->prefix('#')
                             ->helperText('Auto-incremented patch version number'),
@@ -81,17 +98,15 @@ class PatchResource extends Resource
                     ->schema([
                         FileUpload::make('file')
                             ->label('Patch File')
-                            ->acceptedFileTypes(['application/octet-stream', '.gpf'])
-                            ->directory('patches')
-                            ->visibility('public')
-                            ->preserveFilenames()
-                            ->downloadable()
-                            ->openable()
-                            ->helperText('Upload a single .gpf patch file (Required)')
                             ->required()
+                            ->disk('public')
+                            ->directory('patches')
                             ->maxSize(102400)
-                            ->uploadingMessage('Uploading patch file...')
-                            ->removeUploadedFileButtonPosition('right'),
+                            ->downloadable()
+                            ->helperText('Upload a .gpf patch file (max 100MB)')
+                            ->preserveFilenames()
+                            ->storeFileNamesIn('patch_name'),
+
                     ]),
 
                 Section::make('Additional Information')
@@ -122,7 +137,12 @@ class PatchResource extends Resource
                             ->schema([
                                 TextInput::make('post_title')
                                     ->label('Post Title')
-                                    ->placeholder('e.g., Patch #'.$next_number.' - Halloween Update')
+                                    ->placeholder(function (Get $get) {
+                                        $client = $get('client') ?: Patch::CLIENT_XILERO;
+                                        $maxNumber = Patch::where('client', $client)->max('number');
+                                        $next_number = $maxNumber ? $maxNumber + 1 : 1;
+                                        return 'e.g., Patch #'.$next_number.' - Halloween Update';
+                                    })
                                     ->required()
                                     ->maxLength(255)
                                     ->helperText('The title of the announcement post'),
@@ -164,9 +184,12 @@ class PatchResource extends Resource
                     ->schema([
                         Placeholder::make('recent_patches')
                             ->label('')
-                            ->content(function () use ($recent_patches) {
+                            ->content(function (Get $get) {
+                                $client = $get('client') ?: Patch::CLIENT_XILERO;
+                                $recent_patches = Patch::where('client', $client)->latest('number')->take(5)->get();
+                                
                                 if ($recent_patches->isEmpty()) {
-                                    return new HtmlString('<p class="text-sm text-gray-500">No patches found</p>');
+                                    return new HtmlString('<p class="text-sm text-gray-500">No patches found for '.($client === 'retro' ? 'Retro' : 'XileRO').'</p>');
                                 }
 
                                 $html = '<div class="space-y-2">';
@@ -175,6 +198,10 @@ class PatchResource extends Resource
                                         ? '<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">FLD</span>'
                                         : '<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800">GRF</span>';
 
+                                    $client_badge = $patch->client === 'retro'
+                                        ? '<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-orange-100 text-orange-800">Retro</span>'
+                                        : '<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-purple-100 text-purple-800">XileRO</span>';
+
                                     $file_name = $patch->file ? basename($patch->file) : 'No file';
                                     $comments = $patch->comments ? ' - '.Str::limit($patch->comments, 50) : '';
 
@@ -182,10 +209,12 @@ class PatchResource extends Resource
                                         '<div class="flex items-center gap-2 p-2 bg-gray-50 dark:bg-gray-800 rounded">
                                             <span class="font-mono text-sm font-semibold">#%d</span>
                                             %s
+                                            %s
                                             <span class="text-sm text-gray-600 dark:text-gray-400">%s%s</span>
                                         </div>',
                                         $patch->number,
                                         $type_badge,
+                                        $client_badge,
                                         $file_name,
                                         $comments
                                     );
@@ -204,57 +233,66 @@ class PatchResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('number')
-                    ->label('Patch #')
+                    ->label('#')
                     ->numeric()
                     ->sortable()
-                    ->badge(),
+                    ->badge()
+                    ->prefix('#'),
+                    
                 TextColumn::make('type')
-                    ->label('Type')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
                         'FLD' => 'success',
                         'GRF' => 'info',
                         default => 'gray',
+                    }),
+                    
+                TextColumn::make('client')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'retro' => 'danger',
+                        'xilero' => 'success',
+                        default => 'gray',
                     })
                     ->formatStateUsing(fn (string $state): string => match ($state) {
-                        'FLD' => 'FLD (Root)',
-                        'GRF' => 'GRF (File)',
+                        'retro' => 'Retro',
+                        'xilero' => 'XileRO',
                         default => $state,
-                    })
-                    ->searchable(),
-                TextColumn::make('file')
-                    ->label('Patch File')
-                    ->formatStateUsing(function ($state) {
-                        if (! $state) {
-                            return 'No file';
-                        }
-
-                        return basename($state);
-                    })
+                    }),
+                    
+                TextColumn::make('patch_name')
+                    ->label('File')
+                    ->placeholder('No file')
                     ->searchable()
                     ->copyable()
                     ->copyMessage('Filename copied')
-                    ->copyMessageDuration(1500),
+                    ->limit(20)
+                    ->tooltip(fn ($state) => $state),
+                    
                 TextColumn::make('comments')
                     ->label('Notes')
-                    ->limit(50)
+                    ->limit(30)
+                    ->placeholder('No notes')
                     ->tooltip(function (TextColumn $column): ?string {
                         $state = $column->getState();
-
-                        return strlen($state) > 50 ? $state : null;
-                    }),
+                        return strlen($state) > 30 ? $state : null;
+                    })
+                    ->toggleable(isToggledHiddenByDefault: true),
+                    
                 TextColumn::make('post.title')
-                    ->label('Announcement')
+                    ->label('Post')
                     ->placeholder('No post')
-                    ->limit(30)
+                    ->limit(20)
                     ->tooltip(fn ($record) => $record->post ? $record->post->title : null)
                     ->url(fn ($record) => $record->post ? "/posts/{$record->post->slug}" : null)
-                    ->openUrlInNewTab(),
+                    ->openUrlInNewTab()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                    
                 TextColumn::make('created_at')
-                    ->label('Uploaded')
-                    ->dateTime()
+                    ->label('Date')
+                    ->dateTime('M j')
                     ->sortable()
-                    ->since(),
+                    ->tooltip(fn ($state) => $state?->format('M j, Y g:i A')),
             ])
             ->filters([
                 SelectFilter::make('type')
@@ -263,13 +301,16 @@ class PatchResource extends Resource
                         'FLD' => 'FLD - Root Folder',
                         'GRF' => 'GRF - GRF File',
                     ]),
+                SelectFilter::make('client')
+                    ->label('Client')
+                    ->options(Patch::CLIENTS),
             ])
             ->actions([
                 Action::make('download')
                     ->label('Download')
                     ->icon('heroicon-o-arrow-down-tray')
                     ->color('success')
-                    ->url(fn (Patch $record): string => $record->file ? asset('storage/'.$record->file) : '#')
+                    ->url(fn (Patch $record): string => $record->file ? Storage::disk('public')->url($record->file) : '#')
                     ->openUrlInNewTab()
                     ->visible(fn (Patch $record): bool => ! empty($record->file)),
                 EditAction::make(),
@@ -279,7 +320,7 @@ class PatchResource extends Resource
                     DeleteBulkAction::make(),
                 ]),
             ])
-            ->defaultSort('number', 'desc')
+            ->defaultSort('created_at', 'desc')
             ->paginated([10, 25, 50, 100])
             ->poll('60s');
     }

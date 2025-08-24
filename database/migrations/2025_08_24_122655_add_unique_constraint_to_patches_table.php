@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('posts', function (Blueprint $table) {
-            $table->renameColumn('blurb', 'patcher_notice');
-            $table->renameColumn('body', 'article_content');
+        Schema::table('patches', function (Blueprint $table) {
+            $table->unique(['client', 'number'], 'patches_client_number_unique');
         });
     }
 
@@ -22,9 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('posts', function (Blueprint $table) {
-            $table->renameColumn('patcher_notice', 'blurb');
-            $table->renameColumn('article_content', 'body');
+        Schema::table('patches', function (Blueprint $table) {
+            $table->dropUnique('patches_client_number_unique');
         });
     }
 };
