@@ -304,3 +304,13 @@
         @apply text-white text-4xl mb-7;
     }
 }
+
+/* Wiki typography strong elements styling with higher specificity */
+.prose strong,
+.prose-lg strong,
+.prose-xl strong,
+.prose-2xl strong,
+:where(strong):not(:where([class~="not-prose"],[class~="not-prose"] *)) {
+    color: rgb(251 191 36) !important; /* amber-400 */
+    font-weight: 700 !important;
+}
