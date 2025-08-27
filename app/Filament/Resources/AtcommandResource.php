@@ -2,16 +2,18 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\AtcommandResource\Pages;
-use App\Filament\Resources\AtcommandResource\RelationManagers;
+use App\Filament\Resources\AtcommandResource\Pages\CreateAtcommand;
+use App\Filament\Resources\AtcommandResource\Pages\EditAtcommand;
+use App\Filament\Resources\AtcommandResource\Pages\ListAtcommands;
 use App\Models\Atcommand;
-use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class AtcommandResource extends Resource
 {
@@ -34,26 +36,23 @@ class AtcommandResource extends Resource
         return $table
             ->defaultSort('atcommand_date', 'desc')
             ->columns([
-                Tables\Columns\TextColumn::make('account_id'),
-//                Tables\Columns\TextColumn::make('char_id'),
-                Tables\Columns\TextColumn::make('char_name')->searchable(),
-                Tables\Columns\TextColumn::make('map')->sortable(),
-                Tables\Columns\TextColumn::make('command'),
-                Tables\Columns\TextColumn::make('atcommand_date')->sortable()
+                TextColumn::make('account_id'),
+                //                Tables\Columns\TextColumn::make('char_id'),
+                TextColumn::make('char_name')->searchable(),
+                TextColumn::make('map')->sortable(),
+                TextColumn::make('command'),
+                TextColumn::make('atcommand_date')->sortable(),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
-            ])
-            ->emptyStateActions([
-                Tables\Actions\CreateAction::make(),
             ]);
     }
 
@@ -67,9 +66,9 @@ class AtcommandResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListAtcommands::route('/'),
-            'create' => Pages\CreateAtcommand::route('/create'),
-            'edit' => Pages\EditAtcommand::route('/{record}/edit'),
+            'index' => ListAtcommands::route('/'),
+            'create' => CreateAtcommand::route('/create'),
+            'edit' => EditAtcommand::route('/{record}/edit'),
         ];
     }
 }

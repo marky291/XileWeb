@@ -2,13 +2,15 @@
 
 namespace App\Ragnarok;
 
+use Illuminate\Config\Repository;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property int|mixed $guild_score
  * @property int|mixed $previous_score
- * @property \Illuminate\Config\Repository|\Illuminate\Contracts\Foundation\Application|\Illuminate\Foundation\Application|mixed $season
+ * @property Repository|Application|\Illuminate\Foundation\Application|mixed $season
  * @method static firstOrNew(array $array)
  */
 class GameWoeScore extends RagnarokModel

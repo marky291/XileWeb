@@ -1,9 +1,8 @@
 <?php
 
-use App\Actions\ProcessWoeEventPoints;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
-use App\Jobs\GuildMessagesToDiscord;
+use App\Http\Controllers\WikiController;
 use App\Models\Patch;
 use App\Ragnarok\ServerZeny;
 use Carbon\Carbon;
@@ -24,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
 
-    $server_zeny = Cache::remember('server_zeny', now()->addMinutes(60), function() {
+    $server_zeny = Cache::remember('server_zeny', now()->addMinutes(60), function () {
         return ServerZeny::first();
     });
 
@@ -33,17 +32,17 @@ Route::get('/', function () {
         'castles' => App\Ragnarok\GuildCastle::whereIn('castle_id', [28, 31, 15, 16])
             ->with('guild', 'guild.members')
             ->get()
-            ->sortBy(function($castle, $key) {
+            ->sortBy(function ($castle, $key) {
                 $order = ['28', '31', '15', '16'];
-                return array_search((string)$castle->castle_id, $order);
-            })
+
+                return array_search((string) $castle->castle_id, $order);
+            }),
     ]);
 })->name('home');
 
-Route::get('/warofemperium', function()
-{
+Route::get('/warofemperium', function () {
 
-    $server_zeny = Cache::remember('server_zeny', now()->addMinutes(60), function() {
+    $server_zeny = Cache::remember('server_zeny', now()->addMinutes(60), function () {
         return ServerZeny::first();
     });
 
@@ -52,10 +51,11 @@ Route::get('/warofemperium', function()
         'castles' => App\Ragnarok\GuildCastle::whereIn('castle_id', [28, 31, 15, 16])
             ->with('guild', 'guild.members')
             ->get()
-            ->sortBy(function($castle, $key) {
+            ->sortBy(function ($castle, $key) {
                 $order = ['28', '31', '15', '16'];
-                return array_search((string)$castle->castle_id, $order);
-            })
+
+                return array_search((string) $castle->castle_id, $order);
+            }),
     ]);
 })->name('woe');
 
@@ -76,7 +76,8 @@ Route::resource('posts', PostController::class)->only('show');
 
 Route::get('patch/notice', function () {
     $rawPosts = DB::table('posts')
-        ->select('id', 'slug', 'title', 'blurb', 'created_at', DB::raw('MONTH(created_at) as month, YEAR(created_at) as year'))
+        ->select('id', 'slug', 'title', 'patcher_notice', 'created_at', DB::raw('MONTH(created_at) as month, YEAR(created_at) as year'))
+        ->where('client', 'retro') // Posts for Retro client
         ->orderBy('created_at', 'DESC')
         ->get();
 
@@ -85,30 +86,79 @@ Route::get('patch/notice', function () {
     });
 
     $response = response()->view('patcher', ['groupedPosts' => $groupedPosts]);
-    $response->headers->set('Content-Security-Policy', "frame-ancestors https://xilero.net https://xileretro.net http://patch.xileretro.net");
+    $response->headers->set('Content-Security-Policy', 'frame-ancestors https://xilero.net https://xileretro.net http://patch.xileretro.net');
 
     return $response;
 });
 
-Route::get('patch/list', function() {
-    $patches = Patch::all()->toArray();
+// XileRO specific patch notices
+Route::get('xilero/patch/notice', function () {
+    $rawPosts = DB::table('posts')
+        ->select('id', 'slug', 'title', 'patcher_notice', 'created_at', DB::raw('MONTH(created_at) as month, YEAR(created_at) as year'))
+        ->where('client', 'xilero') // Posts for XileRO client
+        ->orderBy('created_at', 'DESC')
+        ->get();
 
-    $formattedPatches = array_map(function($patch) {
-        return sprintf(
-            "%d %s %s // %s",
+    $groupedPosts = $rawPosts->groupBy(function ($date) {
+        return Carbon::parse($date->created_at)->format('F Y'); // grouping by month and year
+    });
+
+    $response = response()->view('patcher', ['groupedPosts' => $groupedPosts]);
+    $response->headers->set('Content-Security-Policy', 'frame-ancestors https://xilero.net https://xileretro.net http://patch.xileretro.net');
+
+    return $response;
+});
+
+Route::get('patch/list', function () {
+    $patches = Patch::where('client', 'retro')->get()->toArray();
+
+    $formattedPatches = array_map(function ($patch) {
+        $base = sprintf(
+            '%d %s %s',
             $patch['number'],
             $patch['type'],
-            $patch['patch_name'],
-            $patch['comments'],
+            $patch['patch_name']
         );
+
+        if (! empty($patch['comments'])) {
+            $base .= ' // '.$patch['comments'];
+        }
+
+        return $base;
     }, $patches);
 
     return response(implode("\n", $formattedPatches), 200)
         ->header('Content-Type', 'text/plain');
 });
 
-require __DIR__.'/auth.php';
+Route::get('xilero/patch/list', function () {
+    $patches = Patch::where('client', 'xilero')->get()->toArray();
 
-Route::any('{query}', function() {
+    $formattedPatches = array_map(function ($patch) {
+        $base = sprintf(
+            '%d %s %s',
+            $patch['number'],
+            $patch['type'],
+            $patch['patch_name']
+        );
+
+        if (! empty($patch['comments'])) {
+            $base .= ' // '.$patch['comments'];
+        }
+
+        return $base;
+    }, $patches);
+
+    return response(implode("\n", $formattedPatches), 200)
+        ->header('Content-Type', 'text/plain');
+});
+
+// Wiki routes
+// Route::get('/wiki', [WikiController::class, 'show'])->name('wiki.home');
+// Route::get('/wiki/{path}', [WikiController::class, 'show'])->where('path', '.*')->name('wiki.show');
+
+Route::any('{query}', function () {
     return redirect('/')->with('message', 'Redirected 404.');
 })->where('query', '.*');
+
+require __DIR__.'/auth.php';

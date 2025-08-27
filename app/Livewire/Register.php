@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use Illuminate\Contracts\Validation\Validator;
 use App\Actions\MakeHashedLoginPassword;
 use App\Models\User;
 use App\Ragnarok\Login;
@@ -31,7 +32,7 @@ class Register extends Component
      * Register for a new account.
      *
      * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
+     * @return Validator
      */
     public function register()
     {

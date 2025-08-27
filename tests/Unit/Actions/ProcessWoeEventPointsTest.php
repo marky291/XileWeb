@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\Actions;
 
 use App\Actions\ProcessWoeEventPoints;
 use App\Exceptions\WoeEventNotEnoughEventsToProcessException;

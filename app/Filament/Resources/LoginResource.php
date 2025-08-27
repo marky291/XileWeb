@@ -5,20 +5,23 @@ namespace App\Filament\Resources;
 use App\Actions\MakeHashedLoginPassword;
 use App\Filament\Resources\CharResource\RelationManagers\CharRelationManager;
 use App\Filament\Resources\DonationUberResource\RelationManagers\DonationUberRelationManager;
-use App\Filament\Resources\LoginResource\Pages;
-use App\Filament\Resources\LoginResource\RelationManagers;
+use App\Filament\Resources\LoginResource\Pages\CreateLogin;
+use App\Filament\Resources\LoginResource\Pages\EditLogin;
+use App\Filament\Resources\LoginResource\Pages\ListLogins;
 use App\Ragnarok\Login;
 use Filament\Actions\Action;
-use Filament\Forms;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Get;
+use Filament\Forms\Components\Set;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
-use Filament\Forms\Get;
-use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class LoginResource extends Resource
 {
@@ -34,18 +37,18 @@ class LoginResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('account_id')->unique(ignoreRecord: true)->readOnly(),
-                Forms\Components\TextInput::make('userid')->unique(ignoreRecord: true),
-                Forms\Components\TextInput::make('email')->unique(ignoreRecord: true),
-                Forms\Components\TextInput::make('user_pass'),
-                Forms\Components\TextInput::make('group_id')->numeric(),
-                Forms\Components\TextInput::make('plain')->label('Plain Password')->hintAction(
-                    Forms\Components\Actions\Action::make('Create Hash')->action(function (Get $get, Set $set, $state) {
+                TextInput::make('account_id')->unique(ignoreRecord: true)->readOnly(),
+                TextInput::make('userid')->unique(ignoreRecord: true),
+                TextInput::make('email')->unique(ignoreRecord: true),
+                TextInput::make('user_pass'),
+                TextInput::make('group_id')->numeric(),
+                TextInput::make('plain')->label('Plain Password')->hintAction(
+                    Action::make('Create Hash')->action(function (Get $get, Set $set, $state) {
                         $set('user_pass', MakeHashedLoginPassword::run($state));
                     }),
                 ),
-                Forms\Components\TextInput::make('last_ip')->readOnly(),
-                Forms\Components\DatePicker::make('lastlogin')->readOnly(),
+                TextInput::make('last_ip')->readOnly(),
+                DatePicker::make('lastlogin')->readOnly(),
             ]);
     }
 
@@ -53,28 +56,25 @@ class LoginResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('account_id'),
-                Tables\Columns\TextColumn::make('userid')->searchable()->copyable(),
-                Tables\Columns\TextColumn::make('email')->searchable(),
-                Tables\Columns\TextColumn::make('chars_count')->counts('chars'),
-                Tables\Columns\TextColumn::make('group_id')->sortable(),
-                Tables\Columns\TextColumn::make('last_ip')->searchable()->copyable(),
-                Tables\Columns\TextColumn::make('lastlogin'),
+                TextColumn::make('account_id'),
+                TextColumn::make('userid')->searchable()->copyable(),
+                TextColumn::make('email')->searchable(),
+                TextColumn::make('chars_count')->counts('chars'),
+                TextColumn::make('group_id')->sortable(),
+                TextColumn::make('last_ip')->searchable()->copyable(),
+                TextColumn::make('lastlogin'),
             ])
             ->filters([
                 Filter::make('Staff')->query(fn (Builder $query): Builder => $query->where('group_id', '>', 1)),
                 Filter::make('Streamers')->query(fn (Builder $query): Builder => $query->where('group_id', '=', 1)),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                EditAction::make(),
             ])
             ->bulkActions([
-//                Tables\Actions\BulkActionGroup::make([
-//                    Tables\Actions\DeleteBulkAction::make(),
-//                ]),
-            ])
-            ->emptyStateActions([
-                //Tables\Actions\CreateAction::make(),
+                //                Tables\Actions\BulkActionGroup::make([
+                //                    Tables\Actions\DeleteBulkAction::make(),
+                //                ]),
             ]);
     }
 
@@ -82,16 +82,16 @@ class LoginResource extends Resource
     {
         return [
             CharRelationManager::class,
-            DonationUberRelationManager::class
+            DonationUberRelationManager::class,
         ];
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListLogins::route('/'),
-            'create' => Pages\CreateLogin::route('/create'),
-            'edit' => Pages\EditLogin::route('/{record}/edit'),
+            'index' => ListLogins::route('/'),
+            'create' => CreateLogin::route('/create'),
+            'edit' => EditLogin::route('/{record}/edit'),
         ];
     }
 }

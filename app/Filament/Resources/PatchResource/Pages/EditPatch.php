@@ -3,7 +3,7 @@
 namespace App\Filament\Resources\PatchResource\Pages;
 
 use App\Filament\Resources\PatchResource;
-use Filament\Actions;
+use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 
 class EditPatch extends EditRecord
@@ -13,7 +13,13 @@ class EditPatch extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\DeleteAction::make(),
+            DeleteAction::make(),
         ];
+    }
+
+    protected function mutateFormDataBeforeSave(array $data): array
+    {
+        // Allow user to change client selection
+        return $data;
     }
 }

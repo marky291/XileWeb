@@ -2,18 +2,19 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\CharResource\Pages;
-use App\Filament\Resources\CharResource\RelationManagers;
+use App\Filament\Resources\CharResource\Pages\CreateChar;
+use App\Filament\Resources\CharResource\Pages\EditChar;
+use App\Filament\Resources\CharResource\Pages\ListChars;
 use App\Filament\Resources\LoginResource\RelationManagers\LoginRelationManager;
 use App\Ragnarok\Char;
-use Filament\Forms;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Filters\Filter;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class CharResource extends Resource
 {
@@ -86,13 +87,12 @@ class CharResource extends Resource
             '4229' => 'Baby Rebellion',
         ];
 
-
         return $form
             ->schema([
-                Forms\Components\TextInput::make('account_id')->readOnly(),
-                Forms\Components\TextInput::make('name'),
-                Forms\Components\Select::make('class')->options($classOptions),
-                Forms\Components\TextInput::make('last_login')->readOnly(),
+                TextInput::make('account_id')->readOnly(),
+                TextInput::make('name'),
+                Select::make('class')->options($classOptions),
+                TextInput::make('last_login')->readOnly(),
             ]);
     }
 
@@ -100,38 +100,35 @@ class CharResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('account_id'),
-                Tables\Columns\TextColumn::make('login.userid')->searchable()->copyable(),
-                Tables\Columns\TextColumn::make('name')->label('Character')->searchable()->copyable(),
-                Tables\Columns\TextColumn::make('class'),
-                Tables\Columns\TextColumn::make('last_login'),
+                TextColumn::make('account_id'),
+                TextColumn::make('login.userid')->searchable()->copyable(),
+                TextColumn::make('name')->label('Character')->searchable()->copyable(),
+                TextColumn::make('class'),
+                TextColumn::make('last_login'),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                EditAction::make(),
             ])
             ->bulkActions([
-//                Tables\Actions\BulkActionGroup::make([
-//                    Tables\Actions\DeleteBulkAction::make(),
-//                ]),
-            ])
-            ->emptyStateActions([
-                //Tables\Actions\CreateAction::make(),
+                //                Tables\Actions\BulkActionGroup::make([
+                //                    Tables\Actions\DeleteBulkAction::make(),
+                //                ]),
             ]);
     }
 
     public static function getRelations(): array
     {
         return [
-            LoginRelationManager::class
+            LoginRelationManager::class,
         ];
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListChars::route('/'),
-            'create' => Pages\CreateChar::route('/create'),
-            'edit' => Pages\EditChar::route('/{record}/edit'),
+            'index' => ListChars::route('/'),
+            'create' => CreateChar::route('/create'),
+            'edit' => EditChar::route('/{record}/edit'),
         ];
     }
 }

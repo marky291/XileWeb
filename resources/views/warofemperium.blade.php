@@ -22,7 +22,7 @@
                                 </div>
                                 <div class="grid grid-cols-{{$castles->count()}} gap-5">
                                     @foreach ($castles as $castle)
-                                    <div class="mb-4 block-home bg-opacity-70 rounded p-5">
+                                    <div class="mb-4 block-home bg-black/70 rounded-xs p-5">
                                         <h3 class="text-amber-200 text-2xl mb-8 half-border">{{ $castle->name }}</h3>
                                         @foreach(config('castles.timezones') as $timezone)
                                             <div class="text-white mb-8 flex rounded">

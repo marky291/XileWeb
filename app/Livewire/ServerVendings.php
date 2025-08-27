@@ -2,13 +2,11 @@
 
 namespace App\Livewire;
 
-use App\Ragnarok\Login;
-use App\Ragnarok\Vending;
 use App\Ragnarok\VendingItems;
-use Filament\Forms\Components\TextInput;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
@@ -17,10 +15,11 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 
-class ServerVendings extends Component implements HasForms, HasTable
+class ServerVendings extends Component implements HasActions, HasForms, HasTable
 {
-    use InteractsWithTable;
+    use InteractsWithActions;
     use InteractsWithForms;
+    use InteractsWithTable;
 
     public function placeholder()
     {
@@ -50,12 +49,6 @@ class ServerVendings extends Component implements HasForms, HasTable
             ])
             ->filters([
                 Filter::make('Less than 1m')->query(fn (Builder $query): Builder => $query->where('price', '<', 1000000)),
-            ])
-            ->actions([
-                // ...
-            ])
-            ->bulkActions([
-                // ...
             ]);
     }
 

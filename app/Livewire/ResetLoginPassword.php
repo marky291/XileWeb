@@ -2,12 +2,14 @@
 
 namespace App\Livewire;
 
+use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Section;
+use Filament\Forms\Components\TextInput;
 use App\Ragnarok\Login;
 use Filament\Actions\Action;
 use Filament\Forms;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
 use Livewire\Component;
 use Illuminate\Contracts\View\View;
 
@@ -17,15 +19,15 @@ class ResetLoginPassword extends Component implements HasForms
 
     public ?array $data = [];
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\Section::make('Reset Account Password')
+        return $schema
+            ->components([
+                Section::make('Reset Account Password')
                     ->description('Prevent abuse by limiting the number of requests per period')
                     ->schema([
-                    Forms\Components\TextInput::make('Username'),
-                    Forms\Components\TextInput::make('New Password'),
+                    TextInput::make('Username'),
+                    TextInput::make('New Password'),
                 ])
             ])
             ->statePath('data');

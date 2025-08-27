@@ -86,7 +86,7 @@
                         <a target="_blank" href="{{ route('posts.show', $post->slug) }}">
                             {{ Carbon::parse($post->created_at)->format('d') }} <span>{{ $post->title }}</span>
                             <div class="description">
-                                <p>{{ $post->blurb }}</p>
+                                <p>{{ $post->patcher_notice }}</p>
                             </div>
                         </a>
                     </li>

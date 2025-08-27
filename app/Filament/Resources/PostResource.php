@@ -2,18 +2,22 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\PostResource\Pages;
-use App\Filament\Resources\PostResource\RelationManagers;
+use App\Filament\Resources\PostResource\Pages\CreatePost;
+use App\Filament\Resources\PostResource\Pages\EditPost;
+use App\Filament\Resources\PostResource\Pages\ListPosts;
 use App\Models\Post;
-use Filament\Forms;
+use Filament\Forms\Components\MarkdownEditor;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Forms\Components\MarkdownEditor;
-use Illuminate\Support\Str;
 
 class PostResource extends Resource
 {
@@ -28,11 +32,29 @@ class PostResource extends Resource
         return $form
             ->columns(1)
             ->schema([
-                Forms\Components\TextInput::make('title')->required()->live()
-                    ->afterStateUpdated(fn ($state, callable $set) => $set('slug', Str::slug($state))),
-                Forms\Components\TextInput::make('slug'),
-                Forms\Components\TextInput::make('blurb')->required(),
-                MarkdownEditor::make('body')->required(),
+                Select::make('client')
+                    ->label('Client')
+                    ->options(Post::CLIENTS)
+                    ->native(false)
+                    ->selectablePlaceholder(false)
+                    ->default(Post::CLIENT_XILERO)
+                    ->helperText('Select which client this post is for')
+                    ->required(),
+                TextInput::make('title')
+                    ->required()
+                    ->helperText('The title of the post'),
+                Textarea::make('patcher_notice')
+                    ->label('Patcher Notice')
+                    ->required()
+                    ->rows(3)
+                    ->maxLength(500)
+                    ->placeholder('Short notice text that will appear in the game patcher...')
+                    ->helperText('This text appears in the game patcher - keep it brief and informative'),
+                MarkdownEditor::make('article_content')
+                    ->label('Full Article')
+                    ->required()
+                    ->placeholder('Full article content that users see when they click "Read More" on the website...')
+                    ->helperText('Complete article content for the website (supports Markdown formatting)'),
             ]);
     }
 
@@ -40,23 +62,48 @@ class PostResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('title'),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('client')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'retro' => 'danger',
+                        'xilero' => 'success',
+                        default => 'gray',
+                    })
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                        'retro' => 'Retro',
+                        'xilero' => 'XileRO',
+                        default => $state,
+                    }),
+                TextColumn::make('title')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('patcher_notice')
+                    ->label('Patcher Notice')
+                    ->limit(50)
+                    ->tooltip(function (TextColumn $column): ?string {
+                        $state = $column->getState();
+
+                        return strlen($state) > 50 ? $state : null;
+                    }),
+                TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->since(),
             ])
             ->filters([
-                //
+                SelectFilter::make('client')
+                    ->label('Client')
+                    ->options(Post::CLIENTS),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ])
-            ->emptyStateActions([
-                Tables\Actions\CreateAction::make(),
-            ]);
+            ->defaultSort('created_at', 'desc');
     }
 
     public static function getRelations(): array
@@ -69,9 +116,9 @@ class PostResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPosts::route('/'),
-            'create' => Pages\CreatePost::route('/create'),
-            'edit' => Pages\EditPost::route('/{record}/edit'),
+            'index' => ListPosts::route('/'),
+            'create' => CreatePost::route('/create'),
+            'edit' => EditPost::route('/{record}/edit'),
         ];
     }
 }

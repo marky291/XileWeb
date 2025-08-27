@@ -1,36 +1,29 @@
 {
   "resources/assets/block-top-bg.png": {
-    "file": "assets/block-top-bg-2303a86c.png",
+    "file": "assets/block-top-bg-DOZCqMwd.png",
     "src": "resources/assets/block-top-bg.png"
   },
-  "resources/assets/effects/light-blue.png": {
-    "file": "assets/light-blue-e49c4045.png",
-    "src": "resources/assets/effects/light-blue.png"
-  },
-  "resources/assets/effects/yellow-light.png": {
-    "file": "assets/yellow-light-eaec9a85.png",
-    "src": "resources/assets/effects/yellow-light.png"
-  },
   "resources/assets/landing-sitting.jpeg": {
-    "file": "assets/landing-sitting-95915df5.jpeg",
+    "file": "assets/landing-sitting-Ch2ESB1R.jpeg",
     "src": "resources/assets/landing-sitting.jpeg"
   },
   "resources/assets/landing-sitting.png": {
-    "file": "assets/landing-sitting-6e119303.png",
+    "file": "assets/landing-sitting-B6Ogy0Zq.png",
     "src": "resources/assets/landing-sitting.png"
   },
   "resources/assets/line.png": {
-    "file": "assets/line-31da0e5c.png",
+    "file": "assets/line-BLRpMGeF.png",
     "src": "resources/assets/line.png"
   },
   "resources/css/app.css": {
-    "file": "assets/app-32f72fe6.css",
-    "isEntry": true,
-    "src": "resources/css/app.css"
+    "file": "assets/app-kx0Fd5_y.css",
+    "src": "resources/css/app.css",
+    "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-33584bf2.js",
-    "isEntry": true,
-    "src": "resources/js/app.js"
+    "file": "assets/app-B-cDXisM.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true
   }
 }

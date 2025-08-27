@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Factories\ragnarok;
+namespace Database\Factories\Ragnarok;
 
 use App\Enum\WoeEventType;
 use App\Ragnarok\GameWoeEvent;

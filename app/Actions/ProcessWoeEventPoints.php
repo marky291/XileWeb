@@ -2,6 +2,8 @@
 
 namespace App\Actions;
 
+use Exception;
+use Throwable;
 use App\Exceptions\WoeEventNotEnoughEventsToProcessException;
 use App\Exceptions\WoeEventOrderException;
 use App\Exceptions\WoeMissingEventException;
@@ -36,7 +38,7 @@ class ProcessWoeEventPoints
     /**
      * Handles the processing of WOE event points.
      *
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function handle(string $castle, Carbon $season = null)
     {
@@ -83,7 +85,7 @@ class ProcessWoeEventPoints
     /**
      * Validates the order of events.
      *
-     * @throws \Throwable
+     * @throws Throwable
      */
     private function isEventOrderValid($events)
     {
@@ -134,7 +136,7 @@ class ProcessWoeEventPoints
                 $guildKills[$event->guild_id] = ($guildKills[$event->guild_id] ?? 0) + 1;
             } else {
                 if ($lastEvent) {
-                    $duration = $event->created_at->diffInSeconds($lastEvent->created_at);
+                    $duration = abs($event->created_at->diffInSeconds($lastEvent->created_at));
                     $guildDurations[$lastEvent->guild_id] = ($guildDurations[$lastEvent->guild_id] ?? 0) + $duration;
                 }
 
@@ -176,7 +178,7 @@ class ProcessWoeEventPoints
 
                 $guild = Guild::firstWhere('guild_id', $guild_id);
 
-                throw_if(!$guild, new \Exception("Guild not found for guild_id: {$guild_id}"));
+                throw_if(!$guild, new Exception("Guild not found for guild_id: {$guild_id}"));
 
                 $score = GameWoeScore::firstOrNew(['guild_id' => $guild_id, 'season' => $season, 'castle_name' => $castle]);
 

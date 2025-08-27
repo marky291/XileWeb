@@ -2,6 +2,7 @@
 
 namespace App\Actions;
 
+use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -22,7 +23,7 @@ class RunDiscordPythonBot
         $token = config("services.discord.{$botNameSlug}_token");
 
         if ($token == null) {
-            throw new \Exception("Token missing for discord bot {$botName}.");
+            throw new Exception("Token missing for discord bot {$botName}.");
         }
 
         $url = route('api.discord');
