@@ -22,8 +22,6 @@ class EditPost extends EditRecord
     {
         // Re-generate slug from title when updating
         $data['slug'] = Str::slug($data['title']);
-        // Ensure posts remain for XileRO (x9) client
-        $data['client'] = 'x9';
 
         return $data;
     }

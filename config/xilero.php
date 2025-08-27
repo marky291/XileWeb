@@ -22,8 +22,8 @@ return [
 
     'max_level' => '255',
     'max_job' => '120',
-    'base_exp' => '4K',
-    'job_exp' => '4K',
+    'base_exp' => '1k',
+    'job_exp' => '1k',
     'card_drops' => '10%',
 
     'donation' => [

@@ -19,10 +19,7 @@ class WikiController extends Controller
             $path = 'index';
         }
 
-        // Special handling for wiki index page
-        if ($path === 'index') {
-            return view('wiki.index');
-        }
+        // Remove special handling - let index.md be processed like other markdown files
 
         // Build the full file path
         $filePath = resource_path("wiki/{$path}.md");

@@ -1,6 +1,8 @@
 # Getting Started with XileRO
 
-Welcome to XileRO! This guide will help you get started on your adventure.
+Welcome to XileRO! This comprehensive guide will walk you through everything you need to know to begin your adventure on our classic Ragnarok Online server.
+
+> **Quick Start:** New to RO? Jump to [Character Creation](#character-creation) to create your first character, then read about [Basic Commands](#basic-commands) to get playing immediately.
 
 ## Table of Contents
 1. [Creating Your Account](#creating-your-account)
@@ -11,28 +13,37 @@ Welcome to XileRO! This guide will help you get started on your adventure.
 
 ## Creating Your Account
 
-To create your XileRO account:
+To create your XileRO account and start playing:
 
-1. Visit our [registration page](#steps2play)
-2. Choose a unique username (this will be your login ID)
-3. Set a secure password
-4. Provide a valid email address
-5. Complete the registration process
+1. **Visit the registration page** - Go to our website's registration section
+2. **Choose a unique username** - This will be your permanent login ID, so choose wisely
+3. **Set a secure password** - Use a strong password to protect your account
+4. **Provide a valid email address** - Required for account recovery and updates
+5. **Complete the registration** - Follow the prompts to finish creating your account
+
+⚠️ **Important:** Remember your login credentials! You'll need them every time you play.
 
 ## Downloading the Client
 
-1. Download the XileRO client from our [official download link](https://drive.google.com/file/d/1RDUNM6pWVBMVLzdMVyze5QmdNuc99zKH/view?usp=sharing)
-2. Extract the files to a folder on your computer
-3. Run the patcher to get the latest updates
-4. Launch XileRO.exe to start the game
+Follow these steps to download and install the XileRO client:
+
+1. **Download the client** - Get the XileRO client from our [official download page](/wiki/download)
+2. **Extract the files** - Unzip to a folder on your computer (recommended: `C:\XileRO`)
+3. **Run the patcher** - Launch the patcher first to download the latest updates
+4. **Start the game** - Once patching is complete, launch `XileRO.exe`
+
+💡 **Tip:** Make sure to run the patcher as administrator if you encounter any permission issues.
 
 ## First Login
 
-When you first log in:
+When you log into XileRO for the first time:
 
-- Use the account credentials you created during registration
-- Select a server (if multiple are available)
-- Create your first character
+1. **Enter your credentials** - Use the username and password you created during registration
+2. **Select the server** - Choose XileRO from the server list (if multiple servers are shown)
+3. **Character selection screen** - You'll see an empty character list since this is your first time
+4. **Create your character** - Click "Create" to make your first character
+
+🎮 **Ready to play?** Once your character is created, click "Start" to enter the world of XileRO!
 
 ## Character Creation
 
@@ -44,25 +55,35 @@ When you first log in:
 - **Thief** → Assassin/Rogue
 - **Acolyte** → Priest/Monk
 
-### Starting Items
+### Starting Tips
+When creating your character:
+- **Choose wisely** - Job changes require specific levels and items
+- **Consider your playstyle** - Each job has unique strengths (DPS, support, tank)
+- **Name carefully** - Character names are permanent and must be appropriate
+
+### Starting Package
 All new characters receive:
-- Novice Package (consumables and basic equipment)
-- Starting zeny
-- Beginner's guide book
+- **Novice Package** - Basic consumables and equipment to get started
+- **Starting Zeny** - Initial currency for purchasing items
+- **Beginner Items** - Essential tools for early gameplay
 
 ## Basic Commands
 
 Here are some essential commands to get you started:
 
-| Command | Description |
-|---------|-------------|
-| `@commands` | Shows all available commands |
-| `@rates` | Display server rates |
-| `@time` | Check server time |
-| `@whereis <monster>` | Find monster locations |
-| `@whodrops <item>` | Check what drops an item |
+| Command | Description | Example |
+|---------|-------------|---------|
+| `@commands` | Shows all available commands | `@commands` |
+| `@rates` | Display current server rates | `@rates` |
+| `@time` | Check server time | `@time` |
+| `@whereis <monster>` | Find where monsters spawn | `@whereis poring` |
+| `@whodrops <item>` | Check what drops an item | `@whodrops red_potion` |
+| `@autoloot <rate>` | Auto-loot items (0-100%) | `@autoloot 10` |
+| `@storage` | Open your storage anywhere | `@storage` |
 
-For a complete list of commands, check our [Commands Guide](/wiki/server-info/commands).
+💡 **Pro Tip:** Type `@commands` in-game to see the complete list of available commands!
+
+For detailed command explanations, visit our [Commands Guide](/wiki/server-info/commands).
 
 ## Next Steps
 

@@ -6,10 +6,10 @@ Welcome to the official XileRO Wiki - your comprehensive guide to our classic Ra
 
 New to XileRO? Here are the essential resources to begin your adventure:
 
-- [Registration Guide](/wiki/getting-started) - Create your account and get started
-- [Download Client](/wiki/download) - Get the latest XileRO client
-- [Server Rules](/wiki/rules) - Important rules and guidelines
-- [Beginner's Guide](/wiki/beginner-guide) - Tips for new players
+- [Getting Started Guide](/wiki/getting-started) - Complete setup guide from account creation to first login
+- [Server Rules](/wiki/server-info/rules) - Important rules and guidelines for all players
+- [Server Rates & Settings](/wiki/server-info/rates) - Complete server configuration and rates
+- [Commands Guide](/wiki/server-info/commands) - All available player commands and how to use them
 
 ## Server Features
 
@@ -18,10 +18,10 @@ Our server offers a balanced gameplay experience with custom rates:
 
 | Feature | Rate/Setting |
 |---------|-------------|
-| Base EXP | 50x |
-| Job EXP | 50x |
-| Drop Rate | 25x |
-| Max Level | 99/70 |
+| Base EXP | 1K |
+| Job EXP | 1K |
+| Card Drop Rate | 10% |
+| Max Level | 255/120 |
 | Max Stats | 99 |
 | Instant Cast | 150 DEX |
 
@@ -54,21 +54,13 @@ Here are some essential commands to enhance your gameplay:
 @storage      - Open storage anywhere
 ```
 
-## Class Guides
+## Server Information
 
-Explore detailed guides for each job class:
+Learn about our server mechanics and features:
 
-### Swordsman Classes
-- [Knight Guide](/wiki/classes/knight) - Tank and DPS builds
-- [Crusader Guide](/wiki/classes/crusader) - Support and shield builds
-
-### Mage Classes
-- [Wizard Guide](/wiki/classes/wizard) - AoE and single-target builds
-- [Sage Guide](/wiki/classes/sage) - Support and battle builds
-
-### Archer Classes
-- [Hunter Guide](/wiki/classes/hunter) - Trap and DS builds
-- [Bard/Dancer Guide](/wiki/classes/bard-dancer) - Support builds
+- [Server Rates & Settings](/wiki/server-info/rates) - Detailed rate information and configurations
+- [Player Commands](/wiki/server-info/commands) - Complete guide to all available commands
+- [Server Rules](/wiki/server-info/rules) - Important guidelines and policies for all players
 
 ## Community Resources
 
@@ -84,26 +76,27 @@ Join our active Discord community for:
 **[Join Discord](https://discord.gg/hp7CS6k)**
 
 ### Important Links
-- [Vote for XileRO](https://xilero.net/vote) - Support the server
-- [Donation Shop](/wiki/donation) - Premium items and services
-- [Forum](/forum) - Community discussions
+- [Vote for XileRO](https://xilero.net/vote) - Support the server and help us grow
+- [Website Home](/) - Return to the main XileRO website
 
-## Recent Updates
+## Wiki Navigation
 
-### Patch 2024.12.15
-- Added new custom headgears
-- Balanced PvP damage formulas
-- Fixed various skill bugs
-- Implemented new world boss
+This wiki is organized to help you find information quickly:
 
-### Patch 2024.12.01
-- Christmas event launched
-- New instance dungeon added
-- Updated WoE rewards
-- Performance optimizations
+- **Getting Started** - New player guides and account setup
+- **Server Information** - Rules, rates, and commands
+- **Community** - Discord, events, and player interactions
+
+### Need Help?
+
+Can't find what you're looking for? Here are your options:
+
+1. **In-Game Help** - Type `@commands` to see available commands or ask in `#main` chat
+2. **Discord Community** - Join our active Discord for real-time support
+3. **Getting Started Guide** - Check our [comprehensive guide](/wiki/getting-started) for new players
 
 ---
 
-*This wiki is maintained by the XileRO team. For contributions or corrections, contact us on Discord.*
+*This wiki is maintained by the XileRO team. For contributions, suggestions, or corrections, contact us on Discord.*
 
-**Last Updated**: December 2024
+**Last Updated**: August 2025
