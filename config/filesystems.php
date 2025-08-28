@@ -59,7 +59,7 @@ return [
         'xilero_patch' => [
             'driver' => 'local',
             'root' => storage_path('app/public/xilero/patch'),
-            'url' => str_replace('https://', 'http://', env('APP_URL')).'/xilero/patch',
+            'url' => str_replace('https://', 'http://', env('APP_URL')).'/storage/xilero/patch',
             'visibility' => 'public',
             'throw' => false,
         ],
@@ -67,7 +67,7 @@ return [
         'retro_patch' => [
             'driver' => 'local',
             'root' => storage_path('app/public/retro/patch'),
-            'url' => str_replace('https://', 'http://', env('APP_URL')).'/retro/patch',
+            'url' => str_replace('https://', 'http://', env('APP_URL')).'/storage/retro/patch',
             'visibility' => 'public',
             'throw' => false,
         ],
