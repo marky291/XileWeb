@@ -109,12 +109,12 @@ Route::get('xilero/patch/notice', function () {
     return $response;
 });
 
-Route::get('retro/patch/patchlist.txt', function () {
+Route::get('retro/patch/list', function () {
     $patches = Patch::where('client', 'retro')->orderBy('number')->get();
     
     $formattedPatches = array_map(function ($patch) {
         $base = sprintf(
-            '%d %s %s',
+            '%03d %s %s',
             $patch['number'],
             $patch['type'],
             $patch['patch_name']
@@ -142,12 +142,12 @@ Route::get('retro/patch/patchlist.txt', function () {
         ->header('X-Content-Type-Options', 'nosniff');
 });
 
-Route::get('xilero/patch/patchlist.txt', function () {
+Route::get('xilero/patch/list', function () {
     $patches = Patch::where('client', 'xilero')->orderBy('number')->get();
 
     $formattedPatches = array_map(function ($patch) {
         $base = sprintf(
-            '%d %s %s',
+            '%03d %s %s',
             $patch['number'],
             $patch['type'],
             $patch['patch_name']
