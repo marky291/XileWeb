@@ -112,7 +112,8 @@ class PatchResource extends Resource
                             ->downloadable()
                             ->helperText('Upload a .gpf patch file (max 100MB)')
                             ->preserveFilenames()
-                            ->storeFileNamesIn('patch_name'),
+                            ->storeFileNamesIn('patch_name')
+                            ->moveFiles(),
 
                     ]),
 
