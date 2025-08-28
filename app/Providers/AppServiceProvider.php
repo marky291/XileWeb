@@ -21,11 +21,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $path = request()->path();
-        
-        // Force HTTPS except for patch routes
-        if (!str_starts_with($path, 'xilero/patch/') && !str_starts_with($path, 'retro/patch/')) {
-            \Illuminate\Support\Facades\URL::forceScheme('https');
+        if (config('app.env') === 'production') {
+            $path = request()->path();
+            
+            // Force HTTPS except for patch routes
+            if (!str_starts_with($path, 'xilero/patch/') && !str_starts_with($path, 'retro/patch/')) {
+                \Illuminate\Support\Facades\URL::forceScheme('https');
+            }
         }
     }
 }
