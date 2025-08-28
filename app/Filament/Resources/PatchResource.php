@@ -99,15 +99,15 @@ class PatchResource extends Resource
                         FileUpload::make('file')
                             ->label('Patch File')
                             ->required(fn (string $context): bool => $context === 'create')
-                            ->disk('public')
-                            ->directory(function (Get $get): string {
+                            ->disk(function (Get $get): string {
                                 $client = $get('client') ?? 'xilero';
                                 return match($client) {
-                                    'retro' => 'retro/patch/files',
-                                    'xilero' => 'xilero/patch/files',
-                                    default => 'xilero/patch/files'
+                                    'retro' => 'retro_patch',
+                                    'xilero' => 'xilero_patch',
+                                    default => 'xilero_patch'
                                 };
                             })
+                            ->directory('')
                             ->maxSize(102400)
                             ->downloadable()
                             ->helperText('Upload a .gpf patch file (max 100MB)')
@@ -317,7 +317,18 @@ class PatchResource extends Resource
                     ->label('Download')
                     ->icon('heroicon-o-arrow-down-tray')
                     ->color('success')
-                    ->url(fn (Patch $record): string => $record->file ? Storage::disk('public')->url($record->file) : '#')
+                    ->url(function (Patch $record): string {
+                        if (!$record->file) {
+                            return '#';
+                        }
+                        $client = $record->client ?? 'xilero';
+                        $fileName = basename($record->file);
+                        return match($client) {
+                            'retro' => '/retro/patch/files/' . $fileName,
+                            'xilero' => '/xilero/patch/files/' . $fileName,
+                            default => '/xilero/patch/files/' . $fileName
+                        };
+                    })
                     ->openUrlInNewTab()
                     ->visible(fn (Patch $record): bool => ! empty($record->file)),
                 EditAction::make(),
