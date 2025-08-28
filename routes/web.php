@@ -109,7 +109,7 @@ Route::get('xilero/patch/notice', function () {
     return $response;
 });
 
-Route::get('retro/patch/list.txt', function () {
+Route::get('retro/patch/patchlist.txt', function () {
     $patches = Patch::where('client', 'retro')->get()->toArray();
     $formattedPatches = array_map(function ($patch) {
         $base = sprintf(
@@ -130,7 +130,7 @@ Route::get('retro/patch/list.txt', function () {
         ->header('Content-Type', 'text/plain');
 });
 
-Route::get('xilero/patch/list.txt', function () {
+Route::get('xilero/patch/patchlist.txt', function () {
     $patches = Patch::where('client', 'xilero')->get()->toArray();
 
     $formattedPatches = array_map(function ($patch) {
