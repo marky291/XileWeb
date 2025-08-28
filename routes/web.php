@@ -74,7 +74,7 @@ Route::view('/forums', 'forums');
 
 Route::resource('posts', PostController::class)->only('show');
 
-Route::get('patch/notice', function () {
+Route::get('retro/patch/notice', function () {
     $rawPosts = DB::table('posts')
         ->select('id', 'slug', 'title', 'patcher_notice', 'created_at', DB::raw('MONTH(created_at) as month, YEAR(created_at) as year'))
         ->where('client', 'retro') // Posts for Retro client
@@ -109,9 +109,8 @@ Route::get('xilero/patch/notice', function () {
     return $response;
 });
 
-Route::get('patch/list', function () {
+Route::get('retro/patch/list.txt', function () {
     $patches = Patch::where('client', 'retro')->get()->toArray();
-
     $formattedPatches = array_map(function ($patch) {
         $base = sprintf(
             '%d %s %s',
@@ -131,7 +130,7 @@ Route::get('patch/list', function () {
         ->header('Content-Type', 'text/plain');
 });
 
-Route::get('xilero/patch/list', function () {
+Route::get('xilero/patch/list.txt', function () {
     $patches = Patch::where('client', 'xilero')->get()->toArray();
 
     $formattedPatches = array_map(function ($patch) {

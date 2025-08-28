@@ -98,9 +98,16 @@ class PatchResource extends Resource
                     ->schema([
                         FileUpload::make('file')
                             ->label('Patch File')
-                            ->required()
+                            ->required(fn (string $context): bool => $context === 'create')
                             ->disk('public')
-                            ->directory('patches')
+                            ->directory(function (Get $get): string {
+                                $client = $get('client') ?? 'xilero';
+                                return match($client) {
+                                    'retro' => 'retro/patch/files',
+                                    'xilero' => 'xilero/patch/files',
+                                    default => 'xilero/patch/files'
+                                };
+                            })
                             ->maxSize(102400)
                             ->downloadable()
                             ->helperText('Upload a .gpf patch file (max 100MB)')
