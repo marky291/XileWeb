@@ -21,8 +21,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-//        Feature::define('latest-posts', fn (User $user) => match (true) {
-//            $user->isAdmin() => true,
-//        });
+        // Only force HTTPS if not in the patch directory
+        if (!request()->is('xilero/patch/*')) {
+            \URL::forceScheme('https');
+        }
     }
 }
