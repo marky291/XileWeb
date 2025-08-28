@@ -322,12 +322,14 @@ class PatchResource extends Resource
                             return '#';
                         }
                         $client = $record->client ?? 'xilero';
-                        $fileName = basename($record->file);
-                        return match($client) {
-                            'retro' => '/retro/patch/files/' . $fileName,
-                            'xilero' => '/xilero/patch/files/' . $fileName,
-                            default => '/xilero/patch/files/' . $fileName
+                        $disk = match($client) {
+                            'retro' => 'retro_patch',
+                            'xilero' => 'xilero_patch',
+                            default => 'xilero_patch'
                         };
+                        
+                        // Use Storage facade to get the proper URL
+                        return Storage::disk($disk)->url($record->file);
                     })
                     ->openUrlInNewTab()
                     ->visible(fn (Patch $record): bool => ! empty($record->file)),
