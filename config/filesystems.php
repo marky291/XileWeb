@@ -58,16 +58,16 @@ return [
 
         'xilero_patch' => [
             'driver' => 'local',
-            'root' => public_path('xilero/patch/files'),
-            'url' => env('APP_URL').'/xilero/patch/files',
+            'root' => storage_path('app/public/xilero/patch'),
+            'url' => str_replace('https://', 'http://', env('APP_URL')).'/xilero/patch',
             'visibility' => 'public',
             'throw' => false,
         ],
 
         'retro_patch' => [
             'driver' => 'local',
-            'root' => public_path('retro/patch/files'),
-            'url' => env('APP_URL').'/retro/patch/files',
+            'root' => storage_path('app/public/retro/patch'),
+            'url' => str_replace('https://', 'http://', env('APP_URL')).'/retro/patch',
             'visibility' => 'public',
             'throw' => false,
         ],
@@ -86,7 +86,9 @@ return [
     */
 
     'links' => [
-        // No longer using storage:link for patches
+        public_path('storage') => storage_path('app/public'),
+        public_path('xilero/patch') => storage_path('app/public/xilero/patch'),
+        public_path('retro/patch') => storage_path('app/public/retro/patch'),
     ],
 
 ];
