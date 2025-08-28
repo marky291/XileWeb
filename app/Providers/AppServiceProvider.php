@@ -21,9 +21,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Only force HTTPS if not in the patch directory
-        if (!request()->is('xilero/patch/*')) {
-            \URL::forceScheme('https');
-        }
+        //
     }
 }
