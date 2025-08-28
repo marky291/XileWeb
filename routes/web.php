@@ -110,7 +110,8 @@ Route::get('xilero/patch/notice', function () {
 });
 
 Route::get('retro/patch/patchlist.txt', function () {
-    $patches = Patch::where('client', 'retro')->get()->toArray();
+    $patches = Patch::where('client', 'retro')->orderBy('number')->get();
+    
     $formattedPatches = array_map(function ($patch) {
         $base = sprintf(
             '%d %s %s',
@@ -124,14 +125,25 @@ Route::get('retro/patch/patchlist.txt', function () {
         }
 
         return $base;
-    }, $patches);
+    }, $patches->toArray());
 
-    return response(implode("\n", $formattedPatches), 200)
-        ->header('Content-Type', 'text/plain');
+    // Create the content with proper line endings
+    $content = implode("\r\n", $formattedPatches);
+    
+    // Get last modified time from the most recent patch update
+    $lastModified = $patches->max('updated_at') ?: now();
+    
+    return response($content, 200)
+        ->header('Content-Type', 'text/plain; charset=UTF-8')
+        ->header('Content-Disposition', 'inline; filename="patchlist.txt"')
+        ->header('Content-Length', strlen($content))
+        ->header('Cache-Control', 'no-cache, must-revalidate')
+        ->header('Last-Modified', $lastModified->toRfc7231String())
+        ->header('X-Content-Type-Options', 'nosniff');
 });
 
 Route::get('xilero/patch/patchlist.txt', function () {
-    $patches = Patch::where('client', 'xilero')->get()->toArray();
+    $patches = Patch::where('client', 'xilero')->orderBy('number')->get();
 
     $formattedPatches = array_map(function ($patch) {
         $base = sprintf(
@@ -146,10 +158,21 @@ Route::get('xilero/patch/patchlist.txt', function () {
         }
 
         return $base;
-    }, $patches);
+    }, $patches->toArray());
 
-    return response(implode("\n", $formattedPatches), 200)
-        ->header('Content-Type', 'text/plain');
+    // Create the content with proper line endings
+    $content = implode("\r\n", $formattedPatches);
+    
+    // Get last modified time from the most recent patch update
+    $lastModified = $patches->max('updated_at') ?: now();
+    
+    return response($content, 200)
+        ->header('Content-Type', 'text/plain; charset=UTF-8')
+        ->header('Content-Disposition', 'inline; filename="patchlist.txt"')
+        ->header('Content-Length', strlen($content))
+        ->header('Cache-Control', 'no-cache, must-revalidate')
+        ->header('Last-Modified', $lastModified->toRfc7231String())
+        ->header('X-Content-Type-Options', 'nosniff');
 });
 
 // Wiki routes
