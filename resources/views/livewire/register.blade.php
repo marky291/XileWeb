@@ -1,22 +1,5 @@
 <div class="grid grid-cols-2 gap-20 ">
     <div class="col-span-2 lg:col-span-1">
-        {{-- TEMPORARY: XileRO X9 not available notice - Remove this block when ready --}}
-        <h2 class="mt-0 mb-2 text-3xl font-bold text-gray-100">XileRO X9 Coming Soon</h2>
-        <p class="mb-8 text-amber-500">Registration is temporarily closed.</p>
-
-        <div class="prose text-gray-300">
-            <p class="text-gray-300 mb-6">XileRO X9 is not yet available. In the meantime, please visit our current server:</p>
-
-            <a href="https://xileretro.net" class="btn btn-primary w-full md:w-auto py-12 justify-center mt-4" target="_blank" rel="noopener">
-                <span>Visit XileRetro.net</span>
-            </a>
-
-            <p class="text-gray-400 mt-8 text-sm">You can register and play on XileRetro while we prepare XileRO X9 for launch.</p>
-        </div>
-        {{-- END TEMPORARY --}}
-
-        {{-- ORIGINAL REGISTRATION FORM - Uncomment when XileRO X9 is ready --}}
-        {{--
         @guest
 
             <h2 class="mt-0 mb-2 text-3xl font-bold text-gray-100"><span class="mr-2">1.</span> Register an Account.</h2>
@@ -152,25 +135,8 @@
 
             </div>
         @endguest
-        --}}
-        {{-- END ORIGINAL REGISTRATION FORM --}}
     </div>
     <div class="col-span-2 lg:col-span-1">
-        {{-- TEMPORARY: Download section closed notice - Remove this block when ready --}}
-        <h2 class="mt-0 mb-2 text-2xl font-bold text-gray-100">Downloads Coming Soon</h2>
-        <p class="mb-8 text-amber-500">Downloads are temporarily unavailable.</p>
-
-        <div class="prose text-gray-300">
-            <p class="text-gray-300 mb-6">Please visit XileRetro to download and play:</p>
-
-            <a href="https://xileretro.net" class="btn btn-primary w-full md:w-auto py-12 justify-center" target="_blank" rel="noopener">
-                <span>Visit XileRetro.net</span>
-            </a>
-        </div>
-        {{-- END TEMPORARY --}}
-
-        {{-- ORIGINAL DOWNLOAD SECTION - Uncomment when XileRO X9 is ready --}}
-        {{--
         <h2 class="mt-0 mb-2 text-2xl font-bold text-gray-100"><span class="mr-2">2.</span> Download Full Client</h2>
         <p class="mb-12 text-amber-500">Full downloads ensure an error-free experience.</p>
         <div class="grid grid-cols-5">
@@ -202,8 +168,6 @@
                 </div>
             </div>
         </div>
-        --}}
-        {{-- END ORIGINAL DOWNLOAD SECTION --}}
 
     </div>
 </div>

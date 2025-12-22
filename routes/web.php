@@ -109,13 +109,9 @@ Route::get('xilero/patch/notice', function () {
     return $response;
 });
 
-// IMPORTANT: These patch list routes must be accessible via HTTP (not HTTPS)
-// NeonCube patcher does not support HTTPS for .txt files
-// Configure web server (nginx/Apache) to NOT redirect these routes to HTTPS
-
-Route::get('retro/patch/list.txt', function () {
+Route::get('retro/patch/list', function () {
     $patches = Patch::where('client', 'retro')->orderBy('number')->get();
-
+    
     $formattedPatches = array_map(function ($patch) {
         $base = sprintf(
             '%03d %s %s',
@@ -131,14 +127,22 @@ Route::get('retro/patch/list.txt', function () {
         return $base;
     }, $patches->toArray());
 
+    // Create the content with proper line endings
     $content = implode("\r\n", $formattedPatches);
-
+    
+    // Get last modified time from the most recent patch update
+    $lastModified = $patches->max('updated_at') ?: now();
+    
     return response($content, 200)
-        ->header('Content-Type', 'text/plain')
-        ->header('Content-Length', strlen($content));
+        ->header('Content-Type', 'text/plain; charset=UTF-8')
+        ->header('Content-Disposition', 'inline; filename="patchlist.txt"')
+        ->header('Content-Length', strlen($content))
+        ->header('Cache-Control', 'no-cache, must-revalidate')
+        ->header('Last-Modified', $lastModified->toRfc7231String())
+        ->header('X-Content-Type-Options', 'nosniff');
 });
 
-Route::get('xilero/patch/list.txt', function () {
+Route::get('xilero/patch/list', function () {
     $patches = Patch::where('client', 'xilero')->orderBy('number')->get();
 
     $formattedPatches = array_map(function ($patch) {
@@ -156,11 +160,19 @@ Route::get('xilero/patch/list.txt', function () {
         return $base;
     }, $patches->toArray());
 
+    // Create the content with proper line endings
     $content = implode("\r\n", $formattedPatches);
-
+    
+    // Get last modified time from the most recent patch update
+    $lastModified = $patches->max('updated_at') ?: now();
+    
     return response($content, 200)
-        ->header('Content-Type', 'text/plain')
-        ->header('Content-Length', strlen($content));
+        ->header('Content-Type', 'text/plain; charset=UTF-8')
+        ->header('Content-Disposition', 'inline; filename="patchlist.txt"')
+        ->header('Content-Length', strlen($content))
+        ->header('Cache-Control', 'no-cache, must-revalidate')
+        ->header('Last-Modified', $lastModified->toRfc7231String())
+        ->header('X-Content-Type-Options', 'nosniff');
 });
 
 // Wiki routes
