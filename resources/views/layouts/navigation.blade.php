@@ -9,8 +9,9 @@
                     </a>
                 </div>
                 <ul aria-label="Desktop Navigation Menu" class="relative hidden lg:flex lg:items-center lg:justify-center lg:gap-6 xl:gap-10">
+                    {{-- TEMPORARY: Redirect to XileRetro - Original: href="#steps2play" --}}
                     <li><a class="hover:bg-linear-to-bl hover:from-blue-900 hover:to-fuchsia-700 rounded-xs py-3 px-6 text-gray-100 border-gray-500 bg-gray-900/50"
-                           href="#steps2play" title="Register at XileRO">Register</a></li>
+                           href="https://xileretro.net" target="_blank" rel="noopener" title="Register at XileRetro">Register</a></li>
                     <li><a class="hover:bg-linear-to-tr hover:from-blue-900 hover:to-fuchsia-700 rounded-xs py-3 px-6 text-gray-100 border-gray-500 bg-gray-900/50"
                            href="https://discord.com/channels/702319926110584943/1150037346415284284"
                            title="Donate to XileRO">Donate</a></li>
@@ -30,13 +31,14 @@
                             </svg>
                         </button>
                     </a>
+                    {{-- TEMPORARY: Redirect to XileRetro - Original: href="https://drive.google.com/file/d/1RDUNM6pWVBMVLzdMVyze5QmdNuc99zKH/view?usp=sharing" --}}
                     <a target="_blank" rel="noopener"
                        class="btn btn-primary ml-12"
-                       href="https://drive.google.com/file/d/1RDUNM6pWVBMVLzdMVyze5QmdNuc99zKH/view?usp=sharing"
-                       title="Download XileRO">
+                       href="https://xileretro.net"
+                       title="Visit XileRetro">
                         <span
                             class="">
-                            Download
+                            XileRetro
                         </span>
                     </a>
                     <button aria-label="Toggle Mobile Menu"
@@ -88,22 +90,24 @@
                                 Wiki
                             </a>
                         </li>
+                        {{-- TEMPORARY: Redirect to XileRetro --}}
                         <li>
-                            <a class="block w-full py-4 text-rose-800" href="https://xileretro.net/#steps2play"
-                               title="Register for XileRO" aria-label="Register for XileRO">
+                            <a class="block w-full py-4 text-rose-800" href="https://xileretro.net"
+                               target="_blank" rel="noopener" title="Register at XileRetro" aria-label="Register at XileRetro">
                                 Register
                             </a>
                         </li>
                         <li class="flex sm:justify-center">
                             <a class="group relative inline-flex border border-red-600 focus:outline-hidden mt-3 w-full max-w-md"
-                               href="https://drive.google.com/file/d/1RDUNM6pWVBMVLzdMVyze5QmdNuc99zKH/view?usp=sharing"
-                               title="Download XileRO Game Client" aria-label="Download XileRO Game Client">
+                               href="https://xileretro.net"
+                               target="_blank" rel="noopener" title="Visit XileRetro" aria-label="Visit XileRetro">
                                 <span
                                     class="w-full inline-flex items-center justify-center self-stretch px-4 py-2 text-sm text-red-600 text-center font-bold uppercase bg-white ring-1 ring-red-600 ring-offset-1 transform transition-transform group-hover:-translate-y-1 group-hover:-translate-x-1 group-focus:-translate-y-1 group-focus:-translate-x-1">
-                                    Download
+                                    XileRetro
                                 </span>
                             </a>
                         </li>
+                        {{-- END TEMPORARY --}}
                     </ul>
                 </div>
             </nav>
