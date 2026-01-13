@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @method static where(array $array)
  * @method static whereIn(string $string, $pluck)
+ *
  * @property
  */
 class GameWoeEvent extends RagnarokModel
@@ -15,9 +16,13 @@ class GameWoeEvent extends RagnarokModel
     use HasFactory;
 
     public const BREAK = 'break';
+
     public const STARTED = 'start';
+
     public const ENDED = 'end';
+
     public const ATTENDED = 'attend';
+
     public const KILLED = 'killed';
 
     /**
@@ -56,7 +61,7 @@ class GameWoeEvent extends RagnarokModel
         'event',
         'guild_id',
         'player',
-        'created_at'
+        'created_at',
     ];
 
     public function getGuildNameFromMessageAttribute()
@@ -78,7 +83,6 @@ class GameWoeEvent extends RagnarokModel
 
         return 'Unknown Guild';
     }
-
 
     public function getPlayerNameFromMessageAttribute()
     {

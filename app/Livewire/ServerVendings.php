@@ -36,6 +36,7 @@ class ServerVendings extends Component implements HasActions, HasForms, HasTable
     {
         return $table
             ->query(VendingItems::query())
+            ->recordKey(fn (VendingItems $record): string => "{$record->vending_id}-{$record->index}")
             ->columns([
                 TextColumn::make('cartinventory_id')->label('Item')->searchable()->sortable(),
                 TextColumn::make('amount')->label('Amount')->searchable()->sortable(),

@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|mixed $guild_score
  * @property int|mixed $previous_score
  * @property Repository|Application|\Illuminate\Foundation\Application|mixed $season
+ *
  * @method static firstOrNew(array $array)
  */
 class GameWoeScore extends RagnarokModel
@@ -18,10 +19,15 @@ class GameWoeScore extends RagnarokModel
     use HasFactory;
 
     public const POINTS_CASTLE_OWNER = 3;
+
     public const POINTS_LONGEST_HELD = 3;
+
     public const POINTS_FIRST_BREAK = 2;
+
     public const POINTS_ATTENDED = 1;
+
     public const POINTS_GUILD_MOST_KILLS = 1;
+
     public const POINTS_ABSENSE = -2;
 
     /**

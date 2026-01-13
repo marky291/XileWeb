@@ -4,12 +4,12 @@ namespace App\Ragnarok;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property int $char_id
  * @property int $account_id
- * @property bool $char_num
+ * @property int $char_num
  * @property string $name
  * @property int $class
  * @property int $base_level
@@ -23,21 +23,30 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $int
  * @property int $dex
  * @property int $luk
+ * @property int $pow
+ * @property int $sta
+ * @property int $wis
+ * @property int $spl
+ * @property int $con
+ * @property int $crt
  * @property int $max_hp
  * @property int $hp
  * @property int $max_sp
  * @property int $sp
+ * @property int $max_ap
+ * @property int $ap
  * @property int $status_point
  * @property int $skill_point
+ * @property int $trait_point
  * @property int $option
- * @property bool $karma
+ * @property int $karma
  * @property int $manner
  * @property int $party_id
  * @property int $guild_id
  * @property int $pet_id
  * @property int $homun_id
  * @property int $elemental_id
- * @property bool $hair
+ * @property int $hair
  * @property int $hair_color
  * @property int $clothes_color
  * @property int $body
@@ -50,11 +59,12 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $last_map
  * @property int $last_x
  * @property int $last_y
+ * @property int $last_instanceid
  * @property string $save_map
  * @property int $save_x
  * @property int $save_y
  * @property int $partner_id
- * @property bool $online
+ * @property int $online
  * @property int $father
  * @property int $mother
  * @property int $child
@@ -63,66 +73,135 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $delete_date
  * @property int $moves
  * @property int $unban_time
- * @property bool $font
+ * @property int $font
  * @property int $uniqueitem_counter
  * @property string $sex
- * @property bool $hotkey_rowshift
- * @property bool $hotkey_rowshift2
+ * @property int $hotkey_rowshift
+ * @property int $hotkey_rowshift2
  * @property int $clan_id
- * @property string $last_login
+ * @property string|null $last_login
  * @property int $title_id
- * @property bool $show_equip
+ * @property int $show_equip
+ * @property int $inventory_slots
+ * @property int $body_direction
+ * @property int $disable_call
+ * @property int $disable_partyinvite
+ * @property int $disable_showcostumes
+ * @property-read string $class_name
+ * @property-read Login $login
+ * @property-read Guild|null $guild
  */
 class Char extends RagnarokModel
 {
     use HasFactory;
 
-    /**
-     * The connection name for the model.
-     *
-     * @var string|null
-     */
     protected $connection = 'main';
 
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
     protected $table = 'char';
 
-    /**
-     * The primary key for the model.
-     *
-     * @var string
-     */
     protected $primaryKey = 'char_id';
 
-    /**
-     * @var array
-     */
-    protected $fillable = ['account_id', 'char_num', 'name', 'class', 'base_level', 'job_level', 'base_exp', 'job_exp', 'zeny', 'str', 'agi', 'vit', 'int', 'dex', 'luk', 'max_hp', 'hp', 'max_sp', 'sp', 'status_point', 'skill_point', 'option', 'karma', 'manner', 'party_id', 'guild_id', 'pet_id', 'homun_id', 'elemental_id', 'hair', 'hair_color', 'clothes_color', 'body', 'weapon', 'shield', 'head_top', 'head_mid', 'head_bottom', 'robe', 'last_map', 'last_x', 'last_y', 'save_map', 'save_x', 'save_y', 'partner_id', 'online', 'father', 'mother', 'child', 'fame', 'rename', 'delete_date', 'moves', 'unban_time', 'font', 'uniqueitem_counter', 'sex', 'hotkey_rowshift', 'hotkey_rowshift2', 'clan_id', 'last_login', 'title_id', 'show_equip'];
-
-    /**
-     * Indicates if the model should be timestamped.
-     *
-     * @var bool
-     */
     public $timestamps = false;
 
-    /**
-     * Scope a query to only include popular users.
-     *
-     * @param Builder $query
-     * @return Builder
-     */
-    public function scopeOnline($query) : Builder
+    protected $fillable = [
+        'account_id',
+        'char_num',
+        'name',
+        'class',
+        'base_level',
+        'job_level',
+        'base_exp',
+        'job_exp',
+        'zeny',
+        'str',
+        'agi',
+        'vit',
+        'int',
+        'dex',
+        'luk',
+        'pow',
+        'sta',
+        'wis',
+        'spl',
+        'con',
+        'crt',
+        'max_hp',
+        'hp',
+        'max_sp',
+        'sp',
+        'max_ap',
+        'ap',
+        'status_point',
+        'skill_point',
+        'trait_point',
+        'option',
+        'karma',
+        'manner',
+        'party_id',
+        'guild_id',
+        'pet_id',
+        'homun_id',
+        'elemental_id',
+        'hair',
+        'hair_color',
+        'clothes_color',
+        'body',
+        'weapon',
+        'shield',
+        'head_top',
+        'head_mid',
+        'head_bottom',
+        'robe',
+        'last_map',
+        'last_x',
+        'last_y',
+        'last_instanceid',
+        'save_map',
+        'save_x',
+        'save_y',
+        'partner_id',
+        'online',
+        'father',
+        'mother',
+        'child',
+        'fame',
+        'rename',
+        'delete_date',
+        'moves',
+        'unban_time',
+        'font',
+        'uniqueitem_counter',
+        'sex',
+        'hotkey_rowshift',
+        'hotkey_rowshift2',
+        'clan_id',
+        'last_login',
+        'title_id',
+        'show_equip',
+        'inventory_slots',
+        'body_direction',
+        'disable_call',
+        'disable_partyinvite',
+        'disable_showcostumes',
+    ];
+
+    public function scopeOnline(Builder $query): Builder
     {
         return $query->where('online', 1);
     }
 
-    public function login()
+    public function login(): BelongsTo
     {
         return $this->belongsTo(Login::class, 'account_id', 'account_id');
+    }
+
+    public function guild(): BelongsTo
+    {
+        return $this->belongsTo(Guild::class, 'guild_id', 'guild_id');
+    }
+
+    public function getClassNameAttribute(): string
+    {
+        return config('jobclasses')[$this->class] ?? 'Unknown';
     }
 }

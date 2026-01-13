@@ -13,8 +13,7 @@ abstract class RagnarokModel extends Model
      */
     public function getConnectionName()
     {
-        if (!app()->runningUnitTests())
-        {
+        if (! app()->runningUnitTests()) {
             return $this->connection;
         }
     }

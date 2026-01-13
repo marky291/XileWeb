@@ -9,8 +9,15 @@
                     </a>
                 </div>
                 <ul aria-label="Desktop Navigation Menu" class="relative hidden lg:flex lg:items-center lg:justify-center lg:gap-6 xl:gap-10">
-                    <li><a class="hover:bg-linear-to-bl hover:from-blue-900 hover:to-fuchsia-700 rounded-xs py-3 px-6 text-gray-100 border-gray-500 bg-gray-900/50"
-                           href="#steps2play" title="Register at XileRO">Register</a></li>
+                    @guest
+                        <li><a class="hover:bg-linear-to-bl hover:from-blue-900 hover:to-fuchsia-700 rounded-xs py-3 px-6 text-gray-100 border-gray-500 bg-gray-900/50"
+                               href="{{ route('register') }}" title="Register at XileRO">Register</a></li>
+                        <li><a class="hover:bg-linear-to-bl hover:from-green-700 hover:to-emerald-500 rounded-xs py-3 px-6 text-gray-100 border-gray-500 bg-gray-900/50"
+                               href="{{ route('login') }}" title="Login to XileRO">Login</a></li>
+                    @else
+                        <li><a class="hover:bg-linear-to-bl hover:from-blue-900 hover:to-fuchsia-700 rounded-xs py-3 px-6 text-gray-100 border-gray-500 bg-gray-900/50"
+                               href="{{ route('dashboard') }}" title="My Account">My Account</a></li>
+                    @endguest
                     <li><a class="hover:bg-linear-to-tr hover:from-blue-900 hover:to-fuchsia-700 rounded-xs py-3 px-6 text-gray-100 border-gray-500 bg-gray-900/50"
                            href="https://discord.com/channels/702319926110584943/1150037346415284284"
                            title="Donate to XileRO">Donate</a></li>
@@ -67,6 +74,36 @@
                  class="fixed inset-0 w-full pt-[4.2rem] z-10 pointer-events-none" style="display: none;">
                 <div class="relative h-full w-full py-8 px-5 bg-white pointer-events-auto overflow-y-auto">
                     <ul>
+                        @guest
+                            <li>
+                                <a class="block w-full py-4 text-rose-800" href="{{ route('register') }}"
+                                   title="Register for XileRO" aria-label="Register for XileRO">
+                                    Register
+                                </a>
+                            </li>
+                            <li>
+                                <a class="block w-full py-4 text-green-700 font-bold" href="{{ route('login') }}"
+                                   title="Login to XileRO" aria-label="Login to XileRO">
+                                    Login
+                                </a>
+                            </li>
+                        @else
+                            <li>
+                                <a class="block w-full py-4 text-rose-800" href="{{ route('dashboard') }}"
+                                   title="My Account" aria-label="My Account">
+                                    My Account
+                                </a>
+                            </li>
+                            <li>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit" class="block w-full py-4 text-left text-gray-600"
+                                            title="Logout" aria-label="Logout">
+                                        Logout
+                                    </button>
+                                </form>
+                            </li>
+                        @endguest
                         <li>
                             <a class="block w-full py-4 text-rose-800"
                                href="https://discord.com/channels/702319926110584943/1150037346415284284" title="Donate to XileRO"
@@ -86,12 +123,6 @@
                                href="http://wiki.xilero.net/index.php?title=Main_Page"
                                title="Access XileRO's Wiki Page" aria-label="Access XileRO's Wiki Page">
                                 Wiki
-                            </a>
-                        </li>
-                        <li>
-                            <a class="block w-full py-4 text-rose-800" href="https://xileretro.net/#steps2play"
-                               title="Register for XileRO" aria-label="Register for XileRO">
-                                Register
                             </a>
                         </li>
                         <li class="flex sm:justify-center">

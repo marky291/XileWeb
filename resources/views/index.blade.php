@@ -11,7 +11,6 @@
         </div>
     </section>
 
-
     <section id="read-the-rules" class="bg-clash-bg relative rounded-lg overflow-hidden py-24 md:pt-32 hidden md:block">
         <div class="z-0 absolute effect-light-blue-bang top-[20px] right-[140px]"></div>
         <div class="z-0 absolute effect-light-yellow-bang top-[20px] right-[180px]"></div>
@@ -55,14 +54,153 @@
 
     <div class="line"></div>
 
-    @if(auth()->check())
-        <livewire:my-account-details/>
-    @endif
+    <section id="steps2play" class="bg-clash-bg relative overflow-hidden py-16 md:py-20 md:px-24">
+        <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5 text-center">
+            @auth
+                {{-- Authenticated User View --}}
+                <div class="max-w-2xl mx-auto">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 bg-amber-500/10 border border-amber-500/20 rounded-full mb-6">
+                        <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                        <span class="text-amber-400 text-sm font-medium">You're logged in</span>
+                    </div>
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Welcome back, Adventurer!</h2>
+                    <p class="text-gray-400 mb-8 text-lg">Manage your characters, view stats, and reset positions from your account dashboard.</p>
+                    <a href="/app" class="group inline-flex items-center px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-gray-900 font-bold text-lg rounded-lg transition-all duration-300 shadow-lg shadow-amber-500/25 hover:shadow-xl hover:shadow-amber-500/30 hover:-translate-y-0.5">
+                        <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                        Go to My Account
+                        <svg class="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                        </svg>
+                    </a>
+                </div>
+            @else
+                {{-- Guest User View --}}
+                <div class="relative max-w-3xl mx-auto">
+                    {{-- Subtle glow --}}
+                    <div class="absolute inset-0 -z-10">
+                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-violet-600/10 rounded-full blur-3xl"></div>
+                    </div>
 
+                    {{-- Heading --}}
+                    <h2 class="text-4xl md:text-5xl font-bold mb-4">
+                        <span class="text-white">Ready to Start Your</span>
+                        <span class="text-amber-400"> Adventure?</span>
+                    </h2>
 
-    <section id="steps2play" class="bg-clash-bg relative overflow-hidden py-12 md:px-24">
-        <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
-            <livewire:register lazy />
+                    {{-- Subtitle --}}
+                    <p class="text-gray-400 mb-8 text-lg max-w-xl mx-auto">
+                        Create your account, download the client, and start playing on XileRO.
+                    </p>
+
+                    {{-- Buttons --}}
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
+                        <a href="{{ route('register') }}" class="group inline-flex items-center px-8 py-4 bg-amber-500 hover:bg-amber-400 text-gray-900 font-bold text-lg rounded-lg transition-all duration-200 hover:-translate-y-0.5">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
+                            </svg>
+                            Create Account
+                            <svg class="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </a>
+                        <a href="{{ route('login') }}" class="group inline-flex items-center px-8 py-4 bg-gray-800 hover:bg-gray-700 border border-gray-700 text-white font-bold text-lg rounded-lg transition-all duration-200 hover:-translate-y-0.5">
+                            <svg class="w-5 h-5 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
+                            </svg>
+                            Login
+                        </a>
+                    </div>
+
+                    <p class="text-gray-500 text-sm">Free to play. No donations required.</p>
+                </div>
+            @endauth
+
+            {{-- Download Section --}}
+            <div class="mt-12 pt-8 border-t border-gray-700">
+                <h3 class="text-2xl font-bold text-white mb-8">Download Game Client</h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {{-- Full Client Downloads --}}
+                    <div class="block-home p-6 rounded-lg">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="p-2 bg-amber-500/20 rounded-lg">
+                                <svg class="w-6 h-6 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold text-amber-400 half-border">Full Client</h4>
+                                <p class="text-xs text-gray-400">Recommended</p>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-400 mb-4">Complete installation with all game files included.</p>
+                        <div class="flex flex-col gap-2">
+                            @foreach(config('downloads.full') as $download)
+                                <a href="{{ $download['link'] }}" target="_blank" rel="noopener" class="inline-flex items-center justify-center px-4 py-2.5 {{ $download['bttn'] === 'btn-primary' ? 'bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white' : 'bg-gray-800 hover:bg-gray-700 text-gray-300 border border-gray-700' }} font-medium rounded-lg transition-all duration-200 text-sm">
+                                    <svg class="w-4 h-4 mr-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                                    </svg>
+                                    <span class="truncate">{{ $download['name'] }}</span>
+                                </a>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    {{-- Lite Client Downloads --}}
+                    <div class="block-home p-6 rounded-lg">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="p-2 bg-violet-500/20 rounded-lg">
+                                <svg class="w-6 h-6 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold text-violet-400 half-border">Lite Client</h4>
+                                <p class="text-xs text-gray-400">Smaller download</p>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-400 mb-4">Lightweight version for faster download speeds.</p>
+                        <div class="flex flex-col gap-2">
+                            @foreach(config('downloads.lite') as $download)
+                                <a href="{{ $download['link'] }}" target="_blank" rel="noopener" class="inline-flex items-center justify-center px-4 py-2.5 {{ $download['bttn'] === 'btn-primary' ? 'bg-gradient-to-r from-violet-600 to-violet-700 hover:from-violet-500 hover:to-violet-600 text-white' : 'bg-gray-800 hover:bg-gray-700 text-gray-300 border border-gray-700' }} font-medium rounded-lg transition-all duration-200 text-sm">
+                                    <svg class="w-4 h-4 mr-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                                    </svg>
+                                    <span class="truncate">{{ $download['name'] }}</span>
+                                </a>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    {{-- Android Downloads --}}
+                    <div class="block-home p-6 rounded-lg">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="p-2 bg-emerald-500/20 rounded-lg">
+                                <svg class="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold text-emerald-400 half-border">Android</h4>
+                                <p class="text-xs text-gray-400">Mobile version</p>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-400 mb-4">Play on the go with our Android client.</p>
+                        <div class="flex flex-col gap-2">
+                            @foreach(config('downloads.android') as $download)
+                                <a href="{{ $download['link'] }}" target="_blank" rel="noopener" class="inline-flex items-center justify-center px-4 py-2.5 {{ $download['bttn'] === 'btn-primary' ? 'bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-500 hover:to-emerald-600 text-white' : 'bg-gray-800 hover:bg-gray-700 text-gray-300 border border-gray-700' }} font-medium rounded-lg transition-all duration-200 text-sm">
+                                    <svg class="w-4 h-4 mr-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                                    </svg>
+                                    <span class="truncate">{{ $download['name'] }}</span>
+                                </a>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -88,7 +226,7 @@
             <p class="mt-6 text-gray-300 leading-relaxed">Welcome to the world of Xilero, where unique adventures await! If you're new to our server or looking to enhance your gameplay experience, you've come to the right place. Our Getting Started guides are crafted to help players of all levels navigate the distinct features and mechanics that set Xilero apart.</p>
             <div class="grid grid-cols-4 gap-12 mt-14">
                 <div class="col-span-4 md:col-span-2 lg:col-span-1 block-home">
-                    <a title="Learn more about Server Information & Features on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xilero.net/index.php?title=Server_Information">
+                    <a title="Learn more about Server Information & Features on XileRO Wiki" target="_blank" rel="noopener" href="https://wiki.xilero.net/index.php?title=Server_Information">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
                                 <img class="object-cover w-full rounded h-44" style="margin:0" src="{{ asset('assets/getting-started/server-information.jpeg') }}" alt="Server Information & Features">
@@ -108,7 +246,7 @@
                     </a>
                 </div>
                 <div class="col-span-4 md:col-span-2 lg:col-span-1 block-home hover:shadow-md hover:shadow-violet-500">
-                    <a title="Discover Best Leveling Areas & Progression Tips on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xilero.net/index.php?title=Leveling_Spots">
+                    <a title="Discover Best Leveling Areas & Progression Tips on XileRO Wiki" target="_blank" rel="noopener" href="https://wiki.xilero.net/index.php?title=Leveling_Spots">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
                                 <img class="object-cover w-full rounded h-44" style="margin:0" src="{{ asset('assets/getting-started/leveling-areas.jpeg') }}" alt="Leveling Areas & Progression Image">
@@ -128,7 +266,7 @@
                     </a>
                 </div>
                 <div class="col-span-4 md:col-span-2 lg:col-span-1 block-home hover:shadow-md hover:shadow-violet-500">
-                    <a title="Learn about the Donation Help & Rewards on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xilero.net/index.php?title=Donation">
+                    <a title="Learn about the Donation Help & Rewards on XileRO Wiki" target="_blank" rel="noopener" href="https://wiki.xilero.net/index.php?title=Donation">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
                                 <img class="object-cover w-full rounded h-44" style="margin:0" src="{{ asset('assets/getting-started/donation-help.jpeg') }}" alt="Donation Help & Rewards">
@@ -138,7 +276,7 @@
                     </a>
                 </div>
                 <div class="col-span-4 md:col-span-2 lg:col-span-1 block-home hover:shadow-md hover:shadow-violet-500">
-                    <a title="Explore the MVP Ranking System on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xilero.net/index.php?title=MVP">
+                    <a title="Explore the MVP Ranking System on XileRO Wiki" target="_blank" rel="noopener" href="https://wiki.xilero.net/index.php?title=MVP">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
                                 <img class="object-cover w-full rounded h-44" style="margin:0" src="{{ asset('assets/getting-started/mvp-ranking.jpeg') }}" alt="MVP Ranking System Image">
@@ -148,7 +286,7 @@
                     </a>
                 </div>
                 <div class="col-span-4 md:col-span-2 lg:col-span-1 block-home hover:shadow-md hover:shadow-violet-500">
-                    <a title="Discover Randomised Weapons Loots on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xilero.net/index.php?title=MVP">
+                    <a title="Discover Randomised Weapons Loots on XileRO Wiki" target="_blank" rel="noopener" href="https://wiki.xilero.net/index.php?title=MVP">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
                                 <img class="object-cover w-full rounded h-44" style="margin:0" src="{{ asset('assets/getting-started/randomized-weapon-loots.jpeg') }}" alt="Randomised Weapon Loot Image">
@@ -158,7 +296,7 @@
                     </a>
                 </div>
                 <div class="col-span-4 md:col-span-2 lg:col-span-1 block-home hover:shadow-md hover:shadow-violet-500">
-                    <a title="Explore the Wikipedia Knowledge Base on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xilero.net/index.php?title=MVP">
+                    <a title="Explore the Wikipedia Knowledge Base on XileRO Wiki" target="_blank" rel="noopener" href="https://wiki.xilero.net/index.php?title=MVP">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
                                 <img class="object-cover w-full rounded h-44" style="margin:0" src="{{ asset('assets/getting-started/wikipedia-knowledge.jpeg') }}" alt="Wikipedia Knowledge Base">
@@ -214,7 +352,6 @@
             <div class="">
                 <div class="grid grid-cols-2">
                     <h2 class="mb-0">Uber Store</h2>
-                    <h2 class="col-span-2 md:col-span-1 text-3xl text-left md:text-right font-bold mb-0 text-amber-500">Live Price: {{ cache()->remember('index.live_uber', now()->addMinutes(10), fn() => number_format($server_zeny->total_uber_cost) ?? 0) }} Zeny</h2>
                 </div>{{--                <h3 class="text-white text-2xl mt-4">Current Uber Cost: 1,000000 zeny</h3>--}}
                 <!-- <p class="mt-6 text-gray-700 leading-relaxed">We pride ourselves on the ability to offer a server that you can compete and join without the need to ever spend real money, to achieve this we offer a dynamic zeny based system to determinate the value of an uber in game which you can then use to purchase donation items. This gives zeny more value and keeps it as main currency while allowing those who want to donate still retain the rewards to support the server.</p> -->
                 <p class="mt-6 text-gray-300 leading-relaxed">Your ubers let you get some of the most powerful items in game, ubers can be purchased in game with zeny or by donation, here is a small preview of what is to offer, click to view our wiki for extensive catalogue of items. <span class="text-amber-500">@warp payon 142 224</span></p>

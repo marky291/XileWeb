@@ -23,9 +23,9 @@
 
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <meta name="description" content="@yield('description', 'XileRO is a leading PK server, offering unique mechanics and one-of-a-kind classic style gameplay. Experience XileRetro today and join the immersive world that redefines PK gaming.')">
-        <meta name="keywords" content="@yield('keywords', 'Ragnarok, Ragnarok Online, Classic, RO, XileRO, XileRetro, XileRO PK Retro, XileRO PK, PK Server, Woe Server')">
-        <meta name="author" content="XileRO, XileRetro">
+        <meta name="description" content="@yield('description', 'XileRO is a leading PK server, offering unique mechanics and one-of-a-kind classic style gameplay. Experience XileRO today and join the immersive world that redefines PK gaming.')">
+        <meta name="keywords" content="@yield('keywords', 'Ragnarok, Ragnarok Online, Classic, RO, XileRO, XileRO PK, PK Server, Woe Server')">
+        <meta name="author" content="XileRO">
         <meta name="robots" content="index, follow">
 
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
@@ -87,23 +87,23 @@
                 <footer id="footer" class="bg-clash-foot shadow-inner">
                     <div class="container px-3 md:px-0 grid grid-cols-2 col-gap-1 pt-12 mx-auto pb-15 content">
                         <div class="col-span-2 lg:col-span-1">
-                            {{-- <img src="/images/logo.png" alt="XileRetro Logo" class="w-1/2"> --}}
+                            {{-- <img src="/images/logo.png" alt="XileRO Logo" class="w-1/2"> --}}
                             <div class="grid grid-cols-2">
                                 <h2 class="text-xl font-bold my-6 text-gray-100">Navigate</h2>
                                 <div class="grid grid-cols-2 col-span-2 col-gap-6 prose">
                                     <ul class="m-0">
-                                        <li><a class="text-gray-300 no-underline hover:underline" href="{{ url('/') }}" title="XileRetro Home Page">Home</a></li>
-                                        <li><a target="_blank" rel="noopener" class="text-gray-300 no-underline hover:underline" href="http://wiki.xilero.net/index.php?title=Server_Rules" title="XileRetro Server Rules">Rulebook</a></li>
-                                        <li><a target="_blank" rel="noopener" class="text-gray-300 no-underline hover:underline" href="http://wiki.xilero.net/index.php?title=Server_Information#Staff" title="Information about XileRetro Staff">The Staff</a></li>
-                                        <li><a target="_blank" rel="noopener" class="text-gray-300 no-underline hover:underline" href="#steps2play" title="Download XileRetro">Download</a></li>
-                                        <li><a target="_blank" rel="noopener" class="text-gray-300 no-underline hover:underline" href="#steps2play" title="Register for XileRetro">Register</a></li>
+                                        <li><a class="text-gray-300 no-underline hover:underline" href="{{ url('/') }}" title="XileRO Home Page">Home</a></li>
+                                        <li><a target="_blank" rel="noopener" class="text-gray-300 no-underline hover:underline" href="http://wiki.xilero.net/index.php?title=Server_Rules" title="XileRO Server Rules">Rulebook</a></li>
+                                        <li><a target="_blank" rel="noopener" class="text-gray-300 no-underline hover:underline" href="http://wiki.xilero.net/index.php?title=Server_Information#Staff" title="Information about XileRO Staff">The Staff</a></li>
+                                        <li><a target="_blank" rel="noopener" class="text-gray-300 no-underline hover:underline" href="#steps2play" title="Download XileRO">Download</a></li>
+                                        <li><a target="_blank" rel="noopener" class="text-gray-300 no-underline hover:underline" href="#steps2play" title="Register for XileRO">Register</a></li>
                                     </ul>
                                     <ul class="m-0">
-                                        <li><a target="_blank" rel="noopener" class="text-gray-300 no-underline hover:underline" href="http://wiki.xilero.net/index.php?title=Server_Information" title="XileRetro Server Features">Server Features</a></li>
-                                        <li><a target="_blank" rel="noopener" class="text-gray-300 no-underline hover:underline" href="http://wiki.xilero.net/index.php?title=General_Customs" title="Modified official information of XileRetro">Modified Official</a></li>
-                                        <li><a target="_blank" rel="noopener" class="text-gray-300 no-underline hover:underline" href="https://wiki.xilero.net/index.php?title=Category:Release_Notes" title="XileRetro Updates and Release Notes">Updates & Release Notes</a></li>
-                                        <li><a target="_blank" rel="noopener" class="text-gray-300 no-underline hover:underline" href="http://wiki.xilero.net/index.php?title=Newbie_Center" title="Support Center for XileRetro Newbies">Newbie Center</a></li>
-                                        <li><a target="_blank" rel="noopener noreferrer" class="text-gray-300 no-underline hover:underline" href="http://wiki.xilero.net/index.php?title=Events" title="XileRetro Events and Activities">Events</a></li>
+                                        <li><a target="_blank" rel="noopener" class="text-gray-300 no-underline hover:underline" href="http://wiki.xilero.net/index.php?title=Server_Information" title="XileRO Server Features">Server Features</a></li>
+                                        <li><a target="_blank" rel="noopener" class="text-gray-300 no-underline hover:underline" href="http://wiki.xilero.net/index.php?title=General_Customs" title="Modified official information of XileRO">Modified Official</a></li>
+                                        <li><a target="_blank" rel="noopener" class="text-gray-300 no-underline hover:underline" href="https://wiki.xilero.net/index.php?title=Category:Release_Notes" title="XileRO Updates & Release Notes">Updates & Release Notes</a></li>
+                                        <li><a target="_blank" rel="noopener" class="text-gray-300 no-underline hover:underline" href="http://wiki.xilero.net/index.php?title=Newbie_Center" title="Support Center for XileRO Newbies">Newbie Center</a></li>
+                                        <li><a target="_blank" rel="noopener noreferrer" class="text-gray-300 no-underline hover:underline" href="http://wiki.xilero.net/index.php?title=Events" title="XileRO Events and Activities">Events</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -116,20 +116,20 @@
                         <div class="col-span-2 lg:col-span-1">
                             <h2 class="text-xl font-bold my-6 text-gray-100">Community Loaders</h2>
                             <div class="grid grid-cols-3 screenshots">
-                                <img class="col-span-1 my-0" src="{{ url('images/loading/loading00.png') }}" title="View XileRetro Wallpaper 1" alt="XileRetro Wallpaper 1">
-                                <img class="col-span-1 my-0" src="{{ url('images/loading/loading06.png') }}" title="View XileRetro Wallpaper 2" alt="XileRetro Wallpaper 2">
-                                <img class="col-span-1 my-0" src="{{ url('images/loading/loading08.png') }}" title="View XileRetro Wallpaper 3" alt="XileRetro Wallpaper 3">
+                                <img class="col-span-1 my-0" src="{{ url('images/loading/loading00.png') }}" title="View XileRO Wallpaper 1" alt="XileRO Wallpaper 1">
+                                <img class="col-span-1 my-0" src="{{ url('images/loading/loading06.png') }}" title="View XileRO Wallpaper 2" alt="XileRO Wallpaper 2">
+                                <img class="col-span-1 my-0" src="{{ url('images/loading/loading08.png') }}" title="View XileRO Wallpaper 3" alt="XileRO Wallpaper 3">
                             </div>
                             <div>
                                 <h2 class="text-xl mt-20 font-bold my-6 text-gray-100">Get in Touch</h2>
                                 <div class="grid grid-cols-3 col-gap-3">
-                                    <a href="https://www.facebook.com/groups/XileRetro" title="XileRetro's Facebook Group" class="no-underline">
+                                    <a href="https://www.facebook.com/groups/XileRetro" title="XileRO Facebook Group" class="no-underline">
                                         <div class="flex items-center col-span-1">
                                             <i class="mr-2 text-4xl text-blue-500 fab fa-facebook-square"></i>
                                             <p class="m-0 text-blue-100">Facebook Page</p>
                                         </div>
                                     </a>
-                                    <a href="https://discord.gg/hp7CS6k" title="Join XileRetro on Discord" class="no-underline">
+                                    <a href="https://discord.gg/hp7CS6k" title="Join XileRO on Discord" class="no-underline">
                                         <div class="flex items-center col-span-1">
                                             <i class="mr-2 text-4xl text-indigo-500 fab fa-discord"></i>
                                             <p class="m-0 text-indigo-100">Discord</p>
@@ -145,7 +145,7 @@
                             <p class="mt-0">A thank you to all our players who support and show commitment<br>to making a server that's great for everyone.</p>
                         </div>
                         <div class="hidden lg:flex items-end justify-end col-span-3 lg:col-span-1 text-right prose text-gray-300">
-                            <p class="mt-0">Website design and coded by XileRetro<br><span class="text-gray-100">Version {{ config('app.version') }}</span></p>
+                            <p class="mt-0">Website design and coded by XileRO<br><span class="text-gray-100">Version {{ config('app.version') }}</span></p>
                         </div>
                     </div>
                 </footer>

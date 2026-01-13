@@ -3,47 +3,51 @@
 namespace Database\Factories\Ragnarok;
 
 use App\Ragnarok\Login;
-use Database\Factories\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 class LoginFactory extends Factory
 {
-    /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
-    protected $model = Login::class; // Please update the namespace to match your Login model
+    protected $model = Login::class;
 
-    /**
-     * Define the model's default state.
-     *
-     * @return array
-     */
-    public function definition()
+    public function definition(): array
     {
         return [
-            'userid' => $this->faker->userName,
-            'user_pass' => $this->faker->password,
-            'sex' => $this->faker->randomElement(['M', 'F', 'S']),
-            'email' => $this->faker->safeEmail,
-            'group_id' => $this->faker->numberBetween(0, 99),
-            'state' => $this->faker->numberBetween(0, 1000000),
-            'unban_time' => $this->faker->numberBetween(0, 1000000),
-            'expiration_time' => $this->faker->numberBetween(0, 1000000),
-            'logincount' => $this->faker->numberBetween(0, 999999),
-            'lastlogin' => $this->faker->dateTime,
-            'last_ip' => $this->faker->ipv4,
-            'birthdate' => $this->faker->date,
-            'character_slots' => $this->faker->numberBetween(0, 255),
-            'pincode' => $this->faker->numerify('####'),
-            'pincode_change' => $this->faker->numberBetween(0, 1000000),
-            'vip_time' => $this->faker->numberBetween(0, 1000000),
-            'old_group' => $this->faker->numberBetween(0, 9),
-            'web_auth_token' => \Illuminate\Support\Str::random(17),
-            'web_auth_token_enabled' => $this->faker->numberBetween(0, 1),
-            'last_unique_id' => $this->faker->numberBetween(0, 1000000),
-            'blocked_unique_id' => $this->faker->numberBetween(0, 1000000),
+            'userid' => $this->faker->userName(),
+            'user_pass' => $this->faker->password(),
+            'sex' => $this->faker->randomElement(['M', 'F']),
+            'email' => $this->faker->unique()->safeEmail(),
+            'group_id' => 0,
+            'state' => 0,
+            'unban_time' => 0,
+            'expiration_time' => 0,
+            'logincount' => 0,
+            'lastlogin' => null,
+            'last_ip' => '',
+            'birthdate' => null,
+            'character_slots' => 0,
+            'pincode' => '',
+            'pincode_change' => 0,
+            'vip_time' => 0,
+            'old_group' => 0,
+            'web_auth_token' => null,
+            'web_auth_token_enabled' => 0,
+            'remember_token' => null,
+            'email_verified_at' => null,
         ];
+    }
+
+    public function admin(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'group_id' => 99,
+        ]);
+    }
+
+    public function verified(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'email_verified_at' => now(),
+        ]);
     }
 }

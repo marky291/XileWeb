@@ -3,34 +3,39 @@
 namespace App\Ragnarok;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property int $vending_id
+ * @property int $index
+ * @property int $cartinventory_id
+ * @property int $amount
+ * @property int $price
+ * @property-read Vending $vending
+ */
 class VendingItems extends RagnarokModel
 {
     use HasFactory;
 
-    /**
-     * The primary key for the model.
-     *
-     * @var string
-     */
-    protected $primaryKey = 'vending_id';
-
-    /**
-     * The connection name for the model.
-     *
-     * @var string|null
-     */
     protected $connection = 'main';
 
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
     protected $table = 'vending_items';
 
-    public function vending()
+    protected $primaryKey = ['vending_id', 'index'];
+
+    public $incrementing = false;
+
+    public $timestamps = false;
+
+    protected $fillable = [
+        'vending_id',
+        'index',
+        'cartinventory_id',
+        'amount',
+        'price',
+    ];
+
+    public function vending(): BelongsTo
     {
         return $this->belongsTo(Vending::class, 'vending_id', 'id');
     }

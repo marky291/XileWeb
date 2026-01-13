@@ -1,12 +1,9 @@
 <?php
 
 use App\Http\Controllers\PostController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WikiController;
 use App\Models\Patch;
-use App\Ragnarok\ServerZeny;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
@@ -22,13 +19,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-
-    $server_zeny = Cache::remember('server_zeny', now()->addMinutes(60), function () {
-        return ServerZeny::first();
-    });
-
     return view('index', [
-        'server_zeny' => $server_zeny,
         'castles' => App\Ragnarok\GuildCastle::whereIn('castle_id', [28, 31, 15, 16])
             ->with('guild', 'guild.members')
             ->get()
@@ -41,13 +32,7 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('/warofemperium', function () {
-
-    $server_zeny = Cache::remember('server_zeny', now()->addMinutes(60), function () {
-        return ServerZeny::first();
-    });
-
     return view('warofemperium', [
-        'server_zeny' => $server_zeny,
         'castles' => App\Ragnarok\GuildCastle::whereIn('castle_id', [28, 31, 15, 16])
             ->with('guild', 'guild.members')
             ->get()
@@ -59,15 +44,7 @@ Route::get('/warofemperium', function () {
     ]);
 })->name('woe');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified', 'server.owner'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+// User account management is handled by Filament /app panel
 
 Route::view('/discord', 'discord');
 Route::view('/forums', 'forums');
@@ -111,7 +88,7 @@ Route::get('xilero/patch/notice', function () {
 
 Route::get('retro/patch/list', function () {
     $patches = Patch::where('client', 'retro')->orderBy('number')->get();
-    
+
     $formattedPatches = array_map(function ($patch) {
         $base = sprintf(
             '%03d %s %s',
@@ -129,10 +106,10 @@ Route::get('retro/patch/list', function () {
 
     // Create the content with proper line endings
     $content = implode("\r\n", $formattedPatches);
-    
+
     // Get last modified time from the most recent patch update
     $lastModified = $patches->max('updated_at') ?: now();
-    
+
     return response($content, 200)
         ->header('Content-Type', 'text/plain; charset=UTF-8')
         ->header('Content-Disposition', 'inline; filename="patchlist.txt"')
@@ -162,10 +139,10 @@ Route::get('xilero/patch/list', function () {
 
     // Create the content with proper line endings
     $content = implode("\r\n", $formattedPatches);
-    
+
     // Get last modified time from the most recent patch update
     $lastModified = $patches->max('updated_at') ?: now();
-    
+
     return response($content, 200)
         ->header('Content-Type', 'text/plain; charset=UTF-8')
         ->header('Content-Disposition', 'inline; filename="patchlist.txt"')
@@ -178,6 +155,25 @@ Route::get('xilero/patch/list', function () {
 // Wiki routes
 // Route::get('/wiki', [WikiController::class, 'show'])->name('wiki.home');
 // Route::get('/wiki/{path}', [WikiController::class, 'show'])->where('path', '.*')->name('wiki.show');
+
+// Authentication routes (integrated with site design)
+Route::middleware('guest')->group(function () {
+    Route::get('/login', \App\Livewire\Auth\GameAccountLogin::class)->name('login');
+    Route::get('/register', \App\Livewire\Auth\GameAccountRegister::class)->name('register');
+    Route::get('/password-reset', fn () => redirect('/app/password-reset'))->name('password.request');
+});
+
+// Authenticated user routes
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', \App\Livewire\Auth\GameAccountDashboard::class)->name('dashboard');
+    Route::post('/logout', function () {
+        auth()->logout();
+        session()->invalidate();
+        session()->regenerateToken();
+
+        return redirect('/');
+    })->name('logout');
+});
 
 Route::any('{query}', function () {
     return redirect('/')->with('message', 'Redirected 404.');

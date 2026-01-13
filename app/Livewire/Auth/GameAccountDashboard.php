@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Auth;
 
 use App\Actions\ResetCharacterPosition;
 use App\Ragnarok\Char;
+use Livewire\Attributes\Layout;
 use Livewire\Component;
 
-class MyAccountDetails extends Component
+#[Layout('layouts.app')]
+class GameAccountDashboard extends Component
 {
     public ?int $selectedCharacterId = null;
 
     /**
      * Get all characters for the authenticated user.
-     *
-     * @return \Illuminate\Support\Collection
      */
     public function characters()
     {
@@ -86,7 +86,7 @@ class MyAccountDetails extends Component
 
     public function render()
     {
-        return view('livewire.my-account-details', [
+        return view('livewire.auth.game-account-dashboard', [
             'characters' => $this->characters(),
             'selectedChar' => $this->selectedCharacter(),
         ]);

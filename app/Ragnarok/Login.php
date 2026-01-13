@@ -2,95 +2,152 @@
 
 namespace App\Ragnarok;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Builder;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
+use Laravel\Sanctum\HasApiTokens;
 
 /**
  * @property int $account_id
  * @property string $userid
  * @property string $user_pass
+ * @property string $sex
  * @property string $email
- * @property bool $group_id
+ * @property int $group_id
  * @property int $state
  * @property int $unban_time
  * @property int $expiration_time
  * @property int $logincount
- * @property string $lastlogin
+ * @property string|null $lastlogin
  * @property string $last_ip
- * @property string $birthdate
- * @property bool $character_slots
+ * @property string|null $birthdate
+ * @property int $character_slots
  * @property string $pincode
  * @property int $pincode_change
  * @property int $vip_time
- * @property bool $old_group
- * @property string $web_auth_token
- * @property bool $web_auth_token_enabled
- * @property int $last_unique_id
- * @property int $blocked_unique_id
+ * @property int $old_group
+ * @property string|null $web_auth_token
+ * @property int $web_auth_token_enabled
+ * @property string|null $remember_token
+ * @property \Carbon\Carbon|null $email_verified_at
+ * @property-read string $name
+ * @property-read DonationUber|null $donationUber
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Char> $chars
  *
- * @property int $total_online
  * @method static create(array $array)
  */
-class Login extends RagnarokModel
+class Login extends Authenticatable implements FilamentUser
 {
-    use Notifiable, HasFactory;
+    use HasApiTokens, HasFactory, Notifiable;
 
-    /**
-     * The connection name for the model.
-     *
-     * @var string|null
-     */
+    protected static function newFactory(): \Database\Factories\Ragnarok\LoginFactory
+    {
+        return \Database\Factories\Ragnarok\LoginFactory::new();
+    }
+
     protected $connection = 'main';
 
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
     protected $table = 'login';
 
-    /**
-     * The primary key for the model.
-     *
-     * @var string
-     */
     protected $primaryKey = 'account_id';
 
-    /**
-     * Indicates if the model should be timestamped.
-     *
-     * @var bool
-     */
     public $timestamps = false;
 
-    /**
-     * The attributes that should be fillable using forms.
-     *
-     * @var array
-     */
-    protected $fillable = ['userid', 'email', 'user_pass', 'group_id'];
+    protected $fillable = [
+        'userid',
+        'user_pass',
+        'sex',
+        'email',
+        'group_id',
+        'state',
+        'unban_time',
+        'expiration_time',
+        'logincount',
+        'lastlogin',
+        'last_ip',
+        'birthdate',
+        'character_slots',
+        'pincode',
+        'pincode_change',
+        'vip_time',
+        'old_group',
+        'web_auth_token',
+        'web_auth_token_enabled',
+        'remember_token',
+        'email_verified_at',
+    ];
+
+    protected $hidden = [
+        'user_pass',
+        'remember_token',
+        'pincode',
+    ];
+
+    protected function casts(): array
+    {
+        return [
+            'email_verified_at' => 'datetime',
+        ];
+    }
 
     /**
-     * Get the password for the user.
-     *
-     * @return string
+     * Get the connection name based on environment (supports testing with SQLite).
      */
-    public function getAuthPassword()
+    public function getConnectionName(): ?string
+    {
+        if (app()->runningUnitTests()) {
+            return config('database.default');
+        }
+
+        return $this->connection;
+    }
+
+    /**
+     * Get the name for display (maps to userid).
+     */
+    public function getNameAttribute(): string
+    {
+        return $this->userid;
+    }
+
+    /**
+     * Get the password for authentication.
+     */
+    public function getAuthPassword(): string
     {
         return $this->user_pass;
     }
 
-    public function donationUber()
+    /**
+     * Check if user is an admin.
+     */
+    public function isAdmin(): bool
+    {
+        return $this->group_id === 99;
+    }
+
+    /**
+     * Determine if the user can access the given Filament panel.
+     */
+    public function canAccessPanel(Panel $panel): bool
+    {
+        if ($panel->getId() === 'admin') {
+            return $this->isAdmin();
+        }
+
+        return true;
+    }
+
+    public function donationUber(): HasOne
     {
         return $this->hasOne(DonationUber::class, 'account_id', 'account_id');
     }
 
-    public function chars()
+    public function chars(): HasMany
     {
         return $this->hasMany(Char::class, 'account_id', 'account_id');
     }
