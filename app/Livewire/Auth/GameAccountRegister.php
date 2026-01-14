@@ -12,6 +12,8 @@ use Livewire\Component;
 #[Layout('layouts.app')]
 class GameAccountRegister extends Component
 {
+    public bool $embedded = false;
+
     public string $username = '';
 
     public string $email = '';
@@ -78,6 +80,8 @@ class GameAccountRegister extends Component
 
     public function render()
     {
-        return view('livewire.auth.game-account-register');
+        return view('livewire.auth.game-account-register', [
+            'embedded' => $this->embedded,
+        ]);
     }
 }

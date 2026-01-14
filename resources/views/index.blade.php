@@ -1,17 +1,124 @@
 <x-app-layout>
 
-    <section class="shadow bg-clash-bg bg-right md:py-20 pb-12 md:pt-80 px-12 pt-40">
-        <div class="section-div text-gray-100">
-            <span class="text-[100px] md:text-[140px] center-letter">X</span>
-            <span class="text-[100px] md:text-[140px] center-letter">I</span>
-            <span class="text-[100px] md:text-[140px] center-letter">L</span>
-            <span class="text-[100px] md:text-[140px] center-letter">E</span>
-            <span class="text-[100px] md:text-[140px] center-letter">R</span>
-            <span class="text-[100px] md:text-[140px] center-letter">O</span>
-        </div>
-    </section>
+    <div id="particles-background" class="relative bg-clash-bg">
+        {{-- Gold Particles --}}
+        <div id="particles-container"></div>
+        <style>
+            #particles-container {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                overflow: hidden;
+                z-index: 1;
+            }
+            .gold-particle {
+                position: absolute;
+                bottom: -10px;
+                background: #d4a84b;
+                border-radius: 50%;
+                opacity: 0;
+                will-change: transform, opacity;
+                animation: floatUp linear infinite;
+            }
+            @keyframes floatUp {
+                0% {
+                    opacity: 0;
+                    transform: translateY(0) scale(0.5);
+                }
+                10% {
+                    opacity: 0.8;
+                }
+                90% {
+                    opacity: 0.6;
+                }
+                100% {
+                    opacity: 0;
+                    transform: translateY(-100vh) scale(1);
+                }
+            }
+            .shooting-star {
+                position: absolute;
+                width: 100px;
+                height: 2px;
+                background: linear-gradient(to right, transparent, rgba(255,255,255,0.4), #fff);
+                opacity: 0;
+                will-change: transform, opacity;
+                transform: rotate(-35deg);
+                animation: shootingStar linear infinite;
+            }
+            @keyframes shootingStar {
+                0% {
+                    opacity: 0;
+                    transform: rotate(-35deg) translateX(0);
+                }
+                1% {
+                    opacity: 1;
+                }
+                14% {
+                    opacity: 1;
+                }
+                15% {
+                    opacity: 0;
+                    transform: rotate(-35deg) translateX(200vw);
+                }
+                100% {
+                    opacity: 0;
+                    transform: rotate(-35deg) translateX(200vw);
+                }
+            }
+        </style>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const container = document.getElementById('particles-container');
+                const fragment = document.createDocumentFragment();
 
-    <section id="read-the-rules" class="bg-clash-bg relative rounded-lg overflow-hidden py-24 md:pt-32 hidden md:block">
+                // Gold particles
+                for (let i = 0; i < 40; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'gold-particle';
+                    particle.style.cssText = `
+                        left: ${Math.random() * 100}%;
+                        animation-duration: ${4 + Math.random() * 6}s;
+                        animation-delay: ${-Math.random() * 10}s;
+                        width: ${2 + Math.random() * 3}px;
+                        height: ${2 + Math.random() * 3}px;
+                        box-shadow: 0 0 ${3 + Math.random() * 4}px rgba(212, 168, 75, 0.6);
+                    `;
+                    fragment.appendChild(particle);
+                }
+
+                // Shooting stars scattered across full background
+                for (let i = 0; i < 5; i++) {
+                    const star = document.createElement('div');
+                    star.className = 'shooting-star';
+                    star.style.cssText = `
+                        top: ${Math.random() * 100}%;
+                        left: ${-20 + Math.random() * 80}%;
+                        animation-duration: 20s;
+                        animation-delay: ${i * 4 + Math.random() * 4}s;
+                    `;
+                    fragment.appendChild(star);
+                }
+
+                container.appendChild(fragment);
+            });
+        </script>
+
+        <section class="shadow bg-transparent bg-right md:py-20 pb-12 md:pt-80 px-12 pt-40 relative z-10" id="hero-section">
+            <div class="section-div text-gray-100 relative z-10">
+                <span class="text-[100px] md:text-[140px] center-letter">X</span>
+                <span class="text-[100px] md:text-[140px] center-letter">I</span>
+                <span class="text-[100px] md:text-[140px] center-letter">L</span>
+                <span class="text-[100px] md:text-[140px] center-letter">E</span>
+                <span class="text-[100px] md:text-[140px] center-letter">R</span>
+                <span class="text-[100px] md:text-[140px] center-letter">O</span>
+            </div>
+        </section>
+
+    <section id="read-the-rules" class="bg-transparent relative rounded-lg py-24 md:pt-32 hidden md:block z-10">
         <div class="z-0 absolute effect-light-blue-bang top-[20px] right-[140px]"></div>
         <div class="z-0 absolute effect-light-yellow-bang top-[20px] right-[180px]"></div>
         <div class="z-10 relative block-home max-w-screen-xl w-full mx-auto flex justify-between container md:text-center mb-0 bg-gray-900 p-4 py-8 rounded to-transparent">
@@ -20,6 +127,7 @@
         </div>
     </section>
 
+    </div>
 {{--    <section id="rates" class="bg-clash-bg relative overflow-hidden py-16 md:pt-24 lg:pt-16">--}}
 {{--        <div class="max-w-screen-xl w-full mx-auto lg:px-8 px-5">--}}
 {{--            <h2>Quick Stats</h2>--}}
@@ -51,152 +159,82 @@
 {{--        </div>--}}
 {{--    </section>--}}
 
-
     <div class="line"></div>
 
-    <section id="steps2play" class="bg-clash-bg relative overflow-hidden py-16 md:py-20 md:px-24">
-        <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5 text-center">
-            @auth
-                {{-- Authenticated User View --}}
-                <div class="max-w-2xl mx-auto">
-                    <div class="inline-flex items-center gap-2 px-4 py-2 bg-amber-500/10 border border-amber-500/20 rounded-full mb-6">
-                        <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                        <span class="text-amber-400 text-sm font-medium">You're logged in</span>
-                    </div>
-                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Welcome back, Adventurer!</h2>
-                    <p class="text-gray-400 mb-8 text-lg">Manage your characters, view stats, and reset positions from your account dashboard.</p>
-                    <a href="/app" class="group inline-flex items-center px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-gray-900 font-bold text-lg rounded-lg transition-all duration-300 shadow-lg shadow-amber-500/25 hover:shadow-xl hover:shadow-amber-500/30 hover:-translate-y-0.5">
-                        <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                        </svg>
-                        Go to My Account
-                        <svg class="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-                        </svg>
-                    </a>
-                </div>
-            @else
-                {{-- Guest User View --}}
-                <div class="relative max-w-3xl mx-auto">
-                    {{-- Subtle glow --}}
-                    <div class="absolute inset-0 -z-10">
-                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-violet-600/10 rounded-full blur-3xl"></div>
-                    </div>
+    <section id="steps2play" class="bg-clash-bg relative overflow-hidden py-12 md:px-24">
+        <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
+            <div class="grid grid-cols-2 gap-20">
+                <div class="col-span-2 lg:col-span-1">
+                    @auth
+                        <h2 class="mt-0 mb-2 text-3xl font-bold text-gray-100">Welcome back, {{ auth()->user()->userid }}!</h2>
+                        <p class="mb-6 text-amber-500">You're ready to continue your adventure.</p>
 
-                    {{-- Heading --}}
-                    <h2 class="text-4xl md:text-5xl font-bold mb-4">
-                        <span class="text-white">Ready to Start Your</span>
-                        <span class="text-amber-400"> Adventure?</span>
-                    </h2>
+                        <p class="text-gray-300 leading-relaxed mb-8">
+                            Access your account dashboard to manage your characters, view your stats, reset positions, and more. Your journey in XileRO awaits!
+                        </p>
 
-                    {{-- Subtitle --}}
-                    <p class="text-gray-400 mb-8 text-lg max-w-xl mx-auto">
-                        Create your account, download the client, and start playing on XileRO.
-                    </p>
-
-                    {{-- Buttons --}}
-                    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
-                        <a href="{{ route('register') }}" class="group inline-flex items-center px-8 py-4 bg-amber-500 hover:bg-amber-400 text-gray-900 font-bold text-lg rounded-lg transition-all duration-200 hover:-translate-y-0.5">
-                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
-                            </svg>
-                            Create Account
-                            <svg class="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                            </svg>
-                        </a>
-                        <a href="{{ route('login') }}" class="group inline-flex items-center px-8 py-4 bg-gray-800 hover:bg-gray-700 border border-gray-700 text-white font-bold text-lg rounded-lg transition-all duration-200 hover:-translate-y-0.5">
-                            <svg class="w-5 h-5 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
-                            </svg>
-                            Login
-                        </a>
-                    </div>
-
-                    <p class="text-gray-500 text-sm">Free to play. No donations required.</p>
-                </div>
-            @endauth
-
-            {{-- Download Section --}}
-            <div class="mt-12 pt-8 border-t border-gray-700">
-                <h3 class="text-2xl font-bold text-white mb-8">Download Game Client</h3>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {{-- Full Client Downloads --}}
-                    <div class="block-home p-6 rounded-lg">
-                        <div class="flex items-center gap-3 mb-4">
-                            <div class="p-2 bg-amber-500/20 rounded-lg">
-                                <svg class="w-6 h-6 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
-                                </svg>
-                            </div>
-                            <div>
-                                <h4 class="text-lg font-bold text-amber-400 half-border">Full Client</h4>
-                                <p class="text-xs text-gray-400">Recommended</p>
-                            </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <a href="{{ route('dashboard') }}" class="btn btn-primary justify-center w-auto py-4">
+                                <span>My Account</span>
+                            </a>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="btn btn-secondary justify-center w-full py-4">
+                                    <span>Logout</span>
+                                </button>
+                            </form>
                         </div>
-                        <p class="text-sm text-gray-400 mb-4">Complete installation with all game files included.</p>
-                        <div class="flex flex-col gap-2">
+                    @else
+                        <h2 class="mt-0 mb-2 text-3xl font-bold text-gray-100">Join the Adventure</h2>
+                        <p class="mb-6 text-amber-500">Create an account or login to start playing.</p>
+
+                        <p class="text-gray-300 leading-relaxed mb-8">
+                            XileRO offers a unique classic Ragnarok Online experience with custom mechanics, active PvP, and a thriving community. Whether you're a veteran player or new to the world of Midgard, there's something here for everyone. Best of all, it's completely free to play with no pay-to-win elements.
+                        </p>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <a href="{{ route('register') }}" class="btn btn-primary justify-center w-auto py-4">
+                                <span>Register Account</span>
+                            </a>
+                            <a href="{{ route('login') }}" class="btn btn-secondary justify-center w-auto py-4">
+                                <span>Account Login</span>
+                            </a>
+                            <a href="{{ route('password.request') }}" class="btn btn-secondary w-auto justify-center py-4">
+                                <span>Password Reset</span>
+                            </a>
+                        </div>
+                    @endauth
+                </div>
+                <div class="col-span-2 lg:col-span-1">
+                    <h2 class="mt-0 mb-2 text-2xl font-bold text-gray-100"><span class="mr-2">1.</span> Download Full Client</h2>
+                    <p class="mb-12 text-amber-500">Full downloads ensure an error-free experience.</p>
+                    <div class="grid grid-cols-5">
+                        <div class="col-span-1 hidden md:block">
+                            <i class="fa fa-windows step2-icon text-gray-300" aria-hidden="true"></i>
+                        </div>
+                        <div class="col-span-5 md:col-span-4 grid gap-5 grid-cols-1">
                             @foreach(config('downloads.full') as $download)
-                                <a href="{{ $download['link'] }}" target="_blank" rel="noopener" class="inline-flex items-center justify-center px-4 py-2.5 {{ $download['bttn'] === 'btn-primary' ? 'bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white' : 'bg-gray-800 hover:bg-gray-700 text-gray-300 border border-gray-700' }} font-medium rounded-lg transition-all duration-200 text-sm">
-                                    <svg class="w-4 h-4 mr-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
-                                    </svg>
-                                    <span class="truncate">{{ $download['name'] }}</span>
+                                <a class="no-underline truncate text-gray-900 btn text-left {{ $download['bttn'] }}" href="{{ $download['link'] }}" target="_blank" rel="noopener">
+                                    {{ $download['name'] }}
                                 </a>
                             @endforeach
                         </div>
                     </div>
 
-                    {{-- Lite Client Downloads --}}
-                    <div class="block-home p-6 rounded-lg">
-                        <div class="flex items-center gap-3 mb-4">
-                            <div class="p-2 bg-violet-500/20 rounded-lg">
-                                <svg class="w-6 h-6 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                                </svg>
+                    <div class="mt-10">
+                        <h2 class="mt-0 mb-2 text-2xl font-bold text-gray-100"><span class="mr-2">2.</span> Android Download</h2>
+                        <p class="mb-12 text-amber-500">Play XileRO on the Go, with android, supporting automatic updates and gepard.</p>
+                        <div class="grid grid-cols-5">
+                            <div class="col-span-1 hidden md:block">
+                                <i class="fa fa-mobile step2-icon text-gray-300" aria-hidden="true"></i>
                             </div>
-                            <div>
-                                <h4 class="text-lg font-bold text-violet-400 half-border">Lite Client</h4>
-                                <p class="text-xs text-gray-400">Smaller download</p>
+                            <div class="col-span-5 md:col-span-4 grid gap-5 grid-cols-1">
+                                @foreach(config('downloads.android') as $download)
+                                    <a class="no-underline truncate btn text-left {{ $download['bttn'] }}" href="{{ $download['link'] }}" target="_blank" rel="noopener">
+                                        {{ $download['name'] }}
+                                    </a>
+                                @endforeach
                             </div>
-                        </div>
-                        <p class="text-sm text-gray-400 mb-4">Lightweight version for faster download speeds.</p>
-                        <div class="flex flex-col gap-2">
-                            @foreach(config('downloads.lite') as $download)
-                                <a href="{{ $download['link'] }}" target="_blank" rel="noopener" class="inline-flex items-center justify-center px-4 py-2.5 {{ $download['bttn'] === 'btn-primary' ? 'bg-gradient-to-r from-violet-600 to-violet-700 hover:from-violet-500 hover:to-violet-600 text-white' : 'bg-gray-800 hover:bg-gray-700 text-gray-300 border border-gray-700' }} font-medium rounded-lg transition-all duration-200 text-sm">
-                                    <svg class="w-4 h-4 mr-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
-                                    </svg>
-                                    <span class="truncate">{{ $download['name'] }}</span>
-                                </a>
-                            @endforeach
-                        </div>
-                    </div>
-
-                    {{-- Android Downloads --}}
-                    <div class="block-home p-6 rounded-lg">
-                        <div class="flex items-center gap-3 mb-4">
-                            <div class="p-2 bg-emerald-500/20 rounded-lg">
-                                <svg class="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
-                                </svg>
-                            </div>
-                            <div>
-                                <h4 class="text-lg font-bold text-emerald-400 half-border">Android</h4>
-                                <p class="text-xs text-gray-400">Mobile version</p>
-                            </div>
-                        </div>
-                        <p class="text-sm text-gray-400 mb-4">Play on the go with our Android client.</p>
-                        <div class="flex flex-col gap-2">
-                            @foreach(config('downloads.android') as $download)
-                                <a href="{{ $download['link'] }}" target="_blank" rel="noopener" class="inline-flex items-center justify-center px-4 py-2.5 {{ $download['bttn'] === 'btn-primary' ? 'bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-500 hover:to-emerald-600 text-white' : 'bg-gray-800 hover:bg-gray-700 text-gray-300 border border-gray-700' }} font-medium rounded-lg transition-all duration-200 text-sm">
-                                    <svg class="w-4 h-4 mr-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
-                                    </svg>
-                                    <span class="truncate">{{ $download['name'] }}</span>
-                                </a>
-                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -352,8 +390,7 @@
             <div class="">
                 <div class="grid grid-cols-2">
                     <h2 class="mb-0">Uber Store</h2>
-                </div>{{--                <h3 class="text-white text-2xl mt-4">Current Uber Cost: 1,000000 zeny</h3>--}}
-                <!-- <p class="mt-6 text-gray-700 leading-relaxed">We pride ourselves on the ability to offer a server that you can compete and join without the need to ever spend real money, to achieve this we offer a dynamic zeny based system to determinate the value of an uber in game which you can then use to purchase donation items. This gives zeny more value and keeps it as main currency while allowing those who want to donate still retain the rewards to support the server.</p> -->
+                </div>
                 <p class="mt-6 text-gray-300 leading-relaxed">Your ubers let you get some of the most powerful items in game, ubers can be purchased in game with zeny or by donation, here is a small preview of what is to offer, click to view our wiki for extensive catalogue of items. <span class="text-amber-500">@warp payon 142 224</span></p>
             </div>
             <div class="">
@@ -362,7 +399,6 @@
                         <li class="block-home p-6">
                             <a id="{{ Str::slug($item['name']) }}" title="Uber Shop Item {{ $item['name'] }}" aria-label="Uber Shop Item {{ $item['name'] }}" href="https://wiki.xilero.net/index.php?title=Donation" class="flex">
                                 <div class="relative shrink-0 bg-breeze flex items-center justify-center rounded-lg overflow-hidden" style="height:100px; width:75px;">
-                                    {{-- <span class="absolute w-full h-full inset-0 bg-gradient-to-b from-[rgba(255,255,255,.2)] to-[rgba(255,255,255,0)]"></span> --}}
                                     <img src="/images/donations/{{ $item['image'] }}" alt="{{ $item['name'] }} Item" class="relative" width="75" height="100">
                                 </div>
                                 <div class="ml-4 leading-5">
@@ -377,19 +413,6 @@
                         </li>
                     @endforeach
                 </ul>
-            </div>
-        </div>
-
-    </section>
-
-    <div class="line"></div>
-
-    <section id="important-links" class="bg-clash-bg relative overflow-hidden py-8 pb-24">
-        <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
-            <h2>Server Vending</h2>
-            <p class="mt-6 text-gray-300 leading-relaxed">Currently in beta, live vending data allows you to search for item IDs to check availability, price, and vendor location. Future feature updates will enhance support.</p>
-            <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5 mt-10">
-                <livewire:server-vendings lazy/>
             </div>
         </div>
     </section>
@@ -439,7 +462,6 @@
             </div>
         </div>
     </section>
-
 
     {{-- ANDOID SECTION REMOVED
         <section class="my-24 px-3 sm:px-0">

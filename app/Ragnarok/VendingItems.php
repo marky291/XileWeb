@@ -39,4 +39,12 @@ class VendingItems extends RagnarokModel
     {
         return $this->belongsTo(Vending::class, 'vending_id', 'id');
     }
+
+    /**
+     * Get the primary key value as a string for Filament compatibility.
+     */
+    public function getKey(): string
+    {
+        return "{$this->vending_id}-{$this->index}";
+    }
 }

@@ -13,6 +13,7 @@ use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
 
 class ServerVendings extends Component implements HasActions, HasForms, HasTable
@@ -32,11 +33,15 @@ class ServerVendings extends Component implements HasActions, HasForms, HasTable
         HTML;
     }
 
+    public function getTableRecordKey(Model $record): string
+    {
+        return "{$record->vending_id}-{$record->index}";
+    }
+
     public function table(Table $table): Table
     {
         return $table
             ->query(VendingItems::query())
-            ->recordKey(fn (VendingItems $record): string => "{$record->vending_id}-{$record->index}")
             ->columns([
                 TextColumn::make('cartinventory_id')->label('Item')->searchable()->sortable(),
                 TextColumn::make('amount')->label('Amount')->searchable()->sortable(),

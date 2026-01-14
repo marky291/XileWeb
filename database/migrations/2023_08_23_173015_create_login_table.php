@@ -35,6 +35,7 @@ return new class extends Migration
                 $table->tinyInteger('web_auth_token_enabled')->default(0);
                 $table->string('remember_token', 100)->nullable();
                 $table->timestamp('email_verified_at')->nullable();
+                $table->unsignedInteger('ubers')->default(0);
 
                 $table->index('userid');
             });

@@ -34,6 +34,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property int $web_auth_token_enabled
  * @property string|null $remember_token
  * @property \Carbon\Carbon|null $email_verified_at
+ * @property int $ubers
  * @property-read string $name
  * @property-read DonationUber|null $donationUber
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Char> $chars
@@ -79,6 +80,7 @@ class Login extends Authenticatable implements FilamentUser
         'web_auth_token_enabled',
         'remember_token',
         'email_verified_at',
+        'ubers',
     ];
 
     protected $hidden = [

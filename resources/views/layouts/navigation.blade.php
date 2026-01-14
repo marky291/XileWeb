@@ -19,8 +19,8 @@
                                href="{{ route('dashboard') }}" title="My Account">My Account</a></li>
                     @endguest
                     <li><a class="hover:bg-linear-to-tr hover:from-blue-900 hover:to-fuchsia-700 rounded-xs py-3 px-6 text-gray-100 border-gray-500 bg-gray-900/50"
-                           href="https://discord.com/channels/702319926110584943/1150037346415284284"
-                           title="Donate to XileRO">Donate</a></li>
+                           href="{{ route('donate-shop') }}"
+                           title="Donate Shop">Donate Shop</a></li>
                     <li><a class="hover:bg-linear-to-bl hover:from-blue-900 hover:to-fuchsia-700 rounded-xs py-3 px-6 text-gray-100 border-gray-500 bg-gray-900/50"
                            href="https://discord.gg/hp7CS6k" title="Join XileRO on Discord">Discord</a></li>
                     <li><a class="hover:bg-linear-to-tr hover:from-blue-900 hover:to-fuchsia-700 rounded-xs py-3 px-6 text-gray-100 border-gray-500 bg-gray-900/50"
@@ -106,9 +106,9 @@
                         @endguest
                         <li>
                             <a class="block w-full py-4 text-rose-800"
-                               href="https://discord.com/channels/702319926110584943/1150037346415284284" title="Donate to XileRO"
-                               aria-label="Donate to XileRO">
-                                Donate
+                               href="{{ route('donate-shop') }}" title="Donate Shop"
+                               aria-label="Donate Shop">
+                                Donate Shop
                             </a>
                         </li>
                         <li>

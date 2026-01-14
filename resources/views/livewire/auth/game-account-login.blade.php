@@ -2,7 +2,7 @@
 
 <section class="bg-clash-bg min-h-screen flex items-center justify-center pt-28 pb-16 px-4">
     <div class="w-full max-w-md">
-        <div class="block-home bg-gray-900 p-8 rounded-lg">
+        <div class="bg-gray-900 p-8 rounded-lg">
             <div class="text-center mb-8">
                 <h1 class="text-3xl font-bold text-white mb-2">Sign in</h1>
                 <p class="text-gray-400">

@@ -175,6 +175,9 @@ Route::middleware('auth')->group(function () {
     })->name('logout');
 });
 
+// Public shop (viewable by all, purchase requires auth)
+Route::get('/donate-shop', \App\Livewire\DonateShop::class)->name('donate-shop');
+
 Route::any('{query}', function () {
     return redirect('/')->with('message', 'Redirected 404.');
 })->where('query', '.*');
