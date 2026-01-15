@@ -6,7 +6,6 @@ use App\Filament\Resources\DonationUberResource\Pages\CreateDonationUber;
 use App\Filament\Resources\DonationUberResource\Pages\EditDonationUber;
 use App\Filament\Resources\DonationUberResource\Pages\ListDonationUbers;
 use App\Filament\Resources\LoginResource\RelationManagers\LoginRelationManager;
-use App\Ragnarok\DonationUber;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Get;
 use Filament\Forms\Components\Section;

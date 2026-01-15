@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Auth;
 
+use App\Actions\SyncGameAccountData;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Validation\ValidationException;
@@ -37,6 +38,9 @@ class GameAccountLogin extends Component
         RateLimiter::clear($this->throttleKey());
 
         session()->regenerate();
+
+        // Sync game account data from game database
+        SyncGameAccountData::run(Auth::user());
 
         $this->redirect(route('dashboard'), navigate: false);
     }

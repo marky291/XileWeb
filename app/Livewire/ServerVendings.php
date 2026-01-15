@@ -2,7 +2,6 @@
 
 namespace App\Livewire;
 
-use App\Ragnarok\VendingItems;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Concerns\InteractsWithForms;

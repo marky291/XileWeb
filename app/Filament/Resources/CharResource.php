@@ -6,7 +6,6 @@ use App\Filament\Resources\CharResource\Pages\CreateChar;
 use App\Filament\Resources\CharResource\Pages\EditChar;
 use App\Filament\Resources\CharResource\Pages\ListChars;
 use App\Filament\Resources\LoginResource\RelationManagers\LoginRelationManager;
-use App\Ragnarok\Char;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;

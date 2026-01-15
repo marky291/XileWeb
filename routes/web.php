@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\DiscordController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\WikiController;
 use App\Models\Patch;
@@ -20,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('index', [
-        'castles' => App\Ragnarok\GuildCastle::whereIn('castle_id', [28, 31, 15, 16])
+        'castles' => App\XileRO\XileRO_GuildCastle::whereIn('castle_id', [28, 31, 15, 16])
             ->with('guild', 'guild.members')
             ->get()
             ->sortBy(function ($castle, $key) {
@@ -33,7 +34,7 @@ Route::get('/', function () {
 
 Route::get('/warofemperium', function () {
     return view('warofemperium', [
-        'castles' => App\Ragnarok\GuildCastle::whereIn('castle_id', [28, 31, 15, 16])
+        'castles' => App\XileRO\XileRO_GuildCastle::whereIn('castle_id', [28, 31, 15, 16])
             ->with('guild', 'guild.members')
             ->get()
             ->sortBy(function ($castle, $key) {
@@ -159,13 +160,17 @@ Route::get('xilero/patch/list', function () {
 // Authentication routes (integrated with site design)
 Route::middleware('guest')->group(function () {
     Route::get('/login', \App\Livewire\Auth\GameAccountLogin::class)->name('login');
-    Route::get('/register', \App\Livewire\Auth\GameAccountRegister::class)->name('register');
+    Route::get('/register', \App\Livewire\Auth\Register::class)->name('register');
     Route::get('/password-reset', fn () => redirect('/app/password-reset'))->name('password.request');
+
+    // Discord OAuth routes
+    Route::get('/auth/discord/redirect', [DiscordController::class, 'redirect'])->name('auth.discord.redirect');
+    Route::get('/auth/discord/callback', [DiscordController::class, 'callback'])->name('auth.discord.callback');
 });
 
 // Authenticated user routes
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', \App\Livewire\Auth\GameAccountDashboard::class)->name('dashboard');
+    Route::get('/dashboard', \App\Livewire\Auth\Dashboard::class)->name('dashboard');
     Route::post('/logout', function () {
         auth()->logout();
         session()->invalidate();

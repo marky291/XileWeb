@@ -1,0 +1,65 @@
+<?php
+
+namespace App\Models;
+
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+
+class User extends Authenticatable implements FilamentUser
+{
+    use HasApiTokens, HasFactory, Notifiable;
+
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'max_game_accounts',
+        'uber_balance',
+        'discord_id',
+        'discord_username',
+        'discord_avatar',
+        'discord_token',
+        'discord_refresh_token',
+    ];
+
+    protected $hidden = [
+        'password',
+        'remember_token',
+        'discord_token',
+        'discord_refresh_token',
+    ];
+
+    protected function casts(): array
+    {
+        return [
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
+        ];
+    }
+
+    public function gameAccounts(): HasMany
+    {
+        return $this->hasMany(GameAccount::class);
+    }
+
+    public function canCreateGameAccount(): bool
+    {
+        return $this->gameAccounts()->count() < $this->max_game_accounts;
+    }
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        if ($panel->getId() === 'admin') {
+            return $this->gameAccounts()
+                ->where('group_id', 99)
+                ->exists();
+        }
+
+        return true;
+    }
+}

@@ -70,7 +70,7 @@ The application uses two database connections:
 - **Main Database**: Standard Laravel tables (users, posts, patches, etc.)
 - **Ragnarok Database**: Game server tables (login, char, guild, etc.)
 
-Models extending `App\Ragnarok\RagnarokModel` automatically handle the game database connection, with special logic for unit testing environments.
+Models extending `App\XileRO\RagnarokModel` automatically handle the game database connection, with special logic for unit testing environments.
 
 ### Key Directories
 
@@ -127,6 +127,16 @@ Tests use SQLite in-memory database for isolation. The `RagnarokModel` base clas
 3. **WoE Events**: Automated scoring and Discord notifications
 4. **Character Management**: Reset positions, inventory management
 5. **Vending System**: In-game shop data display
+6. **Multi-Server Support**: XileRO and XileRetro servers may have accounts with the same username; always display server name alongside account name using `$gameAccount->serverName()`
+
+## External Documentation
+
+| Resource | URL | Description |
+|----------|-----|-------------|
+| **XileRO Docs** | https://docs.xilero.net | Player guides for XileRO (current server), uses GitBook |
+| **XileRetro Docs** | https://wiki.xilero.net | Player guides for XileRetro (old server), MediaWiki |
+
+**Note:** Links to `wiki.xilero.net` are for XileRetro. XileRO documentation is at `docs.xilero.net`.
 
 ===
 

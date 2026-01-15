@@ -3,7 +3,6 @@
 namespace App\Livewire;
 
 use App\Actions\ResetCharacterPosition;
-use App\Ragnarok\Char;
 use Livewire\Component;
 
 class MyAccountDetails extends Component

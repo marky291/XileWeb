@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Illuminate\Validation\ValidationException;
 use App\Actions\MakeHashedLoginPassword;
 use App\Http\Controllers\Controller;
-use App\Ragnarok\Login;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -14,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
+use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
 class NewPasswordController extends Controller
@@ -45,7 +44,7 @@ class NewPasswordController extends Controller
         $status = Password::reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
             function ($user) use ($request) {
-                DB::transaction(function() use ($user, $request) {
+                DB::transaction(function () use ($user, $request) {
                     $user->forceFill([
                         'password' => Hash::make($request->password),
                         'remember_token' => Str::random(60),
@@ -66,6 +65,6 @@ class NewPasswordController extends Controller
         return $status == Password::PASSWORD_RESET
                     ? redirect()->route('login')->with('status', __($status))
                     : back()->withInput($request->only('email'))
-                            ->withErrors(['email' => __($status)]);
+                        ->withErrors(['email' => __($status)]);
     }
 }

@@ -4,7 +4,10 @@ namespace App\Providers;
 
 use App\Auth\RagnarokUserProvider;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
+use SocialiteProviders\Discord\Provider as DiscordProvider;
+use SocialiteProviders\Manager\SocialiteWasCalled;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +26,11 @@ class AppServiceProvider extends ServiceProvider
     {
         Auth::provider('ragnarok', function ($app, array $config) {
             return new RagnarokUserProvider($app['hash'], $config['model']);
+        });
+
+        // Register Discord Socialite provider
+        Event::listen(function (SocialiteWasCalled $event) {
+            $event->extendSocialite('discord', DiscordProvider::class);
         });
 
         if (config('app.env') === 'production') {

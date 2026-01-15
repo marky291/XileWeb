@@ -3,7 +3,6 @@
 namespace App\Livewire\Auth;
 
 use App\Actions\ResetCharacterPosition;
-use App\Ragnarok\Char;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 

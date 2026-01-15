@@ -3,7 +3,7 @@
 namespace Tests\Unit\Livewire;
 
 use App\Livewire\Auth\GameAccountRegister;
-use App\Ragnarok\Login;
+use App\XileRO\XileRO_Login;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
 use Tests\TestCase;
@@ -26,7 +26,7 @@ class RegisterTest extends TestCase
             ->set('password_confirmation', $password)
             ->call('register');
 
-        $login = Login::where('email', $email)->first();
+        $login = XileRO_Login::where('email', $email)->first();
 
         $this->assertNotNull($login);
         $this->assertEquals($username, $login->userid);

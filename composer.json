@@ -17,10 +17,12 @@
         "laravel/horizon": "^5.20",
         "laravel/pennant": "^1.4",
         "laravel/sanctum": "^4.0",
+        "laravel/socialite": "^5.24",
         "laravel/tinker": "^2.8",
         "livewire/livewire": "^v3.0",
         "lorisleiva/laravel-actions": "^2.7",
         "predis/predis": "^2.2",
+        "socialiteproviders/discord": "^4.2",
         "spatie/laravel-markdown": "^2.4"
     },
     "require-dev": {

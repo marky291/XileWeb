@@ -3,7 +3,7 @@
 namespace App\Livewire\Auth;
 
 use App\Actions\MakeHashedLoginPassword;
-use App\Ragnarok\Login;
+use App\XileRO\XileRO_Login;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\Password;
 use Livewire\Attributes\Layout;
@@ -31,14 +31,15 @@ class GameAccountRegister extends Component
                 'alpha_num',
                 'min:4',
                 'max:23',
-                'unique:main.login,userid',
+                'unique:xilero_main.login,userid',
             ],
             'email' => [
                 'required',
                 'string',
                 'email',
                 'max:39',
-                'unique:main.login,email',
+                'unique:xilero_main.login,email',
+                'not_in:a@a.com',
             ],
             'password' => [
                 'required',
@@ -57,6 +58,7 @@ class GameAccountRegister extends Component
             'username.unique' => 'This username is already taken.',
             'username.alpha_num' => 'Username must contain only letters and numbers.',
             'email.unique' => 'This email is already registered.',
+            'email.not_in' => 'This email address is not allowed.',
             'password.confirmed' => 'The password confirmation does not match.',
         ];
     }
@@ -65,7 +67,7 @@ class GameAccountRegister extends Component
     {
         $this->validate();
 
-        $login = Login::create([
+        $login = XileRO_Login::create([
             'userid' => $this->username,
             'email' => $this->email,
             'user_pass' => MakeHashedLoginPassword::run($this->password),

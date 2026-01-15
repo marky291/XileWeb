@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Auth;
 use App\Actions\MakeHashedLoginPassword;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
-use App\Ragnarok\Login;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -32,8 +31,8 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => ['required', 'string', 'alpha_num', 'min:4', 'max:23', 'unique:main.login,userid'],
-            'email' => ['required', 'string', 'email', 'max:39', 'unique:main.login,email'],
+            'name' => ['required', 'string', 'alpha_num', 'min:4', 'max:23', 'unique:xilero_main.login,userid'],
+            'email' => ['required', 'string', 'email', 'max:39', 'unique:xilero_main.login,email'],
             'password' => ['required', 'confirmed', 'min:6', 'max:31', Password::defaults()],
         ]);
 

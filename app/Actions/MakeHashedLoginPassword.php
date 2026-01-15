@@ -8,8 +8,12 @@ class MakeHashedLoginPassword
 {
     use AsAction;
 
-    public function handle(string $unhashedPassword)
+    public function handle(string $unhashedPassword, string $server = 'xilero'): string
     {
-        return hash('sha256', $unhashedPassword.config('database.secret'));
+        $secret = $server === 'xileretro'
+            ? config('database.secret_xileretro')
+            : config('database.secret');
+
+        return hash('sha256', $unhashedPassword.$secret);
     }
 }

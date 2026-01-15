@@ -5,7 +5,6 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\DonationLogResource\Pages\CreateDonationLog;
 use App\Filament\Resources\DonationLogResource\Pages\EditDonationLog;
 use App\Filament\Resources\DonationLogResource\Pages\ListDonationLogs;
-use App\Ragnarok\DonationLog;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;

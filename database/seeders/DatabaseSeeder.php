@@ -11,9 +11,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Ragnarok\Login::factory(10)->create();
+        // \App\XileRO\XileRO_Login::factory(10)->create();
 
-        // \App\Ragnarok\Login::factory()->create([
+        // \App\XileRO\XileRO_Login::factory()->create([
         //     'userid' => 'TestUser',
         //     'email' => 'test@example.com',
         // ]);

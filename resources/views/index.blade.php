@@ -3,7 +3,7 @@
     <div id="particles-background" class="relative bg-clash-bg">
         {{-- Gold Particles --}}
         <div id="particles-container"></div>
-        <style>
+        <style> 
             #particles-container {
                 position: absolute;
                 top: 0;
@@ -163,50 +163,17 @@
 
     <section id="steps2play" class="bg-clash-bg relative overflow-hidden py-12 md:px-24">
         <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
-            <div class="grid grid-cols-2 gap-20">
-                <div class="col-span-2 lg:col-span-1">
-                    @auth
-                        <h2 class="mt-0 mb-2 text-3xl font-bold text-gray-100">Welcome back, {{ auth()->user()->userid }}!</h2>
-                        <p class="mb-6 text-amber-500">You're ready to continue your adventure.</p>
-
-                        <p class="text-gray-300 leading-relaxed mb-8">
-                            Access your account dashboard to manage your characters, view your stats, reset positions, and more. Your journey in XileRO awaits!
-                        </p>
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <a href="{{ route('dashboard') }}" class="btn btn-primary justify-center w-auto py-4">
-                                <span>My Account</span>
-                            </a>
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-                                <button type="submit" class="btn btn-secondary justify-center w-full py-4">
-                                    <span>Logout</span>
-                                </button>
-                            </form>
-                        </div>
-                    @else
-                        <h2 class="mt-0 mb-2 text-3xl font-bold text-gray-100">Join the Adventure</h2>
-                        <p class="mb-6 text-amber-500">Create an account or login to start playing.</p>
-
-                        <p class="text-gray-300 leading-relaxed mb-8">
-                            XileRO offers a unique classic Ragnarok Online experience with custom mechanics, active PvP, and a thriving community. Whether you're a veteran player or new to the world of Midgard, there's something here for everyone. Best of all, it's completely free to play with no pay-to-win elements.
-                        </p>
-
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <a href="{{ route('register') }}" class="btn btn-primary justify-center w-auto py-4">
-                                <span>Register Account</span>
-                            </a>
-                            <a href="{{ route('login') }}" class="btn btn-secondary justify-center w-auto py-4">
-                                <span>Account Login</span>
-                            </a>
-                            <a href="{{ route('password.request') }}" class="btn btn-secondary w-auto justify-center py-4">
-                                <span>Password Reset</span>
-                            </a>
-                        </div>
-                    @endauth
+            <div class="grid grid-cols-1 lg:grid-cols-[1fr_1px_1fr] gap-10 lg:gap-16">
+                <div>
+                    <h2 class="mt-0 mb-2 text-2xl font-bold text-gray-100">XileRO Midrate</h2>
+                    <p class="mb-12 text-amber-500">Coming soon...</p>
                 </div>
-                <div class="col-span-2 lg:col-span-1">
-                    <h2 class="mt-0 mb-2 text-2xl font-bold text-gray-100"><span class="mr-2">1.</span> Download Full Client</h2>
+
+                {{-- Vertical Divider --}}
+                <div class="hidden lg:block bg-gradient-to-b from-transparent via-gray-700 to-transparent"></div>
+
+                <div>
+                    <h2 class="mt-0 mb-2 text-2xl font-bold text-gray-100"><span class="mr-2">1.</span> XileRetro Download Full Client</h2>
                     <p class="mb-12 text-amber-500">Full downloads ensure an error-free experience.</p>
                     <div class="grid grid-cols-5">
                         <div class="col-span-1 hidden md:block">
@@ -222,8 +189,8 @@
                     </div>
 
                     <div class="mt-10">
-                        <h2 class="mt-0 mb-2 text-2xl font-bold text-gray-100"><span class="mr-2">2.</span> Android Download</h2>
-                        <p class="mb-12 text-amber-500">Play XileRO on the Go, with android, supporting automatic updates and gepard.</p>
+                        <h2 class="mt-0 mb-2 text-2xl font-bold text-gray-100"><span class="mr-2">2.</span> XileRetro Android Download</h2>
+                        <p class="mb-12 text-amber-500">Play XileRetro on the Go, with android, supporting automatic updates and gepard.</p>
                         <div class="grid grid-cols-5">
                             <div class="col-span-1 hidden md:block">
                                 <i class="fa fa-mobile step2-icon text-gray-300" aria-hidden="true"></i>
@@ -250,7 +217,7 @@
 
     {{-- <section id="mvprankingladder" class="container mx-auto grid">
         <h2>MVP Ladder</h2>
-        @foreach (App\Ragnarok\MvpLadderRank::orderByDesc('day_kills')->limit(3)->get() as $rank)
+        @foreach (App\XileRO\MvpLadderRank::orderByDesc('day_kills')->limit(3)->get() as $rank)
             <div class="cols-span-1">
                 <p>Player {{ $rank->name }}</p>
                 <p>{{ $rank->day_kills }} MVP Kills Today!</p>

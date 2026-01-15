@@ -32,6 +32,7 @@ return [
     ],
 
     'discord' => [
+        // Bot tokens
         'player_count_token' => env('DISCORD_PLAYER_COUNT_TOKEN'),
         'latest_player_token' => env('DISCORD_LATEST_PLAYER_TOKEN'),
         'kriemhild_guild_points' => env('DISCORD_KRIEMHILD_GUILD_POINTS'),
@@ -43,5 +44,10 @@ return [
         'cyr_guild_points' => env('DISCORD_CYR_GUILD_POINTS'),
         'server_time_token' => env('DISCORD_SERVER_TIME_TOKEN'),
         'next_woe_time_token' => env('DISCORD_NEXT_WOE_TIME_TOKEN'),
+
+        // OAuth credentials (for Socialite login)
+        'client_id' => env('DISCORD_CLIENT_ID'),
+        'client_secret' => env('DISCORD_CLIENT_SECRET'),
+        'redirect' => env('DISCORD_REDIRECT_URI', '/auth/discord/callback'),
     ],
 ];
