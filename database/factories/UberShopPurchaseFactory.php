@@ -33,6 +33,7 @@ class UberShopPurchaseFactory extends Factory
             'claimed_at' => null,
             'claimed_by_char_id' => null,
             'claimed_by_char_name' => null,
+            'is_xileretro' => fake()->boolean(),
         ];
     }
 
