@@ -3,6 +3,7 @@
 namespace Tests\Feature\Filament;
 
 use App\Filament\Pages\PlayerSupport;
+use App\Models\GameAccount;
 use App\Models\User;
 use Filament\Facades\Filament;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -423,5 +424,92 @@ class PlayerSupportTest extends TestCase
             ->set('newGamePassword', str_repeat('a', 32))
             ->call('resetGameAccountPassword')
             ->assertNotified('Invalid password');
+    }
+
+    #[Test]
+    public function linking_unclaimed_game_account_transfers_legacy_ubers(): void
+    {
+        $admin = User::factory()->admin()->create();
+        $masterAccount = User::factory()->create([
+            'name' => 'Master User',
+            'email' => 'master@example.com',
+            'uber_balance' => 100,
+        ]);
+
+        // Create unclaimed game account with legacy ubers
+        $gameAccount = GameAccount::factory()->unclaimed()->create([
+            'server' => 'xileretro',
+            'userid' => 'legacyaccount',
+            'legacy_uber_balance' => 50,
+        ]);
+
+        Livewire::actingAs($admin)
+            ->test(PlayerSupport::class)
+            ->set('selectedPlayer', [
+                'type' => 'master',
+                'id' => $masterAccount->id,
+                'name' => $masterAccount->name,
+                'email' => $masterAccount->email,
+                'uber_balance' => $masterAccount->uber_balance,
+                'is_admin' => false,
+                'game_accounts_count' => 0,
+                'created_at' => $masterAccount->created_at?->format('M j, Y'),
+            ])
+            ->set('selectedUnclaimedGameAccountId', $gameAccount->id)
+            ->set('selectedUnclaimedServer', 'xileretro')
+            ->call('linkUnclaimedToMaster')
+            ->assertNotified();
+
+        // Verify master account received legacy ubers
+        $masterAccount->refresh();
+        $this->assertEquals(150, $masterAccount->uber_balance);
+
+        // Verify game account legacy_uber_balance was cleared
+        $gameAccount->refresh();
+        $this->assertEquals(0, $gameAccount->legacy_uber_balance);
+        $this->assertEquals($masterAccount->id, $gameAccount->user_id);
+    }
+
+    #[Test]
+    public function linking_unclaimed_game_account_without_legacy_ubers_works(): void
+    {
+        $admin = User::factory()->admin()->create();
+        $masterAccount = User::factory()->create([
+            'name' => 'Master User',
+            'email' => 'master@example.com',
+            'uber_balance' => 100,
+        ]);
+
+        // Create unclaimed game account without legacy ubers
+        $gameAccount = GameAccount::factory()->unclaimed()->create([
+            'server' => 'xilero',
+            'userid' => 'nolegubers',
+            'legacy_uber_balance' => 0,
+        ]);
+
+        Livewire::actingAs($admin)
+            ->test(PlayerSupport::class)
+            ->set('selectedPlayer', [
+                'type' => 'master',
+                'id' => $masterAccount->id,
+                'name' => $masterAccount->name,
+                'email' => $masterAccount->email,
+                'uber_balance' => $masterAccount->uber_balance,
+                'is_admin' => false,
+                'game_accounts_count' => 0,
+                'created_at' => $masterAccount->created_at?->format('M j, Y'),
+            ])
+            ->set('selectedUnclaimedGameAccountId', $gameAccount->id)
+            ->set('selectedUnclaimedServer', 'xilero')
+            ->call('linkUnclaimedToMaster')
+            ->assertNotified();
+
+        // Verify master account uber balance unchanged
+        $masterAccount->refresh();
+        $this->assertEquals(100, $masterAccount->uber_balance);
+
+        // Verify game account was linked
+        $gameAccount->refresh();
+        $this->assertEquals($masterAccount->id, $gameAccount->user_id);
     }
 }

@@ -24,6 +24,7 @@ class GameAccountFactory extends Factory
             'group_id' => 0,
             'state' => 0,
             'uber_balance' => 0,
+            'legacy_uber_balance' => 0,
             'has_security_code' => false,
         ];
     }
@@ -53,6 +54,13 @@ class GameAccountFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'user_id' => null,
+        ]);
+    }
+
+    public function withLegacyUbers(int $amount = 100): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'legacy_uber_balance' => $amount,
         ]);
     }
 }

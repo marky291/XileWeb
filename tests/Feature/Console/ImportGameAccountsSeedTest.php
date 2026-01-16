@@ -4,6 +4,7 @@ namespace Tests\Feature\Console;
 
 use App\Models\GameAccount;
 use App\Models\User;
+use App\XileRetro\XileRetro_DonationUbers;
 use App\XileRetro\XileRetro_Login;
 use App\XileRO\XileRO_Login;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -625,5 +626,181 @@ class ImportGameAccountsSeedTest extends TestCase
 
         // All 3 users should have been created
         $this->assertDatabaseCount('users', 3);
+    }
+
+    #[Test]
+    public function xileretro_import_fetches_legacy_ubers_and_transfers_to_master(): void
+    {
+        $login = XileRetro_Login::factory()->create([
+            'userid' => 'uberwallet',
+            'email' => 'uberwallet@example.com',
+            'group_id' => 0,
+        ]);
+
+        // Create legacy ubers record
+        XileRetro_DonationUbers::factory()->create([
+            'account_id' => $login->account_id,
+            'username' => $login->userid,
+            'current_ubers' => 50,
+            'pending_ubers' => 25,
+        ]);
+
+        $this->artisan('player:import', [
+            '--server' => 'xileretro',
+            '--account-id' => $login->account_id,
+        ])
+            ->expectsOutput('Account imported successfully!')
+            ->assertExitCode(0);
+
+        // Verify user was created with uber balance transferred
+        $user = User::where('email', 'uberwallet@example.com')->first();
+        $this->assertNotNull($user);
+        $this->assertEquals(75, $user->uber_balance);
+
+        // Verify game account was created with legacy_uber_balance cleared
+        $gameAccount = GameAccount::where('ragnarok_account_id', $login->account_id)->first();
+        $this->assertEquals(0, $gameAccount->legacy_uber_balance);
+    }
+
+    #[Test]
+    public function xileretro_import_stores_legacy_ubers_when_no_master_account(): void
+    {
+        $login = XileRetro_Login::factory()->create([
+            'userid' => 'legacyfake',
+            'email' => 'a@a.com', // Fake email - no master account
+            'group_id' => 0,
+        ]);
+
+        // Create legacy ubers record
+        XileRetro_DonationUbers::factory()->create([
+            'account_id' => $login->account_id,
+            'username' => $login->userid,
+            'current_ubers' => 100,
+            'pending_ubers' => 50,
+        ]);
+
+        $this->artisan('player:import', [
+            '--server' => 'xileretro',
+            '--account-id' => $login->account_id,
+        ])
+            ->expectsOutput('Account imported successfully!')
+            ->assertExitCode(0);
+
+        // Verify no user was created
+        $this->assertDatabaseCount('users', 0);
+
+        // Verify game account was created with legacy_uber_balance stored (pending transfer)
+        $gameAccount = GameAccount::where('ragnarok_account_id', $login->account_id)->first();
+        $this->assertEquals(150, $gameAccount->legacy_uber_balance);
+        $this->assertNull($gameAccount->user_id);
+    }
+
+    #[Test]
+    public function xileretro_import_handles_account_without_legacy_ubers(): void
+    {
+        $login = XileRetro_Login::factory()->create([
+            'userid' => 'noubers',
+            'email' => 'noubers@example.com',
+            'group_id' => 0,
+        ]);
+
+        // No legacy ubers record exists
+
+        $this->artisan('player:import', [
+            '--server' => 'xileretro',
+            '--account-id' => $login->account_id,
+        ])
+            ->expectsOutput('Account imported successfully!')
+            ->assertExitCode(0);
+
+        // Verify user was created with 0 uber balance
+        $user = User::where('email', 'noubers@example.com')->first();
+        $this->assertNotNull($user);
+        $this->assertEquals(0, $user->uber_balance);
+
+        // Verify game account was created with 0 legacy_uber_balance
+        $gameAccount = GameAccount::where('ragnarok_account_id', $login->account_id)->first();
+        $this->assertEquals(0, $gameAccount->legacy_uber_balance);
+    }
+
+    #[Test]
+    public function xileretro_import_all_reports_legacy_ubers_transferred(): void
+    {
+        // Create accounts with and without legacy ubers
+        $loginWithUbers = XileRetro_Login::factory()->create([
+            'userid' => 'hasubers',
+            'email' => 'hasubers@example.com',
+            'group_id' => 0,
+        ]);
+
+        XileRetro_DonationUbers::factory()->create([
+            'account_id' => $loginWithUbers->account_id,
+            'username' => $loginWithUbers->userid,
+            'current_ubers' => 100,
+            'pending_ubers' => 0,
+        ]);
+
+        $loginWithoutUbers = XileRetro_Login::factory()->create([
+            'userid' => 'noubers2',
+            'email' => 'noubers2@example.com',
+            'group_id' => 0,
+        ]);
+
+        $this->artisan('player:import', [
+            '--server' => 'xileretro',
+            '--all' => true,
+        ])
+            ->expectsConfirmation('Import 2 accounts?', 'yes')
+            ->expectsOutputToContain('Import complete: 2 imported (2 with master account, 0 unclaimed)')
+            ->expectsOutputToContain('Legacy ubers: 100 transferred to master accounts')
+            ->assertExitCode(0);
+    }
+
+    #[Test]
+    public function xileretro_import_all_dry_run_shows_legacy_ubers_column(): void
+    {
+        $login = XileRetro_Login::factory()->create([
+            'userid' => 'dryrunubers',
+            'email' => 'dryrun@example.com',
+            'group_id' => 0,
+        ]);
+
+        XileRetro_DonationUbers::factory()->create([
+            'account_id' => $login->account_id,
+            'username' => $login->userid,
+            'current_ubers' => 75,
+            'pending_ubers' => 25,
+        ]);
+
+        $this->artisan('player:import', [
+            '--server' => 'xileretro',
+            '--all' => true,
+            '--dry-run' => true,
+        ])
+            ->expectsOutput('[DRY RUN] Would import the following accounts:')
+            ->assertExitCode(0);
+
+        // Nothing should be created
+        $this->assertDatabaseCount('game_accounts', 0);
+        $this->assertDatabaseCount('users', 0);
+    }
+
+    #[Test]
+    public function xilero_import_does_not_set_legacy_ubers(): void
+    {
+        $login = XileRO_Login::factory()->create([
+            'userid' => 'xilerouser',
+            'email' => 'xilero@example.com',
+            'group_id' => 0,
+        ]);
+
+        $this->artisan('player:import', [
+            '--server' => 'xilero',
+            '--account-id' => $login->account_id,
+        ])->assertExitCode(0);
+
+        // Verify game account has 0 legacy_uber_balance (XileRO doesn't have legacy ubers)
+        $gameAccount = GameAccount::where('ragnarok_account_id', $login->account_id)->first();
+        $this->assertEquals(0, $gameAccount->legacy_uber_balance);
     }
 }

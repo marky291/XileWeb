@@ -3,9 +3,11 @@
 namespace App\Filament\Pages;
 
 use App\Actions\MakeHashedLoginPassword;
+use App\Actions\TransferLegacyUberBalance;
 use App\Models\GameAccount;
 use App\Models\User;
 use App\XileRetro\XileRetro_Char;
+use App\XileRetro\XileRetro_DonationUbers;
 use App\XileRetro\XileRetro_Login;
 use App\XileRO\XileRO_Char;
 use App\XileRO\XileRO_Login;
@@ -447,9 +449,17 @@ class PlayerSupport extends Page implements HasForms
             'user_id' => $masterAccount->id,
         ]);
 
+        // Transfer legacy uber balance if any
+        $transferredUbers = TransferLegacyUberBalance::run($gameAccount, $masterAccount);
+
+        $message = "Game account {$gameAccount->userid} ({$gameAccount->serverName()}) linked to {$masterAccount->name}";
+        if ($transferredUbers > 0) {
+            $message .= ". Transferred {$transferredUbers} legacy ubers.";
+        }
+
         Notification::make()
             ->title('Account linked')
-            ->body("Game account {$gameAccount->userid} ({$gameAccount->serverName()}) linked to {$masterAccount->name}")
+            ->body($message)
             ->success()
             ->send();
 
@@ -622,8 +632,14 @@ class PlayerSupport extends Page implements HasForms
             return;
         }
 
+        // Check for legacy ubers if XileRetro account
+        $legacyUbers = 0;
+        if ($this->selectedPlayer['server_key'] === 'xileretro') {
+            $legacyUbers = XileRetro_DonationUbers::getTotalUbersForAccount($login->account_id);
+        }
+
         // Create the link
-        GameAccount::create([
+        $gameAccount = GameAccount::create([
             'user_id' => $masterAccount->id,
             'server' => $this->selectedPlayer['server_key'],
             'ragnarok_account_id' => $login->account_id,
@@ -633,11 +649,20 @@ class PlayerSupport extends Page implements HasForms
             'sex' => $login->sex ?? 'M',
             'group_id' => $login->group_id,
             'state' => $login->state,
+            'legacy_uber_balance' => $legacyUbers,
         ]);
+
+        // Transfer legacy uber balance if any
+        $transferredUbers = TransferLegacyUberBalance::run($gameAccount, $masterAccount);
+
+        $message = "Game account {$login->userid} ({$this->selectedPlayer['server']}) linked to master account {$masterAccount->name}";
+        if ($transferredUbers > 0) {
+            $message .= ". Transferred {$transferredUbers} legacy ubers.";
+        }
 
         Notification::make()
             ->title('Account linked')
-            ->body("Game account {$login->userid} ({$this->selectedPlayer['server']}) linked to master account {$masterAccount->name}")
+            ->body($message)
             ->success()
             ->send();
 

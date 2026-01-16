@@ -28,6 +28,7 @@ class GameAccount extends Model
         'group_id',
         'state',
         'uber_balance',
+        'legacy_uber_balance',
         'has_security_code',
     ];
 
