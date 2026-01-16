@@ -2,7 +2,9 @@
 
 namespace App\XileRetro;
 
+use App\Models\Item;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property int $id
@@ -85,4 +87,31 @@ class XileRetro_Inventory extends XileRetro_Model
         'equip_switch',
         'enchantgrade',
     ];
+
+    /**
+     * @return BelongsTo<XileRetro_Char, $this>
+     */
+    public function character(): BelongsTo
+    {
+        return $this->belongsTo(XileRetro_Char::class, 'char_id', 'char_id');
+    }
+
+    public ?Item $cachedItem = null;
+
+    public bool $itemLoaded = false;
+
+    /**
+     * Get the item from the main database.
+     */
+    public function getItemAttribute(): ?Item
+    {
+        if (! $this->itemLoaded) {
+            $this->cachedItem = Item::where('item_id', $this->nameid)
+                ->where('is_xileretro', true)
+                ->first();
+            $this->itemLoaded = true;
+        }
+
+        return $this->cachedItem;
+    }
 }

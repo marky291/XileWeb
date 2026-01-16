@@ -24,8 +24,6 @@ class UberShopCategoryFactory extends Factory
             'uber_range' => fake()->randomElement(['1-10', '10-50', '50-100']),
             'display_order' => fake()->numberBetween(0, 100),
             'enabled' => true,
-            'is_xilero' => true,
-            'is_xileretro' => true,
         ];
     }
 
@@ -33,22 +31,6 @@ class UberShopCategoryFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'enabled' => false,
-        ]);
-    }
-
-    public function xileroOnly(): static
-    {
-        return $this->state(fn (array $attributes) => [
-            'is_xilero' => true,
-            'is_xileretro' => false,
-        ]);
-    }
-
-    public function xileretroOnly(): static
-    {
-        return $this->state(fn (array $attributes) => [
-            'is_xilero' => false,
-            'is_xileretro' => true,
         ]);
     }
 }

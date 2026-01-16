@@ -35,7 +35,9 @@ class PatchResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-arrow-down-tray';
 
-    protected static ?string $navigationGroup = 'Client Patch';
+    protected static ?string $navigationGroup = 'Content';
+
+    protected static ?int $navigationSort = 1;
 
     protected static ?string $modelLabel = 'Client Patch';
 
@@ -84,6 +86,7 @@ class PatchResource extends Resource
                             ->default(function (Get $get) {
                                 $client = $get('client') ?: Patch::CLIENT_XILERO;
                                 $maxNumber = Patch::where('client', $client)->max('number');
+
                                 return $maxNumber ? $maxNumber + 1 : 1;
                             })
                             ->readOnly()
@@ -101,7 +104,8 @@ class PatchResource extends Resource
                             ->required(fn (string $context): bool => $context === 'create')
                             ->disk(function (Get $get): string {
                                 $client = $get('client') ?? 'xilero';
-                                return match($client) {
+
+                                return match ($client) {
                                     'retro' => 'retro_patch',
                                     'xilero' => 'xilero_patch',
                                     default => 'xilero_patch'
@@ -148,6 +152,7 @@ class PatchResource extends Resource
                                         $client = $get('client') ?: Patch::CLIENT_XILERO;
                                         $maxNumber = Patch::where('client', $client)->max('number');
                                         $next_number = $maxNumber ? $maxNumber + 1 : 1;
+
                                         return 'e.g., Patch #'.$next_number.' - Halloween Update';
                                     })
                                     ->required()
@@ -194,7 +199,7 @@ class PatchResource extends Resource
                             ->content(function (Get $get) {
                                 $client = $get('client') ?: Patch::CLIENT_XILERO;
                                 $recent_patches = Patch::where('client', $client)->latest('number')->take(5)->get();
-                                
+
                                 if ($recent_patches->isEmpty()) {
                                     return new HtmlString('<p class="text-sm text-gray-500">No patches found for '.($client === 'retro' ? 'Retro' : 'XileRO').'</p>');
                                 }
@@ -245,7 +250,7 @@ class PatchResource extends Resource
                     ->sortable()
                     ->badge()
                     ->prefix('#'),
-                    
+
                 TextColumn::make('type')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
@@ -253,7 +258,7 @@ class PatchResource extends Resource
                         'GRF' => 'info',
                         default => 'gray',
                     }),
-                    
+
                 TextColumn::make('client')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
@@ -266,7 +271,7 @@ class PatchResource extends Resource
                         'xilero' => 'XileRO',
                         default => $state,
                     }),
-                    
+
                 TextColumn::make('patch_name')
                     ->label('File')
                     ->placeholder('No file')
@@ -275,17 +280,18 @@ class PatchResource extends Resource
                     ->copyMessage('Filename copied')
                     ->limit(20)
                     ->tooltip(fn ($state) => $state),
-                    
+
                 TextColumn::make('comments')
                     ->label('Notes')
                     ->limit(30)
                     ->placeholder('No notes')
                     ->tooltip(function (TextColumn $column): ?string {
                         $state = $column->getState();
+
                         return strlen($state) > 30 ? $state : null;
                     })
                     ->toggleable(isToggledHiddenByDefault: true),
-                    
+
                 TextColumn::make('post.title')
                     ->label('Post')
                     ->placeholder('No post')
@@ -294,7 +300,7 @@ class PatchResource extends Resource
                     ->url(fn ($record) => $record->post ? "/posts/{$record->post->slug}" : null)
                     ->openUrlInNewTab()
                     ->toggleable(isToggledHiddenByDefault: true),
-                    
+
                 TextColumn::make('created_at')
                     ->label('Date')
                     ->dateTime('M j')
@@ -318,16 +324,16 @@ class PatchResource extends Resource
                     ->icon('heroicon-o-arrow-down-tray')
                     ->color('success')
                     ->url(function (Patch $record): string {
-                        if (!$record->file) {
+                        if (! $record->file) {
                             return '#';
                         }
                         $client = $record->client ?? 'xilero';
-                        $disk = match($client) {
+                        $disk = match ($client) {
                             'retro' => 'retro_patch',
                             'xilero' => 'xilero_patch',
                             default => 'xilero_patch'
                         };
-                        
+
                         // Use Storage facade to get the proper URL
                         return Storage::disk($disk)->url($record->file);
                     })

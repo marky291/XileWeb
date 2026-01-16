@@ -36,6 +36,9 @@ return new class extends Migration
                 $table->string('remember_token', 100)->nullable();
                 $table->timestamp('email_verified_at')->nullable();
                 $table->unsignedInteger('ubers')->default(0);
+                // XileRetro-specific fields
+                $table->unsignedInteger('last_unique_id')->default(0);
+                $table->unsignedInteger('blocked_unique_id')->default(0);
 
                 $table->index('userid');
             });

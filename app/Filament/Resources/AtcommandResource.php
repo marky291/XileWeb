@@ -19,9 +19,14 @@ class AtcommandResource extends Resource
 {
     protected static ?string $model = Atcommand::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-command-line';
 
-    protected static ?string $navigationGroup = 'Logs';
+    protected static ?string $navigationGroup = 'XileRO';
+
+    protected static ?int $navigationSort = 4;
+
+    // Hidden until Atcommand model is created
+    protected static bool $shouldRegisterNavigation = false;
 
     public static function form(Form $form): Form
     {

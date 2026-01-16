@@ -3,8 +3,8 @@
 namespace Tests\Unit\Livewire;
 
 use App\Livewire\DonateShop;
-use App\Models\DatabaseItem;
 use App\Models\GameAccount;
+use App\Models\Item;
 use App\Models\UberShopCategory;
 use App\Models\UberShopItem;
 use App\Models\UberShopPurchase;
@@ -18,17 +18,17 @@ class DonateShopTest extends TestCase
 {
     use RefreshDatabase;
 
-    private function createCategoryWithItem(array $itemOverrides = [], array $databaseItemOverrides = []): UberShopItem
+    private function createCategoryWithItem(array $itemOverrides = [], array $itemDataOverrides = []): UberShopItem
     {
         $category = UberShopCategory::factory()->create([
             'enabled' => true,
         ]);
 
-        $databaseItem = DatabaseItem::factory()->create($databaseItemOverrides);
+        $item = Item::factory()->create($itemDataOverrides);
 
         return UberShopItem::factory()->create(array_merge([
             'category_id' => $category->id,
-            'database_item_id' => $databaseItem->id,
+            'item_id' => $item->id,
             'enabled' => true,
             'uber_cost' => 5,
         ], $itemOverrides));
@@ -59,31 +59,39 @@ class DonateShopTest extends TestCase
     #[Test]
     public function it_displays_categories(): void
     {
+        $user = $this->createUserWithGameAccount(100);
+
         $category = UberShopCategory::factory()->create([
             'name' => 'test-category',
             'display_name' => 'Test Category',
             'enabled' => true,
         ]);
 
-        UberShopItem::factory()->create([
+        UberShopItem::factory()->forXileRO()->create([
             'category_id' => $category->id,
             'enabled' => true,
         ]);
 
-        Livewire::test(DonateShop::class)
+        Livewire::actingAs($user)
+            ->test(DonateShop::class)
             ->assertSee('Test Category');
     }
 
     #[Test]
     public function it_displays_items(): void
     {
+        $user = $this->createUserWithGameAccount(100);
+
         $item = $this->createCategoryWithItem([
             'uber_cost' => 10,
+            'is_xilero' => true,
+            'is_xileretro' => false,
         ], [
             'name' => 'Super Sword',
         ]);
 
-        Livewire::test(DonateShop::class)
+        Livewire::actingAs($user)
+            ->test(DonateShop::class)
             ->assertSee('Super Sword')
             ->assertSee('10');
     }
@@ -91,6 +99,8 @@ class DonateShopTest extends TestCase
     #[Test]
     public function it_filters_items_by_category(): void
     {
+        $user = $this->createUserWithGameAccount(100);
+
         $category1 = UberShopCategory::factory()->create([
             'name' => 'weapons',
             'enabled' => true,
@@ -100,21 +110,22 @@ class DonateShopTest extends TestCase
             'enabled' => true,
         ]);
 
-        $swordItem = DatabaseItem::factory()->create(['name' => 'Epic Sword']);
-        $shieldItem = DatabaseItem::factory()->create(['name' => 'Iron Shield']);
+        $swordItem = Item::factory()->create(['name' => 'Epic Sword']);
+        $shieldItem = Item::factory()->create(['name' => 'Iron Shield']);
 
-        UberShopItem::factory()->create([
+        UberShopItem::factory()->forXileRO()->create([
             'category_id' => $category1->id,
-            'database_item_id' => $swordItem->id,
+            'item_id' => $swordItem->id,
             'enabled' => true,
         ]);
-        UberShopItem::factory()->create([
+        UberShopItem::factory()->forXileRO()->create([
             'category_id' => $category2->id,
-            'database_item_id' => $shieldItem->id,
+            'item_id' => $shieldItem->id,
             'enabled' => true,
         ]);
 
-        Livewire::test(DonateShop::class)
+        Livewire::actingAs($user)
+            ->test(DonateShop::class)
             ->assertSee('Epic Sword')
             ->assertSee('Iron Shield')
             ->call('selectCategory', 'weapons')
@@ -188,6 +199,8 @@ class DonateShopTest extends TestCase
     #[Test]
     public function user_with_sufficient_balance_can_purchase_item(): void
     {
+        config(['xilero.uber_shop.purchasing_enabled' => true]);
+
         $user = $this->createUserWithGameAccount(100);
         $gameAccount = $user->gameAccounts()->first();
         $item = $this->createCategoryWithItem(['uber_cost' => 25]);
@@ -195,6 +208,8 @@ class DonateShopTest extends TestCase
         Livewire::actingAs($user)
             ->test(DonateShop::class)
             ->call('selectItem', $item->id)
+            ->assertSet('selectedItemId', $item->id)
+            ->call('confirmPurchase')
             ->call('purchase');
 
         // Verify balance was deducted from user
@@ -240,6 +255,8 @@ class DonateShopTest extends TestCase
     #[Test]
     public function purchase_decrements_item_stock_when_limited(): void
     {
+        config(['xilero.uber_shop.purchasing_enabled' => true]);
+
         $user = $this->createUserWithGameAccount(100);
         $item = $this->createCategoryWithItem([
             'uber_cost' => 10,
@@ -318,6 +335,8 @@ class DonateShopTest extends TestCase
     #[Test]
     public function purchase_resets_selected_item_on_success(): void
     {
+        config(['xilero.uber_shop.purchasing_enabled' => true]);
+
         $user = $this->createUserWithGameAccount(100);
         $item = $this->createCategoryWithItem(['uber_cost' => 10]);
 
@@ -333,6 +352,8 @@ class DonateShopTest extends TestCase
     #[Test]
     public function multiple_purchases_are_tracked_correctly(): void
     {
+        config(['xilero.uber_shop.purchasing_enabled' => true]);
+
         $user = $this->createUserWithGameAccount(100);
         $gameAccount = $user->gameAccounts()->first();
         $item = $this->createCategoryWithItem(['uber_cost' => 20]);
@@ -382,56 +403,63 @@ class DonateShopTest extends TestCase
     }
 
     #[Test]
-    public function it_shows_all_items_regardless_of_server(): void
+    public function it_filters_items_by_selected_game_account_server(): void
     {
         $user = User::factory()->create(['uber_balance' => 100]);
         GameAccount::factory()->create(['user_id' => $user->id, 'server' => 'xilero']);
 
         $category = UberShopCategory::factory()->create(['enabled' => true]);
 
-        $xileroDbItem = DatabaseItem::factory()->create(['name' => 'XileRO Only Item']);
-        $xileretroDbItem = DatabaseItem::factory()->create(['name' => 'XileRetro Only Item']);
+        $xileroDbItem = Item::factory()->create(['name' => 'XileRO Only Item']);
+        $xileretroDbItem = Item::factory()->create(['name' => 'XileRetro Only Item']);
 
         UberShopItem::factory()->forXileRO()->create([
             'category_id' => $category->id,
-            'database_item_id' => $xileroDbItem->id,
+            'item_id' => $xileroDbItem->id,
             'enabled' => true,
         ]);
 
         UberShopItem::factory()->forXileRetro()->create([
             'category_id' => $category->id,
-            'database_item_id' => $xileretroDbItem->id,
+            'item_id' => $xileretroDbItem->id,
             'enabled' => true,
         ]);
 
-        // All items should be visible regardless of selected account's server
+        // Only XileRO items should be visible for XileRO account
         Livewire::actingAs($user)
             ->test(DonateShop::class)
             ->assertSee('XileRO Only Item')
-            ->assertSee('XileRetro Only Item');
+            ->assertDontSee('XileRetro Only Item');
     }
 
     #[Test]
-    public function it_shows_server_mismatch_message_in_modal(): void
+    public function it_shows_xileretro_items_for_xileretro_account(): void
     {
         $user = User::factory()->create(['uber_balance' => 100]);
         GameAccount::factory()->xileretro()->create(['user_id' => $user->id]);
 
         $category = UberShopCategory::factory()->create(['enabled' => true]);
-        $dbItem = DatabaseItem::factory()->create(['name' => 'XileRO Only Item']);
 
-        $xileroItem = UberShopItem::factory()->forXileRO()->create([
+        $xileroDbItem = Item::factory()->create(['name' => 'XileRO Only Item']);
+        $xileretroDbItem = Item::factory()->create(['name' => 'XileRetro Only Item']);
+
+        UberShopItem::factory()->forXileRO()->create([
             'category_id' => $category->id,
-            'database_item_id' => $dbItem->id,
-            'uber_cost' => 10,
+            'item_id' => $xileroDbItem->id,
             'enabled' => true,
         ]);
 
+        UberShopItem::factory()->forXileRetro()->create([
+            'category_id' => $category->id,
+            'item_id' => $xileretroDbItem->id,
+            'enabled' => true,
+        ]);
+
+        // Only XileRetro items should be visible for XileRetro account
         Livewire::actingAs($user)
             ->test(DonateShop::class)
-            ->call('selectItem', $xileroItem->id)
-            ->assertSee('This item is only available for')
-            ->assertSee('Not Available for This Server');
+            ->assertSee('XileRetro Only Item')
+            ->assertDontSee('XileRO Only Item');
     }
 
     #[Test]
@@ -441,11 +469,11 @@ class DonateShopTest extends TestCase
         GameAccount::factory()->create(['user_id' => $user->id, 'server' => 'xilero']);
 
         $category = UberShopCategory::factory()->create(['enabled' => true]);
-        $dbItem = DatabaseItem::factory()->create(['name' => 'Both Servers Item']);
+        $dbItem = Item::factory()->create(['name' => 'Both Servers Item']);
 
         UberShopItem::factory()->forBothServers()->create([
             'category_id' => $category->id,
-            'database_item_id' => $dbItem->id,
+            'item_id' => $dbItem->id,
             'enabled' => true,
         ]);
 
@@ -488,6 +516,8 @@ class DonateShopTest extends TestCase
     #[Test]
     public function can_purchase_item_available_for_both_servers(): void
     {
+        config(['xilero.uber_shop.purchasing_enabled' => true]);
+
         $user = User::factory()->create(['uber_balance' => 100]);
         $gameAccount = GameAccount::factory()->xileretro()->create(['user_id' => $user->id]);
 
@@ -511,13 +541,16 @@ class DonateShopTest extends TestCase
     }
 
     #[Test]
-    public function switching_game_account_resets_purchase_confirmation(): void
+    public function switching_game_account_resets_purchase_confirmation_and_selected_item(): void
     {
         $user = User::factory()->create(['uber_balance' => 100]);
         $xileroAccount = GameAccount::factory()->create(['user_id' => $user->id, 'server' => 'xilero']);
         $xileretroAccount = GameAccount::factory()->xileretro()->create(['user_id' => $user->id]);
 
-        $item = $this->createCategoryWithItem();
+        $item = $this->createCategoryWithItem([
+            'is_xilero' => true,
+            'is_xileretro' => false,
+        ]);
 
         Livewire::actingAs($user)
             ->test(DonateShop::class)
@@ -526,6 +559,6 @@ class DonateShopTest extends TestCase
             ->assertSet('showPurchaseConfirm', true)
             ->set('selectedGameAccountId', $xileretroAccount->id)
             ->assertSet('showPurchaseConfirm', false)
-            ->assertSet('selectedItemId', $item->id); // Item stays selected
+            ->assertSet('selectedItemId', null); // Item is reset when switching servers
     }
 }

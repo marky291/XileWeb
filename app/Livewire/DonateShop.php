@@ -6,6 +6,7 @@ use App\Models\GameAccount;
 use App\Models\UberShopCategory;
 use App\Models\UberShopItem;
 use App\Models\UberShopPurchase;
+use App\Notifications\UberShopPurchaseNotification;
 use App\XileRO\XileRO_Char;
 use App\XileRO\XileRO_Inventory;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -46,6 +47,15 @@ class DonateShop extends Component
     }
 
     /**
+     * Redirect to login page with intended URL set.
+     */
+    public function redirectToLogin(): void
+    {
+        session()->put('url.intended', request()->url());
+        $this->redirect(route('login'), navigate: false);
+    }
+
+    /**
      * Get all enabled categories.
      *
      * @return Collection<int, UberShopCategory>
@@ -72,13 +82,28 @@ class DonateShop extends Component
     }
 
     /**
-     * Get paginated items for the selected category.
+     * Get paginated items for the selected category, filtered by the selected game account's server.
      */
     public function items(): LengthAwarePaginator
     {
-        $query = UberShopItem::with('databaseItem')
+        $gameAccount = $this->selectedGameAccount();
+
+        // If no game account selected, return empty paginator
+        if (! $gameAccount) {
+            return new \Illuminate\Pagination\LengthAwarePaginator([], 0, 15);
+        }
+
+        $query = UberShopItem::with('item')
             ->where('enabled', true)
+            ->orderByDesc('views')
             ->orderBy('display_order');
+
+        // Filter by server based on selected game account
+        if ($gameAccount->server === GameAccount::SERVER_XILERO) {
+            $query->where('is_xilero', true);
+        } else {
+            $query->where('is_xileretro', true);
+        }
 
         if ($this->category) {
             $category = $this->selectedCategory();
@@ -89,13 +114,10 @@ class DonateShop extends Component
 
         if ($this->search) {
             $searchTerm = $this->search;
-            $query->where(function ($q) use ($searchTerm) {
-                $q->where('display_name', 'like', '%'.$searchTerm.'%')
-                    ->orWhereHas('databaseItem', function ($dbQuery) use ($searchTerm) {
-                        $dbQuery->where('name', 'like', '%'.$searchTerm.'%')
-                            ->orWhere('aegis_name', 'like', '%'.$searchTerm.'%')
-                            ->orWhere('item_id', $searchTerm);
-                    });
+            $query->whereHas('item', function ($itemQuery) use ($searchTerm) {
+                $itemQuery->where('name', 'like', '%'.$searchTerm.'%')
+                    ->orWhere('aegis_name', 'like', '%'.$searchTerm.'%')
+                    ->orWhere('item_id', $searchTerm);
             });
         }
 
@@ -135,6 +157,10 @@ class DonateShop extends Component
     {
         $this->selectedItemId = $itemId;
         $this->showPurchaseConfirm = false;
+
+        if ($itemId) {
+            UberShopItem::where('id', $itemId)->increment('views');
+        }
     }
 
     /**
@@ -156,8 +182,10 @@ class DonateShop extends Component
             $this->selectedGameAccountId = $firstAccount?->id;
         }
 
-        // Reset purchase confirmation when switching accounts
+        // Reset purchase confirmation and pagination when switching accounts
         $this->showPurchaseConfirm = false;
+        $this->selectedItemId = null;
+        $this->resetPage();
     }
 
     /**
@@ -169,7 +197,7 @@ class DonateShop extends Component
             return null;
         }
 
-        return UberShopItem::with(['category', 'databaseItem'])->find($this->selectedItemId);
+        return UberShopItem::with(['category', 'item'])->find($this->selectedItemId);
     }
 
     /**
@@ -194,6 +222,35 @@ class DonateShop extends Component
         }
 
         return auth()->user()->uber_balance ?? 0;
+    }
+
+    /**
+     * Check if the current user can make purchases.
+     *
+     * When purchasing_enabled config is true: all users can purchase.
+     * When false: only admin users can purchase.
+     */
+    public function canPurchase(): bool
+    {
+        if (! auth()->check()) {
+            return false;
+        }
+
+        // If purchasing is enabled, everyone can purchase
+        if (config('xilero.uber_shop.purchasing_enabled', true)) {
+            return true;
+        }
+
+        // If purchasing is disabled, only admins can purchase
+        return auth()->user()->isAdmin();
+    }
+
+    /**
+     * Check if purchasing is currently restricted to admins only.
+     */
+    public function isPurchasingRestricted(): bool
+    {
+        return ! config('xilero.uber_shop.purchasing_enabled', true);
     }
 
     /**
@@ -442,6 +499,13 @@ class DonateShop extends Component
             return;
         }
 
+        // Check if user can purchase (feature flag + admin check)
+        if (! $this->canPurchase()) {
+            session()->flash('error', 'Purchasing is currently disabled. Please try again later.');
+
+            return;
+        }
+
         $user = auth()->user();
 
         $gameAccount = $this->selectedGameAccount();
@@ -489,7 +553,7 @@ class DonateShop extends Component
         try {
             DB::transaction(function () use ($user, $gameAccount, $item, $currentBalance) {
                 // Lock the item row to prevent race conditions with stock
-                $lockedItem = UberShopItem::where('id', $item->id)->lockForUpdate()->first();
+                $lockedItem = UberShopItem::with('item')->where('id', $item->id)->lockForUpdate()->first();
 
                 // Re-check availability after lock
                 if (! $lockedItem || ! $lockedItem->is_available) {
@@ -509,12 +573,12 @@ class DonateShop extends Component
                 }
 
                 // Create purchase record
-                UberShopPurchase::create([
+                $purchase = UberShopPurchase::create([
                     'account_id' => $gameAccount->ragnarok_account_id,
                     'account_name' => $gameAccount->userid,
                     'shop_item_id' => $lockedItem->id,
-                    'item_id' => $lockedItem->item_id,
-                    'item_name' => $lockedItem->item_name,
+                    'item_id' => $lockedItem->item->item_id,
+                    'item_name' => $lockedItem->item->name,
                     'refine_level' => $lockedItem->refine_level,
                     'quantity' => $lockedItem->quantity,
                     'uber_cost' => $lockedItem->uber_cost,
@@ -522,6 +586,13 @@ class DonateShop extends Component
                     'status' => UberShopPurchase::STATUS_PENDING,
                     'purchased_at' => now(),
                 ]);
+
+                // Send purchase confirmation email
+                $user->notify(new UberShopPurchaseNotification(
+                    $purchase,
+                    $gameAccount->userid,
+                    $gameAccount->serverName()
+                ));
             });
 
             session()->flash('success', "Successfully purchased {$item->display_name} for {$item->uber_cost} Ubers! The item will be delivered to {$gameAccount->userid} on next login.");
@@ -553,6 +624,8 @@ class DonateShop extends Component
             'pendingPurchases' => $this->pendingPurchases(),
             'claimedPurchases' => $this->claimedPurchases(),
             'refundHours' => $this->refundHours(),
+            'canPurchase' => $this->canPurchase(),
+            'isPurchasingRestricted' => $this->isPurchasingRestricted(),
         ]);
     }
 }

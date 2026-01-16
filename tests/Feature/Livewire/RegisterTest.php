@@ -4,7 +4,9 @@ namespace Tests\Feature\Livewire;
 
 use App\Livewire\Auth\Register;
 use App\Models\User;
+use App\Notifications\WelcomeNotification;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Notification;
 use Livewire\Livewire;
 use Tests\TestCase;
 
@@ -81,5 +83,20 @@ class RegisterTest extends TestCase
 
         $user = User::where('email', 'test@email.com')->first();
         $this->assertEquals(6, $user->max_game_accounts);
+    }
+
+    public function test_welcome_email_is_sent_on_registration(): void
+    {
+        Notification::fake();
+
+        Livewire::test(Register::class)
+            ->set('email', 'newuser@email.com')
+            ->set('password', 'password123')
+            ->set('password_confirmation', 'password123')
+            ->call('register');
+
+        $user = User::where('email', 'newuser@email.com')->first();
+
+        Notification::assertSentTo($user, WelcomeNotification::class);
     }
 }

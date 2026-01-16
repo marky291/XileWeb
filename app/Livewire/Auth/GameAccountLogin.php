@@ -21,6 +21,20 @@ class GameAccountLogin extends Component
 
     public bool $remember = false;
 
+    public function mount(): void
+    {
+        // Store the referer as intended URL if not already set and it's from our site
+        if (! session()->has('url.intended')) {
+            $referer = request()->headers->get('referer');
+            if ($referer && str_starts_with($referer, config('app.url'))) {
+                // Don't store login/register pages as intended
+                if (! str_contains($referer, '/login') && ! str_contains($referer, '/register')) {
+                    session()->put('url.intended', $referer);
+                }
+            }
+        }
+    }
+
     public function authenticate(): void
     {
         $this->validate();
@@ -42,7 +56,9 @@ class GameAccountLogin extends Component
         // Sync game account data from game database
         SyncGameAccountData::run(Auth::user());
 
-        $this->redirect(route('dashboard'), navigate: false);
+        // Redirect to intended URL or dashboard
+        $intendedUrl = session()->pull('url.intended', route('dashboard'));
+        $this->redirect($intendedUrl, navigate: false);
     }
 
     protected function ensureIsNotRateLimited(): void

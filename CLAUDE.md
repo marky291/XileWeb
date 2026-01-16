@@ -133,10 +133,10 @@ Tests use SQLite in-memory database for isolation. The `RagnarokModel` base clas
 
 | Resource | URL | Description |
 |----------|-----|-------------|
-| **XileRO Docs** | https://docs.xilero.net | Player guides for XileRO (current server), uses GitBook |
+| **XileRO Docs** | https://info.xilero.net | Player guides for XileRO (current server), uses GitBook |
 | **XileRetro Docs** | https://wiki.xilero.net | Player guides for XileRetro (old server), MediaWiki |
 
-**Note:** Links to `wiki.xilero.net` are for XileRetro. XileRO documentation is at `docs.xilero.net`.
+**Note:** Links to `wiki.xilero.net` are for XileRetro. XileRO documentation is at `info.xilero.net`.
 
 ===
 

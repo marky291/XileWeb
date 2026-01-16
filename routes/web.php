@@ -29,6 +29,11 @@ Route::get('/', function () {
 
                 return array_search((string) $castle->castle_id, $order);
             }),
+        'popularUberItems' => App\Models\UberShopItem::with('item')
+            ->where('enabled', true)
+            ->orderByDesc('views')
+            ->limit(9)
+            ->get(),
     ]);
 })->name('home');
 
@@ -161,7 +166,6 @@ Route::get('xilero/patch/list', function () {
 Route::middleware('guest')->group(function () {
     Route::get('/login', \App\Livewire\Auth\GameAccountLogin::class)->name('login');
     Route::get('/register', \App\Livewire\Auth\Register::class)->name('register');
-    Route::get('/password-reset', fn () => redirect('/app/password-reset'))->name('password.request');
 
     // Discord OAuth routes
     Route::get('/auth/discord/redirect', [DiscordController::class, 'redirect'])->name('auth.discord.redirect');
@@ -169,8 +173,11 @@ Route::middleware('guest')->group(function () {
 });
 
 // Authenticated user routes
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', \App\Livewire\Auth\Dashboard::class)->name('dashboard');
+});
+
+Route::middleware('auth')->group(function () {
     Route::post('/logout', function () {
         auth()->logout();
         session()->invalidate();
@@ -183,8 +190,11 @@ Route::middleware('auth')->group(function () {
 // Public shop (viewable by all, purchase requires auth)
 Route::get('/donate-shop', \App\Livewire\DonateShop::class)->name('donate-shop');
 
+// Item database viewer
+Route::get('/item-database', \App\Livewire\ItemDatabase::class)->name('item-database');
+
+require __DIR__.'/auth.php';
+
 Route::any('{query}', function () {
     return redirect('/')->with('message', 'Redirected 404.');
 })->where('query', '.*');
-
-require __DIR__.'/auth.php';

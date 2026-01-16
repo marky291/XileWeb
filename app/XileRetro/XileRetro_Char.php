@@ -5,6 +5,7 @@ namespace App\XileRetro;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property int $char_id
@@ -173,5 +174,13 @@ class XileRetro_Char extends XileRetro_Model
     public function getClassNameAttribute(): string
     {
         return config('jobclasses')[$this->class] ?? 'Unknown';
+    }
+
+    /**
+     * @return HasMany<XileRetro_Inventory, $this>
+     */
+    public function inventory(): HasMany
+    {
+        return $this->hasMany(XileRetro_Inventory::class, 'char_id', 'char_id');
     }
 }

@@ -43,7 +43,7 @@ class Dashboard extends Component
                 'alpha_num',
                 'min:4',
                 'max:23',
-                'unique:game_accounts,userid',
+                "unique:game_accounts,userid,NULL,id,server,{$this->gameServer}",
                 "unique:{$loginTable},userid",
             ],
             'gamePassword' => [
@@ -59,7 +59,7 @@ class Dashboard extends Component
     public function messages(): array
     {
         return [
-            'gameUsername.unique' => 'This username is already taken.',
+            'gameUsername.unique' => 'This username is already taken on this server.',
             'gameUsername.alpha_num' => 'Username must contain only letters and numbers.',
             'gamePassword.confirmed' => 'The password confirmation does not match.',
         ];

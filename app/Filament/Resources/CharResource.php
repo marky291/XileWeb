@@ -5,7 +5,9 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\CharResource\Pages\CreateChar;
 use App\Filament\Resources\CharResource\Pages\EditChar;
 use App\Filament\Resources\CharResource\Pages\ListChars;
+use App\Filament\Resources\CharResource\RelationManagers\InventoryRelationManager;
 use App\Filament\Resources\LoginResource\RelationManagers\LoginRelationManager;
+use App\XileRO\XileRO_Char as Char;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -21,9 +23,17 @@ class CharResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
-    protected static ?string $navigationGroup = 'Player Management';
+    protected static ?string $navigationGroup = 'XileRO';
 
-    protected static ?string $navigationIcon = 'heroicon-o-cog-6-tooth';
+    protected static ?string $navigationIcon = 'heroicon-o-user-group';
+
+    protected static ?int $navigationSort = 2;
+
+    protected static ?string $navigationLabel = 'Characters';
+
+    protected static ?string $modelLabel = 'Character';
+
+    protected static ?string $pluralModelLabel = 'Characters';
 
     public static function form(Form $form): Form
     {
@@ -88,10 +98,14 @@ class CharResource extends Resource
 
         return $form
             ->schema([
-                TextInput::make('account_id')->readOnly(),
+                TextInput::make('account_id')
+                    ->disabled()
+                    ->dehydrated(false),
                 TextInput::make('name'),
                 Select::make('class')->options($classOptions),
-                TextInput::make('last_login')->readOnly(),
+                TextInput::make('last_login')
+                    ->disabled()
+                    ->dehydrated(false),
             ]);
     }
 
@@ -119,6 +133,7 @@ class CharResource extends Resource
     {
         return [
             LoginRelationManager::class,
+            InventoryRelationManager::class,
         ];
     }
 

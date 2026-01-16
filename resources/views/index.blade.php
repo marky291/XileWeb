@@ -354,32 +354,73 @@
 
     <section id="uber-store" class="bg-clash-bg mx-auto py-5 pt-8 pb-24">
         <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
-            <div class="">
-                <div class="grid grid-cols-2">
+            <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between">
+                <div>
                     <h2 class="mb-0">Uber Store</h2>
+                    <p class="mt-4 text-gray-300 leading-relaxed">Most popular items from our Uber Shop.</p>
                 </div>
-                <p class="mt-6 text-gray-300 leading-relaxed">Your ubers let you get some of the most powerful items in game, ubers can be purchased in game with zeny or by donation, here is a small preview of what is to offer, click to view our wiki for extensive catalogue of items. <span class="text-amber-500">@warp payon 142 224</span></p>
+                <a href="{{ route('donate-shop') }}" class="mt-4 sm:mt-0 inline-flex items-center gap-2 px-4 py-2 bg-amber-500 hover:bg-amber-400 text-gray-900 font-bold rounded-lg transition-colors">
+                    View All Items
+                    <i class="fas fa-arrow-right"></i>
+                </a>
             </div>
-            <div class="">
-                <ul class="mt-10 relative grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                    @foreach (config('donation.items') as $item)
-                        <li class="block-home p-6">
-                            <a id="{{ Str::slug($item['name']) }}" title="Uber Shop Item {{ $item['name'] }}" aria-label="Uber Shop Item {{ $item['name'] }}" href="https://wiki.xilero.net/index.php?title=Donation" class="flex">
-                                <div class="relative shrink-0 bg-breeze flex items-center justify-center rounded-lg overflow-hidden" style="height:100px; width:75px;">
-                                    <img src="/images/donations/{{ $item['image'] }}" alt="{{ $item['name'] }} Item" class="relative" width="75" height="100">
-                                </div>
-                                <div class="ml-4 leading-5">
-                                    <div class="text-gray-100">{{ $item['name'] }}</div>
-                                    <div class="mt-1 text-sm text-gray-300">{{ $item['description'] }} <br> {{ $item['stats'] }}</div>
-                                    <div class="mt-1 text-sm text-amber-500 font-bold">{{ $item['cost'] }} Ubers</div>
-                                    @if(isset($set))
-                                        <div class="mt-1 text-sm text-amber-200 font-bold">Click to view Item Set Bonus</div>
+            <div class="mt-10 grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+                @foreach ($popularUberItems as $shopItem)
+                    <a href="{{ route('donate-shop') }}" class="block-home bg-gray-900 rounded-lg p-4 text-left hover:bg-gray-800/80 transition-colors">
+                        <div class="flex gap-4">
+                            {{-- Item Image --}}
+                            <div class="shrink-0 w-16 h-20 bg-gray-800 rounded-lg overflow-hidden flex items-center justify-center">
+                                @if ($shopItem->item)
+                                    <img
+                                        src="{{ $shopItem->item->collection() }}"
+                                        alt="{{ $shopItem->item->name }}"
+                                        class="max-h-full max-w-full object-contain"
+                                        onerror="this.onerror=null; this.src='{{ $shopItem->item->icon() }}';"
+                                        loading="lazy"
+                                    >
+                                @else
+                                    <i class="fas fa-box text-gray-600 text-2xl"></i>
+                                @endif
+                            </div>
+
+                            {{-- Item Info --}}
+                            <div class="flex-1 min-w-0">
+                                <div class="flex items-center gap-2">
+                                    <h3 class="font-semibold text-white truncate">{{ $shopItem->display_name }}</h3>
+                                    @if ($shopItem->exclusive_server)
+                                        <span class="shrink-0 text-[10px] font-medium px-1.5 py-0.5 rounded {{ $shopItem->is_xilero ? 'bg-blue-500/20 text-blue-400' : 'bg-purple-500/20 text-purple-400' }}">
+                                            {{ $shopItem->exclusive_server }}
+                                        </span>
                                     @endif
                                 </div>
-                            </a>
-                        </li>
-                    @endforeach
-                </ul>
+                                @if ($shopItem->quantity > 1)
+                                    <span class="text-xs text-gray-500">x{{ $shopItem->quantity }}</span>
+                                @endif
+
+                                @if ($shopItem->item?->description)
+                                    <p class="text-xs text-gray-400 mt-1 line-clamp-2">{!! $shopItem->item->formattedDescription() !!}</p>
+                                @elseif ($shopItem->item?->type)
+                                    <p class="text-xs text-gray-500 mt-0.5">
+                                        {{ $shopItem->item->type }}{{ $shopItem->item->subtype ? ' / ' . $shopItem->item->subtype : '' }}
+                                    </p>
+                                @endif
+
+                                <div class="mt-2 flex items-center justify-between">
+                                    <span class="text-amber-400 font-bold">
+                                        {{ $shopItem->uber_cost }} {{ Str::plural('Uber', $shopItem->uber_cost) }}
+                                    </span>
+                                    @if ($shopItem->stock !== null)
+                                        @if ($shopItem->stock > 0)
+                                            <span class="text-xs text-green-400">{{ $shopItem->stock }} left</span>
+                                        @else
+                                            <span class="text-xs text-red-400">Sold Out</span>
+                                        @endif
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                @endforeach
             </div>
         </div>
     </section>

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('game_accounts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
             $table->unsignedInteger('ragnarok_account_id')->nullable()->unique();
             $table->string('userid', 23)->unique();
             $table->string('user_pass', 128);

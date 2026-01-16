@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Actions\SyncGameAccountData;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Notifications\WelcomeNotification;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -15,6 +16,11 @@ class DiscordController extends Controller
 {
     public function redirect(): RedirectResponse
     {
+        // Preserve intended URL through OAuth flow
+        if ($intended = session()->get('url.intended')) {
+            session()->put('discord_intended_url', $intended);
+        }
+
         /** @var Provider $driver */
         $driver = Socialite::driver('discord');
 
@@ -25,6 +31,9 @@ class DiscordController extends Controller
 
     public function callback(): RedirectResponse
     {
+        // Restore intended URL from before OAuth redirect
+        $intendedUrl = session()->pull('discord_intended_url', route('dashboard'));
+
         try {
             /** @var Provider $driver */
             $driver = Socialite::driver('discord');
@@ -42,7 +51,7 @@ class DiscordController extends Controller
             Auth::login($user, remember: true);
             SyncGameAccountData::run($user);
 
-            return redirect()->intended(route('dashboard'));
+            return redirect()->to($intendedUrl);
         }
 
         // Scenario 2: User with same email exists - link Discord to existing account
@@ -54,7 +63,7 @@ class DiscordController extends Controller
                 Auth::login($user, remember: true);
                 SyncGameAccountData::run($user);
 
-                return redirect()->intended(route('dashboard'));
+                return redirect()->to($intendedUrl);
             }
         }
 
@@ -70,9 +79,11 @@ class DiscordController extends Controller
             'discord_refresh_token' => $discordUser->refreshToken,
         ]);
 
+        $user->notify(new WelcomeNotification);
+
         Auth::login($user, remember: true);
 
-        return redirect()->route('dashboard');
+        return redirect()->to($intendedUrl);
     }
 
     private function updateDiscordData(User $user, $discordUser): void

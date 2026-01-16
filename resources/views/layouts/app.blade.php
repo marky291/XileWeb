@@ -139,7 +139,7 @@
                             <div class="lg:col-span-2">
                                 <h3 class="text-xilero-gold font-semibold text-sm uppercase tracking-wider mb-4">Resources</h3>
                                 <ul class="space-y-3">
-                                    <li><a href="https://docs.xilero.net" target="_blank" rel="noopener" class="text-gray-400 hover:text-white transition-colors text-sm">XileRO Wiki</a></li>
+                                    <li><a href="https://info.xilero.net" target="_blank" rel="noopener" class="text-gray-400 hover:text-white transition-colors text-sm">XileRO Wiki</a></li>
                                     <li><a href="https://wiki.xilero.net" target="_blank" rel="noopener" class="text-gray-400 hover:text-white transition-colors text-sm">XileRetro Wiki</a></li>
                                     <li><a href="https://discord.gg/hp7CS6k" target="_blank" rel="noopener" class="text-gray-400 hover:text-white transition-colors text-sm">Discord Community</a></li>
                                     <li><a href="https://www.facebook.com/groups/XileRetro" target="_blank" rel="noopener" class="text-gray-400 hover:text-white transition-colors text-sm">Facebook Group</a></li>

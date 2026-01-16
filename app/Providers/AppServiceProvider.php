@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Auth\RagnarokUserProvider;
+use App\Models\UberShopPurchase;
+use App\Observers\UberShopPurchaseObserver;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
@@ -27,6 +29,9 @@ class AppServiceProvider extends ServiceProvider
         Auth::provider('ragnarok', function ($app, array $config) {
             return new RagnarokUserProvider($app['hash'], $config['model']);
         });
+
+        // Register model observers
+        UberShopPurchase::observe(UberShopPurchaseObserver::class);
 
         // Register Discord Socialite provider
         Event::listen(function (SocialiteWasCalled $event) {

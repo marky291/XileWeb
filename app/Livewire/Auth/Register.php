@@ -3,6 +3,7 @@
 namespace App\Livewire\Auth;
 
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\Password;
 use Livewire\Attributes\Layout;
@@ -16,6 +17,20 @@ class Register extends Component
     public string $password = '';
 
     public string $password_confirmation = '';
+
+    public function mount(): void
+    {
+        // Store the referer as intended URL if not already set and it's from our site
+        if (! session()->has('url.intended')) {
+            $referer = request()->headers->get('referer');
+            if ($referer && str_starts_with($referer, config('app.url'))) {
+                // Don't store login/register pages as intended
+                if (! str_contains($referer, '/login') && ! str_contains($referer, '/register')) {
+                    session()->put('url.intended', $referer);
+                }
+            }
+        }
+    }
 
     public function rules(): array
     {
@@ -43,10 +58,12 @@ class Register extends Component
             'password' => $this->password,
         ]);
 
+        event(new Registered($user));
+
         Auth::login($user);
         session()->regenerate();
 
-        $this->redirect(route('dashboard'), navigate: false);
+        $this->redirect(route('verification.notice'), navigate: false);
     }
 
     public function render()

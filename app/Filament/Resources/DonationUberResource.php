@@ -24,9 +24,14 @@ class DonationUberResource extends Resource
 {
     protected static ?string $model = DonationUber::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-shopping-cart';
+    protected static ?string $navigationIcon = 'heroicon-o-currency-dollar';
 
-    protected static ?string $navigationGroup = 'Uber System';
+    protected static ?string $navigationGroup = 'XileRO';
+
+    protected static ?int $navigationSort = 5;
+
+    // Hidden until DonationUber model is created
+    protected static bool $shouldRegisterNavigation = false;
 
     public static function form(Form $form): Form
     {

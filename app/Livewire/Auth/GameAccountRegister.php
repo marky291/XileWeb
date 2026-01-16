@@ -3,6 +3,7 @@
 namespace App\Livewire\Auth;
 
 use App\Actions\MakeHashedLoginPassword;
+use App\XileRetro\XileRetro_Login;
 use App\XileRO\XileRO_Login;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\Password;
@@ -14,6 +15,8 @@ class GameAccountRegister extends Component
 {
     public bool $embedded = false;
 
+    public string $server = 'xilero';
+
     public string $username = '';
 
     public string $email = '';
@@ -24,21 +27,27 @@ class GameAccountRegister extends Component
 
     public function rules(): array
     {
+        $database = $this->server === 'xileretro' ? 'xileretro_main' : 'xilero_main';
+
         return [
+            'server' => [
+                'required',
+                'in:xilero,xileretro',
+            ],
             'username' => [
                 'required',
                 'string',
                 'alpha_num',
                 'min:4',
                 'max:23',
-                'unique:xilero_main.login,userid',
+                "unique:{$database}.login,userid",
             ],
             'email' => [
                 'required',
                 'string',
                 'email',
                 'max:39',
-                'unique:xilero_main.login,email',
+                "unique:{$database}.login,email",
                 'not_in:a@a.com',
             ],
             'password' => [
@@ -55,9 +64,9 @@ class GameAccountRegister extends Component
     public function messages(): array
     {
         return [
-            'username.unique' => 'This username is already taken.',
+            'username.unique' => 'This username is already taken on this server.',
             'username.alpha_num' => 'Username must contain only letters and numbers.',
-            'email.unique' => 'This email is already registered.',
+            'email.unique' => 'This email is already registered on this server.',
             'email.not_in' => 'This email address is not allowed.',
             'password.confirmed' => 'The password confirmation does not match.',
         ];
@@ -67,11 +76,17 @@ class GameAccountRegister extends Component
     {
         $this->validate();
 
-        $login = XileRO_Login::create([
+        $loginData = [
             'userid' => $this->username,
             'email' => $this->email,
             'user_pass' => MakeHashedLoginPassword::run($this->password),
-        ]);
+        ];
+
+        if ($this->server === 'xileretro') {
+            $login = XileRetro_Login::create($loginData);
+        } else {
+            $login = XileRO_Login::create($loginData);
+        }
 
         Auth::login($login);
 

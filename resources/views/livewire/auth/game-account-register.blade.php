@@ -1,6 +1,30 @@
 @if($embedded)
 <div>
     <form wire:submit="register" class="space-y-5">
+        {{-- Server Selection --}}
+        <div>
+            <label class="block mb-2 text-xs font-bold tracking-wide text-gray-200 uppercase">
+                Server
+            </label>
+            <div class="grid grid-cols-2 gap-3">
+                <label class="relative cursor-pointer">
+                    <input type="radio" wire:model.live="server" value="xilero" class="peer sr-only">
+                    <div class="px-4 py-3 text-center bg-gray-800 border border-gray-700 rounded-lg peer-checked:border-amber-500 peer-checked:bg-amber-500/10 transition-colors">
+                        <span class="text-sm font-semibold text-gray-300 peer-checked:text-amber-400">XileRO</span>
+                    </div>
+                </label>
+                <label class="relative cursor-pointer">
+                    <input type="radio" wire:model.live="server" value="xileretro" class="peer sr-only">
+                    <div class="px-4 py-3 text-center bg-gray-800 border border-gray-700 rounded-lg peer-checked:border-purple-500 peer-checked:bg-purple-500/10 transition-colors">
+                        <span class="text-sm font-semibold text-gray-300 peer-checked:text-purple-400">XileRetro</span>
+                    </div>
+                </label>
+            </div>
+            @error('server')
+                <p class="mt-2 text-sm text-red-400">{{ $message }}</p>
+            @enderror
+        </div>
+
         {{-- Username --}}
         <div>
             <label for="register-username" class="block mb-2 text-xs font-bold tracking-wide text-gray-200 uppercase">
@@ -104,6 +128,32 @@
             </div>
 
             <form wire:submit="register" class="space-y-6">
+                {{-- Server Selection --}}
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">
+                        Select Server
+                    </label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <label class="relative cursor-pointer">
+                            <input type="radio" wire:model.live="server" value="xilero" class="peer sr-only">
+                            <div class="px-4 py-3 text-center bg-gray-800 border border-gray-700 rounded-lg peer-checked:border-amber-500 peer-checked:bg-amber-500/10 hover:bg-gray-700 transition-colors">
+                                <span class="block text-sm font-semibold peer-checked:text-amber-400 text-gray-300">XileRO</span>
+                                <span class="block text-xs text-gray-500 mt-0.5">Mid-Rate</span>
+                            </div>
+                        </label>
+                        <label class="relative cursor-pointer">
+                            <input type="radio" wire:model.live="server" value="xileretro" class="peer sr-only">
+                            <div class="px-4 py-3 text-center bg-gray-800 border border-gray-700 rounded-lg peer-checked:border-purple-500 peer-checked:bg-purple-500/10 hover:bg-gray-700 transition-colors">
+                                <span class="block text-sm font-semibold peer-checked:text-purple-400 text-gray-300">XileRetro</span>
+                                <span class="block text-xs text-gray-500 mt-0.5">Low-Rate</span>
+                            </div>
+                        </label>
+                    </div>
+                    @error('server')
+                        <p class="mt-2 text-sm text-red-400">{{ $message }}</p>
+                    @enderror
+                </div>
+
                 {{-- Username --}}
                 <div>
                     <label for="username" class="block text-sm font-medium text-gray-300 mb-2">

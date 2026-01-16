@@ -39,7 +39,7 @@
                             <label for="password" class="block text-sm font-medium text-gray-300">
                                 Password
                             </label>
-                            <a href="/app/password-reset" class="text-xs text-xilero-gold hover:text-amber-400">
+                            <a href="{{ route('password.request') }}" class="text-xs text-xilero-gold hover:text-amber-400">
                                 Forgot password?
                             </a>
                         </div>

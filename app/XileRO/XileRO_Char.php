@@ -5,6 +5,7 @@ namespace App\XileRO;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property int $char_id
@@ -203,5 +204,13 @@ class XileRO_Char extends XileRO_Model
     public function getClassNameAttribute(): string
     {
         return config('jobclasses')[$this->class] ?? 'Unknown';
+    }
+
+    /**
+     * @return HasMany<XileRO_Inventory, $this>
+     */
+    public function inventory(): HasMany
+    {
+        return $this->hasMany(XileRO_Inventory::class, 'char_id', 'char_id');
     }
 }

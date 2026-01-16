@@ -2,6 +2,7 @@
 
 namespace App\XileRO;
 
+use App\Models\Item;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -92,5 +93,24 @@ class XileRO_Inventory extends XileRO_Model
     public function character(): BelongsTo
     {
         return $this->belongsTo(XileRO_Char::class, 'char_id', 'char_id');
+    }
+
+    public ?Item $cachedItem = null;
+
+    public bool $itemLoaded = false;
+
+    /**
+     * Get the item from the main database.
+     */
+    public function getItemAttribute(): ?Item
+    {
+        if (! $this->itemLoaded) {
+            $this->cachedItem = Item::where('item_id', $this->nameid)
+                ->where('is_xileretro', false)
+                ->first();
+            $this->itemLoaded = true;
+        }
+
+        return $this->cachedItem;
     }
 }

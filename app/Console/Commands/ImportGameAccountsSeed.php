@@ -22,6 +22,55 @@ class ImportGameAccountsSeed extends Command
 
     protected $description = 'Import game accounts from XileRO_Login/XileRetro_Login and create master accounts';
 
+    /**
+     * System emails that should be completely skipped (no import at all).
+     */
+    protected array $systemEmails = [
+        'athena@athena.com',
+    ];
+
+    /**
+     * Check if an email is a system email that should be skipped entirely.
+     */
+    protected function isSystemEmail(string $email): bool
+    {
+        return in_array(strtolower($email), $this->systemEmails);
+    }
+
+    /**
+     * Check if an email is valid for creating a master account.
+     * Fake emails will still get a GameAccount, but no User.
+     */
+    protected function isValidEmail(string $email): bool
+    {
+        if (empty($email)) {
+            return false;
+        }
+
+        // Default placeholder emails
+        if ($email === 'a@a.com') {
+            return false;
+        }
+
+        // Auto-generated pattern: {numbers}@a.com
+        if (preg_match('/^\d+@a\.com$/i', $email)) {
+            return false;
+        }
+
+        // Auto-generated pattern: {numbers}@xilero.net
+        if (preg_match('/^\d+@xilero\.net$/i', $email)) {
+            return false;
+        }
+
+        // Auto-generated pattern: {anything}@a.com variants
+        if (preg_match('/@a\.com$/i', $email) && ! filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return false;
+        }
+
+        // Basic email validation
+        return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
+    }
+
     public function handle(): int
     {
         $server = $this->option('server');
@@ -64,9 +113,9 @@ class ImportGameAccountsSeed extends Command
             return Command::FAILURE;
         }
 
-        // Skip accounts with default email
-        if ($login->email === 'a@a.com') {
-            $this->error("Account {$login->userid} has default email (a@a.com) and cannot be imported.");
+        // Skip system accounts entirely
+        if ($this->isSystemEmail($login->email)) {
+            $this->error("Account {$login->userid} has system email ({$login->email}) and cannot be imported.");
 
             return Command::FAILURE;
         }
@@ -77,14 +126,17 @@ class ImportGameAccountsSeed extends Command
             ->first();
 
         if ($existing) {
-            $this->warn("Account {$login->userid} (ID: {$accountId}) is already linked to user: {$existing->user->email}");
+            $userInfo = $existing->user ? $existing->user->email : 'unclaimed';
+            $this->warn("Account {$login->userid} (ID: {$accountId}) is already imported (master account: {$userInfo})");
 
             return Command::SUCCESS;
         }
 
+        $hasValidEmail = $this->isValidEmail($login->email);
+
         if ($dryRun) {
             $this->info('[DRY RUN] Would import:');
-            $this->displayLoginInfo($login);
+            $this->displayLoginInfo($login, $hasValidEmail);
 
             return Command::SUCCESS;
         }
@@ -111,7 +163,7 @@ class ImportGameAccountsSeed extends Command
 
         $query = $loginClass::whereNotIn('account_id', $existingIds)
             ->where('group_id', '<', 99) // Exclude admin accounts
-            ->where('email', '!=', 'a@a.com'); // Exclude default email accounts
+            ->whereNotIn('email', $this->systemEmails); // Exclude system accounts
 
         if ($limit) {
             $query->limit($limit);
@@ -125,8 +177,14 @@ class ImportGameAccountsSeed extends Command
             return Command::SUCCESS;
         }
 
+        // Count accounts with valid vs fake emails
+        $withValidEmail = $logins->filter(fn ($login) => $this->isValidEmail($login->email))->count();
+        $withFakeEmail = $logins->count() - $withValidEmail;
+
         $limitInfo = $limit ? " (limited to {$limit})" : '';
         $this->info("Found {$logins->count()} accounts to import{$limitInfo}.");
+        $this->info("  - {$withValidEmail} with valid email (will create master account)");
+        $this->info("  - {$withFakeEmail} with fake/invalid email (game account only, can be claimed later)");
         $this->newLine();
 
         if ($dryRun) {
@@ -138,9 +196,10 @@ class ImportGameAccountsSeed extends Command
                 $login->userid,
                 $login->email,
                 $login->sex,
+                $this->isValidEmail($login->email) ? 'Yes' : 'No',
             ])->toArray();
 
-            $this->table(['Account ID', 'Username', 'Email', 'Sex'], $tableData);
+            $this->table(['Account ID', 'Username', 'Email', 'Sex', 'Master Account?'], $tableData);
 
             return Command::SUCCESS;
         }
@@ -152,19 +211,26 @@ class ImportGameAccountsSeed extends Command
         }
 
         $imported = 0;
+        $withMaster = 0;
+        $withoutMaster = 0;
         $failed = 0;
 
-        $this->withProgressBar($logins, function ($login) use ($server, &$imported, &$failed) {
+        $this->withProgressBar($logins, function ($login) use ($server, &$imported, &$withMaster, &$withoutMaster, &$failed) {
             try {
-                $this->createAccountsFromLogin($login, $server);
+                $result = $this->createAccountsFromLogin($login, $server);
                 $imported++;
+                if ($result['user']) {
+                    $withMaster++;
+                } else {
+                    $withoutMaster++;
+                }
             } catch (\Exception $e) {
                 $failed++;
             }
         });
 
         $this->newLine(2);
-        $this->info("Import complete: {$imported} imported, {$failed} failed.");
+        $this->info("Import complete: {$imported} imported ({$withMaster} with master account, {$withoutMaster} unclaimed), {$failed} failed.");
 
         return Command::SUCCESS;
     }
@@ -179,7 +245,7 @@ class ImportGameAccountsSeed extends Command
 
         $logins = $loginClass::whereNotIn('account_id', $existingIds)
             ->where('group_id', '<', 99)
-            ->where('email', '!=', 'a@a.com') // Exclude default email accounts
+            ->whereNotIn('email', $this->systemEmails)
             ->limit(20)
             ->get();
 
@@ -197,9 +263,10 @@ class ImportGameAccountsSeed extends Command
             $login->userid,
             $login->email,
             $login->sex,
+            $this->isValidEmail($login->email) ? 'Yes' : 'No',
         ])->toArray();
 
-        $this->table(['Account ID', 'Username', 'Email', 'Sex'], $tableData);
+        $this->table(['Account ID', 'Username', 'Email', 'Sex', 'Master Account?'], $tableData);
 
         $this->newLine();
         $this->info('Use --account-id=<ID> to import a specific account');
@@ -211,21 +278,27 @@ class ImportGameAccountsSeed extends Command
     protected function createAccountsFromLogin(XileRO_Login|XileRetro_Login $login, string $server): array
     {
         return DB::transaction(function () use ($login, $server) {
-            // Check if user with this email already exists
-            $user = User::where('email', $login->email)->first();
+            $user = null;
 
-            if (! $user) {
-                // Create new master account
-                $user = User::create([
-                    'name' => $login->userid,
-                    'email' => $login->email ?: $login->userid.'@xilero.net',
-                    'password' => Hash::make(Str::random(32)), // Random password - user must reset
-                ]);
+            // Only create/link User if email is valid
+            if ($this->isValidEmail($login->email)) {
+                // Check if user with this email already exists
+                $user = User::where('email', $login->email)->first();
+
+                if (! $user) {
+                    // Create new master account
+                    $user = User::create([
+                        'name' => $login->userid,
+                        'email' => $login->email,
+                        'password' => Hash::make(Str::random(32)), // Random password - user must reset
+                    ]);
+                }
             }
 
             // Create game account entry (links to existing login record)
+            // user_id is nullable for accounts with fake emails (can be claimed later)
             $gameAccount = GameAccount::create([
-                'user_id' => $user->id,
+                'user_id' => $user?->id,
                 'server' => $server,
                 'ragnarok_account_id' => $login->account_id,
                 'userid' => $login->userid,
@@ -243,7 +316,7 @@ class ImportGameAccountsSeed extends Command
         });
     }
 
-    protected function displayLoginInfo(XileRO_Login|XileRetro_Login $login): void
+    protected function displayLoginInfo(XileRO_Login|XileRetro_Login $login, bool $hasValidEmail = true): void
     {
         $this->table(
             ['Field', 'Value'],
@@ -253,22 +326,37 @@ class ImportGameAccountsSeed extends Command
                 ['Email', $login->email],
                 ['Sex', $login->sex],
                 ['Group ID', $login->group_id],
+                ['Will Create Master Account', $hasValidEmail ? 'Yes' : 'No (can be claimed later)'],
             ]
         );
     }
 
-    protected function displayResult(User $user, GameAccount $gameAccount): void
+    protected function displayResult(?User $user, GameAccount $gameAccount): void
     {
         $this->newLine();
-        $this->table(
-            ['Field', 'Value'],
-            [
-                ['Master Account Email', $user->email],
-                ['Master Account Name', $user->name],
-                ['Game Username', $gameAccount->userid],
-                ['Server', $gameAccount->serverName()],
-                ['Ragnarok Account ID', $gameAccount->ragnarok_account_id],
-            ]
-        );
+
+        if ($user) {
+            $this->table(
+                ['Field', 'Value'],
+                [
+                    ['Master Account Email', $user->email],
+                    ['Master Account Name', $user->name],
+                    ['Game Username', $gameAccount->userid],
+                    ['Server', $gameAccount->serverName()],
+                    ['Ragnarok Account ID', $gameAccount->ragnarok_account_id],
+                ]
+            );
+        } else {
+            $this->table(
+                ['Field', 'Value'],
+                [
+                    ['Master Account', 'None (unclaimed - can be linked via support)'],
+                    ['Game Username', $gameAccount->userid],
+                    ['Game Email', $gameAccount->email],
+                    ['Server', $gameAccount->serverName()],
+                    ['Ragnarok Account ID', $gameAccount->ragnarok_account_id],
+                ]
+            );
+        }
     }
 }

@@ -48,4 +48,11 @@ class GameAccountFactory extends Factory
             'group_id' => 99,
         ]);
     }
+
+    public function unclaimed(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'user_id' => null,
+        ]);
+    }
 }

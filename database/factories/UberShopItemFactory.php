@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\DatabaseItem;
+use App\Models\Item;
 use App\Models\UberShopCategory;
 use App\Models\UberShopItem;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -21,8 +21,7 @@ class UberShopItemFactory extends Factory
     {
         return [
             'category_id' => UberShopCategory::factory(),
-            'database_item_id' => DatabaseItem::factory(),
-            'display_name' => null,
+            'item_id' => Item::factory(),
             'uber_cost' => fake()->numberBetween(1, 100),
             'quantity' => 1,
             'refine_level' => 0,

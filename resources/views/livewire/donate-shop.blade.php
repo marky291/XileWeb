@@ -13,13 +13,42 @@
             </div>
             @auth
                 <div class="mt-4 sm:mt-0">
-                    <div class="px-5 py-3 bg-gray-900 border border-gray-700 rounded-lg flex items-center gap-3">
-                        <i class="fas fa-coins text-amber-400 text-xl"></i>
-                        <div>
-                            <p class="text-xs text-gray-500">Your Balance</p>
-                            <p class="text-lg font-bold text-amber-400">{{ number_format($userBalance) }} <span class="text-sm text-gray-400">Ubers</span></p>
+                    @if ($gameAccounts->isNotEmpty())
+                        <div class="flex bg-gray-900 border border-gray-700 rounded-xl overflow-hidden">
+                            {{-- Game Account Selector --}}
+                            <div class="flex items-center gap-3 px-4 py-3 border-r border-gray-700">
+                                <div class="w-10 h-10 rounded-lg bg-gray-800 flex items-center justify-center shrink-0">
+                                    <i class="fas fa-gamepad text-gray-400 text-lg"></i>
+                                </div>
+                                <div>
+                                    <p class="text-[10px] uppercase tracking-wider text-gray-500 font-medium mb-0.5">Playing on</p>
+                                    <select
+                                        id="headerGameAccountSelect"
+                                        wire:model.live="selectedGameAccountId"
+                                        class="bg-gray-800 text-white text-sm font-semibold border border-gray-600 rounded-lg px-3 py-1.5 pr-8 focus:outline-none focus:ring-1 focus:ring-amber-500 focus:border-amber-500 cursor-pointer appearance-none"
+                                        style="background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3e%3cpolyline points=%276 9 12 15 18 9%27%3e%3c/polyline%3e%3c/svg%3e'); background-repeat: no-repeat; background-position: right 0.5rem center; background-size: 1rem;"
+                                    >
+                                        @foreach ($gameAccounts as $account)
+                                            <option value="{{ $account->id }}" class="bg-gray-800 text-white py-2">
+                                                {{ $account->userid }} - {{ $account->server === 'xilero' ? 'XileRO' : 'XileRetro' }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            {{-- Balance --}}
+                            <div class="flex items-center gap-3 px-4 py-3">
+                                <div class="w-10 h-10 rounded-lg bg-amber-500/20 flex items-center justify-center shrink-0">
+                                    <i class="fas fa-coins text-amber-400 text-lg"></i>
+                                </div>
+                                <div>
+                                    <p class="text-[10px] uppercase tracking-wider text-gray-500 font-medium mb-0.5">Balance</p>
+                                    <p class="text-sm font-bold text-amber-400">{{ number_format($userBalance) }} Ubers</p>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    @endif
                 </div>
             @else
                 <a href="{{ route('login') }}" class="mt-4 sm:mt-0 px-4 py-2 bg-amber-500 hover:bg-amber-400 text-gray-900 font-bold rounded-lg transition-colors flex items-center gap-2">
@@ -74,8 +103,8 @@
                                         <td class="px-4 py-3">
                                             <div class="flex items-center gap-3">
                                                 <span class="w-8 h-8 bg-gray-800 rounded flex items-center justify-center overflow-hidden shrink-0">
-                                                    @if ($purchase->shopItem?->icon_path)
-                                                        <img src="{{ asset('storage/xilero/items/icons/' . basename($purchase->shopItem->icon_path)) }}" alt="" class="max-h-full max-w-full object-contain">
+                                                    @if ($purchase->shopItem?->item)
+                                                        <img src="{{ $purchase->shopItem->item->icon() }}" alt="" class="max-h-full max-w-full object-contain">
                                                     @else
                                                         <i class="fas fa-box text-gray-500 text-xs"></i>
                                                     @endif
@@ -140,8 +169,8 @@
                                         <td class="px-4 py-3">
                                             <div class="flex items-center gap-3">
                                                 <span class="w-8 h-8 bg-gray-800 rounded flex items-center justify-center overflow-hidden shrink-0">
-                                                    @if ($purchase->shopItem?->icon_path)
-                                                        <img src="{{ asset('storage/xilero/items/icons/' . basename($purchase->shopItem->icon_path)) }}" alt="" class="max-h-full max-w-full object-contain">
+                                                    @if ($purchase->shopItem?->item)
+                                                        <img src="{{ $purchase->shopItem->item->icon() }}" alt="" class="max-h-full max-w-full object-contain">
                                                     @else
                                                         <i class="fas fa-box text-gray-500 text-xs"></i>
                                                     @endif
@@ -178,6 +207,34 @@
             @endif
         @endauth
 
+        {{-- No Game Account Warning --}}
+        @auth
+            @if ($gameAccounts->isEmpty())
+                <div class="block-home bg-gray-900 rounded-lg p-12 text-center">
+                    <i class="fas fa-user-slash text-4xl text-gray-600 mb-4"></i>
+                    <h3 class="text-xl font-semibold text-gray-300 mb-2">No Game Account Linked</h3>
+                    <p class="text-gray-500 mb-4">You need to link a game account to browse and purchase items from the Uber Shop.</p>
+                    <a href="/dashboard" class="inline-flex items-center gap-2 px-4 py-2 bg-amber-500 hover:bg-amber-400 text-gray-900 font-bold rounded-lg transition-colors">
+                        <i class="fas fa-link"></i>
+                        Link Game Account
+                    </a>
+                </div>
+            @endif
+        @endauth
+
+        @guest
+            <div class="block-home bg-gray-900 rounded-lg p-12 text-center">
+                <i class="fas fa-sign-in-alt text-4xl text-gray-600 mb-4"></i>
+                <h3 class="text-xl font-semibold text-gray-300 mb-2">Login Required</h3>
+                <p class="text-gray-500 mb-4">Please login to browse and purchase items from the Uber Shop.</p>
+                <a href="{{ route('login') }}" class="inline-flex items-center gap-2 px-4 py-2 bg-amber-500 hover:bg-amber-400 text-gray-900 font-bold rounded-lg transition-colors">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Login
+                </a>
+            </div>
+        @endguest
+
+        @if (auth()->check() && $gameAccounts->isNotEmpty())
         {{-- Search & Filters --}}
         <div class="mb-6 block-home bg-gray-900 rounded-lg p-5">
             <div class="flex flex-col lg:flex-row gap-4">
@@ -289,12 +346,12 @@
                     <div class="flex gap-4">
                         {{-- Item Image --}}
                         <div class="shrink-0 w-16 h-20 bg-gray-800 rounded-lg overflow-hidden flex items-center justify-center">
-                            @if ($item->icon_path)
+                            @if ($item->item)
                                 <img
-                                    src="{{ asset('storage/xilero/items/collection/' . basename($item->icon_path)) }}"
-                                    alt="{{ $item->raw_name }}"
+                                    src="{{ $item->item->collection() }}"
+                                    alt="{{ $item->item->name }}"
                                     class="max-h-full max-w-full object-contain"
-                                    onerror="this.onerror=null; this.src='{{ asset('storage/xilero/items/icons/' . basename($item->icon_path)) }}';"
+                                    onerror="this.onerror=null; this.src='{{ $item->item->icon() }}';"
                                     loading="lazy"
                                 >
                             @else
@@ -316,11 +373,11 @@
                                 <span class="text-xs text-gray-500">x{{ $item->quantity }}</span>
                             @endif
 
-                            @if ($item->description)
-                                <p class="text-xs text-gray-400 mt-1 line-clamp-2">{{ $item->description }}</p>
-                            @elseif ($item->item_type)
+                            @if ($item->item?->description)
+                                <p class="text-xs text-gray-400 mt-1 line-clamp-2">{!! $item->item->formattedDescription() !!}</p>
+                            @elseif ($item->item?->type)
                                 <p class="text-xs text-gray-500 mt-0.5">
-                                    {{ $item->item_type }}{{ $item->item_subtype ? ' / ' . $item->item_subtype : '' }}
+                                    {{ $item->item->type }}{{ $item->item->subtype ? ' / ' . $item->item->subtype : '' }}
                                 </p>
                             @endif
 
@@ -368,6 +425,7 @@
                 {{ $items->links() }}
             </div>
         @endif
+        @endif
     </div>
 
     {{-- Item Detail Modal --}}
@@ -380,9 +438,9 @@
             <div class="flex min-h-full items-center justify-center p-4">
                 <div class="relative w-full max-w-md block-home bg-gray-900 rounded-lg" @click.stop>
                     {{-- Header --}}
-                    <div class="flex items-center justify-between p-5 border-b border-gray-800">
+                    <div class="flex items-start justify-between px-5 pt-4 pb-2 border-b border-gray-800">
                         <h2 class="text-lg font-semibold text-white">Item Details</h2>
-                        <button wire:click="selectItem(null)" class="text-gray-400 hover:text-white transition-colors">
+                        <button wire:click="selectItem(null)" class="text-gray-400 hover:text-white transition-colors -mt-0.5">
                             <i class="fas fa-times"></i>
                         </button>
                     </div>
@@ -392,12 +450,12 @@
                         {{-- Item Info --}}
                         <div class="flex gap-4 mb-5">
                             <div class="shrink-0 w-16 h-20 bg-gray-800 rounded-lg overflow-hidden flex items-center justify-center">
-                                @if ($selectedItem->icon_path)
+                                @if ($selectedItem->item)
                                     <img
-                                        src="{{ asset('storage/xilero/items/collection/' . basename($selectedItem->icon_path)) }}"
-                                        alt="{{ $selectedItem->item_name }}"
+                                        src="{{ $selectedItem->item->collection() }}"
+                                        alt="{{ $selectedItem->item->name }}"
                                         class="max-h-full max-w-full object-contain"
-                                        onerror="this.onerror=null; this.src='{{ asset('storage/xilero/items/icons/' . basename($selectedItem->icon_path)) }}';"
+                                        onerror="this.onerror=null; this.src='{{ $selectedItem->item->icon() }}';"
                                     >
                                 @else
                                     <i class="fas fa-box text-gray-600 text-2xl"></i>
@@ -421,8 +479,8 @@
                             </div>
                         </div>
 
-                        @if ($selectedItem->description)
-                            <p class="text-sm text-gray-400 mb-4">{!! nl2br(e($selectedItem->description)) !!}</p>
+                        @if ($selectedItem->item?->description)
+                            <div class="text-sm text-gray-800 mb-4 leading-relaxed bg-white rounded-lg p-3">{!! $selectedItem->item->formattedDescription() !!}</div>
                         @endif
 
                         @if ($selectedItem->stock !== null)
@@ -437,47 +495,25 @@
 
                         {{-- Purchase Actions --}}
                         @auth
-                            {{-- Game Account Selector --}}
-                            @if ($gameAccounts->count() > 1)
-                                <div class="mb-4">
-                                    <label for="gameAccountSelect" class="block text-sm text-gray-400 mb-2">Deliver to:</label>
-                                    <select
-                                        id="gameAccountSelect"
-                                        wire:model.live="selectedGameAccountId"
-                                        class="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500"
-                                    >
-                                        @foreach ($gameAccounts as $account)
-                                            <option value="{{ $account->id }}">
-                                                {{ $account->userid }} — {{ $account->serverName() }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            @elseif ($gameAccounts->count() === 1)
+                            {{-- Delivery Info --}}
+                            @if ($selectedGameAccount)
                                 <p class="text-sm text-gray-400 mb-4">
-                                    Deliver to: <span class="text-white">{{ $gameAccounts->first()->userid }}</span> <span class="text-gray-500">— {{ $gameAccounts->first()->serverName() }}</span>
+                                    Deliver to: <span class="text-white">{{ $selectedGameAccount->userid }}</span> <span class="text-gray-500">— {{ $selectedGameAccount->serverName() }}</span>
                                 </p>
                             @endif
 
-                            @php
-                                $canPurchaseForServer = $selectedGameAccount && $selectedItem->isAvailableForServer($selectedGameAccount->server);
-                            @endphp
-
-                            @if (! $selectedItem->is_available)
-                                <button class="w-full px-4 py-2.5 bg-gray-700 text-gray-500 font-bold rounded-lg cursor-not-allowed" disabled>
-                                    Currently Unavailable
-                                </button>
-                            @elseif (! $canPurchaseForServer)
-                                <div class="mb-4 p-3 bg-orange-900/50 border border-orange-500 rounded-lg">
-                                    <p class="text-orange-300 text-sm">
-                                        <i class="fas fa-exclamation-triangle mr-2"></i>This item is only available for <span class="font-semibold">{{ $selectedItem->exclusive_server }}</span>.
-                                        @if ($selectedGameAccount)
-                                            Your selected account <span class="font-semibold">{{ $selectedGameAccount->userid }}</span> is on {{ $selectedGameAccount->serverName() }}.
-                                        @endif
+                            @if ($isPurchasingRestricted && ! $canPurchase)
+                                <div class="mb-4 p-3 bg-yellow-900/50 border border-yellow-500 rounded-lg">
+                                    <p class="text-yellow-300 text-sm">
+                                        <i class="fas fa-lock mr-2"></i>Purchasing is temporarily disabled. Check back soon!
                                     </p>
                                 </div>
                                 <button class="w-full px-4 py-2.5 bg-gray-700 text-gray-500 font-bold rounded-lg cursor-not-allowed" disabled>
-                                    Not Available for This Server
+                                    Purchasing Disabled
+                                </button>
+                            @elseif (! $selectedItem->is_available)
+                                <button class="w-full px-4 py-2.5 bg-gray-700 text-gray-500 font-bold rounded-lg cursor-not-allowed" disabled>
+                                    Currently Unavailable
                                 </button>
                             @elseif ($userBalance < $selectedItem->uber_cost)
                                 <div class="mb-4 p-3 bg-red-900/50 border border-red-500 rounded-lg">
