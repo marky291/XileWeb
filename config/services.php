@@ -35,15 +35,7 @@ return [
         // Bot tokens
         'player_count_token' => env('DISCORD_PLAYER_COUNT_TOKEN'),
         'latest_player_token' => env('DISCORD_LATEST_PLAYER_TOKEN'),
-        'kriemhild_guild_points' => env('DISCORD_KRIEMHILD_GUILD_POINTS'),
-        'swanhild_guild_points' => env('DISCORD_SWANHILD_GUILD_POINTS'),
-        'skoegul_guild_points' => env('DISCORD_SKOEGUL_GUILD_POINTS'),
-        'fadhringh_guild_points' => env('DISCORD_FADHRINGH_GUILD_POINTS'),
-        'gondul_guild_points' => env('DISCORD_GONDUL_GUILD_POINTS'),
-        'hljod_guild_points' => env('DISCORD_HLJOD_GUILD_POINTS'),
-        'cyr_guild_points' => env('DISCORD_CYR_GUILD_POINTS'),
         'server_time_token' => env('DISCORD_SERVER_TIME_TOKEN'),
-        'next_woe_time_token' => env('DISCORD_NEXT_WOE_TIME_TOKEN'),
 
         // OAuth credentials (for Socialite login)
         'client_id' => env('DISCORD_CLIENT_ID'),

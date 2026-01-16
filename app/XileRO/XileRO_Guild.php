@@ -29,7 +29,6 @@ use Illuminate\Support\Facades\Cache;
  * @property-read string $emblem
  * @property-read \Illuminate\Database\Eloquent\Collection<int, GuildCastle> $castles
  * @property-read \Illuminate\Database\Eloquent\Collection<int, GuildMember> $members
- * @property-read GameWoeScore|null $gameWoeScore
  */
 class XileRO_Guild extends XileRO_Model
 {

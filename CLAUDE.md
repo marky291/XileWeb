@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-XileWeb is a Laravel 12 web application for managing a Ragnarok Online private server. It includes features for player management, donations, War of Emperium (WoE) events, Discord bot integration, and an admin panel built with Filament PHP.
+XileWeb is a Laravel 12 web application for managing a Ragnarok Online private server. It includes features for player management, donations, Discord bot integration, and an admin panel built with Filament PHP.
 
 ## Tech Stack
 
@@ -78,7 +78,6 @@ Models extending `App\XileRO\RagnarokModel` automatically handle the game databa
 - `app/Filament/`: Admin panel resources and pages
 - `app/Livewire/`: Interactive frontend components
 - `app/Actions/`: Laravel Actions for business logic encapsulation
-- `app/WoeEvents/`: War of Emperium event handling system
 - `app/Discord/scripts/`: Python scripts for Discord bot functionality
 - `app/Console/Commands/`: Artisan commands including Discord bot runners
 
@@ -86,18 +85,10 @@ Models extending `App\XileRO\RagnarokModel` automatically handle the game databa
 The application includes multiple Discord bots implemented in Python:
 - Player count monitoring
 - Server time display
-- WoE event notifications
 - Latest player updates
 - Uber cost information
 
 These are managed through Laravel commands (e.g., `RunDiscordPlayerCountBot`) that execute the Python scripts.
-
-### War of Emperium (WoE) System
-Complex event tracking system for guild battles:
-- `GameWoeEvent` and `GameWoeScore` models track event data
-- `ProcessWoeEventPoints` action calculates scoring
-- `WoeEventScheduleJob` handles Discord notifications
-- Configuration in `config/xilero.php`
 
 ### Admin Panel (Filament)
 Two separate admin panels:
@@ -111,8 +102,8 @@ Resources follow Filament conventions with:
 
 ## Important Configuration Files
 
-- `config/xilero.php`: Game-specific settings (levels, rates, WoE configuration)
-- `config/castles.php`: Castle configuration for WoE
+- `config/xilero.php`: Game-specific settings (levels, rates, donation conversion)
+- `config/castles.php`: Castle configuration for homepage display
 - `config/donation.php`: Donation system settings
 - `.env`: Environment-specific configuration (database credentials, API keys)
 
@@ -124,10 +115,9 @@ Tests use SQLite in-memory database for isolation. The `RagnarokModel` base clas
 
 1. **User Registration**: Custom registration flow linking game accounts
 2. **Donation System**: Uber currency system with configurable conversion rates
-3. **WoE Events**: Automated scoring and Discord notifications
-4. **Character Management**: Reset positions, inventory management
-5. **Vending System**: In-game shop data display
-6. **Multi-Server Support**: XileRO and XileRetro servers may have accounts with the same username; always display server name alongside account name using `$gameAccount->serverName()`
+3. **Character Management**: Reset positions, inventory management
+4. **Vending System**: In-game shop data display
+5. **Multi-Server Support**: XileRO and XileRetro servers may have accounts with the same username; always display server name alongside account name using `$gameAccount->serverName()`
 
 ## External Documentation
 

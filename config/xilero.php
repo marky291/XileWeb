@@ -14,11 +14,6 @@ return [
     'hyperdrive' => [
         'ip_address' => '15.197.157.22',
     ],
-    'woe_events' => [
-        'required_attendance' => 3,
-        'season' => 1,
-        'send_discord' => '18:00',
-    ],
 
     'max_level' => '255',
     'max_job' => '120',

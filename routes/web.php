@@ -37,19 +37,6 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
-Route::get('/warofemperium', function () {
-    return view('warofemperium', [
-        'castles' => App\XileRO\XileRO_GuildCastle::whereIn('castle_id', [28, 31, 15, 16])
-            ->with('guild', 'guild.members')
-            ->get()
-            ->sortBy(function ($castle, $key) {
-                $order = ['28', '31', '15', '16'];
-
-                return array_search((string) $castle->castle_id, $order);
-            }),
-    ]);
-})->name('woe');
-
 // User account management is handled by Filament /app panel
 
 Route::view('/discord', 'discord');

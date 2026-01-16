@@ -433,7 +433,6 @@
                 <div class="">
                     <div class="text-gray-100 flex justify-between">
                         <h2>Woe Times</h2>
-                        <a class="text-amber-200 text-lg hover:text-underline" href="{{ route('woe') }}">View More</a>
                     </div>
                     <p class="mt-6 text-gray-300 leading-relaxed mb-8">Prepare for battle and mark your calendars! The War of Emperium on Xilero takes place across various timezones, ensuring that warriors from all corners of the world can join the fight. Find the schedule that fits your timezone below and rally your guild for the epic clashes in the specified castles.</p>
                 </div>
