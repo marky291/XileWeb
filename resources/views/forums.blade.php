@@ -1,6 +1,7 @@
 <x-app-layout>
-
-    @section('title', 'XileRO Forums')
+    @section('title', 'XileRO Community Forums | Discussions & Support')
+    @section('description', 'Join the XileRO community forums to discuss strategies, find guilds, get help, and connect with fellow Ragnarok Online players.')
+    @section('keywords', 'XileRO forums, Ragnarok Online forum, RO community, game discussion, XileRO help')
 
     <section id="important-links" class="relative overflow-hidden py-16 md:pt-32 bg-black">
         <div class="max-w-screen-xl w-full mx-auto px-5 prose bg-gray-900 rounded p-6">

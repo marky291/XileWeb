@@ -1,7 +1,7 @@
 <x-app-layout>
-    @section("title", "XileRO | Wiki - Your Complete Guide to XileRO")
-    @section('description', 'XileRO Wiki - Your comprehensive guide to XileRO featuring guides, tutorials, and server information')
-    @section('keywords', 'XileRO, Wiki, Guide, Tutorial, Ragnarok Online, Private Server')
+    @section("title", "XileRO Wiki - Guides, Tutorials & Game Information")
+    @section('description', 'Complete XileRO Wiki with beginner guides, class builds, quest walkthroughs, and server information. Everything you need to master Ragnarok Online.')
+    @section('keywords', 'XileRO wiki, Ragnarok Online guide, RO tutorial, class builds, quest guide, leveling guide, XileRO help')
 
     {{-- Hero Section with Search --}}
     <section class="bg-gray-950 pt-20 lg:pt-24 py-16 md:py-20">

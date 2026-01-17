@@ -184,6 +184,10 @@ Route::get('/item-database', \App\Livewire\ItemDatabase::class)->name('item-data
 
 require __DIR__.'/auth.php';
 
+// SEO Routes
+Route::get('/sitemap.xml', [\App\Http\Controllers\SitemapController::class, 'index'])->name('sitemap');
+Route::get('/robots.txt', [\App\Http\Controllers\SitemapController::class, 'robots'])->name('robots');
+
 Route::any('{query}', function () {
     return redirect('/')->with('message', 'Redirected 404.');
 })->where('query', '.*');

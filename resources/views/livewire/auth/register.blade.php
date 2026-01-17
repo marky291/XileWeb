@@ -1,4 +1,6 @@
-@section('title', 'Create Master Account - XileRO')
+@section('title', 'Create Free Account | Play XileRO Ragnarok Online')
+@section('description', 'Register for free and start playing XileRO today! Create your master account to manage up to 6 game characters and join our active community.')
+@section('keywords', 'XileRO register, create account, Ragnarok Online signup, free RO account, play Ragnarok')
 
 <section class="bg-clash-bg min-h-screen flex items-center justify-center pt-24 pb-12 px-4">
     <div class="w-full max-w-md">

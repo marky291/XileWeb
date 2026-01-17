@@ -1,3 +1,7 @@
+@section('title', 'Uber Shop - Premium Items & Donations | XileRO')
+@section('description', 'Browse the XileRO Uber Shop for exclusive items, costumes, and gear. Support the server and get instant delivery to your game account.')
+@section('keywords', 'XileRO shop, Ragnarok Online donations, RO cash shop, Uber items, premium items, XileRO store')
+
 <div class="bg-clash-bg min-h-screen pt-28 pb-16 px-4" x-data="{ mobileFiltersOpen: false }">
     {{-- Global Loading Bar --}}
     <div wire:loading.delay class="fixed top-0 left-0 right-0 z-50">

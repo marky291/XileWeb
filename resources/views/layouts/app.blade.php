@@ -17,11 +17,51 @@
         <meta name="description" content="@yield('description', 'XileRO is a leading PK server, offering unique mechanics and one-of-a-kind classic style gameplay. Experience XileRO today and join the immersive world that redefines PK gaming.')">
         <meta name="keywords" content="@yield('keywords', 'Ragnarok, Ragnarok Online, Classic, RO, XileRO, XileRO PK, PK Server, Woe Server')">
         <meta name="author" content="XileRO">
-        <meta name="robots" content="index, follow">
+        <meta name="robots" content="@yield('robots', 'index, follow')">
+        <meta name="theme-color" content="#1a1a2e">
 
+        {{-- Canonical URL --}}
+        <link rel="canonical" href="@yield('canonical', url()->current())">
+
+        {{-- Open Graph Meta Tags --}}
+        <meta property="og:type" content="@yield('og_type', 'website')">
+        <meta property="og:site_name" content="XileRO">
+        <meta property="og:title" content="@yield('title', 'XileRO | The Ultimate Classic Experience')">
+        <meta property="og:description" content="@yield('description', 'XileRO is a leading PK server, offering unique mechanics and one-of-a-kind classic style gameplay. Experience XileRO today and join the immersive world that redefines PK gaming.')">
+        <meta property="og:url" content="@yield('canonical', url()->current())">
+        <meta property="og:image" content="@yield('og_image', asset('images/og-image.png'))">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta property="og:locale" content="en_US">
+
+        {{-- Twitter Card Meta Tags --}}
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="@yield('title', 'XileRO | The Ultimate Classic Experience')">
+        <meta name="twitter:description" content="@yield('description', 'XileRO is a leading PK server, offering unique mechanics and one-of-a-kind classic style gameplay. Experience XileRO today and join the immersive world that redefines PK gaming.')">
+        <meta name="twitter:image" content="@yield('og_image', asset('images/og-image.png'))">
+
+        {{-- Favicons --}}
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 
         <title>@yield('title', 'XileRO | The Ultimate Classic Experience')</title>
+
+        {{-- JSON-LD Structured Data --}}
+        <script type="application/ld+json">
+        {
+            "@@context": "https://schema.org",
+            "@@type": "Organization",
+            "name": "XileRO",
+            "url": "{{ config('app.url') }}",
+            "logo": "{{ asset('images/logo.png') }}",
+            "description": "XileRO is a leading PK server, offering unique mechanics and one-of-a-kind classic style gameplay.",
+            "sameAs": [
+                "https://discord.gg/hp7CS6k",
+                "https://www.facebook.com/groups/XileRetro"
+            ]
+        }
+        </script>
+        @yield('structured_data')
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -41,6 +81,11 @@
         searchIsOpen: false,
         search: '',
     }" class="h-screen antialiased leading-none">
+
+    {{-- Skip to main content link for accessibility --}}
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-xilero-gold focus:text-black focus:rounded-lg focus:font-semibold">
+        Skip to main content
+    </a>
 
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N6FS7LJR"
@@ -75,7 +120,7 @@
             @endif
 
             <!-- Page Content -->
-            <main class="bg-clash-bg">
+            <main id="main-content" class="bg-clash-bg" role="main">
                 {{ $slot }}
             </main>
 
@@ -143,24 +188,24 @@
                                 <h3 class="text-xilero-gold font-semibold text-sm uppercase tracking-wider mb-4">Community Fan Art</h3>
                                 <div class="grid grid-cols-3 gap-3">
                                     <div class="aspect-[4/3] rounded-lg overflow-hidden border border-gray-700/50 hover:border-xilero-gold/50 transition-colors">
-                                        <img class="w-full h-full object-cover" src="{{ url('images/loading/loading00.png') }}" alt="Community Art 1">
+                                        <img class="w-full h-full object-cover" src="{{ url('images/loading/loading00.png') }}" alt="XileRO community fan art featuring Ragnarok Online characters" loading="lazy">
                                     </div>
                                     <div class="aspect-[4/3] rounded-lg overflow-hidden border border-gray-700/50 hover:border-xilero-gold/50 transition-colors">
-                                        <img class="w-full h-full object-cover" src="{{ url('images/loading/loading06.png') }}" alt="Community Art 2">
+                                        <img class="w-full h-full object-cover" src="{{ url('images/loading/loading06.png') }}" alt="Player created artwork for XileRO private server" loading="lazy">
                                     </div>
                                     <div class="aspect-[4/3] rounded-lg overflow-hidden border border-gray-700/50 hover:border-xilero-gold/50 transition-colors">
-                                        <img class="w-full h-full object-cover" src="{{ url('images/loading/loading08.png') }}" alt="Community Art 3">
+                                        <img class="w-full h-full object-cover" src="{{ url('images/loading/loading08.png') }}" alt="Ragnarok Online fan illustration from XileRO community" loading="lazy">
                                     </div>
                                 </div>
                                 <p class="text-gray-500 text-xs mt-3">Created by talented players in our community</p>
 
                                 {{-- Social Links --}}
                                 <div class="flex items-center gap-4 mt-6">
-                                    <a href="https://discord.gg/hp7CS6k" target="_blank" rel="noopener" class="text-gray-400 hover:text-indigo-400 transition-colors" title="Join Discord">
-                                        <i class="fab fa-discord text-2xl"></i>
+                                    <a href="https://discord.gg/hp7CS6k" target="_blank" rel="noopener" class="text-gray-400 hover:text-indigo-400 transition-colors" title="Join Discord" aria-label="Join our Discord community">
+                                        <i class="fab fa-discord text-2xl" aria-hidden="true"></i>
                                     </a>
-                                    <a href="https://www.facebook.com/groups/XileRetro" target="_blank" rel="noopener" class="text-gray-400 hover:text-blue-400 transition-colors" title="Facebook Group">
-                                        <i class="fab fa-facebook text-2xl"></i>
+                                    <a href="https://www.facebook.com/groups/XileRetro" target="_blank" rel="noopener" class="text-gray-400 hover:text-blue-400 transition-colors" title="Facebook Group" aria-label="Join our Facebook group">
+                                        <i class="fab fa-facebook text-2xl" aria-hidden="true"></i>
                                     </a>
                                 </div>
                             </div>

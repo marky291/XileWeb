@@ -1,4 +1,6 @@
-@section('title', 'Reset Password - XileRO')
+@section('title', 'Reset Your Password | XileRO Account Recovery')
+@section('description', 'Forgot your XileRO password? No problem! Enter your email to receive a password reset link and regain access to your account.')
+@section('robots', 'noindex, follow')
 
 <section class="bg-clash-bg min-h-screen flex items-center justify-center pt-24 pb-12 px-4">
     <div class="w-full max-w-md">

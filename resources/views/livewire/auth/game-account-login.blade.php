@@ -1,4 +1,6 @@
-@section('title', 'Sign In - XileRO')
+@section('title', 'Login to Your Account | XileRO Ragnarok Online')
+@section('description', 'Sign in to your XileRO account to manage your game characters, check your Uber balance, and access exclusive features.')
+@section('robots', 'noindex, follow')
 
 <section class="bg-clash-bg min-h-screen flex items-center justify-center pt-24 pb-12 px-4">
     <div class="w-full max-w-md">

@@ -1,4 +1,48 @@
 <x-app-layout>
+    @section('title', 'XileRO - Classic Ragnarok Online Private Server | Free to Play PK Server')
+    @section('description', 'Join XileRO, a free-to-play classic Ragnarok Online private server featuring intense PvP, War of Emperium, and unique gameplay mechanics. Download now and start your adventure!')
+    @section('keywords', 'Ragnarok Online, RO Private Server, XileRO, Classic RO, PK Server, WoE Server, Free Ragnarok, MMORPG, Ragnarok Private Server 2024')
+
+    @section('structured_data')
+    <script type="application/ld+json">
+    {
+        "@@context": "https://schema.org",
+        "@@type": "VideoGame",
+        "name": "XileRO",
+        "description": "XileRO is a classic Ragnarok Online private server featuring intense PvP, War of Emperium, and unique gameplay mechanics.",
+        "genre": ["MMORPG", "Role-playing game", "PvP"],
+        "gamePlatform": "PC",
+        "applicationCategory": "Game",
+        "operatingSystem": "Windows",
+        "offers": {
+            "@@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock"
+        },
+        "aggregateRating": {
+            "@@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "ratingCount": "500",
+            "bestRating": "5",
+            "worstRating": "1"
+        }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@@context": "https://schema.org",
+        "@@type": "WebSite",
+        "name": "XileRO",
+        "url": "{{ config('app.url') }}",
+        "potentialAction": {
+            "@@type": "SearchAction",
+            "target": "{{ config('app.url') }}/item-database?search={search_term_string}",
+            "query-input": "required name=search_term_string"
+        }
+    }
+    </script>
+    @endsection
 
     <div id="particles-background" class="relative bg-clash-bg">
         {{-- Gold Particles --}}

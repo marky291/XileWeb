@@ -1,4 +1,6 @@
-@section('title', 'My Account - XileRO')
+@section('title', 'My Account Dashboard | XileRO')
+@section('description', 'Manage your XileRO game accounts, view your Uber balance, and access account settings.')
+@section('robots', 'noindex, nofollow')
 
 <section class="bg-clash-bg min-h-screen pt-28 pb-16 px-4">
     {{-- Global Loading Bar --}}

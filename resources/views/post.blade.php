@@ -1,7 +1,65 @@
 <x-app-layout>
-    @section("title", "XileRO | Update: " . $post->title)
-    @section('description', $post->patcher_notice)
-    @section('keywords', 'XileRO, Updates, Changelog')
+    @section("title", $post->title . " | XileRO Patch Notes & Updates")
+    @section('description', $post->patcher_notice ?: 'Latest updates and changes to XileRO - ' . $post->title)
+    @section('keywords', 'XileRO, Updates, Changelog, Patch Notes, ' . $post->title)
+    @section('og_type', 'article')
+    @section('canonical', route('posts.show', $post))
+
+    @section('structured_data')
+    <script type="application/ld+json">
+    {
+        "@@context": "https://schema.org",
+        "@@type": "Article",
+        "headline": "{{ $post->title }}",
+        "description": "{{ $post->patcher_notice ?: 'Latest updates and changes to XileRO' }}",
+        "datePublished": "{{ $post->created_at->toIso8601String() }}",
+        "dateModified": "{{ $post->updated_at->toIso8601String() }}",
+        "author": {
+            "@@type": "Organization",
+            "name": "XileRO"
+        },
+        "publisher": {
+            "@@type": "Organization",
+            "name": "XileRO",
+            "logo": {
+                "@@type": "ImageObject",
+                "url": "{{ asset('images/logo.png') }}"
+            }
+        },
+        "mainEntityOfPage": {
+            "@@type": "WebPage",
+            "@@id": "{{ url()->current() }}"
+        },
+        "wordCount": {{ str_word_count(strip_tags($post->article_content)) }}
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@@context": "https://schema.org",
+        "@@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "{{ url('/') }}"
+            },
+            {
+                "@@type": "ListItem",
+                "position": 2,
+                "name": "Updates",
+                "item": "{{ url('/posts') }}"
+            },
+            {
+                "@@type": "ListItem",
+                "position": 3,
+                "name": "{{ $post->title }}",
+                "item": "{{ url()->current() }}"
+            }
+        ]
+    }
+    </script>
+    @endsection
 
     {{-- Progress Bar --}}
     <div id="reading-progress" class="fixed top-0 left-0 w-0 h-1 bg-amber-500 z-50"></div>

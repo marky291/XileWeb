@@ -1,5 +1,8 @@
 <x-app-layout>
-    @section('title', 'XileRO Discord')
+    @section('title', 'Join Our Discord Community | XileRO Ragnarok Online')
+    @section('description', 'Connect with thousands of XileRO players on Discord! Get support, find guilds, participate in events, and stay updated with the latest server news.')
+    @section('keywords', 'XileRO Discord, Ragnarok Online community, RO guild recruitment, XileRO support, gaming community')
+
     <section id="important-links" class="relative overflow-hidden py-16 md:pt-32 bg-black">
         <div class="max-w-screen-xl w-full mx-auto px-5 prose bg-gray-900 rounded p-6">
             <h2 class="text-4xl font-bold max-w-lg md:text-4xl text-gray-100">Discord</h2>

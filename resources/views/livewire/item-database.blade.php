@@ -1,3 +1,7 @@
+@section('title', 'Item Database - Complete Item Guide | XileRO')
+@section('description', 'Search the complete XileRO item database. Find weapons, armor, cards, and equipment with stats, drop locations, and more.')
+@section('keywords', 'XileRO items, Ragnarok Online database, RO item list, equipment guide, card database, drop rates')
+
 <div class="bg-clash-bg min-h-screen pt-28 pb-16 px-4" x-data="{ mobileFiltersOpen: false }">
     {{-- Global Loading Bar --}}
     <div wire:loading.delay class="fixed top-0 left-0 right-0 z-50">
