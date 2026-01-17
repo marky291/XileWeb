@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('index', [
         'castles' => rescue(function () {
-            return App\XileRO\XileRO_GuildCastle::whereIn('castle_id', [28, 31, 15, 16])
+            return App\XileRetro\XileRetro_GuildCastle::whereIn('castle_id', [28, 31, 15, 16])
                 ->with('guild', 'guild.members')
                 ->get()
                 ->sortBy(function ($castle, $key) {
