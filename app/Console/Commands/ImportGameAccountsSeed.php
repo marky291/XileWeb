@@ -224,7 +224,7 @@ class ImportGameAccountsSeed extends Command
             return Command::SUCCESS;
         }
 
-        if (! $this->confirm("Import up to {$processCount} accounts in batches of {$batchSize}? (existing accounts will be skipped)")) {
+        if (! $this->confirm('Import new accounts (processing newest first, stops after 500 consecutive already-synced)?')) {
             $this->info('Import cancelled.');
 
             return Command::SUCCESS;
@@ -238,69 +238,53 @@ class ImportGameAccountsSeed extends Command
         $totalLegacyUbers = 0;
         $pendingLegacyUbers = 0;
         $processed = 0;
-        $skipExistingCheck = $this->option('skip-existing-check');
+        $consecutiveSynced = 0;
+        $maxConsecutiveSynced = 500;
 
         $query = clone $baseQuery;
         if ($limit) {
             $query->limit($limit);
         }
 
-        $query->orderBy('account_id')->chunk($batchSize, function ($logins) use ($server, $skipExistingCheck, &$imported, &$skipped, &$withMaster, &$withoutMaster, &$failed, &$totalLegacyUbers, &$pendingLegacyUbers, &$processed, $processCount) {
-            $batchStart = $processed;
-            $this->info("Processing batch... ({$processed}/{$processCount})");
+        $this->info('Processing accounts (newest first)...');
 
-            $batchCount = 0;
-            foreach ($logins as $login) {
-                try {
-                    // Check if already imported (skip if exists) - unless skip-existing-check is set
-                    if (! $skipExistingCheck) {
-                        $existing = GameAccount::where('ragnarok_account_id', $login->account_id)
-                            ->where('server', $server)
-                            ->exists();
+        foreach ($query->orderBy('account_id', 'desc')->cursor() as $login) {
+            try {
+                $result = $this->createAccountsFromLogin($login, $server);
+                $processed++;
 
-                        if ($existing) {
-                            $skipped++;
-                            $processed++;
-                            $batchCount++;
+                if ($result['wasCreated'] ?? true) {
+                    $imported++;
+                    $consecutiveSynced = 0; // Reset counter on new import
+                    $legacyUbers = $result['legacyUbers'] ?? 0;
 
-                            continue;
-                        }
-                    }
-
-                    $result = $this->createAccountsFromLogin($login, $server);
-                    $processed++;
-                    $batchCount++;
-
-                    if ($result['wasCreated'] ?? true) {
-                        $imported++;
-                        $legacyUbers = $result['legacyUbers'] ?? 0;
-
-                        if ($result['user']) {
-                            $withMaster++;
-                            $totalLegacyUbers += $legacyUbers;
-                        } else {
-                            $withoutMaster++;
-                            $pendingLegacyUbers += $legacyUbers;
-                        }
+                    if ($result['user']) {
+                        $withMaster++;
+                        $totalLegacyUbers += $legacyUbers;
                     } else {
-                        $skipped++;
+                        $withoutMaster++;
+                        $pendingLegacyUbers += $legacyUbers;
                     }
-
-                    // Show progress every 50 records
-                    if ($batchCount % 50 === 0) {
-                        $this->output->write("\r  Progress: {$batchCount}/{$logins->count()} in batch, {$processed}/{$processCount} total");
-                    }
-                } catch (\Exception $e) {
-                    $failed++;
-                    $processed++;
-                    $batchCount++;
-                    $this->error("  Failed {$login->account_id}: {$e->getMessage()}");
+                } else {
+                    $skipped++;
+                    $consecutiveSynced++;
                 }
-            }
 
-            $this->newLine();
-            $this->info("  Batch done. Imported: {$imported}, Skipped: {$skipped}, Failed: {$failed}");
-        });
+                // Show progress every record
+                $this->output->write("\r  Processed: {$processed} | Imported: {$imported} | Skipped: {$skipped} | Consecutive synced: {$consecutiveSynced}/{$maxConsecutiveSynced}");
+
+                // Stop if we hit 100 consecutive already-synced accounts
+                if ($consecutiveSynced >= $maxConsecutiveSynced) {
+                    $this->newLine();
+                    $this->info("Reached {$maxConsecutiveSynced} consecutive already-synced accounts. All new accounts imported.");
+                    break;
+                }
+            } catch (\Exception $e) {
+                $failed++;
+                $processed++;
+                $this->error("  Failed {$login->account_id}: {$e->getMessage()}");
+            }
+        }
 
         $this->newLine();
         $this->info("Import complete: {$imported} imported ({$withMaster} with master account, {$withoutMaster} unclaimed), {$skipped} skipped (already exist), {$failed} failed.");
@@ -309,7 +293,97 @@ class ImportGameAccountsSeed extends Command
             $this->info("Legacy ubers: {$totalLegacyUbers} transferred to master accounts, {$pendingLegacyUbers} pending (on unclaimed accounts).");
         }
 
+        // Sync legacy uber balances for XileRetro
+        if ($server === 'xileretro') {
+            $this->newLine();
+            $this->syncAllLegacyUbers();
+        }
+
         return Command::SUCCESS;
+    }
+
+    protected function syncAllLegacyUbers(): void
+    {
+        $this->info('Syncing legacy uber balances from donation_ubers...');
+
+        // Step 1: Update legacy_uber_balance from XileRetro_DonationUbers for ALL accounts
+        $uberRecords = XileRetro_DonationUbers::where(function ($q) {
+            $q->where('current_ubers', '>', 0)
+                ->orWhere('pending_ubers', '>', 0);
+        })->get();
+
+        $this->info("Found {$uberRecords->count()} accounts with legacy ubers in donation_ubers.");
+
+        $updated = 0;
+        $notFound = 0;
+
+        foreach ($uberRecords as $uberRecord) {
+            $totalUbers = $uberRecord->total_ubers;
+
+            // Find corresponding GameAccount
+            $gameAccount = GameAccount::where('server', 'xileretro')
+                ->where('ragnarok_account_id', $uberRecord->account_id)
+                ->first();
+
+            if (! $gameAccount) {
+                $notFound++;
+
+                continue;
+            }
+
+            // Update legacy_uber_balance if changed
+            if ($gameAccount->legacy_uber_balance != $totalUbers) {
+                $gameAccount->update(['legacy_uber_balance' => $totalUbers]);
+                $updated++;
+            }
+
+            $this->output->write("\r  Updated legacy balances: {$updated} | Not found: {$notFound}");
+        }
+
+        $this->newLine();
+        $this->info("Legacy balance sync: {$updated} updated, {$notFound} not found.");
+
+        // Step 2: Transfer ALL legacy_uber_balance to master accounts and set to 0 (prevent exploit)
+        $this->newLine();
+        $this->info('Transferring legacy ubers to master accounts (setting legacy_uber_balance to 0)...');
+
+        $gameAccountsWithUbers = GameAccount::where('server', 'xileretro')
+            ->where('legacy_uber_balance', '>', 0)
+            ->whereNotNull('user_id')
+            ->get();
+
+        $transferred = 0;
+        $totalTransferred = 0;
+
+        foreach ($gameAccountsWithUbers as $gameAccount) {
+            $user = $gameAccount->user;
+            if ($user) {
+                $amount = $gameAccount->legacy_uber_balance;
+                $user->increment('uber_balance', $amount);
+                $gameAccount->update(['legacy_uber_balance' => 0]); // Set to 0 to prevent exploit
+                $totalTransferred += $amount;
+                $transferred++;
+
+                $this->output->write("\r  Transferred: {$transferred} accounts | Total ubers: {$totalTransferred}");
+            }
+        }
+
+        $this->newLine();
+        $this->info("Transfer complete: {$transferred} accounts, {$totalTransferred} ubers transferred to master accounts.");
+
+        // Show remaining pending (unclaimed accounts)
+        $pendingCount = GameAccount::where('server', 'xileretro')
+            ->where('legacy_uber_balance', '>', 0)
+            ->whereNull('user_id')
+            ->count();
+        $pendingSum = GameAccount::where('server', 'xileretro')
+            ->where('legacy_uber_balance', '>', 0)
+            ->whereNull('user_id')
+            ->sum('legacy_uber_balance');
+
+        if ($pendingCount > 0) {
+            $this->info("Pending (unclaimed accounts): {$pendingCount} accounts with {$pendingSum} ubers awaiting claim.");
+        }
     }
 
     protected function syncLegacyUberBalances(string $server, bool $dryRun, ?int $limit = null): int
