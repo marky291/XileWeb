@@ -18,10 +18,13 @@ class ImportGameAccountsSeed extends Command
                             {--server=xilero : Server to import from (xilero or xileretro)}
                             {--account-id= : Import a specific account by ID}
                             {--all : Import all accounts that are not yet linked}
+                            {--sync-ubers : Sync legacy_uber_balance for all existing game accounts}
                             {--limit= : Limit total number of accounts to import}
+                            {--batch=500 : Batch size for processing large datasets}
+                            {--skip-existing-check : Skip checking if GameAccount already exists (faster)}
                             {--dry-run : Show what would be imported without making changes}';
 
-    protected $description = 'Import game accounts from XileRO_Login/XileRetro_Login and create master accounts';
+    protected $description = 'Import game accounts from XileRO_Login/XileRetro_Login and sync legacy uber balances';
 
     /**
      * System emails that should be completely skipped (no import at all).
@@ -77,6 +80,7 @@ class ImportGameAccountsSeed extends Command
         $server = $this->option('server');
         $accountId = $this->option('account-id');
         $importAll = $this->option('all');
+        $syncUbers = $this->option('sync-ubers');
         $limit = $this->option('limit') ? (int) $this->option('limit') : null;
         $dryRun = $this->option('dry-run');
 
@@ -89,8 +93,13 @@ class ImportGameAccountsSeed extends Command
         $loginClass = $server === 'xileretro' ? XileRetro_Login::class : XileRO_Login::class;
         $serverName = $server === 'xileretro' ? 'XileRetro' : 'XileRO';
 
-        $this->info("Importing from {$serverName} ({$loginClass})...");
+        $this->info("Processing {$serverName} ({$loginClass})...");
         $this->newLine();
+
+        // Sync legacy uber balances for existing accounts
+        if ($syncUbers) {
+            return $this->syncLegacyUberBalances($server, $dryRun, $limit);
+        }
 
         if ($accountId) {
             return $this->importSingleAccount($loginClass, $server, (int) $accountId, $dryRun);
@@ -156,44 +165,36 @@ class ImportGameAccountsSeed extends Command
 
     protected function importAllAccounts(string $loginClass, string $server, bool $dryRun, ?int $limit = null): int
     {
-        // Get all login records that are not yet linked
-        $existingIds = GameAccount::where('server', $server)
-            ->whereNotNull('ragnarok_account_id')
-            ->pluck('ragnarok_account_id')
-            ->toArray();
+        $batchSize = (int) $this->option('batch');
 
-        $query = $loginClass::whereNotIn('account_id', $existingIds)
-            ->where('group_id', '<', 99) // Exclude admin accounts
+        // Count total accounts first
+        $this->info('Counting accounts in game database...');
+
+        $baseQuery = $loginClass::where('group_id', '<', 99) // Exclude admin accounts
             ->whereNotIn('email', $this->systemEmails); // Exclude system accounts
 
-        if ($limit) {
-            $query->limit($limit);
-        }
+        $totalCount = (clone $baseQuery)->count();
 
-        $logins = $query->get();
-
-        if ($logins->isEmpty()) {
-            $this->info('No unlinked accounts found to import.');
+        if ($totalCount === 0) {
+            $this->info('No accounts found in game database.');
 
             return Command::SUCCESS;
         }
 
-        // Count accounts with valid vs fake emails
-        $withValidEmail = $logins->filter(fn ($login) => $this->isValidEmail($login->email))->count();
-        $withFakeEmail = $logins->count() - $withValidEmail;
-
+        $processCount = $limit ? min($limit, $totalCount) : $totalCount;
         $limitInfo = $limit ? " (limited to {$limit})" : '';
-        $this->info("Found {$logins->count()} accounts to import{$limitInfo}.");
-        $this->info("  - {$withValidEmail} with valid email (will create master account)");
-        $this->info("  - {$withFakeEmail} with fake/invalid email (game account only, can be claimed later)");
+        $this->info("Found {$totalCount} accounts in game database{$limitInfo}.");
+        $this->info("Will process in batches of {$batchSize}.");
         $this->newLine();
 
         if ($dryRun) {
-            $this->info('[DRY RUN] Would import the following accounts:');
+            $this->info('[DRY RUN] Sample accounts from game database (first 20):');
             $this->newLine();
 
+            $sample = (clone $baseQuery)->limit(20)->get();
+
             if ($server === 'xileretro') {
-                $tableData = $logins->map(fn ($login) => [
+                $tableData = $sample->map(fn ($login) => [
                     $login->account_id,
                     $login->userid,
                     $login->email,
@@ -204,7 +205,7 @@ class ImportGameAccountsSeed extends Command
 
                 $this->table(['Account ID', 'Username', 'Email', 'Sex', 'Master Account?', 'Legacy Ubers'], $tableData);
             } else {
-                $tableData = $logins->map(fn ($login) => [
+                $tableData = $sample->map(fn ($login) => [
                     $login->account_id,
                     $login->userid,
                     $login->email,
@@ -215,42 +216,94 @@ class ImportGameAccountsSeed extends Command
                 $this->table(['Account ID', 'Username', 'Email', 'Sex', 'Master Account?'], $tableData);
             }
 
+            if ($processCount > 20) {
+                $this->newLine();
+                $this->info('... and '.($processCount - 20).' more accounts.');
+            }
+
             return Command::SUCCESS;
         }
 
-        if (! $this->confirm("Import {$logins->count()} accounts?")) {
+        if (! $this->confirm("Import up to {$processCount} accounts in batches of {$batchSize}? (existing accounts will be skipped)")) {
             $this->info('Import cancelled.');
 
             return Command::SUCCESS;
         }
 
         $imported = 0;
+        $skipped = 0;
         $withMaster = 0;
         $withoutMaster = 0;
         $failed = 0;
         $totalLegacyUbers = 0;
         $pendingLegacyUbers = 0;
+        $processed = 0;
+        $skipExistingCheck = $this->option('skip-existing-check');
 
-        $this->withProgressBar($logins, function ($login) use ($server, &$imported, &$withMaster, &$withoutMaster, &$failed, &$totalLegacyUbers, &$pendingLegacyUbers) {
-            try {
-                $result = $this->createAccountsFromLogin($login, $server);
-                $imported++;
-                $legacyUbers = $result['legacyUbers'] ?? 0;
+        $query = clone $baseQuery;
+        if ($limit) {
+            $query->limit($limit);
+        }
 
-                if ($result['user']) {
-                    $withMaster++;
-                    $totalLegacyUbers += $legacyUbers;
-                } else {
-                    $withoutMaster++;
-                    $pendingLegacyUbers += $legacyUbers;
+        $query->orderBy('account_id')->chunk($batchSize, function ($logins) use ($server, $skipExistingCheck, &$imported, &$skipped, &$withMaster, &$withoutMaster, &$failed, &$totalLegacyUbers, &$pendingLegacyUbers, &$processed, $processCount) {
+            $batchStart = $processed;
+            $this->info("Processing batch... ({$processed}/{$processCount})");
+
+            $batchCount = 0;
+            foreach ($logins as $login) {
+                try {
+                    // Check if already imported (skip if exists) - unless skip-existing-check is set
+                    if (! $skipExistingCheck) {
+                        $existing = GameAccount::where('ragnarok_account_id', $login->account_id)
+                            ->where('server', $server)
+                            ->exists();
+
+                        if ($existing) {
+                            $skipped++;
+                            $processed++;
+                            $batchCount++;
+
+                            continue;
+                        }
+                    }
+
+                    $result = $this->createAccountsFromLogin($login, $server);
+                    $processed++;
+                    $batchCount++;
+
+                    if ($result['wasCreated'] ?? true) {
+                        $imported++;
+                        $legacyUbers = $result['legacyUbers'] ?? 0;
+
+                        if ($result['user']) {
+                            $withMaster++;
+                            $totalLegacyUbers += $legacyUbers;
+                        } else {
+                            $withoutMaster++;
+                            $pendingLegacyUbers += $legacyUbers;
+                        }
+                    } else {
+                        $skipped++;
+                    }
+
+                    // Show progress every 50 records
+                    if ($batchCount % 50 === 0) {
+                        $this->output->write("\r  Progress: {$batchCount}/{$logins->count()} in batch, {$processed}/{$processCount} total");
+                    }
+                } catch (\Exception $e) {
+                    $failed++;
+                    $processed++;
+                    $batchCount++;
+                    $this->error("  Failed {$login->account_id}: {$e->getMessage()}");
                 }
-            } catch (\Exception $e) {
-                $failed++;
             }
+
+            $this->newLine();
+            $this->info("  Batch done. Imported: {$imported}, Skipped: {$skipped}, Failed: {$failed}");
         });
 
-        $this->newLine(2);
-        $this->info("Import complete: {$imported} imported ({$withMaster} with master account, {$withoutMaster} unclaimed), {$failed} failed.");
+        $this->newLine();
+        $this->info("Import complete: {$imported} imported ({$withMaster} with master account, {$withoutMaster} unclaimed), {$skipped} skipped (already exist), {$failed} failed.");
 
         if ($server === 'xileretro' && ($totalLegacyUbers > 0 || $pendingLegacyUbers > 0)) {
             $this->info("Legacy ubers: {$totalLegacyUbers} transferred to master accounts, {$pendingLegacyUbers} pending (on unclaimed accounts).");
@@ -259,27 +312,206 @@ class ImportGameAccountsSeed extends Command
         return Command::SUCCESS;
     }
 
+    protected function syncLegacyUberBalances(string $server, bool $dryRun, ?int $limit = null): int
+    {
+        if ($server !== 'xileretro') {
+            $this->warn('Legacy uber sync is only available for XileRetro accounts.');
+
+            return Command::SUCCESS;
+        }
+
+        $this->info('Fetching accounts with legacy ubers from XileRetro...');
+        $this->newLine();
+
+        // Query XileRetro_DonationUbers for accounts that have ubers
+        $query = XileRetro_DonationUbers::where(function ($q) {
+            $q->where('current_ubers', '>', 0)
+                ->orWhere('pending_ubers', '>', 0);
+        });
+
+        if ($limit) {
+            $query->limit($limit);
+        }
+
+        $legacyUberRecords = $query->get();
+
+        if ($legacyUberRecords->isEmpty()) {
+            $this->info('No accounts with legacy ubers found.');
+
+            return Command::SUCCESS;
+        }
+
+        $this->info("Found {$legacyUberRecords->count()} accounts with legacy ubers.");
+        $this->newLine();
+
+        // Load all existing GameAccounts for this server upfront (keyed by ragnarok_account_id)
+        $this->info('Loading existing game accounts...');
+        $accountIds = $legacyUberRecords->pluck('account_id')->toArray();
+        $existingGameAccounts = GameAccount::where('server', $server)
+            ->whereIn('ragnarok_account_id', $accountIds)
+            ->get()
+            ->keyBy('ragnarok_account_id');
+
+        $this->info("Found {$existingGameAccounts->count()} existing game accounts.");
+        $this->newLine();
+
+        $toUpdate = [];
+        $toImport = [];
+
+        foreach ($legacyUberRecords as $uberRecord) {
+            $totalUbers = $uberRecord->total_ubers;
+
+            // Check if GameAccount exists for this ragnarok account
+            $gameAccount = $existingGameAccounts->get($uberRecord->account_id);
+
+            if ($gameAccount) {
+                // GameAccount exists - check if balance needs updating
+                if ($totalUbers != $gameAccount->legacy_uber_balance) {
+                    $toUpdate[] = [
+                        'game_account' => $gameAccount,
+                        'account_id' => $uberRecord->account_id,
+                        'username' => $uberRecord->username,
+                        'current_ubers' => $uberRecord->current_ubers,
+                        'pending_ubers' => $uberRecord->pending_ubers,
+                        'total_ubers' => $totalUbers,
+                        'old_balance' => $gameAccount->legacy_uber_balance,
+                        'has_user' => $gameAccount->user_id ? 'Yes' : 'No',
+                    ];
+                }
+            } else {
+                // GameAccount doesn't exist - needs to be imported
+                $toImport[] = [
+                    'account_id' => $uberRecord->account_id,
+                    'username' => $uberRecord->username,
+                    'current_ubers' => $uberRecord->current_ubers,
+                    'pending_ubers' => $uberRecord->pending_ubers,
+                    'total_ubers' => $totalUbers,
+                ];
+            }
+        }
+
+        // Display accounts to update
+        if (! empty($toUpdate)) {
+            $this->info('Accounts with uber balance changes:');
+            $this->table(
+                ['Account ID', 'Username', 'Current', 'Pending', 'Total', 'Old Balance', 'Has Master'],
+                collect($toUpdate)->map(fn ($item) => [
+                    $item['account_id'],
+                    $item['username'],
+                    $item['current_ubers'],
+                    $item['pending_ubers'],
+                    $item['total_ubers'],
+                    $item['old_balance'],
+                    $item['has_user'],
+                ])->toArray()
+            );
+            $this->newLine();
+        }
+
+        // Display accounts to import
+        if (! empty($toImport)) {
+            $this->info('Accounts needing import (not yet in GameAccount):');
+            $this->table(
+                ['Account ID', 'Username', 'Current', 'Pending', 'Total'],
+                collect($toImport)->map(fn ($item) => [
+                    $item['account_id'],
+                    $item['username'],
+                    $item['current_ubers'],
+                    $item['pending_ubers'],
+                    $item['total_ubers'],
+                ])->toArray()
+            );
+            $this->newLine();
+        }
+
+        if (empty($toUpdate) && empty($toImport)) {
+            $this->info('All legacy uber balances are already in sync.');
+
+            return Command::SUCCESS;
+        }
+
+        if ($dryRun) {
+            $this->info('[DRY RUN] Would update '.count($toUpdate).' game accounts.');
+            $this->info('[DRY RUN] Would import '.count($toImport).' new accounts.');
+
+            return Command::SUCCESS;
+        }
+
+        $updated = 0;
+        $imported = 0;
+        $transferred = 0;
+        $totalUbersTransferred = 0;
+
+        // Update existing GameAccounts
+        if (! empty($toUpdate) && $this->confirm('Update '.count($toUpdate).' existing game account uber balances?')) {
+            $this->withProgressBar($toUpdate, function ($item) use (&$updated, &$transferred, &$totalUbersTransferred) {
+                $gameAccount = $item['game_account'];
+                $totalUbers = $item['total_ubers'];
+
+                DB::transaction(function () use ($gameAccount, $totalUbers, &$updated, &$transferred, &$totalUbersTransferred) {
+                    // If account has a linked user, transfer ubers to user immediately
+                    if ($gameAccount->user_id && $totalUbers > 0) {
+                        $user = $gameAccount->user;
+                        if ($user) {
+                            $ubersToTransfer = $totalUbers - $gameAccount->legacy_uber_balance;
+                            if ($ubersToTransfer > 0) {
+                                $user->increment('uber_balance', $ubersToTransfer);
+                                $totalUbersTransferred += $ubersToTransfer;
+                                $transferred++;
+                            }
+                            $gameAccount->update(['legacy_uber_balance' => 0]);
+                        }
+                    } else {
+                        $gameAccount->update(['legacy_uber_balance' => $totalUbers]);
+                    }
+                    $updated++;
+                });
+            });
+            $this->newLine(2);
+        }
+
+        // Import new accounts
+        if (! empty($toImport) && $this->confirm('Import '.count($toImport).' new accounts with legacy ubers?')) {
+            $loginClass = XileRetro_Login::class;
+
+            $this->withProgressBar($toImport, function ($item) use ($loginClass, $server, &$imported) {
+                $login = $loginClass::find($item['account_id']);
+                if ($login && ! $this->isSystemEmail($login->email)) {
+                    try {
+                        $this->createAccountsFromLogin($login, $server);
+                        $imported++;
+                    } catch (\Exception $e) {
+                        // Skip failed imports
+                    }
+                }
+            });
+            $this->newLine(2);
+        }
+
+        $this->info("Sync complete: {$updated} updated, {$imported} imported.");
+
+        if ($transferred > 0) {
+            $this->info("Transferred {$totalUbersTransferred} ubers to {$transferred} master accounts.");
+        }
+
+        return Command::SUCCESS;
+    }
+
     protected function interactiveImport(string $loginClass, string $server, bool $dryRun): int
     {
-        // Get unlinked accounts
-        $existingIds = GameAccount::where('server', $server)
-            ->whereNotNull('ragnarok_account_id')
-            ->pluck('ragnarok_account_id')
-            ->toArray();
-
-        $logins = $loginClass::whereNotIn('account_id', $existingIds)
-            ->where('group_id', '<', 99)
+        // Query Login table directly from game database
+        $logins = $loginClass::where('group_id', '<', 99)
             ->whereNotIn('email', $this->systemEmails)
             ->limit(20)
             ->get();
 
         if ($logins->isEmpty()) {
-            $this->info('No unlinked accounts found to import.');
+            $this->info('No accounts found in game database.');
 
             return Command::SUCCESS;
         }
 
-        $this->info('Unlinked accounts (showing first 20):');
+        $this->info('Game accounts (showing first 20):');
         $this->newLine();
 
         if ($server === 'xileretro') {
@@ -307,7 +539,7 @@ class ImportGameAccountsSeed extends Command
 
         $this->newLine();
         $this->info('Use --account-id=<ID> to import a specific account');
-        $this->info('Use --all to import all unlinked accounts');
+        $this->info('Use --all to import all accounts (existing will be skipped)');
 
         return Command::SUCCESS;
     }
@@ -315,6 +547,23 @@ class ImportGameAccountsSeed extends Command
     protected function createAccountsFromLogin(XileRO_Login|XileRetro_Login $login, string $server): array
     {
         return DB::transaction(function () use ($login, $server) {
+            // Check if already exists by ragnarok_account_id OR userid (skip duplicates)
+            $existing = GameAccount::where('server', $server)
+                ->where(function ($q) use ($login) {
+                    $q->where('ragnarok_account_id', $login->account_id)
+                        ->orWhere('userid', $login->userid);
+                })
+                ->first();
+
+            if ($existing) {
+                return [
+                    'user' => $existing->user,
+                    'gameAccount' => $existing,
+                    'legacyUbers' => 0,
+                    'wasCreated' => false,
+                ];
+            }
+
             $user = null;
 
             // Only create/link User if email is valid
@@ -353,8 +602,11 @@ class ImportGameAccountsSeed extends Command
                 'legacy_uber_balance' => $legacyUbers,
             ]);
 
+            $wasCreated = true;
+
             // If user was created/linked and there are legacy ubers, transfer them immediately
-            if ($user && $legacyUbers > 0) {
+            // Only do this for newly created accounts
+            if ($wasCreated && $user && $legacyUbers > 0) {
                 $user->increment('uber_balance', $legacyUbers);
                 $gameAccount->update(['legacy_uber_balance' => 0]);
             }
@@ -363,6 +615,7 @@ class ImportGameAccountsSeed extends Command
                 'user' => $user,
                 'gameAccount' => $gameAccount,
                 'legacyUbers' => $legacyUbers,
+                'wasCreated' => $wasCreated,
             ];
         });
     }

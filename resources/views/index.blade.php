@@ -180,9 +180,9 @@
                             <i class="fa fa-windows step2-icon text-gray-300" aria-hidden="true"></i>
                         </div>
                         <div class="col-span-5 md:col-span-4 grid gap-5 grid-cols-1">
-                            @foreach(config('downloads.full') as $download)
-                                <a class="no-underline truncate text-gray-900 btn text-left {{ $download['bttn'] }}" href="{{ $download['link'] }}" target="_blank" rel="noopener">
-                                    {{ $download['name'] }}
+                            @foreach(\App\Models\Download::full()->get() as $download)
+                                <a class="no-underline truncate text-gray-900 btn text-left {{ $download->button_class }}" href="{{ $download->download_url }}" target="_blank" rel="noopener">
+                                    {{ $download->display_name }}
                                 </a>
                             @endforeach
                         </div>
@@ -196,9 +196,9 @@
                                 <i class="fa fa-mobile step2-icon text-gray-300" aria-hidden="true"></i>
                             </div>
                             <div class="col-span-5 md:col-span-4 grid gap-5 grid-cols-1">
-                                @foreach(config('downloads.android') as $download)
-                                    <a class="no-underline truncate btn text-left {{ $download['bttn'] }}" href="{{ $download['link'] }}" target="_blank" rel="noopener">
-                                        {{ $download['name'] }}
+                                @foreach(\App\Models\Download::android()->get() as $download)
+                                    <a class="no-underline truncate btn text-left {{ $download->button_class }}" href="{{ $download->download_url }}" target="_blank" rel="noopener">
+                                        {{ $download->display_name }}
                                     </a>
                                 @endforeach
                             </div>
