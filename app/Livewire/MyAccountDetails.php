@@ -2,30 +2,92 @@
 
 namespace App\Livewire;
 
-use App\Ragnarok\Login;
+use App\Actions\ResetCharacterPosition;
 use Livewire\Component;
 
 class MyAccountDetails extends Component
 {
+    public ?int $selectedCharacterId = null;
+
+    /**
+     * Get all characters for the authenticated user.
+     *
+     * @return \Illuminate\Support\Collection
+     */
     public function characters()
     {
-        $loginAccountId = auth()->user()->userLogins()->pluck('login_account_id')->first();
-        
-        if (!$loginAccountId) {
-            return collect(); // Return empty collection if no login account
+        return auth()->user()->chars()->with('guild')->get();
+    }
+
+    /**
+     * Select a character to view details.
+     */
+    public function selectCharacter(?int $charId): void
+    {
+        $this->selectedCharacterId = $charId;
+    }
+
+    /**
+     * Get the currently selected character with full details.
+     */
+    public function selectedCharacter(): ?Char
+    {
+        if (! $this->selectedCharacterId) {
+            return null;
         }
-        
-        $login = Login::find($loginAccountId);
-        
-        if (!$login) {
-            return collect(); // Return empty collection if login not found
+
+        $character = Char::with('guild')->find($this->selectedCharacterId);
+
+        if (! $character) {
+            return null;
         }
-        
-        return $login->chars;
+
+        // Verify the character belongs to the authenticated user
+        if ($character->account_id !== auth()->user()->account_id) {
+            return null;
+        }
+
+        return $character;
+    }
+
+    /**
+     * Reset a character's position to the default save point.
+     * Only works for offline characters.
+     */
+    public function resetPosition(int $charId): void
+    {
+        $character = Char::find($charId);
+
+        if (! $character) {
+            session()->flash('error', 'Character not found.');
+
+            return;
+        }
+
+        // Verify the character belongs to the authenticated user
+        if ($character->account_id !== auth()->user()->account_id) {
+            session()->flash('error', 'You do not own this character.');
+
+            return;
+        }
+
+        // Check if character is online
+        if ($character->online) {
+            session()->flash('error', 'Cannot reset position for an online character. Please log out first.');
+
+            return;
+        }
+
+        ResetCharacterPosition::run($character);
+
+        session()->flash('success', "{$character->name}'s position has been reset to Prontera.");
     }
 
     public function render()
     {
-        return view('livewire.my-account-details');
+        return view('livewire.my-account-details', [
+            'characters' => $this->characters(),
+            'selectedChar' => $this->selectedCharacter(),
+        ]);
     }
 }

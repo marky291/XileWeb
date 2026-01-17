@@ -65,10 +65,10 @@ return [
             'model' => App\Models\User::class,
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'ragnarok' => [
+            'driver' => 'ragnarok',
+            'model' => App\XileRO\XileRO_Login::class,
+        ],
     ],
 
     /*

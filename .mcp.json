@@ -3,7 +3,7 @@
         "laravel-boost": {
             "command": "php",
             "args": [
-                "./artisan",
+                "artisan",
                 "boost:mcp"
             ]
         },
@@ -13,7 +13,7 @@
                 "/Applications/Herd.app/Contents/Resources/herd-mcp.phar"
             ],
             "env": {
-                "SITE_PATH": "/Users/markhester/Herd/XileWeb"
+                "SITE_PATH": "/Users/markhester/Herd/XileRO X9/XileWeb"
             }
         }
     }

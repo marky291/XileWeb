@@ -1,18 +1,124 @@
 <x-app-layout>
 
-    <section class="shadow bg-clash-bg bg-right md:py-20 pb-12 md:pt-80 px-12 pt-40">
-        <div class="section-div text-gray-100">
-            <span class="text-[100px] md:text-[140px] center-letter">X</span>
-            <span class="text-[100px] md:text-[140px] center-letter">I</span>
-            <span class="text-[100px] md:text-[140px] center-letter">L</span>
-            <span class="text-[100px] md:text-[140px] center-letter">E</span>
-            <span class="text-[100px] md:text-[140px] center-letter">R</span>
-            <span class="text-[100px] md:text-[140px] center-letter">O</span>
-        </div>
-    </section>
+    <div id="particles-background" class="relative bg-clash-bg">
+        {{-- Gold Particles --}}
+        <div id="particles-container"></div>
+        <style> 
+            #particles-container {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                overflow: hidden;
+                z-index: 1;
+            }
+            .gold-particle {
+                position: absolute;
+                bottom: -10px;
+                background: #d4a84b;
+                border-radius: 50%;
+                opacity: 0;
+                will-change: transform, opacity;
+                animation: floatUp linear infinite;
+            }
+            @keyframes floatUp {
+                0% {
+                    opacity: 0;
+                    transform: translateY(0) scale(0.5);
+                }
+                10% {
+                    opacity: 0.8;
+                }
+                90% {
+                    opacity: 0.6;
+                }
+                100% {
+                    opacity: 0;
+                    transform: translateY(-100vh) scale(1);
+                }
+            }
+            .shooting-star {
+                position: absolute;
+                width: 100px;
+                height: 2px;
+                background: linear-gradient(to right, transparent, rgba(255,255,255,0.4), #fff);
+                opacity: 0;
+                will-change: transform, opacity;
+                transform: rotate(-35deg);
+                animation: shootingStar linear infinite;
+            }
+            @keyframes shootingStar {
+                0% {
+                    opacity: 0;
+                    transform: rotate(-35deg) translateX(0);
+                }
+                1% {
+                    opacity: 1;
+                }
+                14% {
+                    opacity: 1;
+                }
+                15% {
+                    opacity: 0;
+                    transform: rotate(-35deg) translateX(200vw);
+                }
+                100% {
+                    opacity: 0;
+                    transform: rotate(-35deg) translateX(200vw);
+                }
+            }
+        </style>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const container = document.getElementById('particles-container');
+                const fragment = document.createDocumentFragment();
 
+                // Gold particles
+                for (let i = 0; i < 40; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'gold-particle';
+                    particle.style.cssText = `
+                        left: ${Math.random() * 100}%;
+                        animation-duration: ${4 + Math.random() * 6}s;
+                        animation-delay: ${-Math.random() * 10}s;
+                        width: ${2 + Math.random() * 3}px;
+                        height: ${2 + Math.random() * 3}px;
+                        box-shadow: 0 0 ${3 + Math.random() * 4}px rgba(212, 168, 75, 0.6);
+                    `;
+                    fragment.appendChild(particle);
+                }
 
-    <section id="read-the-rules" class="bg-clash-bg relative rounded-lg overflow-hidden py-24 md:pt-32 hidden md:block">
+                // Shooting stars scattered across full background
+                for (let i = 0; i < 5; i++) {
+                    const star = document.createElement('div');
+                    star.className = 'shooting-star';
+                    star.style.cssText = `
+                        top: ${Math.random() * 100}%;
+                        left: ${-20 + Math.random() * 80}%;
+                        animation-duration: 20s;
+                        animation-delay: ${i * 4 + Math.random() * 4}s;
+                    `;
+                    fragment.appendChild(star);
+                }
+
+                container.appendChild(fragment);
+            });
+        </script>
+
+        <section class="shadow bg-transparent bg-right md:py-20 pb-12 md:pt-80 px-12 pt-40 relative z-10" id="hero-section">
+            <div class="section-div text-gray-100 relative z-10">
+                <span class="text-[100px] md:text-[140px] center-letter">X</span>
+                <span class="text-[100px] md:text-[140px] center-letter">I</span>
+                <span class="text-[100px] md:text-[140px] center-letter">L</span>
+                <span class="text-[100px] md:text-[140px] center-letter">E</span>
+                <span class="text-[100px] md:text-[140px] center-letter">R</span>
+                <span class="text-[100px] md:text-[140px] center-letter">O</span>
+            </div>
+        </section>
+
+    <section id="read-the-rules" class="bg-transparent relative rounded-lg py-24 md:pt-32 hidden md:block z-10">
         <div class="z-0 absolute effect-light-blue-bang top-[20px] right-[140px]"></div>
         <div class="z-0 absolute effect-light-yellow-bang top-[20px] right-[180px]"></div>
         <div class="z-10 relative block-home max-w-screen-xl w-full mx-auto flex justify-between container md:text-center mb-0 bg-gray-900 p-4 py-8 rounded to-transparent">
@@ -21,6 +127,7 @@
         </div>
     </section>
 
+    </div>
 {{--    <section id="rates" class="bg-clash-bg relative overflow-hidden py-16 md:pt-24 lg:pt-16">--}}
 {{--        <div class="max-w-screen-xl w-full mx-auto lg:px-8 px-5">--}}
 {{--            <h2>Quick Stats</h2>--}}
@@ -52,17 +159,53 @@
 {{--        </div>--}}
 {{--    </section>--}}
 
-
     <div class="line"></div>
-
-    @if(auth()->check())
-        <livewire:my-account-details/>
-    @endif
-
 
     <section id="steps2play" class="bg-clash-bg relative overflow-hidden py-12 md:px-24">
         <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
-            <livewire:register lazy />
+            <div class="grid grid-cols-1 lg:grid-cols-[1fr_1px_1fr] gap-10 lg:gap-16">
+                <div>
+                    <h2 class="mt-0 mb-2 text-2xl font-bold text-gray-100">XileRO Midrate</h2>
+                    <p class="mb-12 text-amber-500">Coming soon...</p>
+                </div>
+
+                {{-- Vertical Divider --}}
+                <div class="hidden lg:block bg-gradient-to-b from-transparent via-gray-700 to-transparent"></div>
+
+                <div>
+                    <h2 class="mt-0 mb-2 text-2xl font-bold text-gray-100"><span class="mr-2">1.</span> XileRetro Download Full Client</h2>
+                    <p class="mb-12 text-amber-500">Full downloads ensure an error-free experience.</p>
+                    <div class="grid grid-cols-5">
+                        <div class="col-span-1 hidden md:block">
+                            <i class="fa fa-windows step2-icon text-gray-300" aria-hidden="true"></i>
+                        </div>
+                        <div class="col-span-5 md:col-span-4 grid gap-5 grid-cols-1">
+                            @foreach(\App\Models\Download::full()->get() as $download)
+                                <a class="no-underline truncate text-gray-900 btn text-left {{ $download->button_class }}" href="{{ $download->download_url }}" target="_blank" rel="noopener">
+                                    {{ $download->display_name }}
+                                </a>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    <div class="mt-10">
+                        <h2 class="mt-0 mb-2 text-2xl font-bold text-gray-100"><span class="mr-2">2.</span> XileRetro Android Download</h2>
+                        <p class="mb-12 text-amber-500">Play XileRetro on the Go, with android, supporting automatic updates and gepard.</p>
+                        <div class="grid grid-cols-5">
+                            <div class="col-span-1 hidden md:block">
+                                <i class="fa fa-mobile step2-icon text-gray-300" aria-hidden="true"></i>
+                            </div>
+                            <div class="col-span-5 md:col-span-4 grid gap-5 grid-cols-1">
+                                @foreach(\App\Models\Download::android()->get() as $download)
+                                    <a class="no-underline truncate btn text-left {{ $download->button_class }}" href="{{ $download->download_url }}" target="_blank" rel="noopener">
+                                        {{ $download->display_name }}
+                                    </a>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -74,7 +217,7 @@
 
     {{-- <section id="mvprankingladder" class="container mx-auto grid">
         <h2>MVP Ladder</h2>
-        @foreach (App\Ragnarok\MvpLadderRank::orderByDesc('day_kills')->limit(3)->get() as $rank)
+        @foreach (App\XileRO\MvpLadderRank::orderByDesc('day_kills')->limit(3)->get() as $rank)
             <div class="cols-span-1">
                 <p>Player {{ $rank->name }}</p>
                 <p>{{ $rank->day_kills }} MVP Kills Today!</p>
@@ -88,7 +231,7 @@
             <p class="mt-6 text-gray-300 leading-relaxed">Welcome to the world of Xilero, where unique adventures await! If you're new to our server or looking to enhance your gameplay experience, you've come to the right place. Our Getting Started guides are crafted to help players of all levels navigate the distinct features and mechanics that set Xilero apart.</p>
             <div class="grid grid-cols-4 gap-12 mt-14">
                 <div class="col-span-4 md:col-span-2 lg:col-span-1 block-home">
-                    <a title="Learn more about Server Information & Features on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xilero.net/index.php?title=Server_Information">
+                    <a title="Learn more about Server Information & Features on XileRO Wiki" target="_blank" rel="noopener" href="https://wiki.xilero.net/index.php?title=Server_Information">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
                                 <img class="object-cover w-full rounded h-44" style="margin:0" src="{{ asset('assets/getting-started/server-information.jpeg') }}" alt="Server Information & Features">
@@ -108,7 +251,7 @@
                     </a>
                 </div>
                 <div class="col-span-4 md:col-span-2 lg:col-span-1 block-home hover:shadow-md hover:shadow-violet-500">
-                    <a title="Discover Best Leveling Areas & Progression Tips on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xilero.net/index.php?title=Leveling_Spots">
+                    <a title="Discover Best Leveling Areas & Progression Tips on XileRO Wiki" target="_blank" rel="noopener" href="https://wiki.xilero.net/index.php?title=Leveling_Spots">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
                                 <img class="object-cover w-full rounded h-44" style="margin:0" src="{{ asset('assets/getting-started/leveling-areas.jpeg') }}" alt="Leveling Areas & Progression Image">
@@ -128,7 +271,7 @@
                     </a>
                 </div>
                 <div class="col-span-4 md:col-span-2 lg:col-span-1 block-home hover:shadow-md hover:shadow-violet-500">
-                    <a title="Learn about the Donation Help & Rewards on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xilero.net/index.php?title=Donation">
+                    <a title="Learn about the Donation Help & Rewards on XileRO Wiki" target="_blank" rel="noopener" href="https://wiki.xilero.net/index.php?title=Donation">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
                                 <img class="object-cover w-full rounded h-44" style="margin:0" src="{{ asset('assets/getting-started/donation-help.jpeg') }}" alt="Donation Help & Rewards">
@@ -138,7 +281,7 @@
                     </a>
                 </div>
                 <div class="col-span-4 md:col-span-2 lg:col-span-1 block-home hover:shadow-md hover:shadow-violet-500">
-                    <a title="Explore the MVP Ranking System on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xilero.net/index.php?title=MVP">
+                    <a title="Explore the MVP Ranking System on XileRO Wiki" target="_blank" rel="noopener" href="https://wiki.xilero.net/index.php?title=MVP">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
                                 <img class="object-cover w-full rounded h-44" style="margin:0" src="{{ asset('assets/getting-started/mvp-ranking.jpeg') }}" alt="MVP Ranking System Image">
@@ -148,7 +291,7 @@
                     </a>
                 </div>
                 <div class="col-span-4 md:col-span-2 lg:col-span-1 block-home hover:shadow-md hover:shadow-violet-500">
-                    <a title="Discover Randomised Weapons Loots on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xilero.net/index.php?title=MVP">
+                    <a title="Discover Randomised Weapons Loots on XileRO Wiki" target="_blank" rel="noopener" href="https://wiki.xilero.net/index.php?title=MVP">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
                                 <img class="object-cover w-full rounded h-44" style="margin:0" src="{{ asset('assets/getting-started/randomized-weapon-loots.jpeg') }}" alt="Randomised Weapon Loot Image">
@@ -158,7 +301,7 @@
                     </a>
                 </div>
                 <div class="col-span-4 md:col-span-2 lg:col-span-1 block-home hover:shadow-md hover:shadow-violet-500">
-                    <a title="Explore the Wikipedia Knowledge Base on XileRetro Wiki" target="_blank" rel="noopener" href="https://wiki.xilero.net/index.php?title=MVP">
+                    <a title="Explore the Wikipedia Knowledge Base on XileRO Wiki" target="_blank" rel="noopener" href="https://wiki.xilero.net/index.php?title=MVP">
                         <div class="p-6 rounded-md hover:shadow-lg prose">
                             <div class="mb-6 border border-gray-200 rounded">
                                 <img class="object-cover w-full rounded h-44" style="margin:0" src="{{ asset('assets/getting-started/wikipedia-knowledge.jpeg') }}" alt="Wikipedia Knowledge Base">
@@ -211,48 +354,73 @@
 
     <section id="uber-store" class="bg-clash-bg mx-auto py-5 pt-8 pb-24">
         <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
-            <div class="">
-                <div class="grid grid-cols-2">
+            <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between">
+                <div>
                     <h2 class="mb-0">Uber Store</h2>
-                    <h2 class="col-span-2 md:col-span-1 text-3xl text-left md:text-right font-bold mb-0 text-amber-500">Live Price: {{ cache()->remember('index.live_uber', now()->addMinutes(10), fn() => number_format($server_zeny->total_uber_cost) ?? 0) }} Zeny</h2>
-                </div>{{--                <h3 class="text-white text-2xl mt-4">Current Uber Cost: 1,000000 zeny</h3>--}}
-                <!-- <p class="mt-6 text-gray-700 leading-relaxed">We pride ourselves on the ability to offer a server that you can compete and join without the need to ever spend real money, to achieve this we offer a dynamic zeny based system to determinate the value of an uber in game which you can then use to purchase donation items. This gives zeny more value and keeps it as main currency while allowing those who want to donate still retain the rewards to support the server.</p> -->
-                <p class="mt-6 text-gray-300 leading-relaxed">Your ubers let you get some of the most powerful items in game, ubers can be purchased in game with zeny or by donation, here is a small preview of what is to offer, click to view our wiki for extensive catalogue of items. <span class="text-amber-500">@warp payon 142 224</span></p>
+                    <p class="mt-4 text-gray-300 leading-relaxed">Most popular items from our Uber Shop.</p>
+                </div>
+                <a href="{{ route('donate-shop') }}" class="mt-4 sm:mt-0 inline-flex items-center gap-2 px-4 py-2 bg-amber-500 hover:bg-amber-400 text-gray-900 font-bold rounded-lg transition-colors">
+                    View All Items
+                    <i class="fas fa-arrow-right"></i>
+                </a>
             </div>
-            <div class="">
-                <ul class="mt-10 relative grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                    @foreach (config('donation.items') as $item)
-                        <li class="block-home p-6">
-                            <a id="{{ Str::slug($item['name']) }}" title="Uber Shop Item {{ $item['name'] }}" aria-label="Uber Shop Item {{ $item['name'] }}" href="https://wiki.xilero.net/index.php?title=Donation" class="flex">
-                                <div class="relative shrink-0 bg-breeze flex items-center justify-center rounded-lg overflow-hidden" style="height:100px; width:75px;">
-                                    {{-- <span class="absolute w-full h-full inset-0 bg-gradient-to-b from-[rgba(255,255,255,.2)] to-[rgba(255,255,255,0)]"></span> --}}
-                                    <img src="/images/donations/{{ $item['image'] }}" alt="{{ $item['name'] }} Item" class="relative" width="75" height="100">
-                                </div>
-                                <div class="ml-4 leading-5">
-                                    <div class="text-gray-100">{{ $item['name'] }}</div>
-                                    <div class="mt-1 text-sm text-gray-300">{{ $item['description'] }} <br> {{ $item['stats'] }}</div>
-                                    <div class="mt-1 text-sm text-amber-500 font-bold">{{ $item['cost'] }} Ubers</div>
-                                    @if(isset($set))
-                                        <div class="mt-1 text-sm text-amber-200 font-bold">Click to view Item Set Bonus</div>
+            <div class="mt-10 grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+                @foreach ($popularUberItems as $shopItem)
+                    <a href="{{ route('donate-shop') }}" class="block-home bg-gray-900 rounded-lg p-4 text-left hover:bg-gray-800/80 transition-colors">
+                        <div class="flex gap-4">
+                            {{-- Item Image --}}
+                            <div class="shrink-0 w-16 h-20 bg-gray-800 rounded-lg overflow-hidden flex items-center justify-center">
+                                @if ($shopItem->item)
+                                    <img
+                                        src="{{ $shopItem->item->collection() }}"
+                                        alt="{{ $shopItem->item->name }}"
+                                        class="max-h-full max-w-full object-contain"
+                                        onerror="this.onerror=null; this.src='{{ $shopItem->item->icon() }}';"
+                                        loading="lazy"
+                                    >
+                                @else
+                                    <i class="fas fa-box text-gray-600 text-2xl"></i>
+                                @endif
+                            </div>
+
+                            {{-- Item Info --}}
+                            <div class="flex-1 min-w-0">
+                                <div class="flex items-center gap-2">
+                                    <h3 class="font-semibold text-white truncate">{{ $shopItem->display_name }}</h3>
+                                    @if ($shopItem->exclusive_server)
+                                        <span class="shrink-0 text-[10px] font-medium px-1.5 py-0.5 rounded {{ $shopItem->is_xilero ? 'bg-blue-500/20 text-blue-400' : 'bg-purple-500/20 text-purple-400' }}">
+                                            {{ $shopItem->exclusive_server }}
+                                        </span>
                                     @endif
                                 </div>
-                            </a>
-                        </li>
-                    @endforeach
-                </ul>
-            </div>
-        </div>
+                                @if ($shopItem->quantity > 1)
+                                    <span class="text-xs text-gray-500">x{{ $shopItem->quantity }}</span>
+                                @endif
 
-    </section>
+                                @if ($shopItem->item?->description)
+                                    <p class="text-xs text-gray-400 mt-1 line-clamp-2">{!! $shopItem->item->formattedDescription() !!}</p>
+                                @elseif ($shopItem->item?->type)
+                                    <p class="text-xs text-gray-500 mt-0.5">
+                                        {{ $shopItem->item->type }}{{ $shopItem->item->subtype ? ' / ' . $shopItem->item->subtype : '' }}
+                                    </p>
+                                @endif
 
-    <div class="line"></div>
-
-    <section id="important-links" class="bg-clash-bg relative overflow-hidden py-8 pb-24">
-        <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
-            <h2>Server Vending</h2>
-            <p class="mt-6 text-gray-300 leading-relaxed">Currently in beta, live vending data allows you to search for item IDs to check availability, price, and vendor location. Future feature updates will enhance support.</p>
-            <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5 mt-10">
-                <livewire:server-vendings lazy/>
+                                <div class="mt-2 flex items-center justify-between">
+                                    <span class="text-amber-400 font-bold">
+                                        {{ $shopItem->uber_cost }} {{ Str::plural('Uber', $shopItem->uber_cost) }}
+                                    </span>
+                                    @if ($shopItem->stock !== null)
+                                        @if ($shopItem->stock > 0)
+                                            <span class="text-xs text-green-400">{{ $shopItem->stock }} left</span>
+                                        @else
+                                            <span class="text-xs text-red-400">Sold Out</span>
+                                        @endif
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                @endforeach
             </div>
         </div>
     </section>
@@ -265,7 +433,6 @@
                 <div class="">
                     <div class="text-gray-100 flex justify-between">
                         <h2>Woe Times</h2>
-                        <a class="text-amber-200 text-lg hover:text-underline" href="{{ route('woe') }}">View More</a>
                     </div>
                     <p class="mt-6 text-gray-300 leading-relaxed mb-8">Prepare for battle and mark your calendars! The War of Emperium on Xilero takes place across various timezones, ensuring that warriors from all corners of the world can join the fight. Find the schedule that fits your timezone below and rally your guild for the epic clashes in the specified castles.</p>
                 </div>
@@ -302,7 +469,6 @@
             </div>
         </div>
     </section>
-
 
     {{-- ANDOID SECTION REMOVED
         <section class="my-24 px-3 sm:px-0">

@@ -2,9 +2,14 @@
 
 namespace App\Providers;
 
-use App\Models\User;
+use App\Auth\RagnarokUserProvider;
+use App\Models\UberShopPurchase;
+use App\Observers\UberShopPurchaseObserver;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
-use Laravel\Pennant\Feature;
+use SocialiteProviders\Discord\Provider as DiscordProvider;
+use SocialiteProviders\Manager\SocialiteWasCalled;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,11 +26,23 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Auth::provider('ragnarok', function ($app, array $config) {
+            return new RagnarokUserProvider($app['hash'], $config['model']);
+        });
+
+        // Register model observers
+        UberShopPurchase::observe(UberShopPurchaseObserver::class);
+
+        // Register Discord Socialite provider
+        Event::listen(function (SocialiteWasCalled $event) {
+            $event->extendSocialite('discord', DiscordProvider::class);
+        });
+
         if (config('app.env') === 'production') {
             $path = request()->path();
-            
+
             // Force HTTPS except for patch routes
-            if (!str_starts_with($path, 'xilero/patch/') && !str_starts_with($path, 'retro/patch/')) {
+            if (! str_starts_with($path, 'xilero/patch/') && ! str_starts_with($path, 'retro/patch/')) {
                 \Illuminate\Support\Facades\URL::forceScheme('https');
             }
         }

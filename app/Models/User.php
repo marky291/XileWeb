@@ -2,76 +2,76 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Ragnarok\Login;
+use App\Notifications\VerifyEmailNotification;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-/**
- * @property int $group_id
- */
-class User extends Authenticatable implements FilamentUser
+class User extends Authenticatable implements FilamentUser, MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'name',
         'email',
         'password',
-        'group_id',
+        'max_game_accounts',
+        'uber_balance',
+        'is_admin',
+        'discord_id',
+        'discord_username',
+        'discord_avatar',
+        'discord_token',
+        'discord_refresh_token',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
+        'password',
         'remember_token',
+        'discord_token',
+        'discord_refresh_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-        'password' => 'hashed',
-    ];
-
-    public function isAdmin()
+    protected function casts(): array
     {
-        return $this->group_id == 99;
+        return [
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
+            'is_admin' => 'boolean',
+        ];
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->is_admin;
+    }
+
+    public function gameAccounts(): HasMany
+    {
+        return $this->hasMany(GameAccount::class);
+    }
+
+    public function canCreateGameAccount(): bool
+    {
+        return $this->gameAccounts()->count() < $this->max_game_accounts;
     }
 
     public function canAccessPanel(Panel $panel): bool
     {
-        if ($panel->getId() == "admin") {
+        if ($panel->getId() === 'admin') {
             return $this->isAdmin();
         }
 
         return true;
     }
 
-    public function logins() : BelongsToMany
+    public function sendEmailVerificationNotification(): void
     {
-        return $this->belongsToMany(Login::class, 'user_logins')->using(UserLogin::class);
-    }
-
-    public function userLogins() : HasMany
-    {
-        return $this->hasMany(UserLogin::class);
+        $this->notify(new VerifyEmailNotification);
     }
 }

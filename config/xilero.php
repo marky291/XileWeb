@@ -8,16 +8,11 @@ return [
                 'map' => 'prontera',
                 'x' => 156,
                 'y' => 153,
-            ]
-        ]
+            ],
+        ],
     ],
     'hyperdrive' => [
-        'ip_address' => '15.197.157.22'
-    ],
-    'woe_events' => [
-        'required_attendance' => 3,
-        'season' => 1,
-        'send_discord' => "18:00",
+        'ip_address' => '15.197.157.22',
     ],
 
     'max_level' => '255',
@@ -33,6 +28,11 @@ return [
             20.00 => 18,
             40.00 => 42,
             75.00 => 88,
-        ]
-    ]
+        ],
+    ],
+
+    'uber_shop' => [
+        // When false, only admin users can purchase from the Uber Shop
+        'purchasing_enabled' => false,
+    ],
 ];

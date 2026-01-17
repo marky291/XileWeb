@@ -2,7 +2,6 @@
 
 namespace App\Livewire;
 
-use App\Ragnarok\VendingItems;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -13,6 +12,7 @@ use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
 
 class ServerVendings extends Component implements HasActions, HasForms, HasTable
@@ -30,6 +30,11 @@ class ServerVendings extends Component implements HasActions, HasForms, HasTable
             </div>
         </div>
         HTML;
+    }
+
+    public function getTableRecordKey(Model $record): string
+    {
+        return "{$record->vending_id}-{$record->index}";
     }
 
     public function table(Table $table): Table

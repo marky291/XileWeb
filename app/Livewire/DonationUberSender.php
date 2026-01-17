@@ -2,21 +2,18 @@
 
 namespace App\Livewire;
 
-use App\Ragnarok\DonationUber;
-use App\Ragnarok\Login;
+use App\Models\GameAccount;
 use Illuminate\Validation\Rules\Exists;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
 
 class DonationUberSender extends Component
 {
-    #[Rule(['required', 'alpha_num', 'min:4', 'max:23', new Exists('main.login', 'userid')])]
+    #[Rule(['required', 'alpha_num', 'min:4', 'max:23', new Exists('game_accounts', 'userid')])]
     public $username = '';
 
     #[Rule(['required', 'integer'])]
     public $uber_amount = '';
-
-    public DonationUber|null $donation_uber_information = null;
 
     public bool $isSent = false;
 
@@ -24,18 +21,9 @@ class DonationUberSender extends Component
     {
         $this->validate();
 
-        $login = Login::firstWhere('userid', '=', $this->username);
+        $gameAccount = GameAccount::firstWhere('userid', '=', $this->username);
 
-        $donation_uber_information = DonationUber::firstOrCreate([
-            'account_id' => $login->account_id
-        ], [
-            'pending_ubers' => 0,
-            'username' => $this->username,
-        ]);
-
-        $donation_uber_information->increment('pending_ubers', $this->uber_amount);
-
-        $donation_uber_information->save();
+        $gameAccount->increment('uber_balance', $this->uber_amount);
 
         $this->isSent = true;
     }

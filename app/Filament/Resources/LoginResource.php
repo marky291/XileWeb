@@ -8,7 +8,7 @@ use App\Filament\Resources\DonationUberResource\RelationManagers\DonationUberRel
 use App\Filament\Resources\LoginResource\Pages\CreateLogin;
 use App\Filament\Resources\LoginResource\Pages\EditLogin;
 use App\Filament\Resources\LoginResource\Pages\ListLogins;
-use App\Ragnarok\Login;
+use App\XileRO\XileRO_Login as Login;
 use Filament\Actions\Action;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Get;
@@ -29,9 +29,17 @@ class LoginResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'userid';
 
-    protected static ?string $navigationGroup = 'Player Management';
+    protected static ?string $navigationGroup = 'XileRO';
 
-    protected static ?string $navigationIcon = 'heroicon-o-cog-6-tooth';
+    protected static ?string $navigationIcon = 'heroicon-o-user-circle';
+
+    protected static ?int $navigationSort = 1;
+
+    protected static ?string $navigationLabel = 'Logins';
+
+    protected static ?string $modelLabel = 'Login';
+
+    protected static ?string $pluralModelLabel = 'Logins';
 
     public static function form(Form $form): Form
     {

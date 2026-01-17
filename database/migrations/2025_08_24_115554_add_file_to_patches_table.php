@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('patches', function (Blueprint $table) {
-            $table->string('file');
+            $table->string('file')->default('');
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('patches', function (Blueprint $table) {
-            $table->string('file');
+            $table->dropColumn('file');
         });
     }
 };

@@ -26,7 +26,8 @@ return [
     |
     */
 
-    'secret' => env('DB_SECRET', ''),
+    'secret' => env('DB_XILERO_SECRET', ''),
+    'secret_xileretro' => env('DB_XILERETRO_SECRET', ''),
 
     /*
     |--------------------------------------------------------------------------
@@ -66,14 +67,14 @@ return [
             ]) : [],
         ],
 
-        'main' => [
+        'xilero_main' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_RAGNAROK', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
+            'host' => env('DB_XILERO_HOST', '127.0.0.1'),
+            'port' => env('DB_XILERO_PORT', '3306'),
+            'database' => env('DB_XILERO', 'forge'),
+            'username' => env('DB_XILERO_USERNAME', 'forge'),
+            'password' => env('DB_XILERO_PASSWORD', ''),
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
@@ -86,14 +87,54 @@ return [
             ]) : [],
         ],
 
-        'ragnarok_logs' => [
+        'xilero_logs' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_RAGNAROK_LOGS', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
+            'host' => env('DB_XILERO_HOST', '127.0.0.1'),
+            'port' => env('DB_XILERO_PORT', '3306'),
+            'database' => env('DB_XILERO_LOGS', 'forge'),
+            'username' => env('DB_XILERO_USERNAME', 'forge'),
+            'password' => env('DB_XILERO_PASSWORD', ''),
+            'unix_socket' => env('DB_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => true,
+            'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+            ]) : [],
+        ],
+
+        'xileretro_main' => [
+            'driver' => 'mysql',
+            'url' => env('DATABASE_URL'),
+            'host' => env('DB_XILERETRO_HOST', '127.0.0.1'),
+            'port' => env('DB_XILERETRO_PORT', '3306'),
+            'database' => env('DB_XILERETRO', 'forge'),
+            'username' => env('DB_XILERETRO_USERNAME', 'forge'),
+            'password' => env('DB_XILERETRO_PASSWORD', ''),
+            'unix_socket' => env('DB_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => true,
+            'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+            ]) : [],
+        ],
+
+        'xileretro_logs' => [
+            'driver' => 'mysql',
+            'url' => env('DATABASE_URL'),
+            'host' => env('DB_XILERETRO_HOST', '127.0.0.1'),
+            'port' => env('DB_XILERETRO_PORT', '3306'),
+            'database' => env('DB_XILERETRO_LOGS', 'forge'),
+            'username' => env('DB_XILERETRO_USERNAME', 'forge'),
+            'password' => env('DB_XILERETRO_PASSWORD', ''),
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
@@ -153,7 +194,7 @@ return [
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
         ],
-        
+
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),

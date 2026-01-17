@@ -59,7 +59,7 @@ return [
         'xilero_patch' => [
             'driver' => 'local',
             'root' => storage_path('app/public/xilero/patch'),
-            'url' => env('APP_URL') . '/storage/xilero/patch',
+            'url' => env('APP_URL').'/storage/xilero/patch',
             'visibility' => 'public',
             'throw' => false,
         ],
@@ -67,7 +67,15 @@ return [
         'retro_patch' => [
             'driver' => 'local',
             'root' => storage_path('app/public/retro/patch'),
-            'url' => env('APP_URL') . '/storage/retro/patch',
+            'url' => env('APP_URL').'/storage/retro/patch',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
+        'android_apk' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/android/apk'),
+            'url' => env('APP_URL').'/storage/android/apk',
             'visibility' => 'public',
             'throw' => false,
         ],
@@ -89,6 +97,7 @@ return [
         public_path('storage') => storage_path('app/public'),
         public_path('xilero/patch') => storage_path('app/public/xilero/patch'),
         public_path('retro/patch') => storage_path('app/public/retro/patch'),
+        public_path('storage/android/apk') => storage_path('app/public/android/apk'),
     ],
 
 ];

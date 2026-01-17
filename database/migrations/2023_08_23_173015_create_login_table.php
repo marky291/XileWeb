@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if (app()->runningUnitTests())
-        {
+        if (app()->runningUnitTests()) {
             Schema::create('login', function (Blueprint $table) {
                 $table->increments('account_id');
                 $table->string('userid', 23)->default('');
                 $table->string('user_pass', 64)->default('');
+                $table->enum('sex', ['M', 'F', 'S'])->default('M');
                 $table->string('email', 39)->default('');
                 $table->tinyInteger('group_id')->default(0);
                 $table->unsignedInteger('state')->default(0);
@@ -31,13 +31,18 @@ return new class extends Migration
                 $table->unsignedInteger('pincode_change')->default(0);
                 $table->unsignedInteger('vip_time')->default(0);
                 $table->tinyInteger('old_group')->default(0);
-                $table->string('web_auth_token', 17)->nullable();
+                $table->string('web_auth_token', 17)->nullable()->unique();
                 $table->tinyInteger('web_auth_token_enabled')->default(0);
+                $table->string('remember_token', 100)->nullable();
+                $table->timestamp('email_verified_at')->nullable();
+                $table->unsignedInteger('ubers')->default(0);
+                // XileRetro-specific fields
                 $table->unsignedInteger('last_unique_id')->default(0);
                 $table->unsignedInteger('blocked_unique_id')->default(0);
+
+                $table->index('userid');
             });
         }
-
     }
 
     /**

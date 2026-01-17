@@ -4,6 +4,65 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Donation Tiers
+    |--------------------------------------------------------------------------
+    |
+    | Configure the donation amounts and their corresponding Uber rewards.
+    |
+    */
+    'tiers' => [
+        ['amount' => 5, 'ubers' => 3],
+        ['amount' => 10, 'ubers' => 8],
+        ['amount' => 20, 'ubers' => 18],
+        ['amount' => 40, 'ubers' => 42],
+        ['amount' => 75, 'ubers' => 88],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Custom Amount Calculator Settings
+    |--------------------------------------------------------------------------
+    |
+    | Settings for calculating Ubers for custom donation amounts.
+    | The algorithm interpolates between tiers and extrapolates above the
+    | highest tier, with higher amounts getting progressively better rates.
+    |
+    */
+    'calculator' => [
+        // Minimum donation amount allowed
+        'minimum_amount' => 5,
+
+        // Base rate for amounts below the first tier (Ubers per dollar)
+        'base_rate' => 0.5,
+
+        // Growth factor for extrapolating above highest tier (higher = more generous)
+        // This adds extra value as amounts increase beyond $75
+        'extrapolation_growth' => 0.08,
+
+        // Maximum rate cap (Ubers per dollar) to prevent excessive rewards
+        'max_rate' => 1.8,
+
+        // Round calculated ubers down to nearest integer
+        'round_down' => true,
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Payment Methods
+    |--------------------------------------------------------------------------
+    |
+    | Configure available payment methods and their bonuses.
+    |
+    */
+    'payment_methods' => [
+        'paypal' => ['name' => 'PayPal', 'bonus' => 0],
+        'crypto' => ['name' => 'Binance (Crypto)', 'bonus' => 10],
+        'zelle' => ['name' => 'Zelle', 'bonus' => 0],
+        'gcash' => ['name' => 'GCash', 'bonus' => 0],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Donation items
     |--------------------------------------------------------------------------
     |
@@ -82,6 +141,6 @@ return [
             'stats' => 'MaxHP +5%, Movement +10%.',
             'isTokenSet' => true,
             'cost' => 11,
-        ]
-    ]
+        ],
+    ],
 ];

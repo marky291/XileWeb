@@ -2,60 +2,56 @@
 
 namespace Tests\Feature;
 
-use App\Ragnarok\CastleName;
-use App\Ragnarok\GuildCastle;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use App\XileRO\CastleName;
+use App\XileRO\XileRO_GuildCastle;
 use Tests\TestCase;
 
 class GuildCastleTest extends TestCase
 {
-    public function testGetNameById()
+    public function test_get_name_by_id(): void
     {
-        $this->assertEquals('Neuschwanstein', GuildCastle::getCastleNameById(0));
-        $this->assertEquals('Kriemhild', GuildCastle::getCastleNameById(15));
-        $this->assertNull(GuildCastle::getCastleNameById(100)); // Assuming 100 does not exist
+        $this->assertEquals('Neuschwanstein', XileRO_GuildCastle::getCastleNameById(0));
+        $this->assertEquals('Kriemhild', XileRO_GuildCastle::getCastleNameById(15));
+        $this->assertNull(XileRO_GuildCastle::getCastleNameById(100));
     }
 
-    public function testGetIdByName()
+    public function test_get_id_by_name(): void
     {
-        $this->assertEquals(0, GuildCastle::getCastleIdByName('Neuschwanstein'));
-        $this->assertEquals(15, GuildCastle::getCastleIdByName('Kriemhild'));
-        $this->assertNull(GuildCastle::getCastleIdByName('NonExistentCastle'));
+        $this->assertEquals(0, XileRO_GuildCastle::getCastleIdByName('Neuschwanstein'));
+        $this->assertEquals(15, XileRO_GuildCastle::getCastleIdByName('Kriemhild'));
+        $this->assertNull(XileRO_GuildCastle::getCastleIdByName('NonExistentCastle'));
     }
 
-    public function testGetNameAttribute()
+    public function test_get_name_attribute(): void
     {
-        $guildCastle = new GuildCastle(['castle_id' => 0]); // Assuming constructor or an ORM method to set properties
+        $guildCastle = new XileRO_GuildCastle(['castle_id' => 0]);
         $this->assertEquals('Neuschwanstein', $guildCastle->name);
 
-        $guildCastle = new GuildCastle(['castle_id' => 15]);
+        $guildCastle = new XileRO_GuildCastle(['castle_id' => 15]);
         $this->assertEquals('Kriemhild', $guildCastle->name);
 
-        $guildCastle = new GuildCastle(['castle_id' => 100]);
+        $guildCastle = new XileRO_GuildCastle(['castle_id' => 100]);
         $this->assertEquals('Unknown Castle', $guildCastle->name);
     }
 
-    public function testCastleEdition()
+    public function test_castle_edition(): void
     {
         $this->assertEquals(1, CastleName::Neuschwanstein->getEdition());
         $this->assertEquals(2, CastleName::Himinn->getEdition());
-        $this->assertEquals(0, CastleName::GuildVsGuild->getEdition()); // Assuming 'GuildVsGuild' is not explicitly assigned to an edition, thus defaults to 0.
+        $this->assertEquals(0, CastleName::GuildVsGuild->getEdition());
     }
 
-    public function testCastleName()
+    public function test_castle_name(): void
     {
         $this->assertEquals('Neuschwanstein', CastleName::Neuschwanstein->getName());
         $this->assertEquals('Himinn', CastleName::Himinn->getName());
-        // Test for a castle that might not have a direct name method call, assuming 'GuildVsGuild' returns 'Unknown Castle' by default.
         $this->assertEquals('Unknown Castle', CastleName::tryFrom(100)?->getName() ?? 'Unknown Castle');
     }
 
-    public function testEnumValue()
+    public function test_enum_value(): void
     {
         $this->assertEquals(0, CastleName::Neuschwanstein->value);
         $this->assertEquals(25, CastleName::Himinn->value);
-        // Test to ensure invalid castle ID returns null
         $this->assertNull(CastleName::tryFrom(100));
     }
 }
