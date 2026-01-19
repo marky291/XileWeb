@@ -4,9 +4,11 @@ namespace App\Livewire\Auth;
 
 use App\Actions\CreateGameAccount;
 use App\Actions\ResetCharacterPosition;
+use App\Actions\ResetGameAccountPassword;
 use App\Actions\SyncGameAccountData;
 use App\Models\GameAccount;
 use App\Models\SyncedCharacter;
+use App\Notifications\GameAccountPasswordResetNotification;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
@@ -26,6 +28,12 @@ class Dashboard extends Component
     public ?int $selectedGameAccountId = null;
 
     public ?int $selectedCharacterId = null;
+
+    public ?int $resettingPasswordFor = null;
+
+    public string $newPassword = '';
+
+    public string $newPassword_confirmation = '';
 
     public function rules(): array
     {
@@ -206,6 +214,74 @@ class Dashboard extends Component
         } else {
             session()->flash('error', 'Failed to reset security code.');
         }
+    }
+
+    public function showPasswordResetForm(int $gameAccountId): void
+    {
+        $gameAccount = auth()->user()->gameAccounts()->find($gameAccountId);
+
+        if (! $gameAccount) {
+            session()->flash('error', 'Game account not found.');
+
+            return;
+        }
+
+        // Check if any characters are online
+        if ($gameAccount->hasOnlineCharacters()) {
+            session()->flash('error', 'Cannot reset password while logged in. Please log out of the game first.');
+
+            return;
+        }
+
+        $this->resettingPasswordFor = $gameAccountId;
+        $this->newPassword = '';
+        $this->newPassword_confirmation = '';
+    }
+
+    public function cancelPasswordReset(): void
+    {
+        $this->resettingPasswordFor = null;
+        $this->newPassword = '';
+        $this->newPassword_confirmation = '';
+        $this->resetErrorBag(['newPassword', 'newPassword_confirmation']);
+    }
+
+    public function resetPassword(): void
+    {
+        if (! $this->resettingPasswordFor) {
+            return;
+        }
+
+        $this->validate([
+            'newPassword' => ['required', 'string', 'min:6', 'max:31', 'confirmed'],
+        ], [
+            'newPassword.confirmed' => 'The password confirmation does not match.',
+        ]);
+
+        $gameAccount = auth()->user()->gameAccounts()->find($this->resettingPasswordFor);
+
+        if (! $gameAccount) {
+            session()->flash('error', 'Game account not found.');
+            $this->cancelPasswordReset();
+
+            return;
+        }
+
+        // Check again if any characters are online
+        if ($gameAccount->hasOnlineCharacters()) {
+            session()->flash('error', 'Cannot reset password while logged in. Please log out of the game first.');
+            $this->cancelPasswordReset();
+
+            return;
+        }
+
+        ResetGameAccountPassword::run($gameAccount, $this->newPassword);
+
+        auth()->user()->notify(new GameAccountPasswordResetNotification($gameAccount));
+
+        $this->cancelPasswordReset();
+
+        session()->flash('success', "Password has been reset for {$gameAccount->userid}.");
     }
 
     public function render()

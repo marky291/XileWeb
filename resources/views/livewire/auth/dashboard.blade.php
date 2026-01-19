@@ -207,9 +207,27 @@
                             </button>
 
                             <div class="flex items-center gap-3">
+                                {{-- Reset Password Button --}}
+                                @php $hasOnlineChars = $accountChars->contains('online', true); @endphp
+                                <button
+                                    wire:click="showPasswordResetForm({{ $account->id }})"
+                                    wire:loading.attr="disabled"
+                                    wire:target="showPasswordResetForm({{ $account->id }})"
+                                    class="px-3 py-1.5 text-sm font-medium rounded-lg transition-colors disabled:opacity-50 {{ $hasOnlineChars ? 'bg-gray-800 text-gray-500 cursor-not-allowed' : 'bg-gray-700 hover:bg-amber-600 text-gray-300 hover:text-white' }}"
+                                    title="{{ $hasOnlineChars ? 'Log out of the game first to reset password' : 'Reset password for ' . $account->userid }}"
+                                    {{ $hasOnlineChars ? 'disabled' : '' }}
+                                >
+                                    <span wire:loading.remove wire:target="showPasswordResetForm({{ $account->id }})">
+                                        <i class="fas fa-key"></i>
+                                        <span class="hidden sm:inline ml-1.5">Reset Password</span>
+                                    </span>
+                                    <span wire:loading wire:target="showPasswordResetForm({{ $account->id }})">
+                                        <i class="fas fa-spinner fa-spin"></i>
+                                    </span>
+                                </button>
+
                                 {{-- Reset Security Button (Account-level action) --}}
                                 @if($account->has_security_code)
-                                    @php $hasOnlineChars = $accountChars->contains('online', true); @endphp
                                     <button
                                         wire:click="resetSecurity({{ $account->id }})"
                                         @if(!$hasOnlineChars) wire:confirm="Reset @security code for {{ $account->userid }}? You will need to set a new one in-game." @endif
@@ -381,4 +399,73 @@
             </div>
         @endif
     </div>
+
+    {{-- Password Reset Modal --}}
+    @if($resettingPasswordFor)
+        @php $resettingAccount = $gameAccounts->firstWhere('id', $resettingPasswordFor); @endphp
+        <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/70" wire:click.self="cancelPasswordReset">
+            <div class="bg-gray-900 rounded-lg shadow-xl border border-gray-700 w-full max-w-md mx-4">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold text-white">
+                            Reset Password
+                        </h3>
+                        <button wire:click="cancelPasswordReset" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+
+                    <p class="text-gray-400 text-sm mb-6">
+                        Enter a new password for <span class="text-amber-400 font-medium">{{ $resettingAccount?->userid }}</span>
+                    </p>
+
+                    <form wire:submit="resetPassword" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-1">New Password</label>
+                            <input
+                                wire:model="newPassword"
+                                type="password"
+                                placeholder="Enter new password"
+                                class="w-full px-3 py-2.5 bg-gray-800/50 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-xilero-gold/50 focus:border-xilero-gold transition-colors"
+                                autofocus
+                            >
+                            <p class="mt-1 text-xs text-gray-500">6-31 characters</p>
+                            @error('newPassword')
+                                <p class="mt-1 text-xs text-red-400">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-1">Confirm Password</label>
+                            <input
+                                wire:model="newPassword_confirmation"
+                                type="password"
+                                placeholder="Confirm new password"
+                                class="w-full px-3 py-2.5 bg-gray-800/50 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-xilero-gold/50 focus:border-xilero-gold transition-colors"
+                            >
+                        </div>
+
+                        <div class="flex justify-end gap-3 pt-2">
+                            <button
+                                type="button"
+                                wire:click="cancelPasswordReset"
+                                class="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                type="submit"
+                                wire:loading.attr="disabled"
+                                wire:target="resetPassword"
+                                class="px-4 py-2 bg-amber-500 hover:bg-amber-400 text-gray-900 font-bold rounded-lg transition-colors disabled:opacity-75"
+                            >
+                                <span wire:loading.remove wire:target="resetPassword">Reset Password</span>
+                                <span wire:loading wire:target="resetPassword">Resetting...</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endif
 </section>
