@@ -512,4 +512,84 @@ class PlayerSupportTest extends TestCase
         $gameAccount->refresh();
         $this->assertEquals($masterAccount->id, $gameAccount->user_id);
     }
+
+    #[Test]
+    public function cannot_link_already_linked_game_account_to_another_master(): void
+    {
+        $admin = User::factory()->admin()->create();
+        $existingMaster = User::factory()->create(['name' => 'Existing Master']);
+        $newMaster = User::factory()->create(['name' => 'New Master']);
+
+        // Create already-linked game account
+        $gameAccount = GameAccount::factory()->create([
+            'user_id' => $existingMaster->id,
+            'server' => 'xilero',
+            'ragnarok_account_id' => 12345,
+            'userid' => 'linkedaccount',
+        ]);
+
+        Livewire::actingAs($admin)
+            ->test(PlayerSupport::class)
+            ->set('selectedPlayer', [
+                'type' => 'xilero_login',
+                'server' => 'XileRO',
+                'server_key' => 'xilero',
+                'account_id' => 12345,
+                'userid' => 'linkedaccount',
+                'email' => 'test@example.com',
+                'group_id' => 0,
+                'last_ip' => '127.0.0.1',
+                'lastlogin' => null,
+                'chars_count' => 0,
+                'linked_master_id' => $existingMaster->id,
+                'linked_master_name' => $existingMaster->name,
+            ])
+            ->set('linkToMasterAccountId', $newMaster->id)
+            ->call('linkGameAccountToMaster')
+            ->assertNotified('Already linked');
+    }
+
+    #[Test]
+    public function can_link_unclaimed_game_account_record_to_master_via_link_game_account_to_master(): void
+    {
+        $admin = User::factory()->admin()->create();
+        $masterAccount = User::factory()->create(['name' => 'Master User']);
+
+        // Create unclaimed game account (user_id = null but record exists)
+        $gameAccount = GameAccount::factory()->unclaimed()->create([
+            'server' => 'xilero',
+            'ragnarok_account_id' => 12345,
+            'userid' => 'unclaimedaccount',
+        ]);
+
+        // This test verifies the fix - an unclaimed GameAccount record should not
+        // block linking. The actual linking requires a live XileRO_Login record
+        // which we cannot easily mock, so we verify the validation passes the
+        // "already linked" check and proceeds to the "game account not found" error
+        // (because there's no live XileRO_Login record).
+        Livewire::actingAs($admin)
+            ->test(PlayerSupport::class)
+            ->set('selectedPlayer', [
+                'type' => 'xilero_login',
+                'server' => 'XileRO',
+                'server_key' => 'xilero',
+                'account_id' => 12345,
+                'userid' => 'unclaimedaccount',
+                'email' => 'test@example.com',
+                'group_id' => 0,
+                'last_ip' => '127.0.0.1',
+                'lastlogin' => null,
+                'chars_count' => 0,
+                'linked_master_id' => null,
+                'linked_master_name' => null,
+            ])
+            ->set('linkToMasterAccountId', $masterAccount->id)
+            ->call('linkGameAccountToMaster')
+            // Should NOT see "Already linked" error - that's the bug we're fixing
+            // Instead we should see "Game account not found" because no live login exists
+            ->assertNotified('Game account not found');
+
+        // Verify no duplicate GameAccount was created
+        $this->assertEquals(1, GameAccount::where('ragnarok_account_id', 12345)->count());
+    }
 }

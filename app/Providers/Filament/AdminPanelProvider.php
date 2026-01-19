@@ -79,6 +79,29 @@ class AdminPanelProvider extends PanelProvider
                 ')
             )
             ->renderHook(
+                PanelsRenderHook::SCRIPTS_AFTER,
+                fn () => new HtmlString('
+                    <script>
+                        document.addEventListener("livewire:init", () => {
+                            Livewire.hook("request", ({ fail }) => {
+                                fail(({ status, preventDefault }) => {
+                                    if (status === 419) {
+                                        preventDefault();
+                                        if (confirm("Your session has expired. Would you like to refresh the page?")) {
+                                            window.location.reload();
+                                        }
+                                    }
+                                    if (status === 401 || status === 403) {
+                                        preventDefault();
+                                        window.location.href = "/login";
+                                    }
+                                });
+                            });
+                        });
+                    </script>
+                ')
+            )
+            ->renderHook(
                 PanelsRenderHook::BODY_START,
                 fn () => new HtmlString('
                     <!-- Google Tag Manager (noscript) -->

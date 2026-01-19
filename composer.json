@@ -30,7 +30,7 @@
         "fakerphp/faker": "^1.9.1",
         "filament/upgrade": "^4.0",
         "kitloong/laravel-migrations-generator": "^7.2",
-        "laravel/boost": "^1.0",
+        "laravel/boost": "^1.8",
         "laravel/breeze": "^2.0",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.18",

@@ -1,135 +1,3 @@
-# CLAUDE.md
-
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
-
-## Project Overview
-
-XileWeb is a Laravel 12 web application for managing a Ragnarok Online private server. It includes features for player management, donations, Discord bot integration, and an admin panel built with Filament PHP.
-
-## Tech Stack
-
-- **Backend**: Laravel 12 with PHP 8.4+
-- **Frontend**: Livewire 3, Alpine.js, Tailwind CSS
-- **Admin Panel**: Filament 3
-- **Database**: Dual database setup (main Laravel DB + Ragnarok game DB)
-- **Queue/Cache**: Redis with Laravel Horizon
-- **Build Tools**: Vite for frontend assets
-
-## Common Development Commands
-
-### Development Server
-```bash
-# Start Vite dev server for frontend assets
-npm run dev
-
-# Run Laravel development server (if not using Laravel Herd)
-php artisan serve
-```
-
-### Build & Deployment
-```bash
-# Build frontend assets for production
-npm run build
-
-# Clear all Laravel caches
-php artisan optimize:clear
-
-# Run database migrations
-php artisan migrate
-
-# Run queue workers (managed by Horizon)
-php artisan horizon
-```
-
-### Testing
-```bash
-# Run all tests
-php artisan test
-
-# Run specific test suite
-php artisan test --testsuite=Unit
-php artisan test --testsuite=Feature
-
-# Run specific test file
-php artisan test tests/Unit/Ragnarok/LoginTest.php
-```
-
-### Code Quality
-```bash
-# Format PHP code with Laravel Pint
-./vendor/bin/pint
-
-# Run PHPUnit tests
-./vendor/bin/phpunit
-```
-
-## Architecture Overview
-
-### Dual Database Architecture
-The application uses two database connections:
-- **Main Database**: Standard Laravel tables (users, posts, patches, etc.)
-- **Ragnarok Database**: Game server tables (login, char, guild, etc.)
-
-Models extending `App\XileRO\RagnarokModel` automatically handle the game database connection, with special logic for unit testing environments.
-
-### Key Directories
-
-- `app/Ragnarok/`: Models and logic for Ragnarok game database entities
-- `app/Filament/`: Admin panel resources and pages
-- `app/Livewire/`: Interactive frontend components
-- `app/Actions/`: Laravel Actions for business logic encapsulation
-- `app/Discord/scripts/`: Python scripts for Discord bot functionality
-- `app/Console/Commands/`: Artisan commands including Discord bot runners
-
-### Discord Bot Integration
-The application includes multiple Discord bots implemented in Python:
-- Player count monitoring
-- Server time display
-- Latest player updates
-- Uber cost information
-
-These are managed through Laravel commands (e.g., `RunDiscordPlayerCountBot`) that execute the Python scripts.
-
-### Admin Panel (Filament)
-Two separate admin panels:
-- `/admin`: Main admin panel (`AdminPanelProvider`)
-- `/app`: User-facing app panel (`AppPanelProvider`)
-
-Resources follow Filament conventions with:
-- Resource classes defining model configurations
-- Page classes for Create/Edit/List operations
-- Relation managers for related data
-
-## Important Configuration Files
-
-- `config/xilero.php`: Game-specific settings (levels, rates, donation conversion)
-- `config/castles.php`: Castle configuration for homepage display
-- `config/donation.php`: Donation system settings
-- `.env`: Environment-specific configuration (database credentials, API keys)
-
-## Testing Approach
-
-Tests use SQLite in-memory database for isolation. The `RagnarokModel` base class automatically handles connection switching during tests. Factory classes are provided for both main and Ragnarok database models.
-
-## Key Business Logic
-
-1. **User Registration**: Custom registration flow linking game accounts
-2. **Donation System**: Uber currency system with configurable conversion rates
-3. **Character Management**: Reset positions, inventory management
-4. **Vending System**: In-game shop data display
-5. **Multi-Server Support**: XileRO and XileRetro servers may have accounts with the same username; always display server name alongside account name using `$gameAccount->serverName()`
-
-## External Documentation
-
-| Resource | URL | Description |
-|----------|-----|-------------|
-| **XileRO Docs** | https://info.xilero.net | Player guides for XileRO (current server), uses GitBook |
-| **XileRetro Docs** | https://wiki.xilero.net | Player guides for XileRetro (old server), MediaWiki |
-
-**Note:** Links to `wiki.xilero.net` are for XileRetro. XileRO documentation is at `info.xilero.net`.
-
-===
-
 <laravel-boost-guidelines>
 === foundation rules ===
 
@@ -140,13 +8,14 @@ The Laravel Boost guidelines are specifically curated by Laravel maintainers for
 ## Foundational Context
 This application is a Laravel application and its main Laravel ecosystems package & versions are below. You are an expert with them all. Ensure you abide by these specific packages & versions.
 
-- php - 8.4.15
+- php - 8.4.16
 - filament/filament (FILAMENT) - v3
 - laravel/framework (LARAVEL) - v12
 - laravel/horizon (HORIZON) - v5
 - laravel/pennant (PENNANT) - v1
 - laravel/prompts (PROMPTS) - v0
 - laravel/sanctum (SANCTUM) - v4
+- laravel/socialite (SOCIALITE) - v5
 - livewire/livewire (LIVEWIRE) - v3
 - laravel/breeze (BREEZE) - v2
 - laravel/mcp (MCP) - v0
@@ -244,6 +113,13 @@ protected function isAccessible(User $user, ?string $path = null): bool
 
 ## Enums
 - Typically, keys in an Enum should be TitleCase. For example: `FavoritePerson`, `BestLake`, `Monthly`.
+
+=== herd rules ===
+
+## Laravel Herd
+
+- The application is served by Laravel Herd and will be available at: `https?://[kebab-case-project-dir].test`. Use the `get-absolute-url` tool to generate URLs for the user to ensure valid URLs.
+- You must not run any commands to make the site available via HTTP(S). It is always available through Laravel Herd.
 
 === tests rules ===
 

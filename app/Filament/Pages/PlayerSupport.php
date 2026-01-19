@@ -596,7 +596,7 @@ class PlayerSupport extends Page implements HasForms
             ->where('ragnarok_account_id', $this->selectedPlayer['account_id'])
             ->first();
 
-        if ($existingLink) {
+        if ($existingLink && $existingLink->user_id !== null) {
             $existingMaster = User::find($existingLink->user_id);
             Notification::make()
                 ->title('Already linked')
@@ -638,19 +638,40 @@ class PlayerSupport extends Page implements HasForms
             $legacyUbers = XileRetro_DonationUbers::getTotalUbersForAccount($login->account_id);
         }
 
-        // Create the link
-        $gameAccount = GameAccount::create([
-            'user_id' => $masterAccount->id,
-            'server' => $this->selectedPlayer['server_key'],
-            'ragnarok_account_id' => $login->account_id,
-            'userid' => $login->userid,
-            'user_pass' => $login->user_pass,
-            'email' => $login->email,
-            'sex' => $login->sex ?? 'M',
-            'group_id' => $login->group_id,
-            'state' => $login->state,
-            'legacy_uber_balance' => $legacyUbers,
-        ]);
+        // Create or update the link
+        if ($existingLink) {
+            // For XileRetro, re-fetch legacy ubers to ensure current balance
+            if ($this->selectedPlayer['server_key'] === 'xileretro') {
+                $legacyUbers = XileRetro_DonationUbers::getTotalUbersForAccount($login->account_id);
+            }
+
+            // Update existing unclaimed record
+            $existingLink->update([
+                'user_id' => $masterAccount->id,
+                'userid' => $login->userid,
+                'user_pass' => $login->user_pass,
+                'email' => $login->email,
+                'sex' => $login->sex ?? 'M',
+                'group_id' => $login->group_id,
+                'state' => $login->state,
+                'legacy_uber_balance' => $legacyUbers,
+            ]);
+            $gameAccount = $existingLink;
+        } else {
+            // Create new record
+            $gameAccount = GameAccount::create([
+                'user_id' => $masterAccount->id,
+                'server' => $this->selectedPlayer['server_key'],
+                'ragnarok_account_id' => $login->account_id,
+                'userid' => $login->userid,
+                'user_pass' => $login->user_pass,
+                'email' => $login->email,
+                'sex' => $login->sex ?? 'M',
+                'group_id' => $login->group_id,
+                'state' => $login->state,
+                'legacy_uber_balance' => $legacyUbers,
+            ]);
+        }
 
         // Transfer legacy uber balance if any
         $transferredUbers = TransferLegacyUberBalance::run($gameAccount, $masterAccount);
