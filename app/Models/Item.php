@@ -6,6 +6,9 @@ use Carbon\Carbon;
 use Database\Factories\ItemFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * @property int $id
@@ -30,6 +33,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $equip_script
  * @property string|null $unequip_script
  * @property bool $is_xileretro
+ * @property int $view_id
+ * @property string|null $resource_name
  * @property int $views
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -61,7 +66,11 @@ class Item extends Model
         'equip_script',
         'unequip_script',
         'is_xileretro',
+        'view_id',
+        'resource_name',
         'views',
+        'data_patch_id',
+        'sprite_patch_id',
     ];
 
     protected function casts(): array
@@ -77,23 +86,23 @@ class Item extends Model
     }
 
     /**
-     * Get the collection URL for the item.
-     *
-     * This uses public/assets/{is_xileretro}/item_collection/{item_id}.png
+     * Get the collection image URL for the item.
      */
     public function collection(): string
     {
-        return '/assets/'.($this->is_xileretro ? 'retro' : 'xilero').'/item_collection/'.$this->item_id.'.png';
+        $path = ($this->is_xileretro ? 'retro' : 'xilero').'/collection/'.$this->item_id.'.png';
+
+        return Storage::disk('public')->url($path);
     }
 
     /**
-     * Get the icon URL for the item.
-     *
-     * This uses public/assets/{is_xileretro}/item_icons/{item_id}.png
+     * Get the icon image URL for the item.
      */
     public function icon(): string
     {
-        return '/assets/'.($this->is_xileretro ? 'retro' : 'xilero').'/item_icons/'.$this->item_id.'.png';
+        $path = ($this->is_xileretro ? 'retro' : 'xilero').'/item/'.$this->item_id.'.png';
+
+        return Storage::disk('public')->url($path);
     }
 
     /**
@@ -114,5 +123,31 @@ class Item extends Model
         $description = nl2br($description);
 
         return $description;
+    }
+
+    /**
+     * Get the patch that last updated this item's data.
+     */
+    public function dataPatch(): BelongsTo
+    {
+        return $this->belongsTo(Patch::class, 'data_patch_id');
+    }
+
+    /**
+     * Get the patch that last updated this item's sprites.
+     */
+    public function spritePatch(): BelongsTo
+    {
+        return $this->belongsTo(Patch::class, 'sprite_patch_id');
+    }
+
+    /**
+     * Get the posts that feature this item.
+     */
+    public function posts(): BelongsToMany
+    {
+        return $this->belongsToMany(Post::class)
+            ->withPivot('sort_order')
+            ->withTimestamps();
     }
 }

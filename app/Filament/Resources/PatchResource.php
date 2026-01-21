@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\PatchResource\Pages\CreatePatch;
 use App\Filament\Resources\PatchResource\Pages\EditPatch;
 use App\Filament\Resources\PatchResource\Pages\ListPatches;
+use App\Jobs\CompilePatch;
 use App\Models\Patch;
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
@@ -17,6 +18,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
@@ -301,6 +303,15 @@ class PatchResource extends Resource
                     ->openUrlInNewTab()
                     ->toggleable(isToggledHiddenByDefault: true),
 
+                TextColumn::make('compiled_at')
+                    ->label('Compiled')
+                    ->dateTime('M j')
+                    ->sortable()
+                    ->placeholder(fn (Patch $record): string => $record->is_compiling ? 'Compiling...' : 'Not compiled')
+                    ->tooltip(fn ($state) => $state?->format('M j, Y g:i A'))
+                    ->icon(fn (Patch $record): ?string => $record->is_compiling ? 'heroicon-o-arrow-path' : null)
+                    ->color(fn (Patch $record): ?string => $record->is_compiling ? 'warning' : null),
+
                 TextColumn::make('created_at')
                     ->label('Date')
                     ->dateTime('M j')
@@ -319,6 +330,27 @@ class PatchResource extends Resource
                     ->options(Patch::CLIENTS),
             ])
             ->recordActions([
+                Action::make('compile')
+                    ->label(fn (Patch $record): string => $record->is_compiling ? 'Compiling...' : 'Compile')
+                    ->icon(fn (Patch $record): string => $record->is_compiling ? 'heroicon-o-arrow-path' : 'heroicon-o-cog-6-tooth')
+                    ->color(fn (Patch $record): string => $record->is_compiling ? 'gray' : 'warning')
+                    ->requiresConfirmation()
+                    ->modalHeading('Compile Patch')
+                    ->modalDescription('This will extract ItemInfo data from the patch file and update the items database. Continue?')
+                    ->modalSubmitActionLabel('Compile')
+                    ->action(function (Patch $record): void {
+                        $record->update(['is_compiling' => true]);
+
+                        CompilePatch::dispatch($record);
+
+                        Notification::make()
+                            ->title('Compile job queued')
+                            ->body("Patch #{$record->number} has been queued for compilation.")
+                            ->success()
+                            ->send();
+                    })
+                    ->visible(fn (Patch $record): bool => ! empty($record->file))
+                    ->disabled(fn (Patch $record): bool => $record->is_compiling),
                 Action::make('download')
                     ->label('Download')
                     ->icon('heroicon-o-arrow-down-tray')
@@ -354,7 +386,14 @@ class PatchResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            PatchResource\RelationManagers\ItemsRelationManager::class,
+        ];
+    }
+
+    public static function getWidgets(): array
+    {
+        return [
+            PatchResource\Widgets\PatchCompileStatus::class,
         ];
     }
 

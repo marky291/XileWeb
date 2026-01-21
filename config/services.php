@@ -37,6 +37,9 @@ return [
         'latest_player_token' => env('DISCORD_LATEST_PLAYER_TOKEN'),
         'server_time_token' => env('DISCORD_SERVER_TIME_TOKEN'),
 
+        // Webhooks
+        'discord_webhook_news' => env('DISCORD_WEBHOOK_NEWS'),
+
         // OAuth credentials (for Socialite login)
         'client_id' => env('DISCORD_CLIENT_ID'),
         'client_secret' => env('DISCORD_CLIENT_SECRET'),

@@ -17,6 +17,13 @@ class EditPatch extends EditRecord
         ];
     }
 
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            PatchResource\Widgets\PatchCompileStatus::class,
+        ];
+    }
+
     protected function mutateFormDataBeforeSave(array $data): array
     {
         // Allow user to change client selection

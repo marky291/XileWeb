@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Post;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,11 @@ class PostFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'title' => fake()->sentence(),
+            'slug' => fake()->unique()->slug(),
+            'client' => fake()->randomElement([Post::CLIENT_XILERO, Post::CLIENT_RETRO]),
+            'patcher_notice' => fake()->paragraph(),
+            'article_content' => fake()->paragraphs(3, true),
         ];
     }
 }

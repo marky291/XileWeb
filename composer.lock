@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5a1d4f841785a661e178696b7d9539f5",
+    "content-hash": "023150de023869b94d5f1749c23c5ceb",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -9799,84 +9799,6 @@
             "time": "2025-04-30T06:54:44+00:00"
         },
         {
-            "name": "kitloong/laravel-migrations-generator",
-            "version": "v7.2.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/kitloong/laravel-migrations-generator.git",
-                "reference": "37f29a99671a5dde3a598e40157e2e245f077878"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/kitloong/laravel-migrations-generator/zipball/37f29a99671a5dde3a598e40157e2e245f077878",
-                "reference": "37f29a99671a5dde3a598e40157e2e245f077878",
-                "shasum": ""
-            },
-            "require": {
-                "ext-pdo": "*",
-                "illuminate/support": "^11.0|^12.0",
-                "php": "^8.2"
-            },
-            "require-dev": {
-                "barryvdh/laravel-ide-helper": "^3.0",
-                "friendsofphp/php-cs-fixer": "^3.1",
-                "larastan/larastan": "^2.0|^3.0",
-                "mockery/mockery": "^1.0",
-                "orchestra/testbench": "^9.0|^10.0",
-                "phpmd/phpmd": "^2.10",
-                "phpstan/phpstan-mockery": "^1.0|^2.0",
-                "slevomat/coding-standard": "^8.0",
-                "squizlabs/php_codesniffer": "^3.5"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "KitLoong\\MigrationsGenerator\\MigrationsGeneratorServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "KitLoong\\MigrationsGenerator\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Kit Loong",
-                    "email": "kitloong1008@gmail.com"
-                }
-            ],
-            "description": "Generates Laravel Migrations from an existing database",
-            "keywords": [
-                "artisan",
-                "generator",
-                "laravel",
-                "lumen",
-                "migration",
-                "migrations"
-            ],
-            "support": {
-                "issues": "https://github.com/kitloong/laravel-migrations-generator/issues",
-                "source": "https://github.com/kitloong/laravel-migrations-generator/tree/v7.2.0"
-            },
-            "funding": [
-                {
-                    "url": "https://www.buymeacoffee.com/kitloong",
-                    "type": "buy_me_a_coffee"
-                },
-                {
-                    "url": "https://github.com/kitloong",
-                    "type": "github"
-                }
-            ],
-            "time": "2025-08-10T07:31:19+00:00"
-        },
-        {
             "name": "laravel/boost",
             "version": "v1.8.10",
             "source": {
@@ -12642,67 +12564,6 @@
             "time": "2025-12-04T18:11:45+00:00"
         },
         {
-            "name": "thedoctor0/laravel-factory-generator",
-            "version": "1.4.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/TheDoctor0/laravel-factory-generator.git",
-                "reference": "adfff0e5444d3113e9c7b376fa32d3e589cc0ec9"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/TheDoctor0/laravel-factory-generator/zipball/adfff0e5444d3113e9c7b376fa32d3e589cc0ec9",
-                "reference": "adfff0e5444d3113e9c7b376fa32d3e589cc0ec9",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/console": "^10.0|^11.0|^12.0",
-                "illuminate/filesystem": "^10.0|^11.0|^12.0",
-                "illuminate/support": "^10.0|^11.0|^12.0",
-                "php": "^8.1"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "TheDoctor0\\LaravelFactoryGenerator\\FactoryGeneratorServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "TheDoctor0\\LaravelFactoryGenerator\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "Automatically generate Laravel factories for your models.",
-            "keywords": [
-                "factories",
-                "factory",
-                "generator",
-                "laravel",
-                "tests"
-            ],
-            "support": {
-                "issues": "https://github.com/TheDoctor0/laravel-factory-generator/issues",
-                "source": "https://github.com/TheDoctor0/laravel-factory-generator/tree/1.4.4"
-            },
-            "funding": [
-                {
-                    "url": "https://www.paypal.me/thedoctor0",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/thedoctor0",
-                    "type": "github"
-                }
-            ],
-            "time": "2025-02-22T18:52:08+00:00"
-        },
-        {
             "name": "theseer/tokenizer",
             "version": "1.3.1",
             "source": {
@@ -12759,7 +12620,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^8.1",
+        "php": "^8.4",
         "ext-gd": "*"
     },
     "platform-dev": {},

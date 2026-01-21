@@ -38,6 +38,8 @@ class ItemFactory extends Factory
             'equip_script' => null,
             'unequip_script' => null,
             'is_xileretro' => false,
+            'view_id' => fake()->numberBetween(0, 100),
+            'resource_name' => fake()->optional()->word(),
         ];
     }
 

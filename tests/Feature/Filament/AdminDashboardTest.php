@@ -143,12 +143,12 @@ class AdminDashboardTest extends TestCase
     public function admin_can_search_master_accounts(): void
     {
         $admin = User::factory()->admin()->create();
-        $searchableUser = User::factory()->create(['name' => 'Searchable User']);
-        $otherUser = User::factory()->create(['name' => 'Other User']);
+        $searchableUser = User::factory()->create(['email' => 'searchable@example.com']);
+        $otherUser = User::factory()->create(['email' => 'other@example.com']);
 
         Livewire::actingAs($admin)
             ->test(ListMasterAccounts::class)
-            ->searchTable('Searchable')
+            ->searchTable('searchable@example')
             ->assertCanSeeTableRecords([$searchableUser])
             ->assertCanNotSeeTableRecords([$otherUser]);
     }

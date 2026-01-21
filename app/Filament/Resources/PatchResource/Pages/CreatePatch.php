@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\PatchResource\Pages;
 
 use App\Filament\Resources\PatchResource;
+use App\Jobs\CompilePatch;
 use App\Models\Patch;
 use App\Models\Post;
 use Filament\Notifications\Notification;
@@ -19,6 +20,9 @@ class CreatePatch extends CreateRecord
         $client = $data['client'];
         $maxNumber = Patch::where('client', $client)->max('number');
         $data['number'] = $maxNumber ? $maxNumber + 1 : 1;
+
+        // Mark as compiling immediately since we'll auto-compile
+        $data['is_compiling'] = true;
 
         // Remove post-related fields from patch data
         unset($data['create_post']);
@@ -52,6 +56,20 @@ class CreatePatch extends CreateRecord
                 ->body('The announcement post has been created successfully.')
                 ->success()
                 ->send();
+        }
+
+        // Auto-compile the patch
+        if (! empty($this->record->file)) {
+            CompilePatch::dispatch($this->record);
+
+            Notification::make()
+                ->title('Compiling Patch')
+                ->body("Patch #{$this->record->number} is being compiled in the background.")
+                ->info()
+                ->send();
+        } else {
+            // No file uploaded, reset compiling state
+            $this->record->update(['is_compiling' => false]);
         }
     }
 }
