@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
+use Database\Factories\ItemFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -29,12 +31,12 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $unequip_script
  * @property bool $is_xileretro
  * @property int $views
- * @property \Carbon\Carbon|null $created_at
- * @property \Carbon\Carbon|null $updated_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  */
 class Item extends Model
 {
-    /** @use HasFactory<\Database\Factories\ItemFactory> */
+    /** @use HasFactory<ItemFactory> */
     use HasFactory;
 
     protected $fillable = [

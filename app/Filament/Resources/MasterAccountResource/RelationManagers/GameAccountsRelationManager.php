@@ -3,12 +3,15 @@
 namespace App\Filament\Resources\MasterAccountResource\RelationManagers;
 
 use App\Models\GameAccount;
-use Filament\Infolists\Components\Grid;
+use Exception;
+use Filament\Actions\ViewAction;
 use Filament\Infolists\Components\RepeatableEntry;
-use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\RelationManagers\RelationManager;
-use Filament\Tables;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Section;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
 class GameAccountsRelationManager extends RelationManager
@@ -21,27 +24,27 @@ class GameAccountsRelationManager extends RelationManager
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('server')
+                TextColumn::make('server')
                     ->badge()
                     ->formatStateUsing(fn (string $state) => GameAccount::SERVERS[$state] ?? $state)
                     ->color(fn (string $state) => $state === 'xilero' ? 'success' : 'warning'),
-                Tables\Columns\TextColumn::make('userid')
+                TextColumn::make('userid')
                     ->label('Username')
                     ->searchable()
                     ->copyable(),
-                Tables\Columns\TextColumn::make('ragnarok_account_id')
+                TextColumn::make('ragnarok_account_id')
                     ->label('Account ID')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('live_email')
+                TextColumn::make('live_email')
                     ->label('Email (Live)')
                     ->getStateUsing(fn (GameAccount $record) => $this->getLiveLogin($record)?->email ?? 'N/A')
                     ->toggleable(),
-                Tables\Columns\TextColumn::make('live_group_id')
+                TextColumn::make('live_group_id')
                     ->label('Group (Live)')
                     ->badge()
                     ->getStateUsing(fn (GameAccount $record) => $this->getLiveLogin($record)?->group_id ?? 0)
                     ->color(fn ($state) => $state >= 99 ? 'danger' : ($state > 0 ? 'warning' : 'gray')),
-                Tables\Columns\TextColumn::make('live_state')
+                TextColumn::make('live_state')
                     ->label('State (Live)')
                     ->badge()
                     ->getStateUsing(fn (GameAccount $record) => $this->getLiveLogin($record)?->state ?? 0)
@@ -55,32 +58,32 @@ class GameAccountsRelationManager extends RelationManager
                         5 => 'danger',
                         default => 'warning',
                     }),
-                Tables\Columns\TextColumn::make('live_lastlogin')
+                TextColumn::make('live_lastlogin')
                     ->label('Last Login (Live)')
                     ->getStateUsing(fn (GameAccount $record) => $this->getLiveLogin($record)?->lastlogin ?? 'Never')
                     ->toggleable(),
-                Tables\Columns\TextColumn::make('live_last_ip')
+                TextColumn::make('live_last_ip')
                     ->label('Last IP (Live)')
                     ->getStateUsing(fn (GameAccount $record) => $this->getLiveLogin($record)?->last_ip ?? 'N/A')
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('chars_count')
+                TextColumn::make('chars_count')
                     ->label('Characters')
                     ->getStateUsing(fn (GameAccount $record) => $this->getCharacterCount($record))
                     ->badge()
                     ->color('info'),
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('server')
+                SelectFilter::make('server')
                     ->options(GameAccount::SERVERS),
             ])
             ->headerActions([])
-            ->actions([
-                Tables\Actions\ViewAction::make()
+            ->recordActions([
+                ViewAction::make()
                     ->label('View Details')
                     ->modalHeading(fn (GameAccount $record) => "Game Account: {$record->userid}")
-                    ->infolist(fn (GameAccount $record) => $this->getGameAccountInfolist($record)),
+                    ->schema(fn (GameAccount $record) => $this->getGameAccountInfolist($record)),
             ])
-            ->bulkActions([]);
+            ->toolbarActions([]);
     }
 
     protected function getLiveLogin(GameAccount $record): mixed
@@ -92,7 +95,7 @@ class GameAccountsRelationManager extends RelationManager
         if (! isset($cache[$key])) {
             try {
                 $cache[$key] = $record->ragnarokLogin();
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $cache[$key] = null;
             }
         }
@@ -108,7 +111,7 @@ class GameAccountsRelationManager extends RelationManager
 
         try {
             return $record->chars()->count();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return 0;
         }
     }
@@ -247,7 +250,7 @@ class GameAccountsRelationManager extends RelationManager
                 'zeny' => $char->zeny ?? 0,
                 'last_login' => $char->last_login,
             ])->toArray();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return [];
         }
     }

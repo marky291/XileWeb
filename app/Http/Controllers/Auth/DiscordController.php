@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Notifications\DiscordLinkedNotification;
 use App\Notifications\WelcomeNotification;
+use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -39,7 +40,7 @@ class DiscordController extends Controller
             /** @var Provider $driver */
             $driver = Socialite::driver('discord');
             $discordUser = $driver->user();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return redirect()->route('login')
                 ->with('error', 'Failed to authenticate with Discord. Please try again.');
         }

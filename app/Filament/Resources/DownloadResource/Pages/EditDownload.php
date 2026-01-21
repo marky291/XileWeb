@@ -3,7 +3,7 @@
 namespace App\Filament\Resources\DownloadResource\Pages;
 
 use App\Filament\Resources\DownloadResource;
-use Filament\Actions;
+use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 
 class EditDownload extends EditRecord
@@ -13,7 +13,7 @@ class EditDownload extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\DeleteAction::make(),
+            DeleteAction::make(),
         ];
     }
 }

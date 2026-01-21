@@ -3,6 +3,7 @@
 namespace App\XileRO;
 
 use App\Actions\CreateEmblemFromData;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Cache;
@@ -27,8 +28,8 @@ use Illuminate\Support\Facades\Cache;
  * @property string|null $last_master_change
  * @property int $created_time
  * @property-read string $emblem
- * @property-read \Illuminate\Database\Eloquent\Collection<int, GuildCastle> $castles
- * @property-read \Illuminate\Database\Eloquent\Collection<int, GuildMember> $members
+ * @property-read Collection<int, GuildCastle> $castles
+ * @property-read Collection<int, GuildMember> $members
  */
 class XileRO_Guild extends XileRO_Model
 {

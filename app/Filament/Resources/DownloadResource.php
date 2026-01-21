@@ -6,19 +6,19 @@ use App\Filament\Resources\DownloadResource\Pages\CreateDownload;
 use App\Filament\Resources\DownloadResource\Pages\EditDownload;
 use App\Filament\Resources\DownloadResource\Pages\ListDownloads;
 use App\Models\Download;
+use Filament\Actions\Action;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Forms\Form;
-use Filament\Forms\Get;
 use Filament\Resources\Resource;
-use Filament\Tables\Actions\Action;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteBulkAction;
-use Filament\Tables\Actions\EditAction;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
@@ -29,9 +29,9 @@ class DownloadResource extends Resource
 {
     protected static ?string $model = Download::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-arrow-down-tray';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-arrow-down-tray';
 
-    protected static ?string $navigationGroup = 'Content';
+    protected static string|\UnitEnum|null $navigationGroup = 'Content';
 
     protected static ?int $navigationSort = 2;
 
@@ -39,10 +39,10 @@ class DownloadResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Downloads';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 Section::make('Download Information')
                     ->description('Configure the basic settings for this download')
                     ->icon('heroicon-o-information-circle')
@@ -192,7 +192,7 @@ class DownloadResource extends Resource
                         '0' => 'Disabled',
                     ]),
             ])
-            ->actions([
+            ->recordActions([
                 Action::make('open')
                     ->label('Open')
                     ->icon('heroicon-o-arrow-top-right-on-square')
@@ -202,7 +202,7 @@ class DownloadResource extends Resource
                     ->visible(fn (Download $record): bool => ! empty($record->download_url)),
                 EditAction::make(),
             ])
-            ->bulkActions([
+            ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),

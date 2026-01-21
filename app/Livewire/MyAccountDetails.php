@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Actions\ResetCharacterPosition;
+use Illuminate\Support\Collection;
 use Livewire\Component;
 
 class MyAccountDetails extends Component
@@ -12,7 +13,7 @@ class MyAccountDetails extends Component
     /**
      * Get all characters for the authenticated user.
      *
-     * @return \Illuminate\Support\Collection
+     * @return Collection
      */
     public function characters()
     {

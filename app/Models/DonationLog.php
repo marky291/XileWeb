@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use Database\Factories\DonationLogFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class DonationLog extends Model
 {
-    /** @use HasFactory<\Database\Factories\DonationLogFactory> */
+    /** @use HasFactory<DonationLogFactory> */
     use HasFactory;
 
     protected $fillable = [

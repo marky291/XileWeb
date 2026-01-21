@@ -2,17 +2,19 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\MasterAccountResource\Pages;
-use App\Filament\Resources\MasterAccountResource\RelationManagers;
+use App\Filament\Resources\MasterAccountResource\Pages\CreateMasterAccount;
+use App\Filament\Resources\MasterAccountResource\Pages\EditMasterAccount;
+use App\Filament\Resources\MasterAccountResource\Pages\ListMasterAccounts;
+use App\Filament\Resources\MasterAccountResource\RelationManagers\GameAccountsRelationManager;
 use App\Models\User;
-use Filament\Forms\Components\Section;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteBulkAction;
-use Filament\Tables\Actions\EditAction;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TernaryFilter;
@@ -22,9 +24,9 @@ class MasterAccountResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-user-circle';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-user-circle';
 
-    protected static ?string $navigationGroup = 'Accounts';
+    protected static string|\UnitEnum|null $navigationGroup = 'Accounts';
 
     protected static ?int $navigationSort = 0;
 
@@ -34,10 +36,10 @@ class MasterAccountResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Master Accounts';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 Section::make('Account Information')
                     ->schema([
                         TextInput::make('name')
@@ -99,9 +101,6 @@ class MasterAccountResource extends Resource
                 TextColumn::make('id')
                     ->label('ID')
                     ->sortable(),
-                TextColumn::make('name')
-                    ->searchable()
-                    ->sortable(),
                 TextColumn::make('email')
                     ->searchable()
                     ->sortable(),
@@ -132,10 +131,10 @@ class MasterAccountResource extends Resource
                 TernaryFilter::make('is_admin')
                     ->label('Administrators'),
             ])
-            ->actions([
+            ->recordActions([
                 EditAction::make(),
             ])
-            ->bulkActions([
+            ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),
@@ -146,16 +145,16 @@ class MasterAccountResource extends Resource
     public static function getRelations(): array
     {
         return [
-            RelationManagers\GameAccountsRelationManager::class,
+            GameAccountsRelationManager::class,
         ];
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListMasterAccounts::route('/'),
-            'create' => Pages\CreateMasterAccount::route('/create'),
-            'edit' => Pages\EditMasterAccount::route('/{record}/edit'),
+            'index' => ListMasterAccounts::route('/'),
+            'create' => CreateMasterAccount::route('/create'),
+            'edit' => EditMasterAccount::route('/{record}/edit'),
         ];
     }
 }

@@ -6,6 +6,22 @@
                 "-y",
                 "@modelcontextprotocol/server-memory"
             ]
+        },
+        "laravel-boost": {
+            "command": "php",
+            "args": [
+                "artisan",
+                "boost:mcp"
+            ]
+        },
+        "herd": {
+            "command": "php",
+            "args": [
+                "/Applications/Herd.app/Contents/Resources/herd-mcp.phar"
+            ],
+            "env": {
+                "SITE_PATH": "/Users/markhester/Herd/XileRO"
+            }
         }
     }
 }

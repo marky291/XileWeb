@@ -3,7 +3,7 @@
 namespace App\Filament\Resources\UberShopItemResource\Pages;
 
 use App\Filament\Resources\UberShopItemResource;
-use Filament\Actions;
+use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 
 class ListUberShopItems extends ListRecords
@@ -13,7 +13,7 @@ class ListUberShopItems extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            CreateAction::make(),
         ];
     }
 }

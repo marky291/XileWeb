@@ -7,35 +7,34 @@ use App\Jobs\SendDonationAppliedEmail;
 use App\Models\DonationLog;
 use App\Models\User;
 use App\Services\DonationCalculator;
-use Filament\Forms\Components\Placeholder;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\ViewField;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
-use Filament\Forms\Get;
-use Filament\Forms\Set;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Utilities\Set;
+use Filament\Schemas\Schema;
 
 class ApplyDonation extends Page implements HasForms
 {
     use InteractsWithForms;
 
-    protected static ?string $navigationIcon = 'heroicon-o-gift';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-gift';
 
     protected static ?string $navigationLabel = 'Apply Donation';
 
-    protected static ?string $navigationGroup = 'Donations';
+    protected static string|\UnitEnum|null $navigationGroup = 'Donations';
 
     protected static ?int $navigationSort = 0;
 
     protected static ?string $title = 'Apply Donation';
 
-    protected static string $view = 'filament.pages.apply-donation';
+    protected string $view = 'filament.pages.apply-donation';
 
     public ?array $data = [];
 
@@ -44,10 +43,10 @@ class ApplyDonation extends Page implements HasForms
         $this->form->fill();
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 Section::make('Step 1: Select Master Account')
                     ->description('Search by email or name to find the player\'s master account')
                     ->schema([
@@ -68,27 +67,26 @@ class ApplyDonation extends Page implements HasForms
                             ->afterStateUpdated(function (Set $set, ?string $state) {
                                 if ($state) {
                                     $user = User::find($state);
-                                    $set('current_balance', $user?->uber_balance ?? 0);
-                                } else {
-                                    $set('current_balance', null);
-                                }
-                            }),
-                        Placeholder::make('current_balance')
-                            ->label('Current Uber Balance')
-                            ->content(fn (Get $get): string => $get('current_balance') !== null ? $get('current_balance').' Ubers' : '-'),
-                        Placeholder::make('total_donated')
-                            ->label('Lifetime Donations')
-                            ->visible(fn (Get $get): bool => $get('user_id') !== null)
-                            ->content(function (Get $get): string {
-                                $userId = $get('user_id');
-                                if (! $userId) {
-                                    return '-';
-                                }
-                                $total = DonationLog::where('user_id', $userId)->sum('amount');
-                                $totalUbers = DonationLog::where('user_id', $userId)->sum('total_ubers');
+                                    $set('current_balance', ($user?->uber_balance ?? 0).' Ubers');
 
-                                return '$'.number_format($total, 2).' donated, '.number_format($totalUbers).' Ubers received';
+                                    $total = DonationLog::where('user_id', $state)->sum('amount');
+                                    $totalUbers = DonationLog::where('user_id', $state)->sum('total_ubers');
+                                    $set('total_donated', '$'.number_format($total, 2).' donated, '.number_format($totalUbers).' Ubers received');
+                                } else {
+                                    $set('current_balance', '-');
+                                    $set('total_donated', '-');
+                                }
                             }),
+                        TextInput::make('current_balance')
+                            ->label('Current Uber Balance')
+                            ->disabled()
+                            ->dehydrated(false)
+                            ->default('-'),
+                        TextInput::make('total_donated')
+                            ->label('Lifetime Donations')
+                            ->disabled()
+                            ->dehydrated(false)
+                            ->default('-'),
                         ViewField::make('donation_history')
                             ->view('filament.pages.partials.donation-history-table')
                             ->viewData([
@@ -201,29 +199,31 @@ class ApplyDonation extends Page implements HasForms
                 Section::make('Step 3: Review & Confirm')
                     ->description('Review the donation details before applying')
                     ->schema([
-                        Placeholder::make('review_user')
+                        TextInput::make('review_user')
                             ->label('Master Account')
-                            ->content(fn (Get $get): string => $get('user_id') ? (User::find($get('user_id'))?->email ?? '-') : '-'),
-                        Placeholder::make('review_amount')
+                            ->disabled()
+                            ->dehydrated(false)
+                            ->default('-'),
+                        TextInput::make('review_amount')
                             ->label('Donation Amount')
-                            ->content(fn (Get $get): string => $get('amount') ? '$'.$get('amount') : '-'),
-                        Placeholder::make('review_payment')
+                            ->disabled()
+                            ->dehydrated(false)
+                            ->default('-'),
+                        TextInput::make('review_payment')
                             ->label('Payment Method')
-                            ->content(fn (Get $get): string => $get('payment_method') ? config("donation.payment_methods.{$get('payment_method')}.name", '-') : '-'),
-                        Placeholder::make('review_base')
+                            ->disabled()
+                            ->dehydrated(false)
+                            ->default('-'),
+                        TextInput::make('review_base')
                             ->label('Base Ubers from Tier')
-                            ->content(fn (Get $get): string => $get('base_ubers') ?? '0'),
-                        Placeholder::make('review_bonus')
+                            ->disabled()
+                            ->dehydrated(false)
+                            ->default('0'),
+                        TextInput::make('review_bonus')
                             ->label('Additional Bonus')
-                            ->content(function (Get $get): string {
-                                $paymentMethod = $get('payment_method');
-                                $bonus = config("donation.payment_methods.{$paymentMethod}.bonus", 0);
-                                $baseUbers = (int) ($get('base_ubers') ?? 0);
-                                $bonusUbers = (int) floor($baseUbers * ($bonus / 100));
-                                $extraUbers = (int) ($get('extra_ubers') ?? 0);
-
-                                return ($bonusUbers + $extraUbers).' (Payment bonus: '.$bonusUbers.', Extra: '.$extraUbers.')';
-                            }),
+                            ->disabled()
+                            ->dehydrated(false)
+                            ->default('0'),
                         TextInput::make('total_ubers')
                             ->label('TOTAL Ubers to Apply')
                             ->numeric()
@@ -261,6 +261,14 @@ class ApplyDonation extends Page implements HasForms
         $bonusUbers = (int) floor($baseUbers * ($bonus / 100));
         $extraUbers = (int) ($get('extra_ubers') ?? 0);
         $set('total_ubers', $baseUbers + $bonusUbers + $extraUbers);
+
+        // Update review fields
+        $userId = $get('user_id');
+        $set('review_user', $userId ? (User::find($userId)?->email ?? '-') : '-');
+        $set('review_amount', $get('amount') ? '$'.$get('amount') : '-');
+        $set('review_payment', $paymentMethod ? config("donation.payment_methods.{$paymentMethod}.name", '-') : '-');
+        $set('review_base', (string) $baseUbers);
+        $set('review_bonus', ($bonusUbers + $extraUbers).' (Payment bonus: '.$bonusUbers.', Extra: '.$extraUbers.')');
     }
 
     public function apply(): void

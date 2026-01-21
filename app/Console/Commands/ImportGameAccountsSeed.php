@@ -7,6 +7,7 @@ use App\Models\User;
 use App\XileRetro\XileRetro_DonationUbers;
 use App\XileRetro\XileRetro_Login;
 use App\XileRO\XileRO_Login;
+use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -279,7 +280,7 @@ class ImportGameAccountsSeed extends Command
                     $this->info("Reached {$maxConsecutiveSynced} consecutive already-synced accounts. All new accounts imported.");
                     break;
                 }
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $failed++;
                 $processed++;
                 $this->error("  Failed {$login->account_id}: {$e->getMessage()}");
@@ -554,7 +555,7 @@ class ImportGameAccountsSeed extends Command
                     try {
                         $this->createAccountsFromLogin($login, $server);
                         $imported++;
-                    } catch (\Exception $e) {
+                    } catch (Exception $e) {
                         // Skip failed imports
                     }
                 }

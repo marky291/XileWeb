@@ -8,6 +8,7 @@ use App\XileRetro\XileRetro_Char;
 use App\XileRetro\XileRetro_Login;
 use App\XileRO\XileRO_Char;
 use App\XileRO\XileRO_Login;
+use Exception;
 use Filament\Widgets\StatsOverviewWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 use Illuminate\Support\Facades\DB;
@@ -16,7 +17,7 @@ class ServerStatsOverview extends StatsOverviewWidget
 {
     protected static ?int $sort = 1;
 
-    protected static ?string $pollingInterval = '30s';
+    protected ?string $pollingInterval = '30s';
 
     protected function getStats(): array
     {
@@ -52,7 +53,7 @@ class ServerStatsOverview extends StatsOverviewWidget
                 ->description("{$totalAccounts} accounts, {$totalChars} characters")
                 ->descriptionIcon('heroicon-m-signal')
                 ->color($online > 0 ? 'success' : 'gray');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return Stat::make('XileRO', 'N/A')
                 ->description('Database unavailable')
                 ->color('danger');
@@ -70,7 +71,7 @@ class ServerStatsOverview extends StatsOverviewWidget
                 ->description("{$totalAccounts} accounts, {$totalChars} characters")
                 ->descriptionIcon('heroicon-m-signal')
                 ->color($online > 0 ? 'success' : 'gray');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return Stat::make('XileRetro', 'N/A')
                 ->description('Database unavailable')
                 ->color('danger');

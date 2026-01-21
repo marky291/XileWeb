@@ -7,14 +7,14 @@ use App\Filament\Resources\DonationUberResource\Pages\EditDonationUber;
 use App\Filament\Resources\DonationUberResource\Pages\ListDonationUbers;
 use App\Filament\Resources\LoginResource\RelationManagers\LoginRelationManager;
 use Filament\Actions\Action;
+use Filament\Actions\EditAction;
 use Filament\Forms\Components\Get;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Set;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
 use Filament\Tables;
-use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
@@ -24,19 +24,19 @@ class DonationUberResource extends Resource
 {
     protected static ?string $model = DonationUber::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-currency-dollar';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-currency-dollar';
 
-    protected static ?string $navigationGroup = 'XileRO';
+    protected static string|\UnitEnum|null $navigationGroup = 'XileRO';
 
     protected static ?int $navigationSort = 5;
 
     // Hidden until DonationUber model is created
     protected static bool $shouldRegisterNavigation = false;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 TextInput::make('account_id'),
                 TextInput::make('username')->alphaNum(),
                 TextInput::make('current_ubers')->numeric(),
@@ -64,10 +64,10 @@ class DonationUberResource extends Resource
             ->filters([
                 Filter::make('Has Pending Ubers')->query(fn (Builder $query): Builder => $query->where('pending_ubers', '>', 0)),
             ])
-            ->actions([
+            ->recordActions([
                 EditAction::make(),
             ])
-            ->bulkActions([
+            ->toolbarActions([
                 //                Tables\Actions\BulkActionGroup::make([
                 //                    Tables\Actions\DeleteBulkAction::make(),
                 //                ]),

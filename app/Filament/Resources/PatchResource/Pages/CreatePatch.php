@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\PatchResource\Pages;
 
 use App\Filament\Resources\PatchResource;
+use App\Models\Patch;
 use App\Models\Post;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
@@ -16,7 +17,7 @@ class CreatePatch extends CreateRecord
     {
         // Calculate the correct patch number for the selected client
         $client = $data['client'];
-        $maxNumber = \App\Models\Patch::where('client', $client)->max('number');
+        $maxNumber = Patch::where('client', $client)->max('number');
         $data['number'] = $maxNumber ? $maxNumber + 1 : 1;
 
         // Remove post-related fields from patch data

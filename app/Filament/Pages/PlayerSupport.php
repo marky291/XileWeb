@@ -15,9 +15,9 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
+use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -25,13 +25,13 @@ class PlayerSupport extends Page implements HasForms
 {
     use InteractsWithForms;
 
-    protected static ?string $navigationIcon = 'heroicon-o-lifebuoy';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-lifebuoy';
 
-    protected static ?string $navigationGroup = 'Support';
+    protected static string|\UnitEnum|null $navigationGroup = 'Support';
 
     protected static ?int $navigationSort = 0;
 
-    protected static string $view = 'filament.pages.player-support';
+    protected string $view = 'filament.pages.player-support';
 
     public ?string $search = '';
 
@@ -70,10 +70,10 @@ class PlayerSupport extends Page implements HasForms
         $this->form->fill();
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 Select::make('searchType')
                     ->label('Search By')
                     ->options([

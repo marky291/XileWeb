@@ -2,8 +2,10 @@
 
 namespace App\XileRetro;
 
+use Database\Factories\XileRetro\XileRetro_LoginFactory;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -34,7 +36,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property int $last_unique_id
  * @property int $blocked_unique_id
  * @property-read string $name
- * @property-read \Illuminate\Database\Eloquent\Collection<int, XileRetro_Char> $chars
+ * @property-read Collection<int, XileRetro_Char> $chars
  *
  * @method static create(array $array)
  */
@@ -42,9 +44,9 @@ class XileRetro_Login extends Authenticatable implements FilamentUser
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    protected static function newFactory(): \Database\Factories\XileRetro\XileRetro_LoginFactory
+    protected static function newFactory(): XileRetro_LoginFactory
     {
-        return \Database\Factories\XileRetro\XileRetro_LoginFactory::new();
+        return XileRetro_LoginFactory::new();
     }
 
     protected $connection = 'xileretro_main';

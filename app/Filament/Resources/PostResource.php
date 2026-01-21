@@ -6,15 +6,15 @@ use App\Filament\Resources\PostResource\Pages\CreatePost;
 use App\Filament\Resources\PostResource\Pages\EditPost;
 use App\Filament\Resources\PostResource\Pages\ListPosts;
 use App\Models\Post;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteBulkAction;
-use Filament\Tables\Actions\EditAction;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
@@ -23,17 +23,17 @@ class PostResource extends Resource
 {
     protected static ?string $model = Post::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-newspaper';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-newspaper';
 
-    protected static ?string $navigationGroup = 'Content';
+    protected static string|\UnitEnum|null $navigationGroup = 'Content';
 
     protected static ?int $navigationSort = 0;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->columns(1)
-            ->schema([
+            ->components([
                 Select::make('client')
                     ->label('Client')
                     ->options(Post::CLIENTS)
@@ -97,10 +97,10 @@ class PostResource extends Resource
                     ->label('Client')
                     ->options(Post::CLIENTS),
             ])
-            ->actions([
+            ->recordActions([
                 EditAction::make(),
             ])
-            ->bulkActions([
+            ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),

@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
+use Database\Factories\UberShopItemFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -19,8 +21,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $views
  * @property bool $is_xilero
  * @property bool $is_xileretro
- * @property \Carbon\Carbon|null $created_at
- * @property \Carbon\Carbon|null $updated_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  * @property-read UberShopCategory|null $category
  * @property-read Item $item
  * @property-read bool $is_available
@@ -29,7 +31,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class UberShopItem extends Model
 {
-    /** @use HasFactory<\Database\Factories\UberShopItemFactory> */
+    /** @use HasFactory<UberShopItemFactory> */
     use HasFactory;
 
     protected $fillable = [

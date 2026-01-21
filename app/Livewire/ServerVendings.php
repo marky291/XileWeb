@@ -32,7 +32,7 @@ class ServerVendings extends Component implements HasActions, HasForms, HasTable
         HTML;
     }
 
-    public function getTableRecordKey(Model $record): string
+    public function getTableRecordKey(Model|array $record): string
     {
         return "{$record->vending_id}-{$record->index}";
     }

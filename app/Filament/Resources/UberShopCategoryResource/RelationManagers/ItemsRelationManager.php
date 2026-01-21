@@ -2,10 +2,20 @@
 
 namespace App\Filament\Resources\UberShopCategoryResource\RelationManagers;
 
-use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\CreateAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Resources\RelationManagers\RelationManager;
-use Filament\Tables;
+use Filament\Schemas\Schema;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ViewColumn;
+use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 
 class ItemsRelationManager extends RelationManager
@@ -14,45 +24,45 @@ class ItemsRelationManager extends RelationManager
 
     protected static ?string $title = 'Shop Items';
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\Select::make('item_id')
+        return $schema
+            ->components([
+                Select::make('item_id')
                     ->relationship('item', 'name')
                     ->searchable()
                     ->preload()
                     ->required(),
-                Forms\Components\TextInput::make('uber_cost')
+                TextInput::make('uber_cost')
                     ->required()
                     ->numeric()
                     ->minValue(1)
                     ->suffix('Ubers'),
-                Forms\Components\TextInput::make('quantity')
+                TextInput::make('quantity')
                     ->required()
                     ->numeric()
                     ->minValue(1)
                     ->default(1),
-                Forms\Components\TextInput::make('refine_level')
+                TextInput::make('refine_level')
                     ->required()
                     ->numeric()
                     ->minValue(0)
                     ->maxValue(20)
                     ->default(0),
-                Forms\Components\TextInput::make('stock')
+                TextInput::make('stock')
                     ->numeric()
                     ->minValue(0)
                     ->placeholder('Unlimited'),
-                Forms\Components\TextInput::make('display_order')
+                TextInput::make('display_order')
                     ->required()
                     ->numeric()
                     ->default(0),
-                Forms\Components\Toggle::make('enabled')
+                Toggle::make('enabled')
                     ->default(true),
-                Forms\Components\Toggle::make('is_xilero')
+                Toggle::make('is_xilero')
                     ->label('XileRO')
                     ->default(true),
-                Forms\Components\Toggle::make('is_xileretro')
+                Toggle::make('is_xileretro')
                     ->label('XileRetro')
                     ->default(true),
             ])
@@ -63,54 +73,54 @@ class ItemsRelationManager extends RelationManager
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('display_order')
+                TextColumn::make('display_order')
                     ->label('#')
                     ->sortable(),
-                Tables\Columns\ViewColumn::make('item_icon')
+                ViewColumn::make('item_icon')
                     ->label('')
                     ->view('filament.tables.columns.shop-item-icon'),
-                Tables\Columns\TextColumn::make('item.name')
+                TextColumn::make('item.name')
                     ->label('Item')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('uber_cost')
+                TextColumn::make('uber_cost')
                     ->label('Price')
                     ->sortable()
                     ->badge()
                     ->color('warning')
                     ->formatStateUsing(fn ($state) => $state.' Ubers'),
-                Tables\Columns\TextColumn::make('quantity')
+                TextColumn::make('quantity')
                     ->label('Qty')
                     ->sortable()
                     ->alignCenter(),
-                Tables\Columns\TextColumn::make('refine_level')
+                TextColumn::make('refine_level')
                     ->label('+')
                     ->sortable()
                     ->alignCenter()
                     ->formatStateUsing(fn ($state) => $state > 0 ? '+'.$state : '-'),
-                Tables\Columns\TextColumn::make('stock')
+                TextColumn::make('stock')
                     ->label('Stock')
                     ->sortable()
                     ->alignCenter()
                     ->formatStateUsing(fn ($state) => $state ?? '∞'),
-                Tables\Columns\IconColumn::make('enabled')
+                IconColumn::make('enabled')
                     ->boolean()
                     ->sortable(),
             ])
             ->defaultSort('display_order')
             ->filters([
-                Tables\Filters\TernaryFilter::make('enabled'),
+                TernaryFilter::make('enabled'),
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                CreateAction::make(),
             ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+            ->recordActions([
+                EditAction::make(),
+                DeleteAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ])
             ->reorderable('display_order');

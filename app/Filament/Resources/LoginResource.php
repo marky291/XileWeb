@@ -10,14 +10,14 @@ use App\Filament\Resources\LoginResource\Pages\EditLogin;
 use App\Filament\Resources\LoginResource\Pages\ListLogins;
 use App\XileRO\XileRO_Login as Login;
 use Filament\Actions\Action;
+use Filament\Actions\EditAction;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Get;
 use Filament\Forms\Components\Set;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables;
-use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
@@ -29,9 +29,9 @@ class LoginResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'userid';
 
-    protected static ?string $navigationGroup = 'XileRO';
+    protected static string|\UnitEnum|null $navigationGroup = 'XileRO';
 
-    protected static ?string $navigationIcon = 'heroicon-o-user-circle';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-user-circle';
 
     protected static ?int $navigationSort = 1;
 
@@ -41,10 +41,10 @@ class LoginResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Logins';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 TextInput::make('account_id')->unique(ignoreRecord: true)->readOnly(),
                 TextInput::make('userid')->unique(ignoreRecord: true),
                 TextInput::make('email')->unique(ignoreRecord: true),
@@ -76,10 +76,10 @@ class LoginResource extends Resource
                 Filter::make('Staff')->query(fn (Builder $query): Builder => $query->where('group_id', '>', 1)),
                 Filter::make('Streamers')->query(fn (Builder $query): Builder => $query->where('group_id', '=', 1)),
             ])
-            ->actions([
+            ->recordActions([
                 EditAction::make(),
             ])
-            ->bulkActions([
+            ->toolbarActions([
                 //                Tables\Actions\BulkActionGroup::make([
                 //                    Tables\Actions\DeleteBulkAction::make(),
                 //                ]),

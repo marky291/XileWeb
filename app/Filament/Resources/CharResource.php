@@ -8,12 +8,12 @@ use App\Filament\Resources\CharResource\Pages\ListChars;
 use App\Filament\Resources\CharResource\RelationManagers\InventoryRelationManager;
 use App\Filament\Resources\LoginResource\RelationManagers\LoginRelationManager;
 use App\XileRO\XileRO_Char as Char;
+use Filament\Actions\EditAction;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables;
-use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -23,9 +23,9 @@ class CharResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
-    protected static ?string $navigationGroup = 'XileRO';
+    protected static string|\UnitEnum|null $navigationGroup = 'XileRO';
 
-    protected static ?string $navigationIcon = 'heroicon-o-user-group';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-user-group';
 
     protected static ?int $navigationSort = 2;
 
@@ -35,7 +35,7 @@ class CharResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Characters';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
         $classOptions = [
             // Novice / 1st Class
@@ -96,8 +96,8 @@ class CharResource extends Resource
             '4229' => 'Baby Rebellion',
         ];
 
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 TextInput::make('account_id')
                     ->disabled()
                     ->dehydrated(false),
@@ -119,10 +119,10 @@ class CharResource extends Resource
                 TextColumn::make('class'),
                 TextColumn::make('last_login'),
             ])
-            ->actions([
+            ->recordActions([
                 EditAction::make(),
             ])
-            ->bulkActions([
+            ->toolbarActions([
                 //                Tables\Actions\BulkActionGroup::make([
                 //                    Tables\Actions\DeleteBulkAction::make(),
                 //                ]),

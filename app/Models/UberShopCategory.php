@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
+use Database\Factories\UberShopCategoryFactory;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -14,14 +17,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string|null $uber_range
  * @property int $display_order
  * @property bool $enabled
- * @property \Carbon\Carbon|null $created_at
- * @property \Carbon\Carbon|null $updated_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  * @property-read string $clean_display_name
- * @property-read \Illuminate\Database\Eloquent\Collection<int, UberShopItem> $items
+ * @property-read Collection<int, UberShopItem> $items
  */
 class UberShopCategory extends Model
 {
-    /** @use HasFactory<\Database\Factories\UberShopCategoryFactory> */
+    /** @use HasFactory<UberShopCategoryFactory> */
     use HasFactory;
 
     protected $fillable = [

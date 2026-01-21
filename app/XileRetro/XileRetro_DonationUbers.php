@@ -2,7 +2,9 @@
 
 namespace App\XileRetro;
 
+use Database\Factories\XileRetro\XileRetro_DonationUbersFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Carbon;
 
 /**
  * Legacy donation_ubers table from XileRetro game database.
@@ -13,16 +15,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string $username
  * @property int $current_ubers
  * @property int $pending_ubers
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property \Illuminate\Support\Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property Carbon|null $created_at
  */
 class XileRetro_DonationUbers extends XileRetro_Model
 {
     use HasFactory;
 
-    protected static function newFactory(): \Database\Factories\XileRetro\XileRetro_DonationUbersFactory
+    protected static function newFactory(): XileRetro_DonationUbersFactory
     {
-        return \Database\Factories\XileRetro\XileRetro_DonationUbersFactory::new();
+        return XileRetro_DonationUbersFactory::new();
     }
 
     protected $connection = 'xileretro_main';

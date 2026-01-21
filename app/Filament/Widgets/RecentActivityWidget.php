@@ -3,7 +3,8 @@
 namespace App\Filament\Widgets;
 
 use App\Models\User;
-use Filament\Tables;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget as BaseWidget;
 
@@ -24,21 +25,21 @@ class RecentActivityWidget extends BaseWidget
                     ->limit(10)
             )
             ->columns([
-                Tables\Columns\TextColumn::make('name')
+                TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('email')
+                TextColumn::make('email')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('uber_balance')
+                TextColumn::make('uber_balance')
                     ->label('Ubers')
                     ->badge()
                     ->color('warning'),
-                Tables\Columns\TextColumn::make('game_accounts_count')
+                TextColumn::make('game_accounts_count')
                     ->counts('gameAccounts')
                     ->label('Game Accounts'),
-                Tables\Columns\IconColumn::make('is_admin')
+                IconColumn::make('is_admin')
                     ->label('Admin')
                     ->boolean(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->label('Registered')
                     ->since()
                     ->sortable(),

@@ -2,23 +2,27 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\DonationLogResource\Pages;
+use App\Filament\Resources\DonationLogResource\Pages\ListDonationLogs;
+use App\Filament\Resources\DonationLogResource\Pages\ViewDonationLog;
 use App\Models\DonationLog;
-use Filament\Infolists\Components\Section;
+use Filament\Actions\Action;
+use Filament\Actions\ViewAction;
 use Filament\Infolists\Components\TextEntry;
-use Filament\Infolists\Infolist;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
 class DonationLogResource extends Resource
 {
     protected static ?string $model = DonationLog::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-banknotes';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-banknotes';
 
-    protected static ?string $navigationGroup = 'Donations';
+    protected static string|\UnitEnum|null $navigationGroup = 'Donations';
 
     protected static ?int $navigationSort = 1;
 
@@ -28,10 +32,10 @@ class DonationLogResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Donations';
 
-    public static function infolist(Infolist $infolist): Infolist
+    public static function infolist(Schema $schema): Schema
     {
-        return $infolist
-            ->schema([
+        return $schema
+            ->components([
                 Section::make('Donation Details')
                     ->schema([
                         TextEntry::make('user.email')
@@ -71,39 +75,39 @@ class DonationLogResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->label('Date')
                     ->dateTime('M j, Y H:i')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('user.email')
+                TextColumn::make('user.email')
                     ->label('User')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('amount')
+                TextColumn::make('amount')
                     ->money('USD')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('payment_method')
+                TextColumn::make('payment_method')
                     ->label('Payment')
                     ->formatStateUsing(fn (DonationLog $record) => $record->paymentMethodName())
                     ->badge()
                     ->color(fn (string $state) => $state === 'crypto' ? 'warning' : 'gray'),
-                Tables\Columns\TextColumn::make('total_ubers')
+                TextColumn::make('total_ubers')
                     ->label('Ubers')
                     ->sortable()
                     ->badge()
                     ->color(fn (DonationLog $record) => $record->isReverted() ? 'danger' : 'success'),
-                Tables\Columns\TextColumn::make('reverted_at')
+                TextColumn::make('reverted_at')
                     ->label('Status')
                     ->formatStateUsing(fn (DonationLog $record) => $record->isReverted() ? 'Reverted' : 'Active')
                     ->badge()
                     ->color(fn (DonationLog $record) => $record->isReverted() ? 'danger' : 'success'),
-                Tables\Columns\TextColumn::make('admin.email')
+                TextColumn::make('admin.email')
                     ->label('Processed By')
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([
-                Tables\Filters\SelectFilter::make('payment_method')
+                SelectFilter::make('payment_method')
                     ->label('Payment Method')
                     ->options(function () {
                         $options = [];
@@ -114,9 +118,9 @@ class DonationLogResource extends Resource
                         return $options;
                     }),
             ])
-            ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\Action::make('revert')
+            ->recordActions([
+                ViewAction::make(),
+                Action::make('revert')
                     ->label('Revert')
                     ->icon('heroicon-o-arrow-uturn-left')
                     ->color('danger')
@@ -167,7 +171,7 @@ class DonationLogResource extends Resource
                         }
                     }),
             ])
-            ->bulkActions([]);
+            ->toolbarActions([]);
     }
 
     public static function getRelations(): array
@@ -178,8 +182,8 @@ class DonationLogResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListDonationLogs::route('/'),
-            'view' => Pages\ViewDonationLog::route('/{record}'),
+            'index' => ListDonationLogs::route('/'),
+            'view' => ViewDonationLog::route('/{record}'),
         ];
     }
 

@@ -4,7 +4,10 @@ namespace App\Filament\Resources\XileRetroCharResource\RelationManagers;
 
 use App\Models\Item;
 use Filament\Resources\RelationManagers\RelationManager;
-use Filament\Tables;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ViewColumn;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -39,21 +42,21 @@ class InventoryRelationManager extends RelationManager
                 });
             })
             ->columns([
-                Tables\Columns\ViewColumn::make('item_icon')
+                ViewColumn::make('item_icon')
                     ->label('')
                     ->view('filament.tables.columns.item-icon'),
-                Tables\Columns\TextColumn::make('item_name')
+                TextColumn::make('item_name')
                     ->label('Item')
                     ->getStateUsing(fn ($record) => $record->item?->name)
                     ->description(fn ($record) => $record->item ? null : "ID: {$record->nameid}"),
-                Tables\Columns\TextColumn::make('nameid')
+                TextColumn::make('nameid')
                     ->label('Item ID')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('amount')
+                TextColumn::make('amount')
                     ->sortable()
                     ->alignCenter(),
-                Tables\Columns\TextColumn::make('refine')
+                TextColumn::make('refine')
                     ->label('+')
                     ->sortable()
                     ->alignCenter()
@@ -65,28 +68,28 @@ class InventoryRelationManager extends RelationManager
                         default => 'gray',
                     })
                     ->formatStateUsing(fn (int $state) => $state > 0 ? "+{$state}" : '-'),
-                Tables\Columns\TextColumn::make('card0')
+                TextColumn::make('card0')
                     ->label('Card 1')
                     ->toggleable(isToggledHiddenByDefault: true)
                     ->formatStateUsing(fn (int $state) => $state > 0 ? $state : '-'),
-                Tables\Columns\TextColumn::make('card1')
+                TextColumn::make('card1')
                     ->label('Card 2')
                     ->toggleable(isToggledHiddenByDefault: true)
                     ->formatStateUsing(fn (int $state) => $state > 0 ? $state : '-'),
-                Tables\Columns\TextColumn::make('card2')
+                TextColumn::make('card2')
                     ->label('Card 3')
                     ->toggleable(isToggledHiddenByDefault: true)
                     ->formatStateUsing(fn (int $state) => $state > 0 ? $state : '-'),
-                Tables\Columns\TextColumn::make('card3')
+                TextColumn::make('card3')
                     ->label('Card 4')
                     ->toggleable(isToggledHiddenByDefault: true)
                     ->formatStateUsing(fn (int $state) => $state > 0 ? $state : '-'),
-                Tables\Columns\IconColumn::make('favorite')
+                IconColumn::make('favorite')
                     ->label('Fav')
                     ->boolean()
                     ->alignCenter()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\IconColumn::make('bound')
+                IconColumn::make('bound')
                     ->label('Bound')
                     ->boolean()
                     ->alignCenter()
@@ -94,10 +97,10 @@ class InventoryRelationManager extends RelationManager
             ])
             ->defaultSort('id', 'desc')
             ->filters([
-                Tables\Filters\Filter::make('refined')
+                Filter::make('refined')
                     ->label('Refined Items')
                     ->query(fn (Builder $query): Builder => $query->where('refine', '>', 0)),
-                Tables\Filters\Filter::make('has_cards')
+                Filter::make('has_cards')
                     ->label('Has Cards')
                     ->query(fn (Builder $query): Builder => $query->where(function ($q) {
                         $q->where('card0', '>', 0)
@@ -105,11 +108,11 @@ class InventoryRelationManager extends RelationManager
                             ->orWhere('card2', '>', 0)
                             ->orWhere('card3', '>', 0);
                     })),
-                Tables\Filters\Filter::make('favorite')
+                Filter::make('favorite')
                     ->label('Favorites')
                     ->query(fn (Builder $query): Builder => $query->where('favorite', 1)),
             ])
-            ->actions([])
-            ->bulkActions([]);
+            ->recordActions([])
+            ->toolbarActions([]);
     }
 }

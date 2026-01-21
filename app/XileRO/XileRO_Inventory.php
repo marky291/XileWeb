@@ -3,6 +3,7 @@
 namespace App\XileRO;
 
 use App\Models\Item;
+use Database\Factories\XileRO\XileRO_InventoryFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -46,9 +47,9 @@ class XileRO_Inventory extends XileRO_Model
 {
     use HasFactory;
 
-    protected static function newFactory(): \Database\Factories\XileRO\XileRO_InventoryFactory
+    protected static function newFactory(): XileRO_InventoryFactory
     {
-        return \Database\Factories\XileRO\XileRO_InventoryFactory::new();
+        return XileRO_InventoryFactory::new();
     }
 
     protected $connection = 'xilero_main';

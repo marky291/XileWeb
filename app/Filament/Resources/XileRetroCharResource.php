@@ -7,11 +7,11 @@ use App\Filament\Resources\XileRetroCharResource\Pages\EditXileRetroChar;
 use App\Filament\Resources\XileRetroCharResource\Pages\ListXileRetroChars;
 use App\Filament\Resources\XileRetroCharResource\RelationManagers\InventoryRelationManager;
 use App\XileRetro\XileRetro_Char as Char;
+use Filament\Actions\EditAction;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables\Actions\EditAction;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -21,9 +21,9 @@ class XileRetroCharResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
-    protected static ?string $navigationGroup = 'XileRetro';
+    protected static string|\UnitEnum|null $navigationGroup = 'XileRetro';
 
-    protected static ?string $navigationIcon = 'heroicon-o-user-group';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-user-group';
 
     protected static ?int $navigationSort = 2;
 
@@ -33,7 +33,7 @@ class XileRetroCharResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Characters';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
         $classOptions = [
             // Novice / 1st Class
@@ -62,8 +62,8 @@ class XileRetroCharResource extends Resource
             '4046' => 'Taekwon', '4047' => 'Star Gladiator', '4049' => 'Soul Linker',
         ];
 
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 TextInput::make('account_id')
                     ->disabled()
                     ->dehydrated(false),
@@ -85,10 +85,10 @@ class XileRetroCharResource extends Resource
                 TextColumn::make('class'),
                 TextColumn::make('last_login'),
             ])
-            ->actions([
+            ->recordActions([
                 EditAction::make(),
             ])
-            ->bulkActions([]);
+            ->toolbarActions([]);
     }
 
     public static function getRelations(): array

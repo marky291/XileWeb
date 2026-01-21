@@ -4,25 +4,26 @@ namespace App\Filament\Pages;
 
 use App\XileRetro\XileRetro_Login;
 use App\XileRO\XileRO_Login;
+use Exception;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
+use Filament\Schemas\Schema;
 
 class Moderation extends Page implements HasForms
 {
     use InteractsWithForms;
 
-    protected static ?string $navigationIcon = 'heroicon-o-shield-exclamation';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-shield-exclamation';
 
-    protected static ?string $navigationGroup = 'Support';
+    protected static string|\UnitEnum|null $navigationGroup = 'Support';
 
     protected static ?int $navigationSort = 1;
 
-    protected static string $view = 'filament.pages.moderation';
+    protected string $view = 'filament.pages.moderation';
 
     public ?string $search = '';
 
@@ -42,10 +43,10 @@ class Moderation extends Page implements HasForms
         $this->loadRecentLogins();
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 Select::make('server')
                     ->label('Server')
                     ->options([
@@ -87,7 +88,7 @@ class Moderation extends Page implements HasForms
                     'group_id' => $login->group_id,
                 ])
                 ->toArray();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->recentLogins = [];
             Notification::make()
                 ->title('Database Error')
@@ -144,7 +145,7 @@ class Moderation extends Page implements HasForms
                     ->info()
                     ->send();
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Notification::make()
                 ->title('Search Error')
                 ->body($e->getMessage())
@@ -201,7 +202,7 @@ class Moderation extends Page implements HasForms
             $this->selectedAccount['state'] = 5;
             $this->selectedAccount['unban_time'] = $unbanTime;
             $this->loadRecentLogins();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Notification::make()
                 ->title('Ban failed')
                 ->body($e->getMessage())
@@ -244,7 +245,7 @@ class Moderation extends Page implements HasForms
             $this->selectedAccount['state'] = 0;
             $this->selectedAccount['unban_time'] = 0;
             $this->loadRecentLogins();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Notification::make()
                 ->title('Unban failed')
                 ->body($e->getMessage())

@@ -3,7 +3,7 @@
 namespace App\Filament\Resources\MasterAccountResource\Pages;
 
 use App\Filament\Resources\MasterAccountResource;
-use Filament\Actions;
+use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 
 class EditMasterAccount extends EditRecord
@@ -13,7 +13,7 @@ class EditMasterAccount extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\DeleteAction::make(),
+            DeleteAction::make(),
         ];
     }
 

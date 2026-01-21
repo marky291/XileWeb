@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use Database\Factories\SyncedCharacterFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class SyncedCharacter extends Model
 {
-    /** @use HasFactory<\Database\Factories\SyncedCharacterFactory> */
+    /** @use HasFactory<SyncedCharacterFactory> */
     use HasFactory;
 
     protected $fillable = [

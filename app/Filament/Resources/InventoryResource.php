@@ -6,12 +6,12 @@ use App\Filament\Resources\InventoryResource\Pages\CreateInventory;
 use App\Filament\Resources\InventoryResource\Pages\EditInventory;
 use App\Filament\Resources\InventoryResource\Pages\ListInventories;
 use App\XileRO\XileRO_Inventory as Inventory;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteBulkAction;
-use Filament\Tables\Actions\EditAction;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
@@ -21,9 +21,9 @@ class InventoryResource extends Resource
 {
     protected static ?string $model = Inventory::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-archive-box';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-archive-box';
 
-    protected static ?string $navigationGroup = 'XileRO';
+    protected static string|\UnitEnum|null $navigationGroup = 'XileRO';
 
     protected static ?int $navigationSort = 3;
 
@@ -35,10 +35,10 @@ class InventoryResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Inventory';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 TextInput::make('id')
                     ->label('ID')
                     ->disabled(),
@@ -115,10 +115,10 @@ class InventoryResource extends Resource
                             ->orWhere('card3', '>', 0);
                     })),
             ])
-            ->actions([
+            ->recordActions([
                 EditAction::make(),
             ])
-            ->bulkActions([
+            ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),

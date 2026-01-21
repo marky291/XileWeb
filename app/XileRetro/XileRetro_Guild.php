@@ -3,6 +3,7 @@
 namespace App\XileRetro;
 
 use App\Actions\CreateEmblemFromData;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Cache;
@@ -26,8 +27,8 @@ use Illuminate\Support\Facades\Cache;
  * @property string|null $emblem_data
  * @property string|null $last_master_change
  * @property-read string $emblem
- * @property-read \Illuminate\Database\Eloquent\Collection<int, XileRetro_GuildCastle> $castles
- * @property-read \Illuminate\Database\Eloquent\Collection<int, XileRetro_GuildMember> $members
+ * @property-read Collection<int, XileRetro_GuildCastle> $castles
+ * @property-read Collection<int, XileRetro_GuildMember> $members
  */
 class XileRetro_Guild extends XileRetro_Model
 {

@@ -7,6 +7,7 @@ use App\Models\UberShopPurchase;
 use App\Observers\UberShopPurchaseObserver;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
 use SocialiteProviders\Discord\Provider as DiscordProvider;
@@ -53,7 +54,7 @@ class AppServiceProvider extends ServiceProvider
 
             // Force HTTPS except for patch routes
             if (! str_starts_with($path, 'xilero/patch/') && ! str_starts_with($path, 'retro/patch/')) {
-                \Illuminate\Support\Facades\URL::forceScheme('https');
+                URL::forceScheme('https');
             }
         }
     }

@@ -6,12 +6,12 @@ use App\Filament\Resources\AtcommandResource\Pages\CreateAtcommand;
 use App\Filament\Resources\AtcommandResource\Pages\EditAtcommand;
 use App\Filament\Resources\AtcommandResource\Pages\ListAtcommands;
 use App\Models\Atcommand;
-use Filament\Forms\Form;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteBulkAction;
-use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -19,19 +19,19 @@ class AtcommandResource extends Resource
 {
     protected static ?string $model = Atcommand::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-command-line';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-command-line';
 
-    protected static ?string $navigationGroup = 'XileRO';
+    protected static string|\UnitEnum|null $navigationGroup = 'XileRO';
 
     protected static ?int $navigationSort = 4;
 
     // Hidden until Atcommand model is created
     protected static bool $shouldRegisterNavigation = false;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 //
             ]);
     }
@@ -51,10 +51,10 @@ class AtcommandResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
+            ->recordActions([
                 EditAction::make(),
             ])
-            ->bulkActions([
+            ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),

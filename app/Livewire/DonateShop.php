@@ -9,6 +9,7 @@ use App\Models\UberShopPurchase;
 use App\Notifications\UberShopPurchaseNotification;
 use App\XileRO\XileRO_Char;
 use App\XileRO\XileRO_Inventory;
+use Exception;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
@@ -134,7 +135,7 @@ class DonateShop extends Component
      *
      * @return Collection<int, UberShopCategory>
      */
-    public function categories(): Collection
+    public function categories(): EloquentCollection
     {
         return UberShopCategory::where('enabled', true)
             ->orderBy('display_order')
@@ -390,7 +391,7 @@ class DonateShop extends Component
 
             session()->flash('success', "Purchase cancelled. {$purchase->uber_cost} Ubers have been refunded.");
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             session()->flash('error', 'Failed to cancel purchase: '.$e->getMessage());
         }
     }
@@ -547,7 +548,7 @@ class DonateShop extends Component
 
             session()->flash('success', "Item refunded. {$purchase->uber_cost} Ubers have been returned to your account.");
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             session()->flash('error', 'Failed to process refund: '.$e->getMessage());
         }
     }
@@ -638,7 +639,7 @@ class DonateShop extends Component
 
                 // Re-check availability after lock
                 if (! $lockedItem || ! $lockedItem->is_available) {
-                    throw new \Exception('Item is no longer available.');
+                    throw new Exception('Item is no longer available.');
                 }
 
                 // Calculate new balance
@@ -682,7 +683,7 @@ class DonateShop extends Component
             $this->selectedItemId = null;
             $this->showPurchaseConfirm = false;
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             session()->flash('error', 'Purchase failed: '.$e->getMessage());
         }
     }

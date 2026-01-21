@@ -3,7 +3,7 @@
 namespace App\Filament\Resources\UberShopItemResource\Pages;
 
 use App\Filament\Resources\UberShopItemResource;
-use Filament\Actions;
+use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 
 class EditUberShopItem extends EditRecord
@@ -13,7 +13,7 @@ class EditUberShopItem extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\DeleteAction::make(),
+            DeleteAction::make(),
         ];
     }
 }

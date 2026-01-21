@@ -17,13 +17,6 @@ class ApplyDonationTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        Filament::setCurrentPanel(Filament::getPanel('admin'));
-    }
-
     #[Test]
     public function guest_cannot_access_apply_donation_page(): void
     {
@@ -55,6 +48,7 @@ class ApplyDonationTest extends TestCase
     public function can_apply_donation_to_user(): void
     {
         Queue::fake();
+        Filament::setCurrentPanel(Filament::getPanel('admin'));
 
         $admin = User::factory()->admin()->create();
         $user = User::factory()->create([
@@ -97,6 +91,7 @@ class ApplyDonationTest extends TestCase
     public function crypto_payment_adds_bonus(): void
     {
         Queue::fake();
+        Filament::setCurrentPanel(Filament::getPanel('admin'));
 
         $admin = User::factory()->admin()->create();
         $user = User::factory()->create([
@@ -135,6 +130,7 @@ class ApplyDonationTest extends TestCase
     public function can_add_extra_bonus_ubers(): void
     {
         Queue::fake();
+        Filament::setCurrentPanel(Filament::getPanel('admin'));
 
         $admin = User::factory()->admin()->create();
         $user = User::factory()->create([
@@ -171,6 +167,8 @@ class ApplyDonationTest extends TestCase
     #[Test]
     public function shows_donation_history_when_user_selected(): void
     {
+        Filament::setCurrentPanel(Filament::getPanel('admin'));
+
         $admin = User::factory()->admin()->create();
         $user = User::factory()->create();
 
@@ -190,6 +188,7 @@ class ApplyDonationTest extends TestCase
     public function redirects_to_donation_history_after_successful_donation(): void
     {
         Queue::fake();
+        Filament::setCurrentPanel(Filament::getPanel('admin'));
 
         $admin = User::factory()->admin()->create();
         $user = User::factory()->create();

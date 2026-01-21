@@ -2,8 +2,11 @@
 
 namespace App\XileRO;
 
+use Carbon\Carbon;
+use Database\Factories\XileRO\XileRO_LoginFactory;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -32,11 +35,11 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string|null $web_auth_token
  * @property int $web_auth_token_enabled
  * @property string|null $remember_token
- * @property \Carbon\Carbon|null $email_verified_at
+ * @property Carbon|null $email_verified_at
  * @property int $ubers
  * @property-read string $name
  * @property-read DonationUber|null $donationUber
- * @property-read \Illuminate\Database\Eloquent\Collection<int, Char> $chars
+ * @property-read Collection<int, Char> $chars
  *
  * @method static create(array $array)
  */
@@ -44,9 +47,9 @@ class XileRO_Login extends Authenticatable implements FilamentUser
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    protected static function newFactory(): \Database\Factories\XileRO\XileRO_LoginFactory
+    protected static function newFactory(): XileRO_LoginFactory
     {
-        return \Database\Factories\XileRO\XileRO_LoginFactory::new();
+        return XileRO_LoginFactory::new();
     }
 
     protected $connection = 'xilero_main';

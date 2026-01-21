@@ -8,13 +8,13 @@ use App\Filament\Resources\XileRetroLoginResource\Pages\EditXileRetroLogin;
 use App\Filament\Resources\XileRetroLoginResource\Pages\ListXileRetroLogins;
 use App\XileRetro\XileRetro_Login as Login;
 use Filament\Actions\Action;
+use Filament\Actions\EditAction;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Get;
 use Filament\Forms\Components\Set;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables\Actions\EditAction;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
@@ -26,9 +26,9 @@ class XileRetroLoginResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'userid';
 
-    protected static ?string $navigationGroup = 'XileRetro';
+    protected static string|\UnitEnum|null $navigationGroup = 'XileRetro';
 
-    protected static ?string $navigationIcon = 'heroicon-o-user-circle';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-user-circle';
 
     protected static ?int $navigationSort = 1;
 
@@ -38,10 +38,10 @@ class XileRetroLoginResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Logins';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 TextInput::make('account_id')->unique(ignoreRecord: true)->readOnly(),
                 TextInput::make('userid')->unique(ignoreRecord: true),
                 TextInput::make('email')->unique(ignoreRecord: true),
@@ -72,10 +72,10 @@ class XileRetroLoginResource extends Resource
             ->filters([
                 Filter::make('Staff')->query(fn (Builder $query): Builder => $query->where('group_id', '>', 1)),
             ])
-            ->actions([
+            ->recordActions([
                 EditAction::make(),
             ])
-            ->bulkActions([]);
+            ->toolbarActions([]);
     }
 
     public static function getRelations(): array

@@ -3,7 +3,7 @@
 namespace App\Filament\Resources\DonationLogResource\Pages;
 
 use App\Filament\Resources\DonationLogResource;
-use Filament\Actions;
+use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
 
 class ViewDonationLog extends ViewRecord
@@ -13,7 +13,7 @@ class ViewDonationLog extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\EditAction::make(),
+            EditAction::make(),
         ];
     }
 }
