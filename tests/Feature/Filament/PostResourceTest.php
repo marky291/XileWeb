@@ -104,13 +104,27 @@ class PostResourceTest extends TestCase
 
         $admin = User::factory()->admin()->create();
         $xileroPost = Post::factory()->create(['client' => Post::CLIENT_XILERO]);
-        $retroPost = Post::factory()->create(['client' => Post::CLIENT_XILERETRO]);
+        $retroPost = Post::factory()->create(['client' => Post::CLIENT_RETRO]);
 
         Livewire::actingAs($admin)
             ->test(ListPosts::class)
             ->filterTable('client', Post::CLIENT_XILERO)
             ->assertCanSeeTableRecords([$xileroPost])
             ->assertCanNotSeeTableRecords([$retroPost]);
+    }
+
+    #[Test]
+    public function admin_can_access_edit_post_page(): void
+    {
+        $admin = User::factory()->admin()->create();
+        $post = Post::factory()->create([
+            'title' => 'Original Title',
+            'patcher_notice' => 'Original notice',
+        ]);
+
+        $this->actingAs($admin)
+            ->get('/admin/posts/'.$post->slug.'/edit')
+            ->assertSuccessful();
     }
 
     #[Test]
@@ -122,10 +136,11 @@ class PostResourceTest extends TestCase
         $post = Post::factory()->create([
             'title' => 'Original Title',
             'patcher_notice' => 'Original notice',
+            'article_content' => 'Original content',
         ]);
 
         Livewire::actingAs($admin)
-            ->test(EditPost::class, ['record' => $post->id])
+            ->test(EditPost::class, ['record' => $post->slug])
             ->assertFormSet([
                 'title' => 'Original Title',
             ])

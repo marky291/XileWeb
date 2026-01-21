@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\ItemController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
@@ -31,3 +32,14 @@ Route::get('/discord', function () {
         ];
     });
 })->name('api.discord');
+
+/*
+|--------------------------------------------------------------------------
+| API V1 Routes (Token Authenticated)
+|--------------------------------------------------------------------------
+*/
+
+Route::prefix('v1')->middleware(['auth:sanctum', 'ability:read'])->group(function () {
+    Route::get('/items', [ItemController::class, 'index'])->name('api.v1.items.index');
+    Route::get('/items/{item}', [ItemController::class, 'show'])->name('api.v1.items.show');
+});

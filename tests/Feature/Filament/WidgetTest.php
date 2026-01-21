@@ -96,8 +96,8 @@ class WidgetTest extends TestCase
         Filament::setCurrentPanel(Filament::getPanel('admin'));
 
         $admin = User::factory()->admin()->create();
-        UberShopItem::factory()->count(5)->create(['is_active' => true]);
-        UberShopItem::factory()->count(3)->create(['is_active' => false]);
+        UberShopItem::factory()->count(5)->create(['enabled' => true]);
+        UberShopItem::factory()->count(3)->create(['enabled' => false]);
 
         $component = Livewire::actingAs($admin)
             ->test(ServerStatsOverview::class)

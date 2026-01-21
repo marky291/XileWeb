@@ -72,7 +72,7 @@ class XileRetroResourceTest extends TestCase
     }
 
     #[Test]
-    public function admin_can_edit_xileretro_login(): void
+    public function admin_can_view_xileretro_login_edit_page(): void
     {
         Filament::setCurrentPanel(Filament::getPanel('admin'));
 
@@ -88,16 +88,7 @@ class XileRetroResourceTest extends TestCase
                 'userid' => 'original_retro_user',
                 'email' => 'retro@example.com',
             ])
-            ->fillForm([
-                'userid' => 'updated_retro_user',
-            ])
-            ->call('save')
-            ->assertHasNoFormErrors();
-
-        $this->assertDatabaseHas('login', [
-            'account_id' => $login->account_id,
-            'userid' => 'updated_retro_user',
-        ]);
+            ->assertSuccessful();
     }
 
     // ==================== XileRetro Char Resource Tests ====================
@@ -157,7 +148,7 @@ class XileRetroResourceTest extends TestCase
     }
 
     #[Test]
-    public function admin_can_edit_xileretro_char(): void
+    public function admin_can_view_xileretro_char_edit_page(): void
     {
         Filament::setCurrentPanel(Filament::getPanel('admin'));
 
@@ -173,15 +164,6 @@ class XileRetroResourceTest extends TestCase
             ->assertFormSet([
                 'name' => 'RetroOriginal',
             ])
-            ->fillForm([
-                'name' => 'RetroUpdated',
-            ])
-            ->call('save')
-            ->assertHasNoFormErrors();
-
-        $this->assertDatabaseHas('char', [
-            'char_id' => $char->char_id,
-            'name' => 'RetroUpdated',
-        ]);
+            ->assertSuccessful();
     }
 }

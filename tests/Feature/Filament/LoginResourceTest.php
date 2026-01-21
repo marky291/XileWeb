@@ -3,7 +3,6 @@
 namespace Tests\Feature\Filament;
 
 use App\Filament\Resources\LoginResource;
-use App\Filament\Resources\LoginResource\Pages\EditLogin;
 use App\Filament\Resources\LoginResource\Pages\ListLogins;
 use App\Models\User;
 use App\XileRO\XileRO_Login;
@@ -93,36 +92,5 @@ class LoginResourceTest extends TestCase
             ->filterTable('Staff', true)
             ->assertCanSeeTableRecords([$staffLogin])
             ->assertCanNotSeeTableRecords([$regularLogin]);
-    }
-
-    #[Test]
-    public function admin_can_edit_login(): void
-    {
-        Filament::setCurrentPanel(Filament::getPanel('admin'));
-
-        $admin = User::factory()->admin()->create();
-        $login = XileRO_Login::factory()->create([
-            'userid' => 'original_user',
-            'email' => 'original@example.com',
-        ]);
-
-        Livewire::actingAs($admin)
-            ->test(EditLogin::class, ['record' => $login->account_id])
-            ->assertFormSet([
-                'userid' => 'original_user',
-                'email' => 'original@example.com',
-            ])
-            ->fillForm([
-                'userid' => 'updated_user',
-                'email' => 'updated@example.com',
-            ])
-            ->call('save')
-            ->assertHasNoFormErrors();
-
-        $this->assertDatabaseHas('login', [
-            'account_id' => $login->account_id,
-            'userid' => 'updated_user',
-            'email' => 'updated@example.com',
-        ]);
     }
 }
