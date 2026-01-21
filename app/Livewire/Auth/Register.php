@@ -5,7 +5,9 @@ namespace App\Livewire\Auth;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Validation\Rules\Password;
+use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
@@ -75,6 +77,7 @@ class Register extends Component
 
     public function register(): void
     {
+        $this->ensureIsNotRateLimited();
         $this->validate();
 
         $user = User::create([
@@ -82,12 +85,41 @@ class Register extends Component
             'password' => $this->password,
         ]);
 
+        RateLimiter::clear($this->throttleKey());
+
         event(new Registered($user));
 
         Auth::login($user);
         session()->regenerate();
 
         $this->redirect(route('verification.notice'), navigate: false);
+    }
+
+    /**
+     * Ensure the registration request is not rate limited.
+     */
+    protected function ensureIsNotRateLimited(): void
+    {
+        if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
+            RateLimiter::hit($this->throttleKey(), 3600); // 1 hour decay
+            return;
+        }
+
+        $seconds = RateLimiter::availableIn($this->throttleKey());
+
+        throw ValidationException::withMessages([
+            'email' => __('Too many registration attempts. Please try again in :minutes minutes.', [
+                'minutes' => ceil($seconds / 60),
+            ]),
+        ]);
+    }
+
+    /**
+     * Get the rate limiting throttle key for the request.
+     */
+    protected function throttleKey(): string
+    {
+        return 'register:'.request()->ip();
     }
 
     public function render()

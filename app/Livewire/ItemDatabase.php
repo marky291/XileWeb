@@ -29,6 +29,46 @@ class ItemDatabase extends Component
     public ?int $selectedItemId = null;
 
     /**
+     * Sanitize search input to prevent array injection attacks.
+     */
+    public function updatingSearch(mixed &$value): void
+    {
+        $value = is_string($value) ? $value : '';
+    }
+
+    /**
+     * Sanitize type input to prevent array injection attacks.
+     */
+    public function updatingType(mixed &$value): void
+    {
+        $value = is_string($value) || is_null($value) ? $value : null;
+    }
+
+    /**
+     * Sanitize sort input to prevent array injection attacks.
+     */
+    public function updatingSort(mixed &$value): void
+    {
+        $value = is_string($value) ? $value : 'popular';
+    }
+
+    /**
+     * Sanitize server input to prevent array injection attacks.
+     */
+    public function updatingServer(mixed &$value): void
+    {
+        $value = is_string($value) ? $value : 'xilero';
+    }
+
+    /**
+     * Sanitize selectedItemId input to prevent array injection attacks.
+     */
+    public function updatingSelectedItemId(mixed &$value): void
+    {
+        $value = is_numeric($value) ? (int) $value : null;
+    }
+
+    /**
      * Get all available item types.
      *
      * @return array<string>

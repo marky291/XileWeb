@@ -35,6 +35,46 @@ class DonateShop extends Component
 
     public bool $showPurchaseConfirm = false;
 
+    /**
+     * Sanitize category input to prevent array injection attacks.
+     */
+    public function updatingCategory(mixed &$value): void
+    {
+        $value = is_string($value) || is_null($value) ? $value : null;
+    }
+
+    /**
+     * Sanitize search input to prevent array injection attacks.
+     */
+    public function updatingSearch(mixed &$value): void
+    {
+        $value = is_string($value) ? $value : '';
+    }
+
+    /**
+     * Sanitize selectedItemId input to prevent array injection attacks.
+     */
+    public function updatingSelectedItemId(mixed &$value): void
+    {
+        $value = is_numeric($value) ? (int) $value : null;
+    }
+
+    /**
+     * Sanitize selectedGameAccountId input to prevent array injection attacks.
+     */
+    public function updatingSelectedGameAccountId(mixed &$value): void
+    {
+        $value = is_numeric($value) ? (int) $value : null;
+    }
+
+    /**
+     * Sanitize showPurchaseConfirm input to prevent array injection attacks.
+     */
+    public function updatingShowPurchaseConfirm(mixed &$value): void
+    {
+        $value = filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) ?? false;
+    }
+
     public function mount(): void
     {
         // Auto-select first game account if user has one

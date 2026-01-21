@@ -20,14 +20,21 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
         'name',
         'email',
         'password',
-        'max_game_accounts',
-        'uber_balance',
-        'is_admin',
         'discord_id',
         'discord_username',
         'discord_avatar',
         'discord_token',
         'discord_refresh_token',
+    ];
+
+    /**
+     * Attributes that should never be mass assignable (security-sensitive).
+     * These must be set explicitly via $user->attribute = value.
+     */
+    protected $guarded = [
+        'is_admin',
+        'uber_balance',
+        'max_game_accounts',
     ];
 
     protected $hidden = [

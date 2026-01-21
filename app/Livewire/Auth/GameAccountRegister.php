@@ -6,7 +6,9 @@ use App\Actions\MakeHashedLoginPassword;
 use App\XileRetro\XileRetro_Login;
 use App\XileRO\XileRO_Login;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Validation\Rules\Password;
+use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
@@ -114,6 +116,7 @@ class GameAccountRegister extends Component
 
     public function register(): void
     {
+        $this->ensureIsNotRateLimited();
         $this->validate();
 
         $loginData = [
@@ -128,11 +131,40 @@ class GameAccountRegister extends Component
             $login = XileRO_Login::create($loginData);
         }
 
+        RateLimiter::clear($this->throttleKey());
+
         Auth::login($login);
 
         session()->regenerate();
 
         $this->redirect(route('dashboard'), navigate: false);
+    }
+
+    /**
+     * Ensure the registration request is not rate limited.
+     */
+    protected function ensureIsNotRateLimited(): void
+    {
+        if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
+            RateLimiter::hit($this->throttleKey(), 3600); // 1 hour decay
+            return;
+        }
+
+        $seconds = RateLimiter::availableIn($this->throttleKey());
+
+        throw ValidationException::withMessages([
+            'username' => __('Too many registration attempts. Please try again in :minutes minutes.', [
+                'minutes' => ceil($seconds / 60),
+            ]),
+        ]);
+    }
+
+    /**
+     * Get the rate limiting throttle key for the request.
+     */
+    protected function throttleKey(): string
+    {
+        return 'game-register:'.request()->ip();
     }
 
     public function render()
