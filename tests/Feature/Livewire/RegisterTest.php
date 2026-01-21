@@ -5,6 +5,7 @@ namespace Tests\Feature\Livewire;
 use App\Livewire\Auth\Register;
 use App\Models\User;
 use App\Notifications\WelcomeNotification;
+use Illuminate\Auth\Events\Verified;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
 use Livewire\Livewire;
@@ -85,10 +86,11 @@ class RegisterTest extends TestCase
         $this->assertEquals(6, $user->max_game_accounts);
     }
 
-    public function test_welcome_email_is_sent_on_registration(): void
+    public function test_welcome_email_is_sent_on_email_verification(): void
     {
         Notification::fake();
 
+        // Register the user
         Livewire::test(Register::class)
             ->set('email', 'newuser@email.com')
             ->set('password', 'password123')
@@ -96,6 +98,10 @@ class RegisterTest extends TestCase
             ->call('register');
 
         $user = User::where('email', 'newuser@email.com')->first();
+
+        // Welcome notification is sent when email is verified, not on registration
+        // Fire the Verified event (which is triggered by email verification)
+        event(new Verified($user));
 
         Notification::assertSentTo($user, WelcomeNotification::class);
     }

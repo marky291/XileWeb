@@ -46,6 +46,11 @@ class XileRO_Inventory extends XileRO_Model
 {
     use HasFactory;
 
+    protected static function newFactory(): \Database\Factories\XileRO\XileRO_InventoryFactory
+    {
+        return \Database\Factories\XileRO\XileRO_InventoryFactory::new();
+    }
+
     protected $connection = 'xilero_main';
 
     protected $table = 'inventory';

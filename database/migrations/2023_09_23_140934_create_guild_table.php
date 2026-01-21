@@ -17,7 +17,7 @@ return new class extends Migration
             Schema::create('guild', function (Blueprint $table) {
                 $table->id('guild_id');
                 $table->string('name', 24)->default('');
-                $table->unsignedInteger('char_id')->default(0)->index('char_id');
+                $table->unsignedInteger('char_id')->default(0)->index('guild_char_id');
                 $table->string('master', 24)->default('');
                 $table->unsignedTinyInteger('guild_lv')->default(0);
                 $table->unsignedTinyInteger('connect_member')->default(0);

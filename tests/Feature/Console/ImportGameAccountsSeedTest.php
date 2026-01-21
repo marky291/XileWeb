@@ -243,25 +243,14 @@ class ImportGameAccountsSeedTest extends TestCase
     }
 
     #[Test]
-    public function import_all_shows_message_when_no_unlinked_accounts(): void
+    public function import_all_shows_message_when_no_accounts_in_game_database(): void
     {
-        // Create an already linked account
-        $user = User::factory()->create();
-        $login = XileRO_Login::factory()->create([
-            'email' => 'linked@example.com',
-            'group_id' => 0,
-        ]);
-        GameAccount::factory()->create([
-            'user_id' => $user->id,
-            'server' => 'xilero',
-            'ragnarok_account_id' => $login->account_id,
-        ]);
-
+        // No accounts in game database at all
         $this->artisan('player:import', [
             '--server' => 'xilero',
             '--all' => true,
         ])
-            ->expectsOutput('No unlinked accounts found to import.')
+            ->expectsOutput('No accounts found in game database.')
             ->assertExitCode(0);
     }
 
@@ -286,7 +275,7 @@ class ImportGameAccountsSeedTest extends TestCase
             '--all' => true,
             '--dry-run' => true,
         ])
-            ->expectsOutputToContain('Found 1 accounts to import')
+            ->expectsOutputToContain('Found 1 accounts in game database')
             ->assertExitCode(0);
     }
 
@@ -312,7 +301,7 @@ class ImportGameAccountsSeedTest extends TestCase
             '--all' => true,
             '--dry-run' => true,
         ])
-            ->expectsOutputToContain('Found 1 accounts to import')
+            ->expectsOutputToContain('Found 1 accounts in game database')
             ->assertExitCode(0);
     }
 
@@ -338,9 +327,7 @@ class ImportGameAccountsSeedTest extends TestCase
             '--all' => true,
             '--dry-run' => true,
         ])
-            ->expectsOutputToContain('Found 2 accounts to import')
-            ->expectsOutputToContain('1 with valid email (will create master account)')
-            ->expectsOutputToContain('1 with fake/invalid email (game account only')
+            ->expectsOutputToContain('Found 2 accounts in game database')
             ->assertExitCode(0);
     }
 
@@ -364,7 +351,7 @@ class ImportGameAccountsSeedTest extends TestCase
             '--all' => true,
             '--dry-run' => true,
         ])
-            ->expectsOutput('[DRY RUN] Would import the following accounts:')
+            ->expectsOutputToContain('[DRY RUN] Sample accounts from game database')
             ->assertExitCode(0);
 
         // Verify nothing was created
@@ -387,7 +374,7 @@ class ImportGameAccountsSeedTest extends TestCase
             '--dry-run' => true,
             '--limit' => 2,
         ])
-            ->expectsOutputToContain('Found 2 accounts to import (limited to 2)')
+            ->expectsOutputToContain('Found 5 accounts in game database (limited to 2)')
             ->assertExitCode(0);
     }
 
@@ -410,7 +397,7 @@ class ImportGameAccountsSeedTest extends TestCase
             '--server' => 'xilero',
             '--all' => true,
         ])
-            ->expectsConfirmation('Import 2 accounts?', 'yes')
+            ->expectsConfirmation('Import new accounts (processing newest first, stops after 500 consecutive already-synced)?', 'yes')
             ->expectsOutputToContain('Import complete: 2 imported (1 with master account, 1 unclaimed)')
             ->assertExitCode(0);
 
@@ -439,7 +426,7 @@ class ImportGameAccountsSeedTest extends TestCase
             '--server' => 'xilero',
             '--all' => true,
         ])
-            ->expectsConfirmation('Import 1 accounts?', 'no')
+            ->expectsConfirmation('Import new accounts (processing newest first, stops after 500 consecutive already-synced)?', 'no')
             ->expectsOutput('Import cancelled.')
             ->assertExitCode(0);
 
@@ -449,7 +436,7 @@ class ImportGameAccountsSeedTest extends TestCase
     }
 
     #[Test]
-    public function interactive_mode_shows_unlinked_accounts_with_master_column(): void
+    public function interactive_mode_shows_accounts_with_master_column(): void
     {
         XileRO_Login::factory()->create([
             'userid' => 'validuser',
@@ -466,9 +453,9 @@ class ImportGameAccountsSeedTest extends TestCase
         $this->artisan('player:import', [
             '--server' => 'xilero',
         ])
-            ->expectsOutput('Unlinked accounts (showing first 20):')
+            ->expectsOutput('Game accounts (showing first 20):')
             ->expectsOutput('Use --account-id=<ID> to import a specific account')
-            ->expectsOutput('Use --all to import all unlinked accounts')
+            ->expectsOutput('Use --all to import all accounts (existing will be skipped)')
             ->assertExitCode(0);
     }
 
@@ -478,7 +465,7 @@ class ImportGameAccountsSeedTest extends TestCase
         $this->artisan('player:import', [
             '--server' => 'xilero',
         ])
-            ->expectsOutput('No unlinked accounts found to import.')
+            ->expectsOutput('No accounts found in game database.')
             ->assertExitCode(0);
     }
 
@@ -750,7 +737,7 @@ class ImportGameAccountsSeedTest extends TestCase
             '--server' => 'xileretro',
             '--all' => true,
         ])
-            ->expectsConfirmation('Import 2 accounts?', 'yes')
+            ->expectsConfirmation('Import new accounts (processing newest first, stops after 500 consecutive already-synced)?', 'yes')
             ->expectsOutputToContain('Import complete: 2 imported (2 with master account, 0 unclaimed)')
             ->expectsOutputToContain('Legacy ubers: 100 transferred to master accounts')
             ->assertExitCode(0);
@@ -777,7 +764,7 @@ class ImportGameAccountsSeedTest extends TestCase
             '--all' => true,
             '--dry-run' => true,
         ])
-            ->expectsOutput('[DRY RUN] Would import the following accounts:')
+            ->expectsOutputToContain('[DRY RUN] Sample accounts from game database')
             ->assertExitCode(0);
 
         // Nothing should be created

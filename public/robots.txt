@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /livewire/
+
+Sitemap: https://xilero.net/sitemap.xml

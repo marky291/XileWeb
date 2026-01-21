@@ -79,136 +79,170 @@
         @auth
             @if ($pendingPurchases->isNotEmpty())
                 <div class="mb-6 block-home bg-gray-900 rounded-lg overflow-hidden">
-                    <div class="p-4 border-b border-gray-800">
-                        <h2 class="text-lg font-semibold text-white">
-                            <i class="fas fa-clock text-amber-400 mr-2"></i>
-                            Pending Redemption ({{ $pendingPurchases->count() }})
-                        </h2>
-                        <p class="text-sm text-gray-400 mt-1">Items will be delivered on your next login</p>
-                    </div>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-sm">
-                            <thead class="bg-gray-800/50 text-gray-400 text-left">
-                                <tr>
-                                    <th class="px-4 py-3 font-medium">Item</th>
-                                    <th class="px-4 py-3 font-medium">Server</th>
-                                    <th class="px-4 py-3 font-medium">Account</th>
-                                    <th class="px-4 py-3 font-medium">Cost</th>
-                                    <th class="px-4 py-3 font-medium">Purchased</th>
-                                    <th class="px-4 py-3 font-medium"></th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-gray-800">
-                                @foreach ($pendingPurchases as $purchase)
-                                    @php
-                                        $purchaseGameAccount = $gameAccounts->where('ragnarok_account_id', $purchase->account_id)->first();
-                                    @endphp
-                                    <tr class="hover:bg-gray-800/30">
-                                        <td class="px-4 py-3">
-                                            <div class="flex items-center gap-3">
-                                                <span class="w-8 h-8 bg-gray-800 rounded flex items-center justify-center overflow-hidden shrink-0">
-                                                    @if ($purchase->shopItem?->item)
-                                                        <img src="{{ $purchase->shopItem->item->icon() }}" alt="" class="max-h-full max-w-full object-contain">
-                                                    @else
-                                                        <i class="fas fa-box text-gray-500 text-xs"></i>
-                                                    @endif
-                                                </span>
-                                                <span class="text-white">
-                                                    @if ($purchase->refine_level > 0)+{{ $purchase->refine_level }} @endif{{ $purchase->item_name }}@if ($purchase->quantity > 1) <span class="text-gray-400">x{{ $purchase->quantity }}</span>@endif
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td class="px-4 py-3 text-gray-300">{{ $purchaseGameAccount?->serverName() ?? 'Unknown' }}</td>
-                                        <td class="px-4 py-3 text-gray-300">{{ $purchase->account_name }}</td>
-                                        <td class="px-4 py-3 text-amber-400">{{ $purchase->uber_cost }} Ubers</td>
-                                        <td class="px-4 py-3 text-gray-400">{{ $purchase->purchased_at->diffForHumans() }}</td>
-                                        <td class="px-4 py-3">
-                                            <button
-                                                wire:click="cancelPendingPurchase({{ $purchase->id }})"
-                                                wire:confirm="Cancel this purchase and refund {{ $purchase->uber_cost }} Ubers?"
-                                                class="text-gray-400 hover:text-red-400 transition-colors"
-                                                title="Cancel and refund"
-                                            >
-                                                <i class="fas fa-times"></i>
-                                            </button>
-                                        </td>
+                    <button wire:click="$toggle('showPending')"
+                            class="w-full p-4 border-b border-gray-800 flex items-center justify-between hover:bg-gray-800/50 transition-colors text-left">
+                        <div>
+                            <h2 class="text-lg font-semibold text-white">
+                                <i class="fas fa-clock text-amber-400 mr-2"></i>
+                                Pending Redemption ({{ $pendingPurchases->count() }})
+                            </h2>
+                            <p class="text-sm text-gray-400 mt-1">Items will be delivered on your next login</p>
+                        </div>
+                        <i class="fas fa-chevron-down text-gray-400 transition-transform duration-200"
+                           :class="{ 'rotate-180': $wire.showPending }"></i>
+                    </button>
+                    <div x-show="$wire.showPending" x-collapse>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm">
+                                <thead class="bg-gray-800/50 text-gray-400 text-left">
+                                    <tr>
+                                        <th class="px-4 py-3 font-medium">Item</th>
+                                        <th class="px-4 py-3 font-medium">Server</th>
+                                        <th class="px-4 py-3 font-medium">Account</th>
+                                        <th class="px-4 py-3 font-medium">Cost</th>
+                                        <th class="px-4 py-3 font-medium">Purchased</th>
+                                        <th class="px-4 py-3 font-medium"></th>
                                     </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody class="divide-y divide-gray-800">
+                                    @foreach ($pendingPurchases as $purchase)
+                                        @php
+                                            $purchaseGameAccount = $gameAccounts->where('ragnarok_account_id', $purchase->account_id)->first();
+                                        @endphp
+                                        <tr class="hover:bg-gray-800/30">
+                                            <td class="px-4 py-3">
+                                                <div class="flex items-center gap-3">
+                                                    <span class="w-8 h-8 bg-gray-800 rounded flex items-center justify-center overflow-hidden shrink-0">
+                                                        @if ($purchase->shopItem?->item)
+                                                            <img src="{{ $purchase->shopItem->item->icon() }}" alt="" class="max-h-full max-w-full object-contain">
+                                                        @else
+                                                            <i class="fas fa-box text-gray-500 text-xs"></i>
+                                                        @endif
+                                                    </span>
+                                                    <span class="text-white">
+                                                        @if ($purchase->refine_level > 0)+{{ $purchase->refine_level }} @endif{{ $purchase->item_name }}@if ($purchase->quantity > 1) <span class="text-gray-400">x{{ $purchase->quantity }}</span>@endif
+                                                    </span>
+                                                </div>
+                                            </td>
+                                            <td class="px-4 py-3 text-gray-300">{{ $purchaseGameAccount?->serverName() ?? 'Unknown' }}</td>
+                                            <td class="px-4 py-3 text-gray-300">{{ $purchase->account_name }}</td>
+                                            <td class="px-4 py-3 text-amber-400">{{ $purchase->uber_cost }} Ubers</td>
+                                            <td class="px-4 py-3 text-gray-400">{{ $purchase->purchased_at->diffForHumans() }}</td>
+                                            <td class="px-4 py-3">
+                                                <button
+                                                    wire:click="cancelPendingPurchase({{ $purchase->id }})"
+                                                    wire:confirm="Cancel this purchase and refund {{ $purchase->uber_cost }} Ubers?"
+                                                    class="text-gray-400 hover:text-red-400 transition-colors"
+                                                    title="Cancel and refund"
+                                                >
+                                                    <i class="fas fa-times"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             @endif
 
             {{-- Purchase History (Claimed items eligible for refund) --}}
-            @if ($claimedPurchases->isNotEmpty())
-                <div class="mb-6 block-home bg-gray-900 rounded-lg overflow-hidden">
-                    <div class="p-4 border-b border-gray-800">
+            <div class="mb-6 block-home bg-gray-900 rounded-lg overflow-hidden">
+                <button wire:click="$toggle('showRecent')"
+                        class="w-full p-4 border-b border-gray-800 flex items-center justify-between hover:bg-gray-800/50 transition-colors text-left">
+                    <div>
                         <h2 class="text-lg font-semibold text-white">
                             <i class="fas fa-history text-blue-400 mr-2"></i>
                             Recent Purchases
+                            @if ($claimedPurchases->isNotEmpty())
+                                <span class="text-sm font-normal text-gray-400">({{ $claimedPurchases->count() }})</span>
+                            @endif
                         </h2>
                         <p class="text-sm text-gray-400 mt-1">Items can be refunded within {{ $refundHours }} hours if still in inventory</p>
                     </div>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-sm">
-                            <thead class="bg-gray-800/50 text-gray-400 text-left">
-                                <tr>
-                                    <th class="px-4 py-3 font-medium">Item</th>
-                                    <th class="px-4 py-3 font-medium">Server</th>
-                                    <th class="px-4 py-3 font-medium">Character</th>
-                                    <th class="px-4 py-3 font-medium">Cost</th>
-                                    <th class="px-4 py-3 font-medium">Claimed</th>
-                                    <th class="px-4 py-3 font-medium"></th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-gray-800">
-                                @foreach ($claimedPurchases as $purchase)
-                                    @php
-                                        $purchaseGameAccount = $gameAccounts->where('ragnarok_account_id', $purchase->account_id)->first();
-                                        $canRefund = $purchase->claimed_at && $purchase->claimed_at->addHours($refundHours)->isFuture();
-                                        $refundExpiresAt = $purchase->claimed_at?->addHours($refundHours);
-                                    @endphp
-                                    <tr class="hover:bg-gray-800/30">
-                                        <td class="px-4 py-3">
-                                            <div class="flex items-center gap-3">
-                                                <span class="w-8 h-8 bg-gray-800 rounded flex items-center justify-center overflow-hidden shrink-0">
-                                                    @if ($purchase->shopItem?->item)
-                                                        <img src="{{ $purchase->shopItem->item->icon() }}" alt="" class="max-h-full max-w-full object-contain">
-                                                    @else
-                                                        <i class="fas fa-box text-gray-500 text-xs"></i>
-                                                    @endif
-                                                </span>
-                                                <span class="text-white">
-                                                    @if ($purchase->refine_level > 0)+{{ $purchase->refine_level }} @endif{{ $purchase->item_name }}@if ($purchase->quantity > 1) <span class="text-gray-400">x{{ $purchase->quantity }}</span>@endif
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td class="px-4 py-3 text-gray-300">{{ $purchaseGameAccount?->serverName() ?? 'Unknown' }}</td>
-                                        <td class="px-4 py-3 text-gray-300">{{ $purchase->claimed_by_char_name ?? '-' }}</td>
-                                        <td class="px-4 py-3 text-amber-400">{{ $purchase->uber_cost }} Ubers</td>
-                                        <td class="px-4 py-3 text-gray-400">{{ $purchase->claimed_at?->diffForHumans() ?? '-' }}</td>
-                                        <td class="px-4 py-3">
-                                            @if ($canRefund)
-                                                <button
-                                                    wire:click="refundPurchase({{ $purchase->id }})"
-                                                    wire:confirm="Refund this item? The item will be removed from your character's inventory and {{ $purchase->uber_cost }} Ubers will be returned."
-                                                    class="text-blue-400 hover:text-blue-300 transition-colors text-xs font-medium"
-                                                    title="Refund expires {{ $refundExpiresAt->diffForHumans() }}"
-                                                >
-                                                    <i class="fas fa-undo mr-1"></i>Refund
-                                                </button>
-                                            @else
-                                                <span class="text-gray-500 text-xs">Expired</span>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                    <div class="flex items-center gap-4">
+                        {{-- Filter dropdown (only visible when expanded) --}}
+                        <select wire:model.live="recentFilter"
+                                x-show="$wire.showRecent"
+                                x-cloak
+                                @click.stop
+                                class="bg-gray-800 text-white border border-gray-600 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+                            <option value="refundable">Refundable Only</option>
+                            <option value="all">All Recent</option>
+                            <option value="expired">Expired Only</option>
+                        </select>
+                        <i class="fas fa-chevron-down text-gray-400 transition-transform duration-200"
+                           :class="{ 'rotate-180': $wire.showRecent }"></i>
                     </div>
+                </button>
+                <div x-show="$wire.showRecent" x-collapse>
+                    @if ($claimedPurchases->isNotEmpty())
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm">
+                                <thead class="bg-gray-800/50 text-gray-400 text-left">
+                                    <tr>
+                                        <th class="px-4 py-3 font-medium">Item</th>
+                                        <th class="px-4 py-3 font-medium">Server</th>
+                                        <th class="px-4 py-3 font-medium">Character</th>
+                                        <th class="px-4 py-3 font-medium">Cost</th>
+                                        <th class="px-4 py-3 font-medium">Claimed</th>
+                                        <th class="px-4 py-3 font-medium"></th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-800">
+                                    @foreach ($claimedPurchases as $purchase)
+                                        @php
+                                            $purchaseGameAccount = $gameAccounts->where('ragnarok_account_id', $purchase->account_id)->first();
+                                            $canRefund = $purchase->claimed_at && $purchase->claimed_at->addHours($refundHours)->isFuture();
+                                            $refundExpiresAt = $purchase->claimed_at?->addHours($refundHours);
+                                        @endphp
+                                        <tr class="hover:bg-gray-800/30">
+                                            <td class="px-4 py-3">
+                                                <div class="flex items-center gap-3">
+                                                    <span class="w-8 h-8 bg-gray-800 rounded flex items-center justify-center overflow-hidden shrink-0">
+                                                        @if ($purchase->shopItem?->item)
+                                                            <img src="{{ $purchase->shopItem->item->icon() }}" alt="" class="max-h-full max-w-full object-contain">
+                                                        @else
+                                                            <i class="fas fa-box text-gray-500 text-xs"></i>
+                                                        @endif
+                                                    </span>
+                                                    <span class="text-white">
+                                                        @if ($purchase->refine_level > 0)+{{ $purchase->refine_level }} @endif{{ $purchase->item_name }}@if ($purchase->quantity > 1) <span class="text-gray-400">x{{ $purchase->quantity }}</span>@endif
+                                                    </span>
+                                                </div>
+                                            </td>
+                                            <td class="px-4 py-3 text-gray-300">{{ $purchaseGameAccount?->serverName() ?? 'Unknown' }}</td>
+                                            <td class="px-4 py-3 text-gray-300">{{ $purchase->claimed_by_char_name ?? '-' }}</td>
+                                            <td class="px-4 py-3 text-amber-400">{{ $purchase->uber_cost }} Ubers</td>
+                                            <td class="px-4 py-3 text-gray-400">{{ $purchase->claimed_at?->diffForHumans() ?? '-' }}</td>
+                                            <td class="px-4 py-3">
+                                                @if ($canRefund)
+                                                    <button
+                                                        wire:click="refundPurchase({{ $purchase->id }})"
+                                                        wire:confirm="Refund this item? The item will be removed from your character's inventory and {{ $purchase->uber_cost }} Ubers will be returned."
+                                                        class="text-blue-400 hover:text-blue-300 transition-colors text-xs font-medium"
+                                                        title="Refund expires {{ $refundExpiresAt->diffForHumans() }}"
+                                                    >
+                                                        <i class="fas fa-undo mr-1"></i>Refund
+                                                    </button>
+                                                @else
+                                                    <span class="text-gray-500 text-xs">Expired</span>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    @else
+                        <div class="p-8 text-center text-gray-500">
+                            <i class="fas fa-inbox text-3xl mb-3"></i>
+                            <p>No {{ $recentFilter === 'refundable' ? 'refundable' : ($recentFilter === 'expired' ? 'expired' : '') }} purchases found</p>
+                        </div>
+                    @endif
                 </div>
-            @endif
+            </div>
         @endauth
 
         {{-- No Game Account Warning --}}

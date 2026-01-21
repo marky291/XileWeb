@@ -74,7 +74,6 @@ class AdminDashboardTest extends TestCase
                 'name' => 'Test User',
                 'email' => 'testuser@example.com',
                 'password' => 'password123',
-                'uber_balance' => 100,
                 'max_game_accounts' => 6,
                 'is_admin' => false,
             ])
@@ -84,7 +83,7 @@ class AdminDashboardTest extends TestCase
         $this->assertDatabaseHas('users', [
             'name' => 'Test User',
             'email' => 'testuser@example.com',
-            'uber_balance' => 100,
+            'uber_balance' => 0, // uber_balance is set via Apply Donation page, not admin form
             'max_game_accounts' => 6,
             'is_admin' => false,
         ]);
@@ -97,17 +96,18 @@ class AdminDashboardTest extends TestCase
         $user = User::factory()->create([
             'name' => 'Original Name',
             'uber_balance' => 50,
+            'max_game_accounts' => 6,
         ]);
 
         Livewire::actingAs($admin)
             ->test(EditMasterAccount::class, ['record' => $user->id])
             ->assertFormSet([
                 'name' => 'Original Name',
-                'uber_balance' => 50,
+                'max_game_accounts' => 6,
             ])
             ->fillForm([
                 'name' => 'Updated Name',
-                'uber_balance' => 200,
+                'max_game_accounts' => 10,
             ])
             ->call('save')
             ->assertHasNoFormErrors();
@@ -115,7 +115,8 @@ class AdminDashboardTest extends TestCase
         $this->assertDatabaseHas('users', [
             'id' => $user->id,
             'name' => 'Updated Name',
-            'uber_balance' => 200,
+            'max_game_accounts' => 10,
+            'uber_balance' => 50, // uber_balance is unchanged - set via Apply Donation page
         ]);
     }
 
@@ -169,7 +170,7 @@ class AdminDashboardTest extends TestCase
     #[Test]
     public function master_account_resource_has_correct_navigation_group(): void
     {
-        $this->assertEquals('Website', MasterAccountResource::getNavigationGroup());
+        $this->assertEquals('Accounts', MasterAccountResource::getNavigationGroup());
     }
 
     #[Test]

@@ -34,7 +34,7 @@ class UberShopResourceTest extends TestCase
     #[Test]
     public function category_resource_has_correct_navigation_group(): void
     {
-        $this->assertEquals('Website', UberShopCategoryResource::getNavigationGroup());
+        $this->assertEquals('Shop', UberShopCategoryResource::getNavigationGroup());
         $this->assertEquals('Uber Shop', UberShopCategoryResource::getNavigationLabel());
     }
 

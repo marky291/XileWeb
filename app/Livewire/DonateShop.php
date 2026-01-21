@@ -29,6 +29,15 @@ class DonateShop extends Component
     #[Url]
     public string $search = '';
 
+    #[Url]
+    public bool $showPending = true;
+
+    #[Url]
+    public bool $showRecent = false;
+
+    #[Url]
+    public string $recentFilter = 'refundable';
+
     public ?int $selectedItemId = null;
 
     public ?int $selectedGameAccountId = null;
@@ -73,6 +82,31 @@ class DonateShop extends Component
     public function updatingShowPurchaseConfirm(mixed &$value): void
     {
         $value = filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) ?? false;
+    }
+
+    /**
+     * Sanitize showPending input to prevent array injection attacks.
+     */
+    public function updatingShowPending(mixed &$value): void
+    {
+        $value = filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) ?? true;
+    }
+
+    /**
+     * Sanitize showRecent input to prevent array injection attacks.
+     */
+    public function updatingShowRecent(mixed &$value): void
+    {
+        $value = filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) ?? false;
+    }
+
+    /**
+     * Sanitize recentFilter input to prevent array injection attacks.
+     */
+    public function updatingRecentFilter(mixed &$value): void
+    {
+        $allowedValues = ['all', 'refundable', 'expired'];
+        $value = is_string($value) && in_array($value, $allowedValues, true) ? $value : 'refundable';
     }
 
     public function mount(): void
@@ -378,13 +412,20 @@ class DonateShop extends Component
             return new EloquentCollection;
         }
 
-        // Show claimed purchases from last 7 days
-        return UberShopPurchase::whereIn('account_id', $accountIds)
+        $query = UberShopPurchase::whereIn('account_id', $accountIds)
             ->where('status', UberShopPurchase::STATUS_CLAIMED)
-            ->where('claimed_at', '>=', now()->subDays(7))
             ->with('shopItem')
-            ->orderByDesc('claimed_at')
-            ->get();
+            ->orderByDesc('claimed_at');
+
+        // Apply filter based on recentFilter property
+        match ($this->recentFilter) {
+            'refundable' => $query->where('claimed_at', '>=', now()->subHours($this->refundHours())),
+            'expired' => $query->where('claimed_at', '<', now()->subHours($this->refundHours()))
+                ->where('claimed_at', '>=', now()->subDays(7)),
+            default => $query->where('claimed_at', '>=', now()->subDays(7)), // 'all'
+        };
+
+        return $query->get();
     }
 
     /**
