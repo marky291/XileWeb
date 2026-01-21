@@ -21,6 +21,30 @@ class GameAccountLogin extends Component
 
     public bool $remember = false;
 
+    /**
+     * Sanitize email input to prevent array injection attacks.
+     */
+    public function updatingEmail(mixed &$value): void
+    {
+        $value = is_string($value) ? $value : '';
+    }
+
+    /**
+     * Sanitize password input to prevent array injection attacks.
+     */
+    public function updatingPassword(mixed &$value): void
+    {
+        $value = is_string($value) ? $value : '';
+    }
+
+    /**
+     * Sanitize remember input to prevent array injection attacks.
+     */
+    public function updatingRemember(mixed &$value): void
+    {
+        $value = filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) ?? false;
+    }
+
     public function mount(): void
     {
         // Store the referer as intended URL if not already set and it's from our site
