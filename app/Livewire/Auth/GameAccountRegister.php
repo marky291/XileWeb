@@ -25,6 +25,46 @@ class GameAccountRegister extends Component
 
     public string $password_confirmation = '';
 
+    /**
+     * Sanitize server input to prevent array injection attacks.
+     */
+    public function updatingServer(mixed &$value): void
+    {
+        $value = is_string($value) ? $value : 'xilero';
+    }
+
+    /**
+     * Sanitize username input to prevent array injection attacks.
+     */
+    public function updatingUsername(mixed &$value): void
+    {
+        $value = is_string($value) ? $value : '';
+    }
+
+    /**
+     * Sanitize email input to prevent array injection attacks.
+     */
+    public function updatingEmail(mixed &$value): void
+    {
+        $value = is_string($value) ? $value : '';
+    }
+
+    /**
+     * Sanitize password input to prevent array injection attacks.
+     */
+    public function updatingPassword(mixed &$value): void
+    {
+        $value = is_string($value) ? $value : '';
+    }
+
+    /**
+     * Sanitize password confirmation input to prevent array injection attacks.
+     */
+    public function updatingPasswordConfirmation(mixed &$value): void
+    {
+        $value = is_string($value) ? $value : '';
+    }
+
     public function rules(): array
     {
         $database = $this->server === 'xileretro' ? 'xileretro_main' : 'xilero_main';
@@ -79,7 +119,7 @@ class GameAccountRegister extends Component
         $loginData = [
             'userid' => $this->username,
             'email' => $this->email,
-            'user_pass' => MakeHashedLoginPassword::run($this->password),
+            'user_pass' => MakeHashedLoginPassword::run($this->password, $this->server),
         ];
 
         if ($this->server === 'xileretro') {

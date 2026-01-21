@@ -35,6 +35,62 @@ class Dashboard extends Component
 
     public string $newPassword_confirmation = '';
 
+    /**
+     * Sanitize showCreateForm input to prevent array injection attacks.
+     */
+    public function updatingShowCreateForm(mixed &$value): void
+    {
+        $value = filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) ?? false;
+    }
+
+    /**
+     * Sanitize gameServer input to prevent array injection attacks.
+     */
+    public function updatingGameServer(mixed &$value): void
+    {
+        $value = is_string($value) ? $value : 'xilero';
+    }
+
+    /**
+     * Sanitize gameUsername input to prevent array injection attacks.
+     */
+    public function updatingGameUsername(mixed &$value): void
+    {
+        $value = is_string($value) ? $value : '';
+    }
+
+    /**
+     * Sanitize gamePassword input to prevent array injection attacks.
+     */
+    public function updatingGamePassword(mixed &$value): void
+    {
+        $value = is_string($value) ? $value : '';
+    }
+
+    /**
+     * Sanitize gamePassword_confirmation input to prevent array injection attacks.
+     */
+    public function updatingGamePasswordConfirmation(mixed &$value): void
+    {
+        $value = is_string($value) ? $value : '';
+    }
+
+    /**
+     * Sanitize newPassword input to prevent array injection attacks.
+     */
+    public function updatingNewPassword(mixed &$value): void
+    {
+        $value = is_string($value) ? $value : '';
+    }
+
+    /**
+     * Sanitize newPassword_confirmation input to prevent array injection attacks.
+     */
+    public function updatingNewPasswordConfirmation(mixed &$value): void
+    {
+        $value = is_string($value) ? $value : '';
+    }
+
     public function rules(): array
     {
         $loginTable = $this->gameServer === 'xileretro' ? 'xileretro_main.login' : 'xilero_main.login';

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Actions\SyncGameAccountData;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Notifications\DiscordLinkedNotification;
 use App\Notifications\WelcomeNotification;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -59,9 +60,17 @@ class DiscordController extends Controller
             $user = User::where('email', $discordUser->getEmail())->first();
 
             if ($user) {
+                // Only notify if this is a new Discord link (not updating existing)
+                $isNewLink = $user->discord_id === null;
+
                 $this->updateDiscordData($user, $discordUser);
                 Auth::login($user, remember: true);
                 SyncGameAccountData::run($user);
+
+                // Notify user that Discord was linked to their account
+                if ($isNewLink) {
+                    $user->notify(new DiscordLinkedNotification($discordUser->getNickname() ?? $discordUser->getName()));
+                }
 
                 return redirect()->to($intendedUrl);
             }

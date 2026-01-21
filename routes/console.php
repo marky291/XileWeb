@@ -7,6 +7,6 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
 
-Artisan::command('horizon:snapshot', function () {
-    $this->call('horizon:snapshot');
-})->purpose('Take Horizon snapshot')->everyFiveMinutes();
+// Artisan::command('horizon:snapshot', function () {
+//     $this->call('horizon:snapshot');
+// })->purpose('Take Horizon snapshot')->everyFiveMinutes();

@@ -13,6 +13,14 @@ class ForgotPassword extends Component
 
     public bool $emailSent = false;
 
+    /**
+     * Sanitize email input to prevent array injection attacks.
+     */
+    public function updatingEmail(mixed &$value): void
+    {
+        $value = is_string($value) ? $value : '';
+    }
+
     public function rules(): array
     {
         return [

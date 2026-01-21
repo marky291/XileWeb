@@ -18,6 +18,30 @@ class Register extends Component
 
     public string $password_confirmation = '';
 
+    /**
+     * Sanitize email input to prevent array injection attacks.
+     */
+    public function updatingEmail(mixed &$value): void
+    {
+        $value = is_string($value) ? $value : '';
+    }
+
+    /**
+     * Sanitize password input to prevent array injection attacks.
+     */
+    public function updatingPassword(mixed &$value): void
+    {
+        $value = is_string($value) ? $value : '';
+    }
+
+    /**
+     * Sanitize password confirmation input to prevent array injection attacks.
+     */
+    public function updatingPasswordConfirmation(mixed &$value): void
+    {
+        $value = is_string($value) ? $value : '';
+    }
+
     public function mount(): void
     {
         // Store the referer as intended URL if not already set and it's from our site
