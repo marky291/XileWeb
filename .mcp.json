@@ -1,20 +1,11 @@
 {
     "mcpServers": {
-        "laravel-boost": {
-            "command": "php",
+        "memory": {
+            "command": "npx",
             "args": [
-                "artisan",
-                "boost:mcp"
+                "-y",
+                "@modelcontextprotocol/server-memory"
             ]
-        },
-        "herd": {
-            "command": "php",
-            "args": [
-                "/Applications/Herd.app/Contents/Resources/herd-mcp.phar"
-            ],
-            "env": {
-                "SITE_PATH": "/Users/markhester/Herd/XileRO X9/XileWeb"
-            }
         }
     }
 }
