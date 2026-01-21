@@ -41,5 +41,6 @@ Route::get('/discord', function () {
 
 Route::prefix('v1')->middleware(['auth:sanctum', 'ability:read'])->group(function () {
     Route::get('/items', [ItemController::class, 'index'])->name('api.v1.items.index');
+    Route::post('/items/bulk', [ItemController::class, 'bulk'])->name('api.v1.items.bulk');
     Route::get('/items/{item}', [ItemController::class, 'show'])->name('api.v1.items.show');
 });

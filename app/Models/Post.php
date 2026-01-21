@@ -28,6 +28,7 @@ class Post extends Model
         'patcher_notice',
         'article_content',
         'user_id',
+        'views',
     ];
 
     protected $casts = [

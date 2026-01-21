@@ -44,7 +44,7 @@ Route::get('/', function () {
 Route::view('/discord', 'discord');
 Route::view('/forums', 'forums');
 
-Route::resource('posts', PostController::class)->only('show');
+Route::resource('posts', PostController::class)->only(['index', 'show']);
 
 Route::get('retro/patch/notice', function () {
     $rawPosts = DB::table('posts')

@@ -10,9 +10,20 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $query = Post::query()->orderByDesc('created_at');
+
+        if ($request->filled('client')) {
+            $query->where('client', $request->client);
+        }
+
+        $posts = $query->paginate(12);
+
+        return view('posts.index', [
+            'posts' => $posts,
+            'selectedClient' => $request->client,
+        ]);
     }
 
     /**
@@ -36,7 +47,41 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return view('post', ['post' => $post]);
+        $post->increment('views');
+
+        // Previous and next posts
+        $previousPost = Post::where('created_at', '<', $post->created_at)
+            ->orderByDesc('created_at')
+            ->first();
+
+        $nextPost = Post::where('created_at', '>', $post->created_at)
+            ->orderBy('created_at')
+            ->first();
+
+        // Related posts (same client, excluding current)
+        $relatedPosts = Post::where('client', $post->client)
+            ->where('id', '!=', $post->id)
+            ->orderByDesc('created_at')
+            ->limit(3)
+            ->get();
+
+        // If not enough related posts, fill with latest from other client
+        if ($relatedPosts->count() < 3) {
+            $moreNeeded = 3 - $relatedPosts->count();
+            $morePosts = Post::where('id', '!=', $post->id)
+                ->whereNotIn('id', $relatedPosts->pluck('id'))
+                ->orderByDesc('created_at')
+                ->limit($moreNeeded)
+                ->get();
+            $relatedPosts = $relatedPosts->concat($morePosts);
+        }
+
+        return view('post', [
+            'post' => $post,
+            'previousPost' => $previousPost,
+            'nextPost' => $nextPost,
+            'relatedPosts' => $relatedPosts,
+        ]);
     }
 
     /**

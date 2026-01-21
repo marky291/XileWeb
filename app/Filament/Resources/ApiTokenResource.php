@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Resources\ApiTokenResource\Pages\ApiTokenSuccess;
 use App\Filament\Resources\ApiTokenResource\Pages\CreateApiToken;
 use App\Filament\Resources\ApiTokenResource\Pages\ListApiTokens;
 use App\Models\PersonalAccessToken;
@@ -132,6 +133,7 @@ class ApiTokenResource extends Resource
         return [
             'index' => ListApiTokens::route('/'),
             'create' => CreateApiToken::route('/create'),
+            'success' => ApiTokenSuccess::route('/success'),
         ];
     }
 }
