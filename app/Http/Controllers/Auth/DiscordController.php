@@ -51,6 +51,7 @@ class DiscordController extends Controller
         if ($user) {
             $this->updateDiscordData($user, $discordUser);
             Auth::login($user, remember: true);
+            $this->updateLastLogin($user);
             SyncGameAccountData::run($user);
 
             return redirect()->to($intendedUrl);
@@ -66,6 +67,7 @@ class DiscordController extends Controller
 
                 $this->updateDiscordData($user, $discordUser);
                 Auth::login($user, remember: true);
+                $this->updateLastLogin($user);
                 SyncGameAccountData::run($user);
 
                 // Notify user that Discord was linked to their account
@@ -87,11 +89,13 @@ class DiscordController extends Controller
             'discord_avatar' => $discordUser->getAvatar(),
             'discord_token' => $discordUser->token,
             'discord_refresh_token' => $discordUser->refreshToken,
+            'registration_ip' => request()->ip(),
         ]);
 
         $user->notify(new WelcomeNotification);
 
         Auth::login($user, remember: true);
+        $this->updateLastLogin($user);
 
         return redirect()->to($intendedUrl);
     }
@@ -104,6 +108,14 @@ class DiscordController extends Controller
             'discord_avatar' => $discordUser->getAvatar(),
             'discord_token' => $discordUser->token,
             'discord_refresh_token' => $discordUser->refreshToken,
+        ]);
+    }
+
+    private function updateLastLogin(User $user): void
+    {
+        $user->update([
+            'last_login_ip' => request()->ip(),
+            'last_login_at' => now(),
         ]);
     }
 }
