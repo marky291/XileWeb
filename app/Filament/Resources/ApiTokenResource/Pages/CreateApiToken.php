@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\ApiTokenResource\Pages;
 
 use App\Filament\Resources\ApiTokenResource;
-use App\Models\User;
 use Carbon\Carbon;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Database\Eloquent\Model;
@@ -16,7 +15,7 @@ class CreateApiToken extends CreateRecord
 
     protected function handleRecordCreation(array $data): Model
     {
-        $user = User::findOrFail($data['tokenable_id']);
+        $user = auth()->user();
 
         $expiresAt = isset($data['expires_at']) ? Carbon::parse($data['expires_at']) : null;
 

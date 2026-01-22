@@ -30,9 +30,12 @@ class ViewApiToken extends ViewRecord
         $subtypes = implode('|', $this->getItemSubtypes());
 
         return <<<PROMPT
-XileRO Item API
+XileRO API
 Base: {$baseUrl}/api/v1
 Auth: Header "Authorization: Bearer {$token}"
+
+=== ITEMS ===
+Note: Item data is CLIENT-SIDE display data (names, descriptions, sprites) extracted from the game client. This is NOT rAthena item_db values - rAthena has additional server-side data like drop rates, mob drops, and script effects not available here.
 
 GET /items
 Params:
@@ -48,7 +51,6 @@ Params:
 - page: int
 
 GET /items/{id} - by database id
-
 POST /items/bulk - body: ids=1101,1102 (max 100)
 
 Examples:
@@ -57,7 +59,7 @@ Examples:
 /items?type=Card&search=Hydra
 /items?job=Knight&type=Weapon
 
-Fields:
+Item Fields:
 - id: database ID (use for /items/{id})
 - item_id: game ID (use for bulk lookup)
 - aegis_name: internal script name
@@ -73,6 +75,32 @@ Fields:
 - is_xileretro: true=XileRetro server, false=XileRO server
 - icon_url: small icon image (32x32)
 - collection_url: large display image
+
+=== NPCS ===
+NPC data includes sprite identifiers and names. Useful for identifying NPCs by name or finding which sprite a specific NPC uses.
+
+GET /npcs
+Params:
+- search: text search on name, or exact npc_id
+- ids: csv npc_ids (45,46,47)
+- sprite: text search on sprite name
+- per_page: int (max 100)
+- page: int
+
+GET /npcs/{id} - by database id
+POST /npcs/bulk - body: ids=45,46,47 (max 100)
+
+Examples:
+/npcs?search=Kafra
+/npcs?sprite=HIDDEN_WARP_NPC
+/npcs?ids=45,46,47
+
+NPC Fields:
+- id: database ID (use for /npcs/{id})
+- npc_id: game NPC ID (use for bulk lookup)
+- name: NPC sprite constant name (e.g., JT_WARPNPC)
+- sprite: sprite resource identifier
+- image_url: NPC sprite image (PNG)
 PROMPT;
     }
 
