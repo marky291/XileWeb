@@ -73,7 +73,7 @@ class ModerationTest extends TestCase
 
         Livewire::actingAs($admin)
             ->test(Moderation::class)
-            ->assertSet('data.server', 'xilero')
+            ->assertSet('data.server', 'all')
             ->set('data.server', 'xileretro')
             ->assertSet('data.server', 'xileretro');
     }

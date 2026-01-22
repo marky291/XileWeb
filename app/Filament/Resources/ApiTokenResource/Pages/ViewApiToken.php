@@ -35,17 +35,44 @@ Base: {$baseUrl}/api/v1
 Auth: Header "Authorization: Bearer {$token}"
 
 GET /items
-Params: search, ids (csv), type (csv), subtype (csv), is_xileretro (bool), refineable (bool), min_slots (int), job, per_page (max 100), page
+Params:
+- search: text search on name/aegis_name, or exact item_id
+- ids: csv item_ids (1101,1102,1103)
+- type: csv ({$types})
+- subtype: csv ({$subtypes})
+- is_xileretro: bool (true=XileRetro, false=XileRO)
+- refineable: bool
+- min_slots: int
+- job: class name (Knight, Wizard, etc)
+- per_page: int (max 100)
+- page: int
 
-GET /items/{id}
+GET /items/{id} - by database id
 
-POST /items/bulk
-Body: ids=1101,1102,1103 (max 100)
+POST /items/bulk - body: ids=1101,1102 (max 100)
 
-Types: {$types}
-Subtypes: {$subtypes}
+Examples:
+/items?search=Excalibur
+/items?type=Weapon&subtype=Dagger&min_slots=1
+/items?type=Card&search=Hydra
+/items?job=Knight&type=Weapon
 
-Fields: id, item_id, aegis_name, name, description, type, subtype, weight, buy, sell, attack, defense, slots, refineable, jobs[], is_xileretro, icon_url, collection_url
+Fields:
+- id: database ID (use for /items/{id})
+- item_id: game ID (use for bulk lookup)
+- aegis_name: internal script name
+- name: display name
+- description: item description with effects
+- type/subtype: classification
+- weight: item weight (1 = 0.1 weight)
+- buy/sell: NPC prices in zeny
+- attack/defense: base stats
+- slots: card slot count
+- refineable: can be upgraded
+- jobs[]: equippable classes
+- is_xileretro: true=XileRetro server, false=XileRO server
+- icon_url: small icon image (32x32)
+- collection_url: large display image
 PROMPT;
     }
 

@@ -35,6 +35,12 @@ class Moderation extends Page implements HasForms
 
     public ?string $banReason = '';
 
+    public int $page = 1;
+
+    public int $perPage = 20;
+
+    public int $totalResults = 0;
+
     public function mount(): void
     {
         $this->form->fill();
@@ -48,12 +54,17 @@ class Moderation extends Page implements HasForms
                 Select::make('server')
                     ->label('Server')
                     ->options([
+                        'all' => 'All Servers',
                         'xilero' => 'XileRO',
                         'xileretro' => 'XileRetro',
                     ])
-                    ->default('xilero')
+                    ->default('all')
                     ->live()
-                    ->afterStateUpdated(fn () => $this->loadRecentLogins()),
+                    ->afterStateUpdated(function () {
+                        $this->page = 1;
+                        $this->selectedAccount = null;
+                        $this->loadRecentLogins();
+                    }),
                 TextInput::make('search')
                     ->label('Search Account')
                     ->placeholder('Username or IP address...')
@@ -65,7 +76,7 @@ class Moderation extends Page implements HasForms
 
     protected function getServer(): string
     {
-        return $this->data['server'] ?? 'xilero';
+        return $this->data['server'] ?? 'all';
     }
 
     protected function getSearch(): string
@@ -76,35 +87,85 @@ class Moderation extends Page implements HasForms
     public function loadRecentLogins(): void
     {
         try {
-            $query = $this->getServer() === 'xilero'
-                ? XileRO_Login::query()
-                : XileRetro_Login::query();
+            $server = $this->getServer();
+            $results = collect();
 
-            $this->recentLogins = $query
-                ->whereNotNull('lastlogin')
-                ->orderByDesc('lastlogin')
-                ->limit(20)
-                ->get()
-                ->map(fn ($login) => [
-                    'account_id' => $login->account_id,
-                    'userid' => $login->userid,
-                    'email' => $login->email,
-                    'last_ip' => $login->last_ip,
-                    'lastlogin' => $login->lastlogin,
-                    'logincount' => $login->logincount,
-                    'state' => $login->state,
-                    'unban_time' => $login->unban_time,
-                    'group_id' => $login->group_id,
-                ])
+            $mapLogin = fn ($login, $serverName) => [
+                'account_id' => $login->account_id,
+                'userid' => $login->userid,
+                'email' => $login->email,
+                'last_ip' => $login->last_ip,
+                'lastlogin' => $login->lastlogin,
+                'logincount' => $login->logincount,
+                'state' => $login->state,
+                'unban_time' => $login->unban_time,
+                'group_id' => $login->group_id,
+                'server' => $serverName,
+            ];
+
+            // Fetch enough records to paginate (fetch more than needed for merged sorting)
+            $fetchLimit = $this->perPage * ($this->page + 1);
+
+            if ($server === 'all' || $server === 'xilero') {
+                $xileroLogins = XileRO_Login::query()
+                    ->whereNotNull('lastlogin')
+                    ->orderByDesc('lastlogin')
+                    ->limit($fetchLimit)
+                    ->get()
+                    ->map(fn ($login) => $mapLogin($login, 'xilero'));
+                $results = $results->merge($xileroLogins);
+            }
+
+            if ($server === 'all' || $server === 'xileretro') {
+                $xileretroLogins = XileRetro_Login::query()
+                    ->whereNotNull('lastlogin')
+                    ->orderByDesc('lastlogin')
+                    ->limit($fetchLimit)
+                    ->get()
+                    ->map(fn ($login) => $mapLogin($login, 'xileretro'));
+                $results = $results->merge($xileretroLogins);
+            }
+
+            $sorted = $results->sortByDesc('lastlogin')->values();
+            $this->totalResults = $sorted->count();
+
+            $this->recentLogins = $sorted
+                ->skip(($this->page - 1) * $this->perPage)
+                ->take($this->perPage)
+                ->values()
                 ->toArray();
         } catch (Exception $e) {
             $this->recentLogins = [];
+            $this->totalResults = 0;
             Notification::make()
                 ->title('Database Error')
                 ->body('Could not load login data: '.$e->getMessage())
                 ->danger()
                 ->send();
         }
+    }
+
+    public function previousPage(): void
+    {
+        if ($this->page > 1) {
+            $this->page--;
+            $this->selectedAccount = null;
+            $this->loadRecentLogins();
+        }
+    }
+
+    public function nextPage(): void
+    {
+        if ($this->page < $this->getTotalPages()) {
+            $this->page++;
+            $this->selectedAccount = null;
+            $this->loadRecentLogins();
+        }
+    }
+
+    public function getTotalPages(): int
+    {
+        return (int) ceil($this->totalResults / $this->perPage);
     }
 
     public function searchAccounts(): void
@@ -123,30 +184,50 @@ class Moderation extends Page implements HasForms
 
         try {
             $searchTerm = '%'.$search.'%';
-            $query = $this->getServer() === 'xilero'
-                ? XileRO_Login::query()
-                : XileRetro_Login::query();
+            $server = $this->getServer();
+            $results = collect();
 
-            $this->recentLogins = $query
-                ->where(function ($q) use ($searchTerm) {
+            $mapLogin = fn ($login, $serverName) => [
+                'account_id' => $login->account_id,
+                'userid' => $login->userid,
+                'email' => $login->email,
+                'last_ip' => $login->last_ip,
+                'lastlogin' => $login->lastlogin,
+                'logincount' => $login->logincount,
+                'state' => $login->state,
+                'unban_time' => $login->unban_time,
+                'group_id' => $login->group_id,
+                'server' => $serverName,
+            ];
+
+            $searchQuery = function ($query) use ($searchTerm) {
+                return $query->where(function ($q) use ($searchTerm) {
                     $q->where('userid', 'like', $searchTerm)
                         ->orWhere('last_ip', 'like', $searchTerm)
                         ->orWhere('email', 'like', $searchTerm);
                 })
-                ->orderByDesc('lastlogin')
-                ->limit(50)
-                ->get()
-                ->map(fn ($login) => [
-                    'account_id' => $login->account_id,
-                    'userid' => $login->userid,
-                    'email' => $login->email,
-                    'last_ip' => $login->last_ip,
-                    'lastlogin' => $login->lastlogin,
-                    'logincount' => $login->logincount,
-                    'state' => $login->state,
-                    'unban_time' => $login->unban_time,
-                    'group_id' => $login->group_id,
-                ])
+                    ->orderByDesc('lastlogin')
+                    ->limit(50);
+            };
+
+            if ($server === 'all' || $server === 'xilero') {
+                $xileroLogins = $searchQuery(XileRO_Login::query())
+                    ->get()
+                    ->map(fn ($login) => $mapLogin($login, 'xilero'));
+                $results = $results->merge($xileroLogins);
+            }
+
+            if ($server === 'all' || $server === 'xileretro') {
+                $xileretroLogins = $searchQuery(XileRetro_Login::query())
+                    ->get()
+                    ->map(fn ($login) => $mapLogin($login, 'xileretro'));
+                $results = $results->merge($xileretroLogins);
+            }
+
+            $this->recentLogins = $results
+                ->sortByDesc('lastlogin')
+                ->take(50)
+                ->values()
                 ->toArray();
 
             if (empty($this->recentLogins)) {
@@ -167,7 +248,14 @@ class Moderation extends Page implements HasForms
 
     public function selectAccount(int $index): void
     {
-        $this->selectedAccount = $this->recentLogins[$index] ?? null;
+        $account = $this->recentLogins[$index] ?? null;
+
+        // Toggle: if clicking the same account, deselect it
+        if ($this->selectedAccount && ($this->selectedAccount['account_id'] ?? null) === ($account['account_id'] ?? null)) {
+            $this->selectedAccount = null;
+        } else {
+            $this->selectedAccount = $account;
+        }
     }
 
     public function clearSelection(): void
