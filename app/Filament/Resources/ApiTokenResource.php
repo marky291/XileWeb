@@ -2,14 +2,15 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ApiTokenResource\Pages\ApiTokenSuccess;
 use App\Filament\Resources\ApiTokenResource\Pages\CreateApiToken;
 use App\Filament\Resources\ApiTokenResource\Pages\ListApiTokens;
+use App\Filament\Resources\ApiTokenResource\Pages\ViewApiToken;
 use App\Models\PersonalAccessToken;
 use App\Models\User;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Select;
@@ -111,6 +112,7 @@ class ApiTokenResource extends Resource
                 //
             ])
             ->recordActions([
+                ViewAction::make(),
                 DeleteAction::make(),
             ])
             ->toolbarActions([
@@ -133,7 +135,7 @@ class ApiTokenResource extends Resource
         return [
             'index' => ListApiTokens::route('/'),
             'create' => CreateApiToken::route('/create'),
-            'success' => ApiTokenSuccess::route('/success'),
+            'view' => ViewApiToken::route('/{record}'),
         ];
     }
 }

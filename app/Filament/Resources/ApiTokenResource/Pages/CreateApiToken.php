@@ -12,9 +12,7 @@ class CreateApiToken extends CreateRecord
 {
     protected static string $resource = ApiTokenResource::class;
 
-    protected ?string $plainTextToken = null;
-
-    protected ?string $tokenName = null;
+    protected ?string $createdToken = null;
 
     protected function handleRecordCreation(array $data): Model
     {
@@ -28,22 +26,18 @@ class CreateApiToken extends CreateRecord
             expiresAt: $expiresAt,
         );
 
-        $this->plainTextToken = $newAccessToken->plainTextToken;
-        $this->tokenName = $data['name'];
+        $this->createdToken = $newAccessToken->plainTextToken;
 
         return $newAccessToken->accessToken;
     }
 
     protected function afterCreate(): void
     {
-        session([
-            'api_token_plain_text' => $this->plainTextToken,
-            'api_token_name' => $this->tokenName,
-        ]);
+        session(['api_token_created' => $this->createdToken]);
     }
 
     protected function getRedirectUrl(): string
     {
-        return ApiTokenResource::getUrl('success');
+        return ApiTokenResource::getUrl('view', ['record' => $this->record]);
     }
 }

@@ -20,7 +20,7 @@
         {{-- Recent/Search Results --}}
         <x-filament::section>
             <x-slot name="heading">
-                @if(strlen($search) >= 2)
+                @if(strlen($data['search'] ?? '') >= 2)
                     Search Results ({{ count($recentLogins) }})
                 @else
                     Recent Logins ({{ count($recentLogins) }})
@@ -59,13 +59,13 @@
                                         </span>
                                     </td>
                                     <td class="py-2 px-2">
-                                        <x-filament::button
+                                        <button
+                                            type="button"
                                             wire:click="selectAccount({{ $index }})"
-                                            size="xs"
-                                            color="gray"
+                                            class="fi-btn fi-btn-size-xs fi-btn-color-gray px-2 py-1 text-xs font-medium rounded-lg bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600"
                                         >
                                             Manage
-                                        </x-filament::button>
+                                        </button>
                                     </td>
                                 </tr>
                             @endforeach

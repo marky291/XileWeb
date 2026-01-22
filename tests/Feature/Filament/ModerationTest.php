@@ -61,7 +61,7 @@ class ModerationTest extends TestCase
 
         Livewire::actingAs($admin)
             ->test(Moderation::class)
-            ->set('search', 'a')
+            ->set('data.search', 'a')
             ->call('searchAccounts')
             ->assertNotified('Search term too short');
     }
@@ -73,9 +73,9 @@ class ModerationTest extends TestCase
 
         Livewire::actingAs($admin)
             ->test(Moderation::class)
-            ->assertSet('server', 'xilero')
-            ->set('server', 'xileretro')
-            ->assertSet('server', 'xileretro');
+            ->assertSet('data.server', 'xilero')
+            ->set('data.server', 'xileretro')
+            ->assertSet('data.server', 'xileretro');
     }
 
     #[Test]

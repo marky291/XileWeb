@@ -4,7 +4,6 @@ namespace App\Filament\Resources;
 
 use App\Actions\MakeHashedLoginPassword;
 use App\Filament\Resources\CharResource\RelationManagers\CharRelationManager;
-use App\Filament\Resources\DonationUberResource\RelationManagers\DonationUberRelationManager;
 use App\Filament\Resources\LoginResource\Pages\CreateLogin;
 use App\Filament\Resources\LoginResource\Pages\EditLogin;
 use App\Filament\Resources\LoginResource\Pages\ListLogins;
@@ -90,7 +89,6 @@ class LoginResource extends Resource
     {
         return [
             CharRelationManager::class,
-            DonationUberRelationManager::class,
         ];
     }
 

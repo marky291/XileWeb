@@ -25,9 +25,7 @@ class Moderation extends Page implements HasForms
 
     protected string $view = 'filament.pages.moderation';
 
-    public ?string $search = '';
-
-    public ?string $server = 'xilero';
+    public ?array $data = [];
 
     public ?array $recentLogins = [];
 
@@ -61,13 +59,24 @@ class Moderation extends Page implements HasForms
                     ->placeholder('Username or IP address...')
                     ->minLength(2),
             ])
-            ->columns(2);
+            ->columns(2)
+            ->statePath('data');
+    }
+
+    protected function getServer(): string
+    {
+        return $this->data['server'] ?? 'xilero';
+    }
+
+    protected function getSearch(): string
+    {
+        return $this->data['search'] ?? '';
     }
 
     public function loadRecentLogins(): void
     {
         try {
-            $query = $this->server === 'xilero'
+            $query = $this->getServer() === 'xilero'
                 ? XileRO_Login::query()
                 : XileRetro_Login::query();
 
@@ -100,7 +109,9 @@ class Moderation extends Page implements HasForms
 
     public function searchAccounts(): void
     {
-        if (strlen($this->search) < 2) {
+        $search = $this->getSearch();
+
+        if (strlen($search) < 2) {
             Notification::make()
                 ->title('Search term too short')
                 ->body('Please enter at least 2 characters')
@@ -111,8 +122,8 @@ class Moderation extends Page implements HasForms
         }
 
         try {
-            $searchTerm = '%'.$this->search.'%';
-            $query = $this->server === 'xilero'
+            $searchTerm = '%'.$search.'%';
+            $query = $this->getServer() === 'xilero'
                 ? XileRO_Login::query()
                 : XileRetro_Login::query();
 
@@ -173,7 +184,7 @@ class Moderation extends Page implements HasForms
         }
 
         try {
-            $login = $this->server === 'xilero'
+            $login = $this->getServer() === 'xilero'
                 ? XileRO_Login::find($this->selectedAccount['account_id'])
                 : XileRetro_Login::find($this->selectedAccount['account_id']);
 
@@ -218,7 +229,7 @@ class Moderation extends Page implements HasForms
         }
 
         try {
-            $login = $this->server === 'xilero'
+            $login = $this->getServer() === 'xilero'
                 ? XileRO_Login::find($this->selectedAccount['account_id'])
                 : XileRetro_Login::find($this->selectedAccount['account_id']);
 
