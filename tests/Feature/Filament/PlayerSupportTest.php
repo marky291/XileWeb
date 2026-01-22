@@ -1006,4 +1006,120 @@ class PlayerSupportTest extends TestCase
             ->set('transferTargetSearch', 'Doe')
             ->assertCount('transferTargetSearchResults', 2);
     }
+
+    #[Test]
+    public function game_account_search_returns_both_linked_and_unlinked_accounts(): void
+    {
+        $admin = User::factory()->admin()->create();
+        $masterAccount = User::factory()->create(['name' => 'Master User']);
+
+        // Create linked account
+        GameAccount::factory()->create([
+            'user_id' => $masterAccount->id,
+            'server' => 'xilero',
+            'userid' => 'linkedtest',
+        ]);
+
+        // Create unclaimed account
+        GameAccount::factory()->unclaimed()->create([
+            'server' => 'xilero',
+            'userid' => 'unlinkedtest',
+        ]);
+
+        Livewire::actingAs($admin)
+            ->test(PlayerSupport::class)
+            ->set('unclaimedGameAccountSearch', 'test')
+            ->assertCount('unclaimedGameAccountResults', 2);
+    }
+
+    #[Test]
+    public function game_account_search_includes_linked_status_and_master_name(): void
+    {
+        $admin = User::factory()->admin()->create();
+        $masterAccount = User::factory()->create(['name' => 'Master User']);
+
+        GameAccount::factory()->create([
+            'user_id' => $masterAccount->id,
+            'server' => 'xilero',
+            'userid' => 'linkedaccount',
+        ]);
+
+        $component = Livewire::actingAs($admin)
+            ->test(PlayerSupport::class)
+            ->set('unclaimedGameAccountSearch', 'linkedaccount');
+
+        $results = $component->get('unclaimedGameAccountResults');
+        $this->assertCount(1, $results);
+        $this->assertTrue($results[0]['is_linked']);
+        $this->assertEquals('Master User', $results[0]['linked_master_name']);
+    }
+
+    #[Test]
+    public function can_transfer_linked_account_via_link_or_transfer_method(): void
+    {
+        $admin = User::factory()->admin()->create();
+        $sourceMaster = User::factory()->create(['name' => 'Source Master']);
+        $targetMaster = User::factory()->create(['name' => 'Target Master']);
+
+        $gameAccount = GameAccount::factory()->create([
+            'user_id' => $sourceMaster->id,
+            'server' => 'xilero',
+            'ragnarok_account_id' => 12345,
+            'userid' => 'transfervia',
+        ]);
+
+        Livewire::actingAs($admin)
+            ->test(PlayerSupport::class)
+            ->set('selectedPlayer', [
+                'type' => 'master',
+                'id' => $targetMaster->id,
+                'name' => $targetMaster->name,
+                'email' => $targetMaster->email,
+                'uber_balance' => 0,
+                'is_admin' => false,
+                'game_accounts_count' => 0,
+                'created_at' => now()->format('M j, Y'),
+            ])
+            ->set('selectedUnclaimedGameAccountId', $gameAccount->id)
+            ->set('selectedGameAccountIsLinked', true)
+            ->set('selectedGameAccountCurrentMaster', $sourceMaster->name)
+            ->call('linkOrTransferToMaster')
+            ->assertNotified('Account transferred');
+
+        $gameAccount->refresh();
+        $this->assertEquals($targetMaster->id, $gameAccount->user_id);
+    }
+
+    #[Test]
+    public function cannot_transfer_to_same_master_via_link_or_transfer(): void
+    {
+        $admin = User::factory()->admin()->create();
+        $masterAccount = User::factory()->create(['name' => 'Master User']);
+
+        $gameAccount = GameAccount::factory()->create([
+            'user_id' => $masterAccount->id,
+            'server' => 'xilero',
+            'ragnarok_account_id' => 12345,
+        ]);
+
+        Livewire::actingAs($admin)
+            ->test(PlayerSupport::class)
+            ->set('selectedPlayer', [
+                'type' => 'master',
+                'id' => $masterAccount->id,
+                'name' => $masterAccount->name,
+                'email' => $masterAccount->email,
+                'uber_balance' => 0,
+                'is_admin' => false,
+                'game_accounts_count' => 1,
+                'created_at' => now()->format('M j, Y'),
+            ])
+            ->set('selectedUnclaimedGameAccountId', $gameAccount->id)
+            ->set('selectedGameAccountIsLinked', true)
+            ->call('linkOrTransferToMaster')
+            ->assertNotified('Already linked');
+
+        $gameAccount->refresh();
+        $this->assertEquals($masterAccount->id, $gameAccount->user_id);
+    }
 }
