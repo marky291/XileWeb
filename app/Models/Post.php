@@ -27,6 +27,7 @@ class Post extends Model
         'client',
         'patcher_notice',
         'article_content',
+        'image',
         'user_id',
         'views',
     ];

@@ -10,6 +10,8 @@ use App\Models\Post;
 use App\Models\User;
 use Filament\Facades\Filament;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Livewire;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
@@ -174,5 +176,81 @@ class PostResourceTest extends TestCase
             ])
             ->call('create')
             ->assertHasFormErrors(['title' => 'required']);
+    }
+
+    #[Test]
+    public function admin_can_create_post_with_image(): void
+    {
+        Storage::fake('public');
+        Filament::setCurrentPanel(Filament::getPanel('admin'));
+
+        $admin = User::factory()->admin()->create();
+
+        Livewire::actingAs($admin)
+            ->test(CreatePost::class)
+            ->fillForm([
+                'client' => Post::CLIENT_XILERO,
+                'title' => 'Post With Image',
+                'patcher_notice' => 'Test patcher notice',
+                'article_content' => 'Test article content',
+                'image' => UploadedFile::fake()->image('post-image.jpg'),
+            ])
+            ->call('create')
+            ->assertHasNoFormErrors();
+
+        $this->assertDatabaseHas('posts', [
+            'title' => 'Post With Image',
+        ]);
+
+        $post = Post::where('title', 'Post With Image')->first();
+        $this->assertNotNull($post->image);
+        Storage::disk('public')->assertExists($post->image);
+    }
+
+    #[Test]
+    public function post_image_is_optional(): void
+    {
+        Filament::setCurrentPanel(Filament::getPanel('admin'));
+
+        $admin = User::factory()->admin()->create();
+
+        Livewire::actingAs($admin)
+            ->test(CreatePost::class)
+            ->fillForm([
+                'client' => Post::CLIENT_XILERO,
+                'title' => 'Post Without Image',
+                'patcher_notice' => 'Test patcher notice',
+                'article_content' => 'Test article content',
+            ])
+            ->call('create')
+            ->assertHasNoFormErrors();
+
+        $post = Post::where('title', 'Post Without Image')->first();
+        $this->assertNull($post->image);
+    }
+
+    #[Test]
+    public function create_post_page_has_ai_prompt_action(): void
+    {
+        Filament::setCurrentPanel(Filament::getPanel('admin'));
+
+        $admin = User::factory()->admin()->create();
+
+        Livewire::actingAs($admin)
+            ->test(CreatePost::class)
+            ->assertActionExists('aiPrompt');
+    }
+
+    #[Test]
+    public function edit_post_page_has_ai_prompt_action(): void
+    {
+        Filament::setCurrentPanel(Filament::getPanel('admin'));
+
+        $admin = User::factory()->admin()->create();
+        $post = Post::factory()->create();
+
+        Livewire::actingAs($admin)
+            ->test(EditPost::class, ['record' => $post->slug])
+            ->assertActionExists('aiPrompt');
     }
 }

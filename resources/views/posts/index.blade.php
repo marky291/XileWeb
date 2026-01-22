@@ -95,6 +95,15 @@
                     @foreach($posts as $post)
                         <a href="{{ route('posts.show', $post) }}"
                            class="group block-home bg-gray-900 rounded-lg overflow-hidden hover:bg-gray-800/80 transition-all duration-200 hover:ring-1 hover:ring-amber-500/30">
+                            {{-- Post Image --}}
+                            @if($post->image)
+                                <div class="aspect-video overflow-hidden">
+                                    <img src="{{ Storage::disk('public')->url($post->image) }}"
+                                         alt="{{ $post->title }}"
+                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                                </div>
+                            @endif
+
                             {{-- Card Content --}}
                             <div class="p-6">
                                 {{-- Header with Date & Badge --}}

@@ -6,11 +6,13 @@
             <div class="grid grid-cols-3 gap-12 mt-14">
                 @foreach(\App\Models\Post::orderBy('created_at', 'desc')->take(3)->get() as $post)
                     <div class="col-span-1 md:col-span-2 lg:col-span-1 rounded block-home overflow-hidden relative">
-                        <a title="Essential Starter Packages & Guides for New Players" href="{{ route('posts.show', $post) }}">
+                        <a title="{{ $post->title }}" href="{{ route('posts.show', $post) }}">
                             <div class="p-6 rounded-md hover:shadow-lg prose relative">
-{{--                                <div class="mb-6 border border-gray-200 rounded">--}}
-{{--                                    <img class="object-cover w-full rounded h-44" style="margin:0" src="https://get.wallhere.com/photo/anime-Sword-Art-Online-Kirito-Sword-Art-Online-sword-1859509.jpg" alt="Starter Packages & Guids Image">--}}
-{{--                                </div>--}}
+                                @if($post->image)
+                                    <div class="mb-6 rounded overflow-hidden">
+                                        <img class="object-cover w-full rounded h-44" style="margin:0" src="{{ Storage::disk('public')->url($post->image) }}" alt="{{ $post->title }}">
+                                    </div>
+                                @endif
                                 <div class="flex items-center justify-between mb-0">
                                     <p class="mb-0 text-amber-500">{{ $post->created_at->diffForHumans() }}</p>
                                     <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border {{ $post->client === 'retro' ? 'border-blue-500/30 text-blue-400/90 bg-blue-500/10' : 'border-amber-500/30 text-amber-400/90 bg-amber-500/10' }}">

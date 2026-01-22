@@ -12,6 +12,7 @@ use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
@@ -23,6 +24,7 @@ use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
@@ -68,6 +70,13 @@ class PostResource extends Resource
                             ->required()
                             ->placeholder('Full article content that users see when they click "Read More" on the website...')
                             ->helperText('Complete article content for the website (supports Markdown formatting)'),
+                        FileUpload::make('image')
+                            ->label('Post Image')
+                            ->image()
+                            ->disk('public')
+                            ->directory('post-images')
+                            ->maxSize(5120)
+                            ->helperText('Featured image displayed on the homepage and article page (max 5MB)'),
                     ]),
 
                 Section::make('Featured Items')
@@ -195,6 +204,10 @@ class PostResource extends Resource
     {
         return $table
             ->columns([
+                ImageColumn::make('image')
+                    ->disk('public')
+                    ->square()
+                    ->size(40),
                 TextColumn::make('client')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {

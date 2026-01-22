@@ -4,6 +4,9 @@
     @section('keywords', 'XileRO, Updates, Changelog, Patch Notes, ' . $post->title)
     @section('og_type', 'article')
     @section('canonical', route('posts.show', $post))
+    @if($post->image)
+        @section('og_image', Storage::disk('public')->url($post->image))
+    @endif
 
     @section('structured_data')
     <script type="application/ld+json">
@@ -26,6 +29,9 @@
                 "url": "{{ asset('images/logo.png') }}"
             }
         },
+        @if($post->image)
+        "image": "{{ Storage::disk('public')->url($post->image) }}",
+        @endif
         "mainEntityOfPage": {
             "@@type": "WebPage",
             "@@id": "{{ url()->current() }}"
@@ -204,6 +210,15 @@
 
                     {{-- Main Content Card --}}
                     <div class="block-home bg-gray-900 rounded-lg overflow-hidden">
+                        {{-- Featured Image --}}
+                        @if($post->image)
+                            <div class="aspect-video overflow-hidden">
+                                <img src="{{ Storage::disk('public')->url($post->image) }}"
+                                     alt="{{ $post->title }}"
+                                     class="w-full h-full object-cover">
+                            </div>
+                        @endif
+
                         {{-- Article Content --}}
                         <article class="p-6 md:p-8" x-data>
                             <div id="article-content" class="prose prose-invert prose-lg max-w-none
