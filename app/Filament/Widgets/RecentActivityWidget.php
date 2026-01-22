@@ -21,7 +21,7 @@ class RecentActivityWidget extends BaseWidget
         return $table
             ->query(
                 User::query()
-                    ->latest()
+                    ->latest('last_login_at')
                     ->limit(10)
             )
             ->columns([
