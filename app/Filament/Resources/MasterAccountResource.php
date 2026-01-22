@@ -121,6 +121,19 @@ class MasterAccountResource extends Resource
                     ->label('Discord')
                     ->placeholder('Not linked')
                     ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('registration_ip')
+                    ->label('Reg IP')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('last_login_ip')
+                    ->label('Last IP')
+                    ->searchable()
+                    ->toggleable(),
+                TextColumn::make('last_login_at')
+                    ->label('Last Login')
+                    ->since()
+                    ->sortable()
+                    ->toggleable(),
                 TextColumn::make('created_at')
                     ->label('Registered')
                     ->dateTime('M j, Y')
