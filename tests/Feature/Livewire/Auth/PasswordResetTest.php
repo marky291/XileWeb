@@ -68,9 +68,10 @@ class PasswordResetTest extends TestCase
             ->set('password', 'newpassword123')
             ->set('password_confirmation', 'newpassword123')
             ->call('resetPassword')
-            ->assertRedirect(route('login'));
+            ->assertRedirect(route('dashboard'));
 
         $this->assertTrue(Hash::check('newpassword123', $user->fresh()->password));
+        $this->assertAuthenticatedAs($user);
     }
 
     public function test_password_reset_validates_password_confirmation(): void

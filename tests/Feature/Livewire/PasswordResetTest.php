@@ -107,10 +107,12 @@ class PasswordResetTest extends TestCase
             ->set('password', 'newpassword123')
             ->set('password_confirmation', 'newpassword123')
             ->call('resetPassword')
-            ->assertRedirect(route('login'));
+            ->assertRedirect(route('dashboard'));
 
         // Verify password was changed
         $this->assertTrue(Hash::check('newpassword123', $user->fresh()->password));
+        // Verify user is logged in after reset
+        $this->assertAuthenticatedAs($user);
     }
 
     #[Test]
@@ -219,7 +221,7 @@ class PasswordResetTest extends TestCase
         // Test the sanitization methods directly on the component class
         // Livewire's typed properties prevent direct array assignment,
         // but the updating hooks provide additional security
-        $component = new ForgotPassword();
+        $component = new ForgotPassword;
 
         $this->assertTrue(method_exists($component, 'updatingEmail'));
 
@@ -233,7 +235,7 @@ class PasswordResetTest extends TestCase
     public function reset_password_sanitization_methods_exist(): void
     {
         // Test the sanitization methods directly on the component class
-        $component = new ResetPassword();
+        $component = new ResetPassword;
 
         $this->assertTrue(method_exists($component, 'updatingEmail'));
         $this->assertTrue(method_exists($component, 'updatingPassword'));
@@ -263,13 +265,16 @@ class PasswordResetTest extends TestCase
         $user = User::factory()->create();
         $token = Password::createToken($user);
 
-        // First reset succeeds
+        // First reset succeeds and logs user in
         Livewire::test(ResetPassword::class, ['token' => $token])
             ->set('email', $user->email)
             ->set('password', 'firstnewpassword')
             ->set('password_confirmation', 'firstnewpassword')
             ->call('resetPassword')
-            ->assertRedirect(route('login'));
+            ->assertRedirect(route('dashboard'));
+
+        // Log out to test token reuse
+        auth()->logout();
 
         // Trying to use same token again should fail
         Livewire::test(ResetPassword::class, ['token' => $token])
