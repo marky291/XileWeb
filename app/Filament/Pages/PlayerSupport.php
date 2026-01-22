@@ -59,6 +59,16 @@ class PlayerSupport extends Page implements HasForms
 
     public ?string $selectedUnclaimedServer = null;
 
+    // For transferring linked game accounts from master view
+    public ?int $transferringGameAccountId = null;
+
+    public ?string $transferTargetSearch = '';
+
+    /** @var array<int, array{id: int, name: string, email: string}> */
+    public array $transferTargetSearchResults = [];
+
+    public ?int $transferTargetMasterAccountId = null;
+
     // For password reset
     public ?string $newPassword = '';
 
@@ -519,6 +529,149 @@ class PlayerSupport extends Page implements HasForms
                 }
             }
         }
+    }
+
+    public function startTransferGameAccount(int $gameAccountId): void
+    {
+        $this->transferringGameAccountId = $gameAccountId;
+        $this->transferTargetSearch = '';
+        $this->transferTargetSearchResults = [];
+        $this->transferTargetMasterAccountId = null;
+    }
+
+    public function cancelTransferGameAccount(): void
+    {
+        $this->transferringGameAccountId = null;
+        $this->transferTargetSearch = '';
+        $this->transferTargetSearchResults = [];
+        $this->transferTargetMasterAccountId = null;
+    }
+
+    public function updatedTransferTargetSearch(): void
+    {
+        if (strlen($this->transferTargetSearch) < 2) {
+            $this->transferTargetSearchResults = [];
+
+            return;
+        }
+
+        $searchTerm = '%'.$this->transferTargetSearch.'%';
+
+        $this->transferTargetSearchResults = User::where('email', 'like', $searchTerm)
+            ->orWhere('name', 'like', $searchTerm)
+            ->limit(10)
+            ->get(['id', 'name', 'email'])
+            ->map(fn ($user) => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+            ])
+            ->toArray();
+    }
+
+    public function selectTransferTarget(int $id, string $name): void
+    {
+        $this->transferTargetMasterAccountId = $id;
+        $this->transferTargetSearch = $name;
+        $this->transferTargetSearchResults = [];
+    }
+
+    public function executeTransferGameAccount(): void
+    {
+        if (! $this->transferringGameAccountId) {
+            Notification::make()
+                ->title('No game account selected')
+                ->body('Please select a game account to transfer')
+                ->warning()
+                ->send();
+
+            return;
+        }
+
+        if (! $this->transferTargetMasterAccountId) {
+            Notification::make()
+                ->title('No target account selected')
+                ->body('Please select a master account to transfer to')
+                ->warning()
+                ->send();
+
+            return;
+        }
+
+        $gameAccount = GameAccount::find($this->transferringGameAccountId);
+        if (! $gameAccount) {
+            Notification::make()
+                ->title('Game account not found')
+                ->danger()
+                ->send();
+            $this->cancelTransferGameAccount();
+
+            return;
+        }
+
+        $targetMaster = User::find($this->transferTargetMasterAccountId);
+        if (! $targetMaster) {
+            Notification::make()
+                ->title('Target master account not found')
+                ->danger()
+                ->send();
+
+            return;
+        }
+
+        // Cannot transfer to the same account
+        if ($gameAccount->user_id === $targetMaster->id) {
+            Notification::make()
+                ->title('Same account')
+                ->body('This game account is already linked to this master account')
+                ->warning()
+                ->send();
+
+            return;
+        }
+
+        // Check if target master can accept more game accounts
+        if (! $targetMaster->canCreateGameAccount()) {
+            Notification::make()
+                ->title('Limit reached')
+                ->body("Target master account has reached maximum game accounts ({$targetMaster->max_game_accounts})")
+                ->danger()
+                ->send();
+
+            return;
+        }
+
+        $sourceMaster = User::find($gameAccount->user_id);
+        $sourceAccountName = $sourceMaster?->name ?? 'Unknown';
+
+        // Transfer the game account
+        $gameAccount->update([
+            'user_id' => $targetMaster->id,
+        ]);
+
+        Notification::make()
+            ->title('Account transferred')
+            ->body("Game account {$gameAccount->userid} ({$gameAccount->serverName()}) transferred from {$sourceAccountName} to {$targetMaster->name}")
+            ->success()
+            ->send();
+
+        // Update the game accounts count in the selected player
+        if ($this->selectedPlayer && $this->selectedPlayer['type'] === 'master') {
+            $currentMaster = User::find($this->selectedPlayer['id']);
+            if ($currentMaster) {
+                $this->selectedPlayer['game_accounts_count'] = $currentMaster->gameAccounts()->count();
+
+                // Update results array
+                foreach ($this->results as $index => $result) {
+                    if ($result['type'] === 'master' && $result['id'] === $currentMaster->id) {
+                        $this->results[$index]['game_accounts_count'] = $this->selectedPlayer['game_accounts_count'];
+                        break;
+                    }
+                }
+            }
+        }
+
+        $this->cancelTransferGameAccount();
     }
 
     public function resetCharacterPosition(string $server, int $charId): void

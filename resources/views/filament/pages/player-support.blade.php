@@ -240,28 +240,113 @@
                                             </h4>
 
                                             @if(count($this->linkedGameAccounts) > 0)
-                                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                                <div class="space-y-2">
                                                     @foreach($this->linkedGameAccounts as $linkedAccount)
-                                                        <div class="flex items-center justify-between p-2 bg-gray-50 dark:bg-gray-700/50 rounded-lg border border-gray-100 dark:border-gray-600">
-                                                            <div class="flex items-center gap-2">
-                                                                <div class="w-7 h-7 rounded {{ $linkedAccount['server'] === 'xilero' ? 'bg-green-100 dark:bg-green-900/50' : 'bg-orange-100 dark:bg-orange-900/50' }} flex items-center justify-center">
-                                                                    <x-heroicon-o-server class="w-3.5 h-3.5 {{ $linkedAccount['server'] === 'xilero' ? 'text-green-600 dark:text-green-400' : 'text-orange-600 dark:text-orange-400' }}" />
-                                                                </div>
-                                                                <div>
-                                                                    <div class="font-medium text-sm leading-tight">{{ $linkedAccount['userid'] }}</div>
-                                                                    <div class="text-xs text-gray-500 dark:text-gray-400 leading-tight">
-                                                                        {{ $linkedAccount['server_name'] }}
+                                                        <div class="p-2 bg-gray-50 dark:bg-gray-700/50 rounded-lg border border-gray-100 dark:border-gray-600">
+                                                            <div class="flex items-center justify-between">
+                                                                <div class="flex items-center gap-2">
+                                                                    <div class="w-7 h-7 rounded {{ $linkedAccount['server'] === 'xilero' ? 'bg-green-100 dark:bg-green-900/50' : 'bg-orange-100 dark:bg-orange-900/50' }} flex items-center justify-center">
+                                                                        <x-heroicon-o-server class="w-3.5 h-3.5 {{ $linkedAccount['server'] === 'xilero' ? 'text-green-600 dark:text-green-400' : 'text-orange-600 dark:text-orange-400' }}" />
+                                                                    </div>
+                                                                    <div>
+                                                                        <div class="font-medium text-sm leading-tight">{{ $linkedAccount['userid'] }}</div>
+                                                                        <div class="text-xs text-gray-500 dark:text-gray-400 leading-tight">
+                                                                            {{ $linkedAccount['server_name'] }}
+                                                                        </div>
                                                                     </div>
                                                                 </div>
+                                                                <div class="flex items-center gap-1">
+                                                                    @if($transferringGameAccountId !== $linkedAccount['id'])
+                                                                        <x-filament::button
+                                                                            wire:click="startTransferGameAccount({{ $linkedAccount['id'] }})"
+                                                                            color="warning"
+                                                                            size="xs"
+                                                                        >
+                                                                            Transfer
+                                                                        </x-filament::button>
+                                                                        <x-filament::button
+                                                                            wire:click="unlinkGameAccount({{ $linkedAccount['id'] }})"
+                                                                            wire:confirm="Are you sure you want to unlink this game account? It will become unclaimed."
+                                                                            color="gray"
+                                                                            size="xs"
+                                                                        >
+                                                                            Unlink
+                                                                        </x-filament::button>
+                                                                    @else
+                                                                        <x-filament::button
+                                                                            wire:click="cancelTransferGameAccount"
+                                                                            color="gray"
+                                                                            size="xs"
+                                                                        >
+                                                                            Cancel
+                                                                        </x-filament::button>
+                                                                    @endif
+                                                                </div>
                                                             </div>
-                                                            <x-filament::button
-                                                                wire:click="unlinkGameAccount({{ $linkedAccount['id'] }})"
-                                                                wire:confirm="Are you sure you want to unlink this game account? It will become unclaimed."
-                                                                color="gray"
-                                                                size="xs"
-                                                            >
-                                                                Unlink
-                                                            </x-filament::button>
+
+                                                            {{-- Transfer UI --}}
+                                                            @if($transferringGameAccountId === $linkedAccount['id'])
+                                                                <div class="mt-2 pt-2 border-t border-gray-200 dark:border-gray-600 space-y-2">
+                                                                    <p class="text-xs text-gray-600 dark:text-gray-400">Transfer this game account to another master account:</p>
+
+                                                                    @if($transferTargetMasterAccountId)
+                                                                        <div class="flex items-center justify-between p-2 bg-warning-50 dark:bg-warning-900/30 rounded-lg border border-warning-200 dark:border-warning-700">
+                                                                            <div class="text-sm">
+                                                                                <span class="font-medium text-warning-700 dark:text-warning-300">{{ $transferTargetSearch }}</span>
+                                                                                <span class="text-warning-500 dark:text-warning-400">(ID: {{ $transferTargetMasterAccountId }})</span>
+                                                                            </div>
+                                                                            <button
+                                                                                type="button"
+                                                                                wire:click="$set('transferTargetMasterAccountId', null)"
+                                                                                class="text-warning-500 hover:text-warning-700 dark:text-warning-400 dark:hover:text-warning-200"
+                                                                            >
+                                                                                <x-heroicon-m-x-mark class="w-4 h-4" />
+                                                                            </button>
+                                                                        </div>
+                                                                    @else
+                                                                        <div class="relative">
+                                                                            <x-filament::input.wrapper>
+                                                                                <x-filament::input
+                                                                                    type="text"
+                                                                                    wire:model.live.debounce.300ms="transferTargetSearch"
+                                                                                    placeholder="Search target master account..."
+                                                                                    autocomplete="off"
+                                                                                />
+                                                                            </x-filament::input.wrapper>
+
+                                                                            @if(count($transferTargetSearchResults) > 0)
+                                                                                <div class="absolute z-50 w-full mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg max-h-48 overflow-y-auto">
+                                                                                    @foreach($transferTargetSearchResults as $targetResult)
+                                                                                        <button
+                                                                                            type="button"
+                                                                                            wire:click="selectTransferTarget({{ $targetResult['id'] }}, '{{ addslashes($targetResult['name']) }}')"
+                                                                                            class="w-full px-3 py-2 text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-700 border-b border-gray-100 dark:border-gray-700 last:border-b-0"
+                                                                                        >
+                                                                                            <div class="font-medium">{{ $targetResult['name'] }}</div>
+                                                                                            <div class="text-xs text-gray-500 dark:text-gray-400">{{ $targetResult['email'] }} (ID: {{ $targetResult['id'] }})</div>
+                                                                                        </button>
+                                                                                    @endforeach
+                                                                                </div>
+                                                                            @elseif(strlen($transferTargetSearch) >= 2 && count($transferTargetSearchResults) === 0)
+                                                                                <div class="absolute z-50 w-full mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg p-3">
+                                                                                    <p class="text-sm text-gray-500 dark:text-gray-400">No master accounts found</p>
+                                                                                </div>
+                                                                            @endif
+                                                                        </div>
+                                                                    @endif
+
+                                                                    <x-filament::button
+                                                                        wire:click="executeTransferGameAccount"
+                                                                        wire:confirm="Are you sure you want to transfer this game account to a different master account?"
+                                                                        color="warning"
+                                                                        class="w-full"
+                                                                        size="sm"
+                                                                        :disabled="!$transferTargetMasterAccountId"
+                                                                    >
+                                                                        Confirm Transfer
+                                                                    </x-filament::button>
+                                                                </div>
+                                                            @endif
                                                         </div>
                                                     @endforeach
                                                 </div>

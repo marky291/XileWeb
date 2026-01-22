@@ -878,4 +878,132 @@ class PlayerSupportTest extends TestCase
             ->assertSet('selectedPlayer.linked_master_id', $targetMaster->id)
             ->assertSet('selectedPlayer.linked_master_name', $targetMaster->name);
     }
+
+    #[Test]
+    public function can_transfer_linked_game_account_from_master_view(): void
+    {
+        $admin = User::factory()->admin()->create();
+        $sourceMaster = User::factory()->create(['name' => 'Source Master']);
+        $targetMaster = User::factory()->create(['name' => 'Target Master']);
+
+        $gameAccount = GameAccount::factory()->create([
+            'user_id' => $sourceMaster->id,
+            'server' => 'xilero',
+            'ragnarok_account_id' => 12345,
+            'userid' => 'transferaccount',
+        ]);
+
+        Livewire::actingAs($admin)
+            ->test(PlayerSupport::class)
+            ->set('selectedPlayer', [
+                'type' => 'master',
+                'id' => $sourceMaster->id,
+                'name' => $sourceMaster->name,
+                'email' => $sourceMaster->email,
+                'uber_balance' => 0,
+                'is_admin' => false,
+                'game_accounts_count' => 1,
+                'created_at' => now()->format('M j, Y'),
+            ])
+            ->call('startTransferGameAccount', $gameAccount->id)
+            ->assertSet('transferringGameAccountId', $gameAccount->id)
+            ->call('selectTransferTarget', $targetMaster->id, $targetMaster->name)
+            ->assertSet('transferTargetMasterAccountId', $targetMaster->id)
+            ->call('executeTransferGameAccount')
+            ->assertNotified('Account transferred')
+            ->assertSet('transferringGameAccountId', null);
+
+        $gameAccount->refresh();
+        $this->assertEquals($targetMaster->id, $gameAccount->user_id);
+    }
+
+    #[Test]
+    public function can_cancel_transfer_from_master_view(): void
+    {
+        $admin = User::factory()->admin()->create();
+        $sourceMaster = User::factory()->create(['name' => 'Source Master']);
+
+        $gameAccount = GameAccount::factory()->create([
+            'user_id' => $sourceMaster->id,
+            'server' => 'xilero',
+            'ragnarok_account_id' => 12345,
+        ]);
+
+        Livewire::actingAs($admin)
+            ->test(PlayerSupport::class)
+            ->call('startTransferGameAccount', $gameAccount->id)
+            ->assertSet('transferringGameAccountId', $gameAccount->id)
+            ->call('cancelTransferGameAccount')
+            ->assertSet('transferringGameAccountId', null)
+            ->assertSet('transferTargetMasterAccountId', null)
+            ->assertSet('transferTargetSearch', '');
+    }
+
+    #[Test]
+    public function cannot_execute_transfer_without_selecting_game_account(): void
+    {
+        $admin = User::factory()->admin()->create();
+        $targetMaster = User::factory()->create(['name' => 'Target Master']);
+
+        Livewire::actingAs($admin)
+            ->test(PlayerSupport::class)
+            ->set('transferTargetMasterAccountId', $targetMaster->id)
+            ->call('executeTransferGameAccount')
+            ->assertNotified('No game account selected');
+    }
+
+    #[Test]
+    public function cannot_execute_transfer_without_selecting_target(): void
+    {
+        $admin = User::factory()->admin()->create();
+        $sourceMaster = User::factory()->create(['name' => 'Source Master']);
+
+        $gameAccount = GameAccount::factory()->create([
+            'user_id' => $sourceMaster->id,
+            'server' => 'xilero',
+            'ragnarok_account_id' => 12345,
+        ]);
+
+        Livewire::actingAs($admin)
+            ->test(PlayerSupport::class)
+            ->call('startTransferGameAccount', $gameAccount->id)
+            ->call('executeTransferGameAccount')
+            ->assertNotified('No target account selected');
+    }
+
+    #[Test]
+    public function cannot_transfer_to_same_master_from_master_view(): void
+    {
+        $admin = User::factory()->admin()->create();
+        $sourceMaster = User::factory()->create(['name' => 'Source Master']);
+
+        $gameAccount = GameAccount::factory()->create([
+            'user_id' => $sourceMaster->id,
+            'server' => 'xilero',
+            'ragnarok_account_id' => 12345,
+        ]);
+
+        Livewire::actingAs($admin)
+            ->test(PlayerSupport::class)
+            ->call('startTransferGameAccount', $gameAccount->id)
+            ->call('selectTransferTarget', $sourceMaster->id, $sourceMaster->name)
+            ->call('executeTransferGameAccount')
+            ->assertNotified('Same account');
+
+        $gameAccount->refresh();
+        $this->assertEquals($sourceMaster->id, $gameAccount->user_id);
+    }
+
+    #[Test]
+    public function transfer_target_search_returns_matching_users(): void
+    {
+        $admin = User::factory()->admin()->create();
+        User::factory()->create(['name' => 'John Doe', 'email' => 'john@example.com']);
+        User::factory()->create(['name' => 'Jane Doe', 'email' => 'jane@example.com']);
+
+        Livewire::actingAs($admin)
+            ->test(PlayerSupport::class)
+            ->set('transferTargetSearch', 'Doe')
+            ->assertCount('transferTargetSearchResults', 2);
+    }
 }
