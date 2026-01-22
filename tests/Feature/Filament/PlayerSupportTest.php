@@ -592,4 +592,290 @@ class PlayerSupportTest extends TestCase
         // Verify no duplicate GameAccount was created
         $this->assertEquals(1, GameAccount::where('ragnarok_account_id', 12345)->count());
     }
+
+    #[Test]
+    public function can_transfer_game_account_to_different_master(): void
+    {
+        $admin = User::factory()->admin()->create();
+        $sourceMaster = User::factory()->create(['name' => 'Source Master']);
+        $targetMaster = User::factory()->create(['name' => 'Target Master']);
+
+        $gameAccount = GameAccount::factory()->create([
+            'user_id' => $sourceMaster->id,
+            'server' => 'xilero',
+            'ragnarok_account_id' => 12345,
+            'userid' => 'transferaccount',
+        ]);
+
+        Livewire::actingAs($admin)
+            ->test(PlayerSupport::class)
+            ->set('selectedPlayer', [
+                'type' => 'xilero_login',
+                'server' => 'XileRO',
+                'server_key' => 'xilero',
+                'account_id' => 12345,
+                'userid' => 'transferaccount',
+                'email' => 'test@example.com',
+                'group_id' => 0,
+                'last_ip' => '127.0.0.1',
+                'lastlogin' => null,
+                'chars_count' => 0,
+                'linked_master_id' => $sourceMaster->id,
+                'linked_master_name' => $sourceMaster->name,
+            ])
+            ->set('linkToMasterAccountId', $targetMaster->id)
+            ->call('transferGameAccountToMaster')
+            ->assertNotified('Account transferred');
+
+        $gameAccount->refresh();
+        $this->assertEquals($targetMaster->id, $gameAccount->user_id);
+    }
+
+    #[Test]
+    public function cannot_transfer_without_selecting_login_type(): void
+    {
+        $admin = User::factory()->admin()->create();
+        $targetMaster = User::factory()->create();
+
+        Livewire::actingAs($admin)
+            ->test(PlayerSupport::class)
+            ->set('selectedPlayer', [
+                'type' => 'master',
+                'id' => $targetMaster->id,
+                'name' => $targetMaster->name,
+                'email' => $targetMaster->email,
+                'uber_balance' => 0,
+                'is_admin' => false,
+                'game_accounts_count' => 0,
+                'created_at' => now()->format('M j, Y'),
+            ])
+            ->set('linkToMasterAccountId', $targetMaster->id)
+            ->call('transferGameAccountToMaster')
+            ->assertNotified('Invalid selection');
+    }
+
+    #[Test]
+    public function cannot_transfer_without_selecting_target_master(): void
+    {
+        $admin = User::factory()->admin()->create();
+        $sourceMaster = User::factory()->create(['name' => 'Source Master']);
+
+        GameAccount::factory()->create([
+            'user_id' => $sourceMaster->id,
+            'server' => 'xilero',
+            'ragnarok_account_id' => 12345,
+        ]);
+
+        Livewire::actingAs($admin)
+            ->test(PlayerSupport::class)
+            ->set('selectedPlayer', [
+                'type' => 'xilero_login',
+                'server' => 'XileRO',
+                'server_key' => 'xilero',
+                'account_id' => 12345,
+                'userid' => 'testaccount',
+                'email' => 'test@example.com',
+                'group_id' => 0,
+                'last_ip' => '127.0.0.1',
+                'lastlogin' => null,
+                'chars_count' => 0,
+                'linked_master_id' => $sourceMaster->id,
+                'linked_master_name' => $sourceMaster->name,
+            ])
+            ->set('linkToMasterAccountId', null)
+            ->call('transferGameAccountToMaster')
+            ->assertNotified('No master account selected');
+    }
+
+    #[Test]
+    public function cannot_transfer_to_nonexistent_master(): void
+    {
+        $admin = User::factory()->admin()->create();
+        $sourceMaster = User::factory()->create(['name' => 'Source Master']);
+
+        GameAccount::factory()->create([
+            'user_id' => $sourceMaster->id,
+            'server' => 'xilero',
+            'ragnarok_account_id' => 12345,
+        ]);
+
+        Livewire::actingAs($admin)
+            ->test(PlayerSupport::class)
+            ->set('selectedPlayer', [
+                'type' => 'xilero_login',
+                'server' => 'XileRO',
+                'server_key' => 'xilero',
+                'account_id' => 12345,
+                'userid' => 'testaccount',
+                'email' => 'test@example.com',
+                'group_id' => 0,
+                'last_ip' => '127.0.0.1',
+                'lastlogin' => null,
+                'chars_count' => 0,
+                'linked_master_id' => $sourceMaster->id,
+                'linked_master_name' => $sourceMaster->name,
+            ])
+            ->set('linkToMasterAccountId', 99999)
+            ->call('transferGameAccountToMaster')
+            ->assertNotified('Master account not found');
+    }
+
+    #[Test]
+    public function cannot_transfer_unlinked_game_account(): void
+    {
+        $admin = User::factory()->admin()->create();
+        $targetMaster = User::factory()->create(['name' => 'Target Master']);
+
+        Livewire::actingAs($admin)
+            ->test(PlayerSupport::class)
+            ->set('selectedPlayer', [
+                'type' => 'xilero_login',
+                'server' => 'XileRO',
+                'server_key' => 'xilero',
+                'account_id' => 12345,
+                'userid' => 'unlinkedaccount',
+                'email' => 'test@example.com',
+                'group_id' => 0,
+                'last_ip' => '127.0.0.1',
+                'lastlogin' => null,
+                'chars_count' => 0,
+                'linked_master_id' => null,
+                'linked_master_name' => null,
+            ])
+            ->set('linkToMasterAccountId', $targetMaster->id)
+            ->call('transferGameAccountToMaster')
+            ->assertNotified('Not linked');
+    }
+
+    #[Test]
+    public function cannot_transfer_to_same_master_account(): void
+    {
+        $admin = User::factory()->admin()->create();
+        $sourceMaster = User::factory()->create(['name' => 'Source Master']);
+
+        GameAccount::factory()->create([
+            'user_id' => $sourceMaster->id,
+            'server' => 'xilero',
+            'ragnarok_account_id' => 12345,
+        ]);
+
+        Livewire::actingAs($admin)
+            ->test(PlayerSupport::class)
+            ->set('selectedPlayer', [
+                'type' => 'xilero_login',
+                'server' => 'XileRO',
+                'server_key' => 'xilero',
+                'account_id' => 12345,
+                'userid' => 'testaccount',
+                'email' => 'test@example.com',
+                'group_id' => 0,
+                'last_ip' => '127.0.0.1',
+                'lastlogin' => null,
+                'chars_count' => 0,
+                'linked_master_id' => $sourceMaster->id,
+                'linked_master_name' => $sourceMaster->name,
+            ])
+            ->set('linkToMasterAccountId', $sourceMaster->id)
+            ->call('transferGameAccountToMaster')
+            ->assertNotified('Same account');
+    }
+
+    #[Test]
+    public function cannot_transfer_if_target_master_at_max_game_accounts(): void
+    {
+        $admin = User::factory()->admin()->create();
+        $sourceMaster = User::factory()->create(['name' => 'Source Master']);
+        $targetMaster = User::factory()->create([
+            'name' => 'Target Master',
+            'max_game_accounts' => 1,
+        ]);
+
+        // Create the game account to transfer
+        GameAccount::factory()->create([
+            'user_id' => $sourceMaster->id,
+            'server' => 'xilero',
+            'ragnarok_account_id' => 12345,
+        ]);
+
+        // Give target master already one game account (at max)
+        GameAccount::factory()->create([
+            'user_id' => $targetMaster->id,
+            'server' => 'xilero',
+            'ragnarok_account_id' => 99999,
+        ]);
+
+        Livewire::actingAs($admin)
+            ->test(PlayerSupport::class)
+            ->set('selectedPlayer', [
+                'type' => 'xilero_login',
+                'server' => 'XileRO',
+                'server_key' => 'xilero',
+                'account_id' => 12345,
+                'userid' => 'testaccount',
+                'email' => 'test@example.com',
+                'group_id' => 0,
+                'last_ip' => '127.0.0.1',
+                'lastlogin' => null,
+                'chars_count' => 0,
+                'linked_master_id' => $sourceMaster->id,
+                'linked_master_name' => $sourceMaster->name,
+            ])
+            ->set('linkToMasterAccountId', $targetMaster->id)
+            ->call('transferGameAccountToMaster')
+            ->assertNotified('Limit reached');
+    }
+
+    #[Test]
+    public function transfer_updates_results_array_with_new_master(): void
+    {
+        $admin = User::factory()->admin()->create();
+        $sourceMaster = User::factory()->create(['name' => 'Source Master']);
+        $targetMaster = User::factory()->create(['name' => 'Target Master']);
+
+        GameAccount::factory()->create([
+            'user_id' => $sourceMaster->id,
+            'server' => 'xilero',
+            'ragnarok_account_id' => 12345,
+            'userid' => 'transferaccount',
+        ]);
+
+        Livewire::actingAs($admin)
+            ->test(PlayerSupport::class)
+            ->set('results', [
+                [
+                    'type' => 'xilero_login',
+                    'server' => 'XileRO',
+                    'server_key' => 'xilero',
+                    'account_id' => 12345,
+                    'userid' => 'transferaccount',
+                    'email' => 'test@example.com',
+                    'group_id' => 0,
+                    'last_ip' => '127.0.0.1',
+                    'lastlogin' => null,
+                    'chars_count' => 0,
+                    'linked_master_id' => $sourceMaster->id,
+                    'linked_master_name' => $sourceMaster->name,
+                ],
+            ])
+            ->set('selectedPlayer', [
+                'type' => 'xilero_login',
+                'server' => 'XileRO',
+                'server_key' => 'xilero',
+                'account_id' => 12345,
+                'userid' => 'transferaccount',
+                'email' => 'test@example.com',
+                'group_id' => 0,
+                'last_ip' => '127.0.0.1',
+                'lastlogin' => null,
+                'chars_count' => 0,
+                'linked_master_id' => $sourceMaster->id,
+                'linked_master_name' => $sourceMaster->name,
+            ])
+            ->set('linkToMasterAccountId', $targetMaster->id)
+            ->call('transferGameAccountToMaster')
+            ->assertSet('results.0.linked_master_id', $targetMaster->id)
+            ->assertSet('results.0.linked_master_name', $targetMaster->name)
+            ->assertSet('selectedPlayer.linked_master_id', $targetMaster->id)
+            ->assertSet('selectedPlayer.linked_master_name', $targetMaster->name);
+    }
 }
