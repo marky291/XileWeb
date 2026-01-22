@@ -59,13 +59,14 @@
                                         </span>
                                     </td>
                                     <td class="py-2 px-2">
-                                        <button
+                                        <x-filament::button
                                             type="button"
                                             wire:click="selectAccount({{ $index }})"
-                                            class="fi-btn fi-btn-size-xs fi-btn-color-gray px-2 py-1 text-xs font-medium rounded-lg bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600"
+                                            size="xs"
+                                            color="gray"
                                         >
                                             Manage
-                                        </button>
+                                        </x-filament::button>
                                     </td>
                                 </tr>
                             @endforeach
