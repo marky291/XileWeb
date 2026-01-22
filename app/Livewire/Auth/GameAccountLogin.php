@@ -77,6 +77,12 @@ class GameAccountLogin extends Component
 
         session()->regenerate();
 
+        // Update last login info
+        Auth::user()->update([
+            'last_login_ip' => request()->ip(),
+            'last_login_at' => now(),
+        ]);
+
         // Sync game account data from game database
         SyncGameAccountData::run(Auth::user());
 

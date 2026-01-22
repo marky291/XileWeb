@@ -83,6 +83,7 @@ class Register extends Component
         $user = User::create([
             'email' => $this->email,
             'password' => $this->password,
+            'registration_ip' => request()->ip(),
         ]);
 
         RateLimiter::clear($this->throttleKey());
@@ -102,6 +103,7 @@ class Register extends Component
     {
         if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
             RateLimiter::hit($this->throttleKey(), 3600); // 1 hour decay
+
             return;
         }
 

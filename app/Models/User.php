@@ -26,6 +26,9 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
         'discord_avatar',
         'discord_token',
         'discord_refresh_token',
+        'registration_ip',
+        'last_login_ip',
+        'last_login_at',
     ];
 
     /**
@@ -49,6 +52,7 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
     {
         return [
             'email_verified_at' => 'datetime',
+            'last_login_at' => 'datetime',
             'password' => 'hashed',
             'is_admin' => 'boolean',
         ];

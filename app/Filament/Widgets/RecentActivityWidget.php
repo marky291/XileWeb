@@ -25,10 +25,17 @@ class RecentActivityWidget extends BaseWidget
                     ->limit(10)
             )
             ->columns([
-                TextColumn::make('name')
-                    ->searchable(),
                 TextColumn::make('email')
                     ->searchable(),
+                TextColumn::make('registration_ip')
+                    ->label('Reg IP')
+                    ->searchable(),
+                TextColumn::make('last_login_ip')
+                    ->label('Last IP')
+                    ->searchable(),
+                TextColumn::make('last_login_at')
+                    ->label('Last Login')
+                    ->since(),
                 TextColumn::make('uber_balance')
                     ->label('Ubers')
                     ->badge()
