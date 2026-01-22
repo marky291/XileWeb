@@ -14,12 +14,12 @@ use Livewire\Component;
 class GameAccountLogin extends Component
 {
     #[Validate('required|string')]
-    public string $email = '';
+    public mixed $email = '';
 
     #[Validate('required|string')]
-    public string $password = '';
+    public mixed $password = '';
 
-    public bool $remember = false;
+    public mixed $remember = false;
 
     /**
      * Sanitize email input to prevent array injection attacks.

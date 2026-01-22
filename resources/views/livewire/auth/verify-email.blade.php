@@ -14,8 +14,24 @@
                     </div>
                     <h1 class="text-2xl font-bold text-white mb-1">Verify Your Email</h1>
                     <p class="text-gray-400 text-sm">
-                        Thanks for signing up! Before getting started, please verify your email address by clicking the link we just sent to you.
+                        Thanks for signing up! Before getting started, please verify your email address by clicking the link we sent to:
                     </p>
+                    <p class="text-xilero-gold font-medium mt-2">
+                        {{ auth()->user()->email }}
+                    </p>
+                </div>
+
+                {{-- Info Box --}}
+                <div class="p-4 bg-blue-900/20 border border-blue-800/50 rounded-lg mb-4">
+                    <div class="flex gap-3">
+                        <svg class="w-5 h-5 text-blue-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <div class="text-sm text-gray-300">
+                            <p class="mb-1">The email may take up to <strong class="text-white">5 minutes</strong> to arrive.</p>
+                            <p>Please check your <strong class="text-white">spam or junk folder</strong> if you don't see it in your inbox.</p>
+                        </div>
+                    </div>
                 </div>
 
                 @if (session('status') === 'verification-link-sent')
@@ -27,6 +43,20 @@
                             </svg>
                             <p class="text-green-400 text-sm">
                                 A new verification link has been sent to your email address.
+                            </p>
+                        </div>
+                    </div>
+                @endif
+
+                @if (session('throttle'))
+                    {{-- Throttle Message --}}
+                    <div class="p-4 bg-amber-900/30 border border-amber-700 rounded-lg mb-4">
+                        <div class="flex items-center gap-3">
+                            <svg class="w-5 h-5 text-amber-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            <p class="text-amber-400 text-sm">
+                                Please wait {{ session('throttle') }} seconds before requesting another email.
                             </p>
                         </div>
                     </div>

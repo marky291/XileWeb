@@ -3,6 +3,7 @@
 namespace App\Livewire\Auth;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\RateLimiter;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
@@ -11,13 +12,27 @@ class VerifyEmail extends Component
 {
     public function sendVerification(): void
     {
-        if (Auth::user()->hasVerifiedEmail()) {
+        $user = Auth::user();
+
+        if ($user->hasVerifiedEmail()) {
             $this->redirect(route('dashboard'), navigate: false);
 
             return;
         }
 
-        Auth::user()->sendEmailVerificationNotification();
+        $throttleKey = 'verify-email:'.$user->id;
+
+        if (RateLimiter::tooManyAttempts($throttleKey, 1)) {
+            $seconds = RateLimiter::availableIn($throttleKey);
+
+            session()->flash('throttle', $seconds);
+
+            return;
+        }
+
+        RateLimiter::hit($throttleKey, 60);
+
+        $user->sendEmailVerificationNotification();
 
         session()->flash('status', 'verification-link-sent');
     }

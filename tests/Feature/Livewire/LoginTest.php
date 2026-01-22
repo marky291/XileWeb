@@ -219,7 +219,7 @@ class LoginTest extends TestCase
     #[Test]
     public function login_component_has_input_sanitization_methods(): void
     {
-        $component = new GameAccountLogin();
+        $component = new GameAccountLogin;
 
         // Verify sanitization methods exist
         $this->assertTrue(method_exists($component, 'updatingEmail'));
@@ -230,7 +230,7 @@ class LoginTest extends TestCase
     #[Test]
     public function email_sanitization_converts_non_string_to_empty(): void
     {
-        $component = new GameAccountLogin();
+        $component = new GameAccountLogin;
 
         // Test the sanitization method directly
         $value = ['malicious' => 'payload'];
@@ -242,7 +242,7 @@ class LoginTest extends TestCase
     #[Test]
     public function password_sanitization_converts_non_string_to_empty(): void
     {
-        $component = new GameAccountLogin();
+        $component = new GameAccountLogin;
 
         $value = ['malicious' => 'payload'];
         $component->updatingPassword($value);
@@ -253,7 +253,7 @@ class LoginTest extends TestCase
     #[Test]
     public function remember_sanitization_converts_array_to_false(): void
     {
-        $component = new GameAccountLogin();
+        $component = new GameAccountLogin;
 
         $value = ['malicious' => 'payload'];
         $component->updatingRemember($value);
@@ -264,7 +264,7 @@ class LoginTest extends TestCase
     #[Test]
     public function remember_sanitization_accepts_valid_values(): void
     {
-        $component = new GameAccountLogin();
+        $component = new GameAccountLogin;
 
         // Test true values
         $value = true;
@@ -317,5 +317,20 @@ class LoginTest extends TestCase
             ->assertRedirect(route('dashboard'));
 
         $this->assertAuthenticatedAs($user);
+    }
+
+    #[Test]
+    public function array_injection_attack_is_sanitized_and_rejected(): void
+    {
+        // This tests that array injection attacks are handled gracefully
+        // instead of throwing TypeErrors
+        Livewire::test(GameAccountLogin::class)
+            ->set('email', ['malicious' => 'payload'])
+            ->set('password', ['another' => 'attack'])
+            ->set('remember', ['array' => 'value'])
+            ->call('authenticate')
+            ->assertHasErrors(['email', 'password']);
+
+        $this->assertGuest();
     }
 }

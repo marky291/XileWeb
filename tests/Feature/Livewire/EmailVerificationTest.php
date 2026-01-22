@@ -9,6 +9,7 @@ use Illuminate\Auth\Events\Verified;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\URL;
 use Livewire\Livewire;
 use PHPUnit\Framework\Attributes\Test;
@@ -214,5 +215,80 @@ class EmailVerificationTest extends TestCase
 
             return true;
         });
+    }
+
+    #[Test]
+    public function resend_verification_is_throttled(): void
+    {
+        Notification::fake();
+
+        $user = User::factory()->unverified()->create();
+
+        // Clear any existing rate limits
+        RateLimiter::clear('verify-email:'.$user->id);
+
+        // First request should succeed
+        $component = Livewire::actingAs($user)
+            ->test(VerifyEmail::class)
+            ->call('sendVerification');
+
+        Notification::assertSentToTimes($user, VerifyEmailNotification::class, 1);
+
+        // Second request (same component) should be throttled
+        $component->call('sendVerification');
+
+        // Should still only have sent one notification
+        Notification::assertSentToTimes($user, VerifyEmailNotification::class, 1);
+    }
+
+    #[Test]
+    public function throttle_resets_after_timeout(): void
+    {
+        Notification::fake();
+
+        $user = User::factory()->unverified()->create();
+
+        // Clear any existing rate limits
+        RateLimiter::clear('verify-email:'.$user->id);
+
+        // First request
+        Livewire::actingAs($user)
+            ->test(VerifyEmail::class)
+            ->call('sendVerification');
+
+        Notification::assertSentToTimes($user, VerifyEmailNotification::class, 1);
+
+        // Travel past throttle timeout (60 seconds)
+        $this->travel(61)->seconds();
+
+        // Should be able to send again
+        Livewire::actingAs($user)
+            ->test(VerifyEmail::class)
+            ->call('sendVerification');
+
+        Notification::assertSentToTimes($user, VerifyEmailNotification::class, 2);
+    }
+
+    #[Test]
+    public function verification_page_shows_user_email(): void
+    {
+        $user = User::factory()->unverified()->create([
+            'email' => 'test@example.com',
+        ]);
+
+        Livewire::actingAs($user)
+            ->test(VerifyEmail::class)
+            ->assertSee('test@example.com');
+    }
+
+    #[Test]
+    public function verification_page_shows_helpful_info(): void
+    {
+        $user = User::factory()->unverified()->create();
+
+        Livewire::actingAs($user)
+            ->test(VerifyEmail::class)
+            ->assertSee('5 minutes')
+            ->assertSee('spam or junk folder');
     }
 }
