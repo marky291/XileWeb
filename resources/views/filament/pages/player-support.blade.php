@@ -164,18 +164,23 @@
                                             </div>
 
                                             <div class="p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
-                                                <h4 class="font-semibold mb-2 text-sm">Link Unclaimed Game Account</h4>
+                                                <h4 class="font-semibold mb-2 text-sm">Link / Transfer Game Account</h4>
                                                 <div class="space-y-1.5">
                                                     @if($selectedUnclaimedGameAccountId)
-                                                        <div class="flex items-center justify-between p-2 bg-primary-50 dark:bg-primary-900/30 rounded-lg border border-primary-200 dark:border-primary-700">
+                                                        <div class="flex items-center justify-between p-2 {{ $selectedGameAccountIsLinked ? 'bg-warning-50 dark:bg-warning-900/30 border-warning-200 dark:border-warning-700' : 'bg-primary-50 dark:bg-primary-900/30 border-primary-200 dark:border-primary-700' }} rounded-lg border">
                                                             <div class="text-sm">
-                                                                <span class="font-medium text-primary-700 dark:text-primary-300">{{ $unclaimedGameAccountSearch }}</span>
-                                                                <span class="text-primary-500 dark:text-primary-400">({{ $selectedUnclaimedServer }})</span>
+                                                                <span class="font-medium {{ $selectedGameAccountIsLinked ? 'text-warning-700 dark:text-warning-300' : 'text-primary-700 dark:text-primary-300' }}">{{ $unclaimedGameAccountSearch }}</span>
+                                                                <span class="{{ $selectedGameAccountIsLinked ? 'text-warning-500 dark:text-warning-400' : 'text-primary-500 dark:text-primary-400' }}">({{ $selectedUnclaimedServer }})</span>
+                                                                @if($selectedGameAccountIsLinked && $selectedGameAccountCurrentMaster)
+                                                                    <div class="text-xs text-warning-600 dark:text-warning-400 mt-0.5">
+                                                                        Currently linked to: {{ $selectedGameAccountCurrentMaster }}
+                                                                    </div>
+                                                                @endif
                                                             </div>
                                                             <button
                                                                 type="button"
                                                                 wire:click="clearUnclaimedGameAccountSelection"
-                                                                class="text-primary-500 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-200"
+                                                                class="{{ $selectedGameAccountIsLinked ? 'text-warning-500 hover:text-warning-700 dark:text-warning-400 dark:hover:text-warning-200' : 'text-primary-500 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-200' }}"
                                                             >
                                                                 <x-heroicon-m-x-mark class="w-4 h-4" />
                                                             </button>
@@ -186,47 +191,66 @@
                                                                 <x-filament::input
                                                                     type="text"
                                                                     wire:model.live.debounce.300ms="unclaimedGameAccountSearch"
-                                                                    placeholder="Search unclaimed accounts..."
+                                                                    placeholder="Search game accounts..."
                                                                     autocomplete="off"
                                                                 />
                                                             </x-filament::input.wrapper>
 
                                                             @if(count($unclaimedGameAccountResults) > 0)
                                                                 <div class="absolute z-50 w-full mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg max-h-48 overflow-y-auto">
-                                                                    @foreach($unclaimedGameAccountResults as $unclaimedResult)
+                                                                    @foreach($unclaimedGameAccountResults as $gameAccountResult)
+                                                                        @php
+                                                                            $linkedMasterParam = $gameAccountResult['linked_master_name'] ? "'" . addslashes($gameAccountResult['linked_master_name']) . "'" : 'null';
+                                                                        @endphp
                                                                         <button
                                                                             type="button"
-                                                                            wire:click="selectUnclaimedGameAccount({{ $unclaimedResult['id'] }}, '{{ $unclaimedResult['server_name'] }}', '{{ addslashes($unclaimedResult['userid']) }}')"
+                                                                            wire:click="selectUnclaimedGameAccount({{ $gameAccountResult['id'] }}, '{{ $gameAccountResult['server_name'] }}', '{{ addslashes($gameAccountResult['userid']) }}', {{ $gameAccountResult['is_linked'] ? 'true' : 'false' }}, {{ $linkedMasterParam }})"
                                                                             class="w-full px-3 py-2 text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-700 border-b border-gray-100 dark:border-gray-700 last:border-b-0"
                                                                         >
-                                                                            <div class="flex items-center justify-between">
-                                                                                <span class="font-medium">{{ $unclaimedResult['userid'] }}</span>
-                                                                                <span class="text-xs px-1.5 py-0.5 rounded {{ $unclaimedResult['server'] === 'xilero' ? 'bg-green-100 text-green-700 dark:bg-green-900/50 dark:text-green-300' : 'bg-orange-100 text-orange-700 dark:bg-orange-900/50 dark:text-orange-300' }}">
-                                                                                    {{ $unclaimedResult['server_name'] }}
-                                                                                </span>
+                                                                            <div class="flex items-center justify-between gap-2">
+                                                                                <span class="font-medium">{{ $gameAccountResult['userid'] }}</span>
+                                                                                <div class="flex items-center gap-1">
+                                                                                    @if($gameAccountResult['is_linked'])
+                                                                                        <span class="text-xs px-1.5 py-0.5 rounded bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300">
+                                                                                            Linked
+                                                                                        </span>
+                                                                                    @else
+                                                                                        <span class="text-xs px-1.5 py-0.5 rounded bg-yellow-100 text-yellow-700 dark:bg-yellow-900/50 dark:text-yellow-300">
+                                                                                            Unlinked
+                                                                                        </span>
+                                                                                    @endif
+                                                                                    <span class="text-xs px-1.5 py-0.5 rounded {{ $gameAccountResult['server'] === 'xilero' ? 'bg-green-100 text-green-700 dark:bg-green-900/50 dark:text-green-300' : 'bg-orange-100 text-orange-700 dark:bg-orange-900/50 dark:text-orange-300' }}">
+                                                                                        {{ $gameAccountResult['server_name'] }}
+                                                                                    </span>
+                                                                                </div>
                                                                             </div>
-                                                                            <div class="text-xs text-gray-500 dark:text-gray-400">{{ $unclaimedResult['email'] }}</div>
+                                                                            <div class="text-xs text-gray-500 dark:text-gray-400">
+                                                                                {{ $gameAccountResult['email'] }}
+                                                                                @if($gameAccountResult['is_linked'] && $gameAccountResult['linked_master_name'])
+                                                                                    <span class="text-blue-600 dark:text-blue-400">→ {{ $gameAccountResult['linked_master_name'] }}</span>
+                                                                                @endif
+                                                                            </div>
                                                                         </button>
                                                                     @endforeach
                                                                 </div>
                                                             @elseif(strlen($unclaimedGameAccountSearch) >= 2 && count($unclaimedGameAccountResults) === 0)
                                                                 <div class="absolute z-50 w-full mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg p-3">
-                                                                    <p class="text-sm text-gray-500 dark:text-gray-400">No unclaimed accounts found</p>
+                                                                    <p class="text-sm text-gray-500 dark:text-gray-400">No game accounts found</p>
                                                                 </div>
                                                             @endif
                                                         </div>
-                                                        <p class="text-xs text-gray-500">Search by username or email</p>
+                                                        <p class="text-xs text-gray-500">Search by username or email (shows linked and unlinked accounts)</p>
                                                     @endif
 
                                                     <x-filament::button
-                                                        wire:click="linkUnclaimedToMaster"
-                                                        wire:confirm="Are you sure you want to link this game account to this master account?"
-                                                        color="primary"
+                                                        wire:click="linkOrTransferToMaster"
+                                                        wire:confirm="{{ $selectedGameAccountIsLinked ? 'Are you sure you want to transfer this game account to this master account?' : 'Are you sure you want to link this game account to this master account?' }}"
+                                                        color="{{ $selectedGameAccountIsLinked ? 'warning' : 'primary' }}"
                                                         class="w-full"
                                                         size="sm"
                                                         :disabled="!$selectedUnclaimedGameAccountId"
                                                     >
-                                                        Link Game Account
+                                                        {{ $selectedGameAccountIsLinked ? 'Transfer Game Account' : 'Link Game Account' }}
                                                     </x-filament::button>
                                                 </div>
                                             </div>

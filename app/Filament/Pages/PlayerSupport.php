@@ -49,7 +49,7 @@ class PlayerSupport extends Page implements HasForms
     /** @var array<int, array{id: int, name: string, email: string}> */
     public array $masterAccountSearchResults = [];
 
-    // For linking unclaimed game accounts to master account
+    // For linking/transferring game accounts to master account
     public ?string $unclaimedGameAccountSearch = '';
 
     /** @var array<int, array<string, mixed>> */
@@ -58,6 +58,10 @@ class PlayerSupport extends Page implements HasForms
     public ?int $selectedUnclaimedGameAccountId = null;
 
     public ?string $selectedUnclaimedServer = null;
+
+    public bool $selectedGameAccountIsLinked = false;
+
+    public ?string $selectedGameAccountCurrentMaster = null;
 
     // For transferring linked game accounts from master view
     public ?int $transferringGameAccountId = null;
@@ -282,6 +286,8 @@ class PlayerSupport extends Page implements HasForms
         $this->unclaimedGameAccountResults = [];
         $this->selectedUnclaimedGameAccountId = null;
         $this->selectedUnclaimedServer = null;
+        $this->selectedGameAccountIsLinked = false;
+        $this->selectedGameAccountCurrentMaster = null;
     }
 
     public function updatedMasterAccountSearch(): void
@@ -354,16 +360,17 @@ class PlayerSupport extends Page implements HasForms
         $searchTerm = '%'.$this->unclaimedGameAccountSearch.'%';
         $results = [];
 
-        // Search unclaimed GameAccounts (user_id is null)
-        $unclaimedAccounts = GameAccount::whereNull('user_id')
-            ->where(function ($query) use ($searchTerm) {
-                $query->where('userid', 'like', $searchTerm)
-                    ->orWhere('email', 'like', $searchTerm);
-            })
+        // Search all GameAccounts (both linked and unclaimed)
+        $gameAccounts = GameAccount::where(function ($query) use ($searchTerm) {
+            $query->where('userid', 'like', $searchTerm)
+                ->orWhere('email', 'like', $searchTerm);
+        })
+            ->with('user:id,name,email')
             ->limit(10)
             ->get();
 
-        foreach ($unclaimedAccounts as $account) {
+        foreach ($gameAccounts as $account) {
+            $isLinked = $account->user_id !== null;
             $results[] = [
                 'id' => $account->id,
                 'server' => $account->server,
@@ -371,19 +378,23 @@ class PlayerSupport extends Page implements HasForms
                 'userid' => $account->userid,
                 'email' => $account->email,
                 'ragnarok_account_id' => $account->ragnarok_account_id,
-                'type' => 'unclaimed',
+                'is_linked' => $isLinked,
+                'linked_master_id' => $account->user_id,
+                'linked_master_name' => $account->user?->name,
             ];
         }
 
         $this->unclaimedGameAccountResults = $results;
     }
 
-    public function selectUnclaimedGameAccount(int $id, string $server, string $userid): void
+    public function selectUnclaimedGameAccount(int $id, string $server, string $userid, bool $isLinked = false, ?string $currentMaster = null): void
     {
         $this->selectedUnclaimedGameAccountId = $id;
         $this->selectedUnclaimedServer = $server;
         $this->unclaimedGameAccountSearch = $userid;
         $this->unclaimedGameAccountResults = [];
+        $this->selectedGameAccountIsLinked = $isLinked;
+        $this->selectedGameAccountCurrentMaster = $currentMaster;
     }
 
     public function clearUnclaimedGameAccountSelection(): void
@@ -391,7 +402,7 @@ class PlayerSupport extends Page implements HasForms
         $this->resetUnclaimedGameAccountFields();
     }
 
-    public function linkUnclaimedToMaster(): void
+    public function linkOrTransferToMaster(): void
     {
         if (! $this->selectedPlayer || $this->selectedPlayer['type'] !== 'master') {
             Notification::make()
@@ -406,7 +417,7 @@ class PlayerSupport extends Page implements HasForms
         if (! $this->selectedUnclaimedGameAccountId) {
             Notification::make()
                 ->title('No game account selected')
-                ->body('Please select an unclaimed game account to link')
+                ->body('Please select a game account to link or transfer')
                 ->warning()
                 ->send();
 
@@ -423,17 +434,6 @@ class PlayerSupport extends Page implements HasForms
             return;
         }
 
-        // Check if master account can have more game accounts
-        if (! $masterAccount->canCreateGameAccount()) {
-            Notification::make()
-                ->title('Limit reached')
-                ->body("Master account has reached maximum game accounts ({$masterAccount->max_game_accounts})")
-                ->danger()
-                ->send();
-
-            return;
-        }
-
         $gameAccount = GameAccount::find($this->selectedUnclaimedGameAccountId);
         if (! $gameAccount) {
             Notification::make()
@@ -444,34 +444,62 @@ class PlayerSupport extends Page implements HasForms
             return;
         }
 
-        if ($gameAccount->user_id !== null) {
+        // Check if already linked to THIS master account
+        if ($gameAccount->user_id === $masterAccount->id) {
             Notification::make()
                 ->title('Already linked')
-                ->body('This game account is already linked to a master account')
+                ->body('This game account is already linked to this master account')
                 ->warning()
                 ->send();
 
             return;
         }
 
-        // Link the game account
+        $isTransfer = $gameAccount->user_id !== null;
+        $sourceMasterName = null;
+
+        if ($isTransfer) {
+            $sourceMaster = User::find($gameAccount->user_id);
+            $sourceMasterName = $sourceMaster?->name ?? 'Unknown';
+        } else {
+            // Only check limit for new links, not transfers
+            if (! $masterAccount->canCreateGameAccount()) {
+                Notification::make()
+                    ->title('Limit reached')
+                    ->body("Master account has reached maximum game accounts ({$masterAccount->max_game_accounts})")
+                    ->danger()
+                    ->send();
+
+                return;
+            }
+        }
+
+        // Link or transfer the game account
         $gameAccount->update([
             'user_id' => $masterAccount->id,
         ]);
 
-        // Transfer legacy uber balance if any
-        $transferredUbers = TransferLegacyUberBalance::run($gameAccount, $masterAccount);
+        if ($isTransfer) {
+            Notification::make()
+                ->title('Account transferred')
+                ->body("Game account {$gameAccount->userid} ({$gameAccount->serverName()}) transferred from {$sourceMasterName} to {$masterAccount->name}")
+                ->success()
+                ->send();
+        } else {
+            // Transfer legacy uber balance if any (only for new links)
+            $transferredUbers = TransferLegacyUberBalance::run($gameAccount, $masterAccount);
 
-        $message = "Game account {$gameAccount->userid} ({$gameAccount->serverName()}) linked to {$masterAccount->name}";
-        if ($transferredUbers > 0) {
-            $message .= ". Transferred {$transferredUbers} legacy ubers.";
+            $message = "Game account {$gameAccount->userid} ({$gameAccount->serverName()}) linked to {$masterAccount->name}";
+            if ($transferredUbers > 0) {
+                $message .= ". Transferred {$transferredUbers} legacy ubers.";
+            }
+
+            Notification::make()
+                ->title('Account linked')
+                ->body($message)
+                ->success()
+                ->send();
         }
-
-        Notification::make()
-            ->title('Account linked')
-            ->body($message)
-            ->success()
-            ->send();
 
         // Update the game accounts count in the selected player
         $this->selectedPlayer['game_accounts_count'] = $masterAccount->gameAccounts()->count();
@@ -485,6 +513,14 @@ class PlayerSupport extends Page implements HasForms
         }
 
         $this->resetUnclaimedGameAccountFields();
+    }
+
+    /**
+     * @deprecated Use linkOrTransferToMaster() instead
+     */
+    public function linkUnclaimedToMaster(): void
+    {
+        $this->linkOrTransferToMaster();
     }
 
     public function unlinkGameAccount(int $gameAccountId): void
