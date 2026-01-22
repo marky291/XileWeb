@@ -250,11 +250,11 @@
             @if ($gameAccounts->isEmpty())
                 <div class="block-home bg-gray-900 rounded-lg p-12 text-center">
                     <i class="fas fa-user-slash text-4xl text-gray-600 mb-4"></i>
-                    <h3 class="text-xl font-semibold text-gray-300 mb-2">No Game Account Linked</h3>
-                    <p class="text-gray-500 mb-4">You need to link a game account to browse and purchase items from the Uber Shop.</p>
+                    <h3 class="text-xl font-semibold text-gray-300 mb-2">No Game Account</h3>
+                    <p class="text-gray-500 mb-4">You need to create a game account to browse and purchase items from the Uber Shop.</p>
                     <a href="/dashboard" class="inline-flex items-center gap-2 px-4 py-2 bg-amber-500 hover:bg-amber-400 text-gray-900 font-bold rounded-lg transition-colors">
-                        <i class="fas fa-link"></i>
-                        Link Game Account
+                        <i class="fas fa-plus"></i>
+                        Create Game Account
                     </a>
                 </div>
             @endif
