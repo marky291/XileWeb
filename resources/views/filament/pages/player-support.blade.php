@@ -338,13 +338,83 @@
                                             </div>
 
                                             <div class="p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
-                                                <h4 class="font-semibold mb-2 text-sm">Link to Master Account</h4>
+                                                <h4 class="font-semibold mb-2 text-sm">
+                                                    @if($result['linked_master_name'] ?? null)
+                                                        Transfer Game Account
+                                                    @else
+                                                        Link to Master Account
+                                                    @endif
+                                                </h4>
                                                 @if($result['linked_master_name'] ?? null)
-                                                    <div class="p-3 bg-blue-50 dark:bg-blue-900/30 rounded-lg">
-                                                        <p class="text-sm text-blue-800 dark:text-blue-200">
-                                                            <span class="font-semibold">Already linked to:</span> {{ $result['linked_master_name'] }}
-                                                            <span class="text-blue-600 dark:text-blue-400">(ID: {{ $result['linked_master_id'] }})</span>
-                                                        </p>
+                                                    <div class="space-y-2">
+                                                        <div class="p-3 bg-blue-50 dark:bg-blue-900/30 rounded-lg">
+                                                            <p class="text-sm text-blue-800 dark:text-blue-200">
+                                                                <span class="font-semibold">Currently linked to:</span> {{ $result['linked_master_name'] }}
+                                                                <span class="text-blue-600 dark:text-blue-400">(ID: {{ $result['linked_master_id'] }})</span>
+                                                            </p>
+                                                        </div>
+
+                                                        {{-- Selected Master Account Display --}}
+                                                        @if($linkToMasterAccountId)
+                                                            <div class="flex items-center justify-between p-2 bg-primary-50 dark:bg-primary-900/30 rounded-lg border border-primary-200 dark:border-primary-700">
+                                                                <div class="text-sm">
+                                                                    <span class="font-medium text-primary-700 dark:text-primary-300">{{ $masterAccountSearch }}</span>
+                                                                    <span class="text-primary-500 dark:text-primary-400">(ID: {{ $linkToMasterAccountId }})</span>
+                                                                </div>
+                                                                <button
+                                                                    type="button"
+                                                                    wire:click="clearMasterAccountSelection"
+                                                                    class="text-primary-500 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-200"
+                                                                >
+                                                                    <x-heroicon-m-x-mark class="w-4 h-4" />
+                                                                </button>
+                                                            </div>
+                                                        @else
+                                                            {{-- Search Input --}}
+                                                            <div class="relative">
+                                                                <x-filament::input.wrapper>
+                                                                    <x-filament::input
+                                                                        type="text"
+                                                                        wire:model.live.debounce.300ms="masterAccountSearch"
+                                                                        placeholder="Search new master account..."
+                                                                        autocomplete="off"
+                                                                    />
+                                                                </x-filament::input.wrapper>
+
+                                                                {{-- Search Results Dropdown --}}
+                                                                @if(count($masterAccountSearchResults) > 0)
+                                                                    <div class="absolute z-50 w-full mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg max-h-48 overflow-y-auto">
+                                                                        @foreach($masterAccountSearchResults as $masterResult)
+                                                                            <button
+                                                                                type="button"
+                                                                                wire:click="selectMasterAccountForLinking({{ $masterResult['id'] }}, '{{ addslashes($masterResult['name']) }}')"
+                                                                                class="w-full px-3 py-2 text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-700 border-b border-gray-100 dark:border-gray-700 last:border-b-0"
+                                                                            >
+                                                                                <div class="font-medium">{{ $masterResult['name'] }}</div>
+                                                                                <div class="text-xs text-gray-500 dark:text-gray-400">{{ $masterResult['email'] }} (ID: {{ $masterResult['id'] }})</div>
+                                                                            </button>
+                                                                        @endforeach
+                                                                    </div>
+                                                                @elseif(strlen($masterAccountSearch) >= 2 && count($masterAccountSearchResults) === 0)
+                                                                    <div class="absolute z-50 w-full mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg p-3">
+                                                                        <p class="text-sm text-gray-500 dark:text-gray-400">No master accounts found</p>
+                                                                    </div>
+                                                                @endif
+                                                            </div>
+                                                            <p class="text-xs text-gray-500">
+                                                                Search for a different master account to transfer to
+                                                            </p>
+                                                        @endif
+
+                                                        <x-filament::button
+                                                            wire:click="transferGameAccountToMaster"
+                                                            wire:confirm="Are you sure you want to transfer this game account to a different master account?"
+                                                            color="warning"
+                                                            class="w-full"
+                                                            :disabled="!$linkToMasterAccountId"
+                                                        >
+                                                            Transfer to Master Account
+                                                        </x-filament::button>
                                                     </div>
                                                 @else
                                                     <div class="space-y-2">

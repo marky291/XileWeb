@@ -707,6 +707,110 @@ class PlayerSupport extends Page implements HasForms
         $this->resetLinkingFields();
     }
 
+    public function transferGameAccountToMaster(): void
+    {
+        if (! $this->selectedPlayer || ! str_contains($this->selectedPlayer['type'], 'login')) {
+            Notification::make()
+                ->title('Invalid selection')
+                ->body('Please select a game account (login) to transfer')
+                ->danger()
+                ->send();
+
+            return;
+        }
+
+        if (! $this->linkToMasterAccountId) {
+            Notification::make()
+                ->title('No master account selected')
+                ->body('Please select a master account to transfer to')
+                ->warning()
+                ->send();
+
+            return;
+        }
+
+        $targetMasterAccount = User::find($this->linkToMasterAccountId);
+        if (! $targetMasterAccount) {
+            Notification::make()
+                ->title('Master account not found')
+                ->body("No master account found with ID {$this->linkToMasterAccountId}")
+                ->danger()
+                ->send();
+
+            return;
+        }
+
+        // Find the existing link
+        $existingLink = GameAccount::where('server', $this->selectedPlayer['server_key'])
+            ->where('ragnarok_account_id', $this->selectedPlayer['account_id'])
+            ->first();
+
+        if (! $existingLink || $existingLink->user_id === null) {
+            Notification::make()
+                ->title('Not linked')
+                ->body('This game account is not linked to any master account. Use "Link" instead.')
+                ->warning()
+                ->send();
+
+            return;
+        }
+
+        // Cannot transfer to the same account
+        if ($existingLink->user_id === $targetMasterAccount->id) {
+            Notification::make()
+                ->title('Same account')
+                ->body('This game account is already linked to this master account')
+                ->warning()
+                ->send();
+
+            return;
+        }
+
+        $sourceMasterAccount = User::find($existingLink->user_id);
+
+        // Check if target master account can have more game accounts
+        if (! $targetMasterAccount->canCreateGameAccount()) {
+            Notification::make()
+                ->title('Limit reached')
+                ->body("Target master account has reached maximum game accounts ({$targetMasterAccount->max_game_accounts})")
+                ->danger()
+                ->send();
+
+            return;
+        }
+
+        $sourceAccountName = $sourceMasterAccount?->name ?? 'Unknown';
+
+        // Transfer the game account
+        $existingLink->update([
+            'user_id' => $targetMasterAccount->id,
+        ]);
+
+        Notification::make()
+            ->title('Account transferred')
+            ->body("Game account {$existingLink->userid} ({$existingLink->serverName()}) transferred from {$sourceAccountName} to {$targetMasterAccount->name}")
+            ->success()
+            ->send();
+
+        // Update the selected player and results array
+        $this->selectedPlayer['linked_master_id'] = $targetMasterAccount->id;
+        $this->selectedPlayer['linked_master_name'] = $targetMasterAccount->name;
+
+        // Find and update the result in the results array
+        foreach ($this->results as $index => $result) {
+            if (isset($result['account_id']) &&
+                $result['account_id'] === $this->selectedPlayer['account_id'] &&
+                $result['server_key'] === $this->selectedPlayer['server_key']
+            ) {
+                $this->results[$index]['linked_master_id'] = $targetMasterAccount->id;
+                $this->results[$index]['linked_master_name'] = $targetMasterAccount->name;
+                break;
+            }
+        }
+
+        $this->resetLinkingFields();
+    }
+
     public function resetMasterPassword(): void
     {
         if (! $this->selectedPlayer || $this->selectedPlayer['type'] !== 'master') {
