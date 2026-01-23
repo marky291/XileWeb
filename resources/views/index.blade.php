@@ -205,58 +205,66 @@
 
     <div class="line"></div>
 
+    <div class="hidden md:block">
+        <x-latest-post-preview lazy/>
+        <div class="line"></div>
+    </div>
+
     <section id="steps2play" class="bg-clash-bg relative overflow-hidden py-12 md:px-24">
         <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
-            <div class="grid grid-cols-1 lg:grid-cols-[1fr_1px_1fr] gap-10 lg:gap-16">
-                <div>
-                    <h2 class="mt-0 mb-2 text-2xl font-bold text-gray-100">XileRO Midrate</h2>
-                    <p class="mb-12 text-amber-500">Coming soon...</p>
-                </div>
-
-                {{-- Vertical Divider --}}
-                <div class="hidden lg:block bg-gradient-to-b from-transparent via-gray-700 to-transparent"></div>
-
-                <div>
-                    <h2 class="mt-0 mb-2 text-2xl font-bold text-gray-100"><span class="mr-2">1.</span> XileRetro Download Full Client</h2>
-                    <p class="mb-12 text-amber-500">Full downloads ensure an error-free experience.</p>
-                    <div class="grid grid-cols-5">
-                        <div class="col-span-1 hidden md:block">
-                            <i class="fa fa-windows step2-icon text-gray-300" aria-hidden="true"></i>
-                        </div>
-                        <div class="col-span-5 md:col-span-4 grid gap-5 grid-cols-1">
-                            @foreach(\App\Models\Download::full()->get() as $download)
-                                <a class="no-underline truncate text-gray-900 btn text-left {{ $download->button_class }}" href="{{ $download->download_url }}" target="_blank" rel="noopener">
-                                    {{ $download->display_name }}
-                                </a>
-                            @endforeach
-                        </div>
+            @auth
+                <div class="grid grid-cols-1 lg:grid-cols-[1fr_1px_1fr] gap-10 lg:gap-16">
+                    <div>
+                        <h2 class="mt-0 mb-2 text-2xl font-bold text-gray-100">XileRO Midrate</h2>
+                        <p class="mb-12 text-amber-500">Coming soon...</p>
                     </div>
 
-                    <div class="mt-10">
-                        <h2 class="mt-0 mb-2 text-2xl font-bold text-gray-100"><span class="mr-2">2.</span> XileRetro Android Download</h2>
-                        <p class="mb-12 text-amber-500">Play XileRetro on the Go, with android, supporting automatic updates and gepard.</p>
+                    {{-- Vertical Divider --}}
+                    <div class="hidden lg:block bg-gradient-to-b from-transparent via-gray-700 to-transparent"></div>
+
+                    <div>
+                        <h2 class="mt-0 mb-2 text-2xl font-bold text-gray-100"><span class="mr-2">1.</span> XileRetro Download Full Client</h2>
+                        <p class="mb-12 text-amber-500">Full downloads ensure an error-free experience.</p>
                         <div class="grid grid-cols-5">
                             <div class="col-span-1 hidden md:block">
-                                <i class="fa fa-mobile step2-icon text-gray-300" aria-hidden="true"></i>
+                                <i class="fa fa-windows step2-icon text-gray-300" aria-hidden="true"></i>
                             </div>
                             <div class="col-span-5 md:col-span-4 grid gap-5 grid-cols-1">
-                                @foreach(\App\Models\Download::android()->get() as $download)
-                                    <a class="no-underline truncate btn text-left {{ $download->button_class }}" href="{{ $download->download_url }}" target="_blank" rel="noopener">
+                                @foreach(\App\Models\Download::full()->get() as $download)
+                                    <a class="no-underline truncate text-gray-900 btn text-left {{ $download->button_class }}" href="{{ $download->download_url }}" target="_blank" rel="noopener">
                                         {{ $download->display_name }}
                                     </a>
                                 @endforeach
                             </div>
                         </div>
+
+                        <div class="mt-10">
+                            <h2 class="mt-0 mb-2 text-2xl font-bold text-gray-100"><span class="mr-2">2.</span> XileRetro Android Download</h2>
+                            <p class="mb-12 text-amber-500">Play XileRetro on the Go, with android, supporting automatic updates and gepard.</p>
+                            <div class="grid grid-cols-5">
+                                <div class="col-span-1 hidden md:block">
+                                    <i class="fa fa-mobile step2-icon text-gray-300" aria-hidden="true"></i>
+                                </div>
+                                <div class="col-span-5 md:col-span-4 grid gap-5 grid-cols-1">
+                                    @foreach(\App\Models\Download::android()->get() as $download)
+                                        <a class="no-underline truncate btn text-left {{ $download->button_class }}" href="{{ $download->download_url }}" target="_blank" rel="noopener">
+                                            {{ $download->display_name }}
+                                        </a>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            @else
+                <div class="max-w-xl">
+                    <h2>XileRO Download</h2>
+                    <x-download-login-prompt />
+                </div>
+            @endauth
         </div>
     </section>
 
-    <div class="hidden md:block">
-        <div class="line"></div>
-        <x-latest-post-preview lazy/>
-    </div>
     <div class="line"></div>
 
     {{-- <section id="mvprankingladder" class="container mx-auto grid">
