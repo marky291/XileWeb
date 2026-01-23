@@ -45,4 +45,25 @@ class HomepageDownloadTest extends TestCase
         $response->assertSee('Test Full Client');
         $response->assertSee('Test Android APK');
     }
+
+    public function test_item_database_shows_login_prompt_for_guests(): void
+    {
+        $response = $this->get('/item-database');
+
+        $response->assertStatus(200);
+        $response->assertSee('Item Database');
+        $response->assertSee('Login Required');
+    }
+
+    public function test_item_database_shows_content_for_authenticated_users(): void
+    {
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)->get('/item-database');
+
+        $response->assertStatus(200);
+        $response->assertSee('Item Database');
+        $response->assertDontSee('Login Required');
+        $response->assertSee('Search by name');
+    }
 }

@@ -17,6 +17,7 @@
             </div>
         </div>
 
+        @auth
         {{-- Search & Filters --}}
         <div class="mb-6 block-home bg-gray-900 rounded-lg p-5 space-y-4">
             {{-- Top Row: Search, Server, Sort --}}
@@ -197,6 +198,17 @@
                 {{ $items->links() }}
             </div>
         @endif
+        @else
+            <div class="block-home bg-gray-900 rounded-lg p-12 text-center">
+                <i class="fas fa-sign-in-alt text-4xl text-gray-600 mb-4" aria-hidden="true"></i>
+                <h3 class="text-xl font-semibold text-gray-300 mb-2">Login Required</h3>
+                <p class="text-gray-500 mb-4">Please login to browse and search the Item Database.</p>
+                <a href="{{ route('login') }}" class="inline-flex items-center gap-2 px-4 py-2 bg-amber-500 hover:bg-amber-400 text-gray-900 font-bold rounded-lg transition-colors">
+                    <i class="fas fa-sign-in-alt" aria-hidden="true"></i>
+                    Login
+                </a>
+            </div>
+        @endauth
     </div>
 
     {{-- Item Detail Modal --}}
