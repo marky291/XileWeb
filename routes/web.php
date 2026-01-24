@@ -46,6 +46,9 @@ Route::view('/forums', 'forums');
 
 Route::resource('posts', PostController::class)->only(['index', 'show']);
 
+Route::view('retro/rpatchur', 'rpatchur');
+Route::view('xilero/rpatchur', 'rpatchur');
+
 Route::get('retro/patch/notice', function () {
     $rawPosts = DB::table('posts')
         ->select('id', 'slug', 'title', 'patcher_notice', 'created_at', DB::raw('MONTH(created_at) as month, YEAR(created_at) as year'))
