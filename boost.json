@@ -2,11 +2,15 @@
     "agents": [
         "claude_code"
     ],
-    "editors": [
-        "claude_code"
-    ],
-    "guidelines": [
+    "guidelines": true,
+    "herd_mcp": true,
+    "mcp": true,
+    "packages": [
         "filament/filament"
     ],
-    "herd_mcp": true
+    "sail": false,
+    "skills": [
+        "livewire-development",
+        "tailwindcss-development"
+    ]
 }

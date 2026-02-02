@@ -165,6 +165,62 @@
     @apply hover:shadow-md hover:shadow-violet-500 transition duration-300 ease-in-out;
   }
 
+  /* Spinning gradient border card */
+  .card-glow-wrapper {
+    position: relative;
+    padding: 2px;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    background: #191b2e;
+  }
+
+  .card-glow-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 150%;
+    height: 150%;
+    background: conic-gradient(
+      #3b1578,
+      #6b5020,
+      #4a1772,
+      #7a4a10,
+      #3b1578
+    );
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .card-glow-wrapper:hover::before {
+    opacity: 1;
+    animation: spin-glow 3s linear infinite;
+  }
+
+  .card-glow-wrapper:hover {
+    box-shadow: 0 0 15px rgba(124, 58, 237, 0.1);
+  }
+
+  .card-glow-inner {
+    background: url(../assets/block-top-bg.png) center top repeat-x;
+    background-color: #12141f;
+    border-radius: 0.375rem;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+    height: 100%;
+  }
+
+  @keyframes spin-glow {
+    from {
+      transform: translate(-50%, -50%) rotate(0deg);
+    }
+    to {
+      transform: translate(-50%, -50%) rotate(360deg);
+    }
+  }
+
   .effect-light-yellow-bang {
     background: url('../assets/effects/yellow-light.png');
     width: 300px;

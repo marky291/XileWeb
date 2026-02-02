@@ -162,6 +162,7 @@
             </div>
         </section>
 
+    {{-- HyperDrive Section - Disabled
     <section id="read-the-rules" class="bg-transparent relative rounded-lg py-24 md:pt-32 hidden md:block z-10">
         <div class="z-0 absolute effect-light-blue-bang top-[20px] right-[140px]"></div>
         <div class="z-0 absolute effect-light-yellow-bang top-[20px] right-[180px]"></div>
@@ -170,6 +171,7 @@
             <div class="no-underline text-amber-500 hover:text-amber-300 font-bold text-2xl cursor-pointer" href=""><span class="text-gray-100">XileRO</span> | HyperDrive™  [<span class="text-gray-100 cursor-text">{{ config('xilero.hyperdrive.ip_address') }}</span>]</div>
         </div>
     </section>
+    --}}
 
     </div>
 {{--    <section id="rates" class="bg-clash-bg relative overflow-hidden py-16 md:pt-24 lg:pt-16">--}}
@@ -213,54 +215,53 @@
     <section id="steps2play" class="bg-clash-bg relative overflow-hidden py-12 md:px-24">
         <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
             @auth
-                <div class="grid grid-cols-1 lg:grid-cols-[1fr_1px_1fr] gap-10 lg:gap-16">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
+                    {{-- Left Column: Windows Downloads --}}
                     <div>
-                        <h2 class="mt-0 mb-2 text-2xl font-bold text-gray-100">XileRO Midrate</h2>
-                        <p class="mb-12 text-amber-500">Coming soon...</p>
+                        <h2 class="mt-0 mb-2 text-2xl font-bold text-gray-100">
+                            <span class="mr-2">1.</span> Download Full Client
+                        </h2>
+                        <p class="mb-8 text-amber-500">Full downloads ensure an error-free experience.</p>
+
+                        <div class="grid gap-4">
+                            @foreach(\App\Models\Download::full()->get() as $download)
+                                <a class="no-underline truncate text-gray-900 btn text-left {{ $download->button_class }}" href="{{ $download->download_url }}" target="_blank" rel="noopener">
+                                    <i class="fa fa-windows mr-3"></i>
+                                    {{ $download->display_name }}
+                                </a>
+                            @endforeach
+                        </div>
+
+                        <p class="mt-6 text-gray-500 text-sm">
+                            <i class="fas fa-info-circle mr-2"></i>
+                            Extract and run the patcher to update
+                        </p>
                     </div>
 
-                    {{-- Vertical Divider --}}
-                    <div class="hidden lg:block bg-gradient-to-b from-transparent via-gray-700 to-transparent"></div>
-
+                    {{-- Right Column: Android Downloads --}}
                     <div>
-                        <h2 class="mt-0 mb-2 text-2xl font-bold text-gray-100"><span class="mr-2">1.</span> XileRetro Download Full Client</h2>
-                        <p class="mb-12 text-amber-500">Full downloads ensure an error-free experience.</p>
-                        <div class="grid grid-cols-5">
-                            <div class="col-span-1 hidden md:block">
-                                <i class="fa fa-windows step2-icon text-gray-300" aria-hidden="true"></i>
-                            </div>
-                            <div class="col-span-5 md:col-span-4 grid gap-5 grid-cols-1">
-                                @foreach(\App\Models\Download::full()->get() as $download)
-                                    <a class="no-underline truncate text-gray-900 btn text-left {{ $download->button_class }}" href="{{ $download->download_url }}" target="_blank" rel="noopener">
-                                        {{ $download->display_name }}
-                                    </a>
-                                @endforeach
-                            </div>
+                        <h2 class="mt-0 mb-2 text-2xl font-bold text-gray-100">
+                            <span class="mr-2">2.</span> Android Download
+                        </h2>
+                        <p class="mb-8 text-amber-500">Play on the go with automatic updates.</p>
+
+                        <div class="grid gap-4">
+                            @foreach(\App\Models\Download::android()->get() as $download)
+                                <a class="no-underline truncate text-gray-900 btn text-left {{ $download->button_class }}" href="{{ $download->download_url }}" target="_blank" rel="noopener">
+                                    <i class="fa fa-android mr-3"></i>
+                                    {{ $download->display_name }}
+                                </a>
+                            @endforeach
                         </div>
 
-                        <div class="mt-10">
-                            <h2 class="mt-0 mb-2 text-2xl font-bold text-gray-100"><span class="mr-2">2.</span> XileRetro Android Download</h2>
-                            <p class="mb-12 text-amber-500">Play XileRetro on the Go, with android, supporting automatic updates and gepard.</p>
-                            <div class="grid grid-cols-5">
-                                <div class="col-span-1 hidden md:block">
-                                    <i class="fa fa-mobile step2-icon text-gray-300" aria-hidden="true"></i>
-                                </div>
-                                <div class="col-span-5 md:col-span-4 grid gap-5 grid-cols-1">
-                                    @foreach(\App\Models\Download::android()->get() as $download)
-                                        <a class="no-underline truncate btn text-left {{ $download->button_class }}" href="{{ $download->download_url }}" target="_blank" rel="noopener">
-                                            {{ $download->display_name }}
-                                        </a>
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
+                        <p class="mt-6 text-gray-500 text-sm">
+                            <i class="fas fa-shield-alt mr-2"></i>
+                            Supports Gepard protection
+                        </p>
                     </div>
                 </div>
             @else
-                <div class="max-w-xl">
-                    <h2>XileRO Download</h2>
-                    <x-download-login-prompt />
-                </div>
+                <x-download-login-prompt />
             @endauth
         </div>
     </section>
