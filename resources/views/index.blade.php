@@ -212,6 +212,74 @@
         <div class="line"></div>
     </div>
 
+    <section id="getting-started" class="relative overflow-hidden py-12 bg-clash-bg md:px-24">
+        <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
+            {{-- Section Header --}}
+            <div class="flex items-end justify-between mb-10">
+                <div>
+                    <h2 class="text-3xl font-bold text-gray-100 mb-2">Getting Started</h2>
+                    <p class="text-gray-400 max-w-2xl">New to XileRO? These guides will help you navigate the unique features and mechanics that set our server apart.</p>
+                </div>
+                <a href="https://wiki.xilero.net" target="_blank" rel="noopener" class="hidden md:inline-flex items-center gap-2 text-amber-500 hover:text-amber-400 font-medium transition-colors">
+                    Visit Wiki
+                    <i class="fas fa-external-link-alt text-sm"></i>
+                </a>
+            </div>
+
+            {{-- Cards Grid --}}
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                @php
+                    $guides = [
+                        ['title' => 'Server Information', 'description' => 'Rates, features & server details', 'image' => 'server-information.jpeg', 'url' => 'https://wiki.xilero.net/index.php?title=Server_Information'],
+                        ['title' => 'Starter Guides', 'description' => 'Essential packages for new players', 'image' => 'starter-packages.jpeg', 'url' => 'https://wiki.xilero.net/index.php?title=Newbie_Center'],
+                        ['title' => 'Leveling Spots', 'description' => 'Best areas for progression', 'image' => 'leveling-areas.jpeg', 'url' => 'https://wiki.xilero.net/index.php?title=Leveling_Spots'],
+                        ['title' => 'Discord Community', 'description' => 'Join discussions & get help', 'image' => 'discord-community.jpeg', 'url' => 'https://discord.gg/hp7CS6k'],
+                        ['title' => 'Donation Rewards', 'description' => 'Support the server & earn rewards', 'image' => 'donation-help.jpeg', 'url' => 'https://wiki.xilero.net/index.php?title=Donation'],
+                        ['title' => 'MVP System', 'description' => 'Boss hunting & rankings', 'image' => 'mvp-ranking.jpeg', 'url' => 'https://wiki.xilero.net/index.php?title=MVP'],
+                        ['title' => 'Random Weapons', 'description' => 'Unique randomized loot system', 'image' => 'randomized-weapon-loots.jpeg', 'url' => 'https://wiki.xilero.net/index.php?title=MVP'],
+                        ['title' => 'Wiki Database', 'description' => 'Complete knowledge base', 'image' => 'wikipedia-knowledge.jpeg', 'url' => 'https://wiki.xilero.net'],
+                    ];
+                @endphp
+
+                @foreach($guides as $guide)
+                    <a href="{{ $guide['url'] }}" target="_blank" rel="noopener" class="group card-glow-wrapper transition-all duration-300 hover:-translate-y-1 no-underline">
+                        <div class="card-glow-inner">
+                            {{-- Image --}}
+                            <div class="relative h-36 overflow-hidden">
+                                <img
+                                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                    src="{{ asset('assets/getting-started/' . $guide['image']) }}"
+                                    alt="{{ $guide['title'] }}"
+                                >
+                                <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent"></div>
+                            </div>
+
+                            {{-- Content --}}
+                            <div class="p-4">
+                                <h3 class="text-base font-semibold text-gray-100 mb-1 group-hover:text-amber-400 transition-colors">
+                                    {{ $guide['title'] }}
+                                </h3>
+                                <p class="text-gray-500 text-sm">
+                                    {{ $guide['description'] }}
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                @endforeach
+            </div>
+
+            {{-- Mobile Wiki Link --}}
+            <div class="mt-8 text-center md:hidden">
+                <a href="https://wiki.xilero.net" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-amber-500 hover:text-amber-400 font-medium transition-colors">
+                    Visit Wiki
+                    <i class="fas fa-external-link-alt text-sm"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <div class="line"></div>
+
     <section id="steps2play" class="bg-clash-bg relative overflow-hidden py-12 md:px-24">
         <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
             @auth
@@ -294,84 +362,6 @@
         </div>
     </section>
 
-    <div class="line"></div>
-
-    {{-- <section id="mvprankingladder" class="container mx-auto grid">
-        <h2>MVP Ladder</h2>
-        @foreach (App\XileRO\MvpLadderRank::orderByDesc('day_kills')->limit(3)->get() as $rank)
-            <div class="cols-span-1">
-                <p>Player {{ $rank->name }}</p>
-                <p>{{ $rank->day_kills }} MVP Kills Today!</p>
-            </div>
-        @endforeach
-    </section> --}}
-
-    <section id="getting-started" class="relative overflow-hidden py-12 bg-clash-bg md:px-24">
-        <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
-            {{-- Section Header --}}
-            <div class="flex items-end justify-between mb-10">
-                <div>
-                    <h2 class="text-3xl font-bold text-gray-100 mb-2">Getting Started</h2>
-                    <p class="text-gray-400 max-w-2xl">New to XileRO? These guides will help you navigate the unique features and mechanics that set our server apart.</p>
-                </div>
-                <a href="https://wiki.xilero.net" target="_blank" rel="noopener" class="hidden md:inline-flex items-center gap-2 text-amber-500 hover:text-amber-400 font-medium transition-colors">
-                    Visit Wiki
-                    <i class="fas fa-external-link-alt text-sm"></i>
-                </a>
-            </div>
-
-            {{-- Cards Grid --}}
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                @php
-                    $guides = [
-                        ['title' => 'Server Information', 'description' => 'Rates, features & server details', 'image' => 'server-information.jpeg', 'url' => 'https://wiki.xilero.net/index.php?title=Server_Information'],
-                        ['title' => 'Starter Guides', 'description' => 'Essential packages for new players', 'image' => 'starter-packages.jpeg', 'url' => 'https://wiki.xilero.net/index.php?title=Newbie_Center'],
-                        ['title' => 'Leveling Spots', 'description' => 'Best areas for progression', 'image' => 'leveling-areas.jpeg', 'url' => 'https://wiki.xilero.net/index.php?title=Leveling_Spots'],
-                        ['title' => 'Discord Community', 'description' => 'Join discussions & get help', 'image' => 'discord-community.jpeg', 'url' => 'https://discord.gg/hp7CS6k'],
-                        ['title' => 'Donation Rewards', 'description' => 'Support the server & earn rewards', 'image' => 'donation-help.jpeg', 'url' => 'https://wiki.xilero.net/index.php?title=Donation'],
-                        ['title' => 'MVP System', 'description' => 'Boss hunting & rankings', 'image' => 'mvp-ranking.jpeg', 'url' => 'https://wiki.xilero.net/index.php?title=MVP'],
-                        ['title' => 'Random Weapons', 'description' => 'Unique randomized loot system', 'image' => 'randomized-weapon-loots.jpeg', 'url' => 'https://wiki.xilero.net/index.php?title=MVP'],
-                        ['title' => 'Wiki Database', 'description' => 'Complete knowledge base', 'image' => 'wikipedia-knowledge.jpeg', 'url' => 'https://wiki.xilero.net'],
-                    ];
-                @endphp
-
-                @foreach($guides as $guide)
-                    <a href="{{ $guide['url'] }}" target="_blank" rel="noopener" class="group card-glow-wrapper transition-all duration-300 hover:-translate-y-1 no-underline">
-                        <div class="card-glow-inner">
-                            {{-- Image --}}
-                            <div class="relative h-36 overflow-hidden">
-                                <img
-                                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                                    src="{{ asset('assets/getting-started/' . $guide['image']) }}"
-                                    alt="{{ $guide['title'] }}"
-                                >
-                                <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent"></div>
-                            </div>
-
-                            {{-- Content --}}
-                            <div class="p-4">
-                                <h3 class="text-base font-semibold text-gray-100 mb-1 group-hover:text-amber-400 transition-colors">
-                                    {{ $guide['title'] }}
-                                </h3>
-                                <p class="text-gray-500 text-sm">
-                                    {{ $guide['description'] }}
-                                </p>
-                            </div>
-                        </div>
-                    </a>
-                @endforeach
-            </div>
-
-            {{-- Mobile Wiki Link --}}
-            <div class="mt-8 text-center md:hidden">
-                <a href="https://wiki.xilero.net" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-amber-500 hover:text-amber-400 font-medium transition-colors">
-                    Visit Wiki
-                    <i class="fas fa-external-link-alt text-sm"></i>
-                </a>
-            </div>
-        </div>
-    </section>
-
     {{-- <section id="important-links">
         <div class="relative overflow-hidden py-16 md:pt-48">
             <span class="hidden absolute bg-radial-gradient opacity-[.15] pointer-events-none lg:inline-flex right-[-20%] top-0 w-[640px] h-[640px]"></span>
@@ -413,70 +403,173 @@
     <section id="uber-store" class="bg-clash-bg mx-auto py-12 md:px-24">
         <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
             {{-- Section Header --}}
-            <div class="flex items-end justify-between mb-10">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
                 <div>
                     <h2 class="text-3xl font-bold text-gray-100 mb-2">Uber Store</h2>
-                    <p class="text-gray-400">Most popular items from the shop. Earn Ubers by donating or trading in-game.</p>
+                    <p class="text-gray-400">Premium items available for Ubers. Earn by donating or trading in-game.</p>
                 </div>
                 <a href="{{ route('donate-shop') }}" class="hidden md:inline-flex items-center gap-2 text-amber-500 hover:text-amber-400 font-medium transition-colors">
-                    View all items
+                    Browse full store
                     <i class="fas fa-arrow-right text-sm"></i>
                 </a>
             </div>
 
-            {{-- Items Grid --}}
-            <div class="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-                @foreach ($popularUberItems as $shopItem)
+            @php
+                $featuredItems = $popularUberItems->take(3);
+                $regularItems = $popularUberItems->skip(3);
+
+                // Helper function to extract tier from description
+                function extractTier($description) {
+                    if (!$description) return null;
+                    if (preg_match('/\[(Godly|Ultimate|Legendary)\s+S-Tier/i', $description)) return 's';
+                    if (preg_match('/\[Elite\s+A-Tier/i', $description)) return 'a';
+                    if (preg_match('/\[Uber\s+B-Tier/i', $description)) return 'b';
+                    return null;
+                }
+            @endphp
+
+            {{-- Featured Items (Top 3) --}}
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                @foreach ($featuredItems as $index => $shopItem)
+                    @php
+                        $tier = extractTier($shopItem->item?->description);
+                    @endphp
                     <a href="{{ route('donate-shop') }}" class="group card-glow-wrapper transition-all duration-300 hover:-translate-y-1 no-underline">
-                        <div class="card-glow-inner p-4">
-                            <div class="flex gap-4">
-                                {{-- Item Image --}}
-                                <div class="shrink-0 w-16 h-16 bg-gray-800/80 rounded-lg overflow-hidden flex items-center justify-center border border-gray-700/50 group-hover:border-amber-500/30 transition-colors">
-                                    @if ($shopItem->item)
-                                        <img
-                                            src="{{ $shopItem->item->collection() }}"
-                                            alt="{{ $shopItem->item->name }}"
-                                            class="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-110"
-                                            onerror="this.onerror=null; this.src='{{ $shopItem->item->icon() }}';"
-                                            loading="lazy"
-                                        >
-                                    @else
-                                        <i class="fas fa-box text-gray-600 text-xl"></i>
-                                    @endif
+                        <div class="card-glow-inner flex flex-col">
+                            {{-- Image Container --}}
+                            <div class="relative h-32 bg-gradient-to-b from-gray-800/30 to-gray-900/60 flex items-center justify-center">
+                                @if ($shopItem->item)
+                                    <img
+                                        src="{{ $shopItem->item->collection() }}"
+                                        alt="{{ $shopItem->item->name }}"
+                                        class="max-h-24 max-w-24 object-contain transition-transform duration-500 group-hover:scale-110"
+                                        onerror="this.onerror=null; this.src='{{ $shopItem->item->icon() }}';"
+                                        loading="lazy"
+                                    >
+                                @else
+                                    <i class="fas fa-gem text-gray-600 text-4xl"></i>
+                                @endif
+
+                                {{-- Popular Badge --}}
+                                <div class="absolute top-2 left-2">
+                                    <span class="inline-flex items-center gap-1 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-orange-500/20 text-orange-400 border border-orange-500/30">
+                                        <i class="fas fa-fire text-[8px]"></i>
+                                        Popular
+                                    </span>
                                 </div>
 
-                                {{-- Item Info --}}
-                                <div class="flex-1 min-w-0">
-                                    <div class="flex items-center gap-2 mb-1">
-                                        <h3 class="font-semibold text-gray-100 truncate group-hover:text-amber-400 transition-colors">{{ $shopItem->display_name }}</h3>
-                                        @if ($shopItem->exclusive_server)
-                                            <span class="shrink-0 text-[10px] font-medium px-1.5 py-0.5 rounded border {{ $shopItem->is_xilero ? 'bg-amber-500/10 text-amber-400 border-amber-500/30' : 'bg-blue-500/10 text-blue-400 border-blue-500/30' }}">
-                                                {{ $shopItem->exclusive_server }}
-                                            </span>
-                                        @endif
-                                    </div>
-
-                                    @if ($shopItem->item?->description)
-                                        <p class="text-xs text-gray-500 line-clamp-1">{!! $shopItem->item->formattedDescription() !!}</p>
-                                    @elseif ($shopItem->item?->type)
-                                        <p class="text-xs text-gray-500">
-                                            {{ $shopItem->item->type }}{{ $shopItem->item->subtype ? ' / ' . $shopItem->item->subtype : '' }}
-                                        </p>
-                                    @endif
-
-                                    <div class="mt-2 flex items-center justify-between">
-                                        <span class="text-amber-400 font-bold text-sm">
-                                            {{ $shopItem->uber_cost }} {{ Str::plural('Uber', $shopItem->uber_cost) }}
+                                {{-- Server Badge --}}
+                                @if ($shopItem->exclusive_server)
+                                    <div class="absolute top-2 right-2">
+                                        <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full {{ $shopItem->is_xilero ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30' : 'bg-blue-500/20 text-blue-300 border border-blue-500/30' }}">
+                                            {{ $shopItem->exclusive_server }}
                                         </span>
-                                        @if ($shopItem->stock !== null)
-                                            @if ($shopItem->stock > 0)
-                                                <span class="text-xs text-green-400/80">{{ $shopItem->stock }} left</span>
-                                            @else
-                                                <span class="text-xs text-red-400">Sold Out</span>
-                                            @endif
-                                        @endif
                                     </div>
+                                @endif
+                            </div>
+
+                            {{-- Content --}}
+                            <div class="p-4 flex flex-col flex-1 border-t border-gray-700/30">
+                                <div class="flex items-start justify-between gap-2 mb-1">
+                                    <h3 class="font-semibold text-gray-100 group-hover:text-amber-400 transition-colors line-clamp-1">
+                                        {{ $shopItem->display_name }}
+                                    </h3>
+                                    {{-- Tier Badge --}}
+                                    @if ($tier === 's')
+                                        <span class="shrink-0 text-[9px] font-bold px-1.5 py-0.5 rounded bg-gradient-to-r from-purple-500/30 to-amber-500/30 text-purple-300 border border-purple-500/40">S-Tier</span>
+                                    @elseif ($tier === 'a')
+                                        <span class="shrink-0 text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-400 border border-amber-500/40">A-Tier</span>
+                                    @elseif ($tier === 'b')
+                                        <span class="shrink-0 text-[9px] font-bold px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-400 border border-blue-500/40">B-Tier</span>
+                                    @endif
                                 </div>
+
+                                @if ($shopItem->item?->description)
+                                    <p class="text-[11px] text-gray-500 line-clamp-1 mb-3">{!! strip_tags($shopItem->item->formattedDescription()) !!}</p>
+                                @endif
+
+                                {{-- Price --}}
+                                <div class="mt-auto flex items-center justify-between">
+                                    <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/20">
+                                        <i class="fas fa-coins text-amber-400 text-xs"></i>
+                                        <span class="text-amber-400 font-bold">{{ $shopItem->uber_cost }}</span>
+                                        <span class="text-amber-400/60 text-xs">{{ Str::plural('Uber', $shopItem->uber_cost) }}</span>
+                                    </div>
+                                    <span class="text-gray-500 group-hover:text-amber-500 transition-colors">
+                                        <i class="fas fa-arrow-right text-sm"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                @endforeach
+            </div>
+
+            {{-- Regular Items Grid --}}
+            <div class="grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+                @foreach ($regularItems as $shopItem)
+                    @php
+                        $tier = extractTier($shopItem->item?->description);
+                    @endphp
+                    <a href="{{ route('donate-shop') }}" class="group card-glow-wrapper transition-all duration-300 hover:-translate-y-0.5 no-underline">
+                        <div class="card-glow-inner p-3 flex items-center gap-3">
+                            {{-- Item Image --}}
+                            <div class="shrink-0 w-14 h-14 rounded-lg bg-gray-800/60 border border-gray-700/50 flex items-center justify-center group-hover:border-amber-500/30 transition-colors overflow-hidden">
+                                @if ($shopItem->item)
+                                    <img
+                                        src="{{ $shopItem->item->collection() }}"
+                                        alt="{{ $shopItem->item->name }}"
+                                        class="max-h-12 max-w-12 object-contain transition-transform duration-300 group-hover:scale-110"
+                                        onerror="this.onerror=null; this.src='{{ $shopItem->item->icon() }}';"
+                                        loading="lazy"
+                                    >
+                                @else
+                                    <i class="fas fa-gem text-gray-600 text-xl"></i>
+                                @endif
+                            </div>
+
+                            {{-- Item Info --}}
+                            <div class="flex-1 min-w-0">
+                                <div class="flex items-center gap-2 mb-0.5">
+                                    <h3 class="font-semibold text-gray-100 text-sm truncate group-hover:text-amber-400 transition-colors">
+                                        {{ $shopItem->display_name }}
+                                    </h3>
+                                    {{-- Tier Badge --}}
+                                    @if ($tier === 's')
+                                        <span class="shrink-0 text-[8px] font-bold px-1 py-0.5 rounded bg-gradient-to-r from-purple-500/30 to-amber-500/30 text-purple-300 border border-purple-500/40">S</span>
+                                    @elseif ($tier === 'a')
+                                        <span class="shrink-0 text-[8px] font-bold px-1 py-0.5 rounded bg-amber-500/20 text-amber-400 border border-amber-500/40">A</span>
+                                    @elseif ($tier === 'b')
+                                        <span class="shrink-0 text-[8px] font-bold px-1 py-0.5 rounded bg-blue-500/20 text-blue-400 border border-blue-500/40">B</span>
+                                    @endif
+                                    @if ($shopItem->exclusive_server)
+                                        <span class="shrink-0 text-[9px] font-semibold px-1.5 py-0.5 rounded {{ $shopItem->is_xilero ? 'bg-amber-500/15 text-amber-400' : 'bg-blue-500/15 text-blue-400' }}">
+                                            {{ $shopItem->exclusive_server }}
+                                        </span>
+                                    @endif
+                                </div>
+
+                                @if ($shopItem->item?->description)
+                                    <p class="text-[11px] text-gray-500 line-clamp-1 mb-1">{!! strip_tags($shopItem->item->formattedDescription()) !!}</p>
+                                @elseif ($shopItem->item?->type)
+                                    <p class="text-[11px] text-gray-500 mb-1">{{ $shopItem->item->type }}</p>
+                                @endif
+
+                                {{-- Price with pill --}}
+                                <div class="flex items-center gap-2">
+                                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20">
+                                        <i class="fas fa-coins text-amber-400 text-[10px]"></i>
+                                        <span class="text-amber-400 font-bold text-sm">{{ $shopItem->uber_cost }}</span>
+                                    </span>
+                                    @if ($shopItem->stock !== null && $shopItem->stock <= 0)
+                                        <span class="text-[10px] text-red-400 font-medium">Sold Out</span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            {{-- Arrow --}}
+                            <div class="shrink-0 text-gray-600 group-hover:text-amber-500 transition-colors">
+                                <i class="fas fa-chevron-right text-xs"></i>
                             </div>
                         </div>
                     </a>
@@ -486,7 +579,7 @@
             {{-- Mobile View All --}}
             <div class="mt-8 text-center md:hidden">
                 <a href="{{ route('donate-shop') }}" class="inline-flex items-center gap-2 text-amber-500 hover:text-amber-400 font-medium transition-colors">
-                    View all items
+                    Browse full store
                     <i class="fas fa-arrow-right text-sm"></i>
                 </a>
             </div>
@@ -550,8 +643,6 @@
             </div>
         </div>
     </section>
-
-    <div class="line"></div>
 
     {{-- ANDOID SECTION REMOVED
         <section class="my-24 px-3 sm:px-0">

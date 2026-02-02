@@ -33,9 +33,12 @@ Route::get('/', function () {
         }, collect(), report: false),
         'popularUberItems' => App\Models\UberShopItem::with('item')
             ->where('enabled', true)
+            ->whereNotNull('item_id')
             ->orderByDesc('views')
-            ->limit(9)
-            ->get(),
+            ->get()
+            ->unique(fn ($item) => $item->display_name)
+            ->values()
+            ->take(18),
     ]);
 })->name('home');
 
