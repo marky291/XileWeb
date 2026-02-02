@@ -215,49 +215,77 @@
     <section id="steps2play" class="bg-clash-bg relative overflow-hidden py-12 md:px-24">
         <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
             @auth
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
-                    {{-- Left Column: Windows Downloads --}}
+                {{-- Section Header --}}
+                <div class="flex items-end justify-between mb-10">
                     <div>
-                        <h2 class="mt-0 mb-2 text-2xl font-bold text-gray-100">
-                            <span class="mr-2">1.</span> Download Full Client
-                        </h2>
-                        <p class="mb-8 text-amber-500">Full downloads ensure an error-free experience.</p>
+                        <h2 class="text-3xl font-bold text-gray-100 mb-2">Download XileRetro</h2>
+                        <p class="text-gray-400">Choose your platform and start playing.</p>
+                    </div>
+                </div>
 
-                        <div class="grid gap-4">
-                            @foreach(\App\Models\Download::full()->get() as $download)
-                                <a class="no-underline truncate text-gray-900 btn text-left {{ $download->button_class }}" href="{{ $download->download_url }}" target="_blank" rel="noopener">
-                                    <i class="fa fa-windows mr-3"></i>
-                                    {{ $download->display_name }}
-                                </a>
-                            @endforeach
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    {{-- Windows Card --}}
+                    <div class="card-glow-wrapper group transition-all duration-300 hover:-translate-y-1">
+                        <div class="card-glow-inner p-6">
+                            <div class="flex items-center gap-4 mb-6">
+                                <div class="w-14 h-14 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
+                                    <i class="fa fa-windows text-2xl text-blue-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-gray-100">Windows</h3>
+                                    <p class="text-gray-400 text-sm">Full client download</p>
+                                </div>
+                            </div>
+
+                            <div class="space-y-3">
+                                @foreach(\App\Models\Download::full()->get() as $download)
+                                    <a href="{{ $download->download_url }}" target="_blank" rel="noopener" class="flex items-center justify-between p-3 rounded-lg bg-gray-800/50 border border-gray-700/50 hover:border-blue-500/30 hover:bg-gray-800 transition-colors no-underline group/btn">
+                                        <div class="flex items-center gap-3">
+                                            <i class="fas fa-download text-gray-500 group-hover/btn:text-blue-400 transition-colors"></i>
+                                            <span class="text-gray-300 group-hover/btn:text-gray-100 transition-colors">{{ $download->name }}</span>
+                                        </div>
+                                        <span class="text-xs text-gray-500">3GB</span>
+                                    </a>
+                                @endforeach
+                            </div>
+
+                            <p class="mt-5 text-gray-500 text-xs flex items-center gap-2">
+                                <i class="fas fa-info-circle"></i>
+                                Extract and run the patcher to update
+                            </p>
                         </div>
-
-                        <p class="mt-6 text-gray-500 text-sm">
-                            <i class="fas fa-info-circle mr-2"></i>
-                            Extract and run the patcher to update
-                        </p>
                     </div>
 
-                    {{-- Right Column: Android Downloads --}}
-                    <div>
-                        <h2 class="mt-0 mb-2 text-2xl font-bold text-gray-100">
-                            <span class="mr-2">2.</span> Android Download
-                        </h2>
-                        <p class="mb-8 text-amber-500">Play on the go with automatic updates.</p>
+                    {{-- Android Card --}}
+                    <div class="card-glow-wrapper group transition-all duration-300 hover:-translate-y-1">
+                        <div class="card-glow-inner p-6">
+                            <div class="flex items-center gap-4 mb-6">
+                                <div class="w-14 h-14 rounded-lg bg-green-500/10 border border-green-500/20 flex items-center justify-center">
+                                    <i class="fa fa-android text-2xl text-green-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-gray-100">Android</h3>
+                                    <p class="text-gray-400 text-sm">Play on the go</p>
+                                </div>
+                            </div>
 
-                        <div class="grid gap-4">
-                            @foreach(\App\Models\Download::android()->get() as $download)
-                                <a class="no-underline truncate text-gray-900 btn text-left {{ $download->button_class }}" href="{{ $download->download_url }}" target="_blank" rel="noopener">
-                                    <i class="fa fa-android mr-3"></i>
-                                    {{ $download->display_name }}
-                                </a>
-                            @endforeach
+                            <div class="space-y-3">
+                                @foreach(\App\Models\Download::android()->get() as $download)
+                                    <a href="{{ $download->download_url }}" target="_blank" rel="noopener" class="flex items-center justify-between p-3 rounded-lg bg-gray-800/50 border border-gray-700/50 hover:border-green-500/30 hover:bg-gray-800 transition-colors no-underline group/btn">
+                                        <div class="flex items-center gap-3">
+                                            <i class="fas fa-download text-gray-500 group-hover/btn:text-green-400 transition-colors"></i>
+                                            <span class="text-gray-300 group-hover/btn:text-gray-100 transition-colors">{{ $download->name }}</span>
+                                        </div>
+                                        <span class="text-xs text-gray-500">3MB</span>
+                                    </a>
+                                @endforeach
+                            </div>
+
+                            <p class="mt-5 text-gray-500 text-xs flex items-center gap-2">
+                                <i class="fas fa-shield-alt"></i>
+                                Supports Gepard protection & auto-updates
+                            </p>
                         </div>
-
-                        <p class="mt-6 text-gray-500 text-sm">
-                            <i class="fas fa-shield-alt mr-2"></i>
-                            Supports Gepard protection
-                        </p>
                     </div>
                 </div>
             @else
@@ -278,91 +306,68 @@
         @endforeach
     </section> --}}
 
-    <section id="important-links" class="relative overflow-hidden py-8 bg-clash-bg">
+    <section id="getting-started" class="relative overflow-hidden py-12 bg-clash-bg md:px-24">
         <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
-            <h2>Getting Started</h2>
-            <p class="mt-6 text-gray-300 leading-relaxed">Welcome to the world of Xilero, where unique adventures await! If you're new to our server or looking to enhance your gameplay experience, you've come to the right place. Our Getting Started guides are crafted to help players of all levels navigate the distinct features and mechanics that set Xilero apart.</p>
-            <div class="grid grid-cols-4 gap-12 mt-14">
-                <div class="col-span-4 md:col-span-2 lg:col-span-1 block-home">
-                    <a title="Learn more about Server Information & Features on XileRO Wiki" target="_blank" rel="noopener" href="https://wiki.xilero.net/index.php?title=Server_Information">
-                        <div class="p-6 rounded-md hover:shadow-lg prose">
-                            <div class="mb-6 border border-gray-200 rounded">
-                                <img class="object-cover w-full rounded h-44" style="margin:0" src="{{ asset('assets/getting-started/server-information.jpeg') }}" alt="Server Information & Features">
+            {{-- Section Header --}}
+            <div class="flex items-end justify-between mb-10">
+                <div>
+                    <h2 class="text-3xl font-bold text-gray-100 mb-2">Getting Started</h2>
+                    <p class="text-gray-400 max-w-2xl">New to XileRO? These guides will help you navigate the unique features and mechanics that set our server apart.</p>
+                </div>
+                <a href="https://wiki.xilero.net" target="_blank" rel="noopener" class="hidden md:inline-flex items-center gap-2 text-amber-500 hover:text-amber-400 font-medium transition-colors">
+                    Visit Wiki
+                    <i class="fas fa-external-link-alt text-sm"></i>
+                </a>
+            </div>
+
+            {{-- Cards Grid --}}
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                @php
+                    $guides = [
+                        ['title' => 'Server Information', 'description' => 'Rates, features & server details', 'image' => 'server-information.jpeg', 'url' => 'https://wiki.xilero.net/index.php?title=Server_Information'],
+                        ['title' => 'Starter Guides', 'description' => 'Essential packages for new players', 'image' => 'starter-packages.jpeg', 'url' => 'https://wiki.xilero.net/index.php?title=Newbie_Center'],
+                        ['title' => 'Leveling Spots', 'description' => 'Best areas for progression', 'image' => 'leveling-areas.jpeg', 'url' => 'https://wiki.xilero.net/index.php?title=Leveling_Spots'],
+                        ['title' => 'Discord Community', 'description' => 'Join discussions & get help', 'image' => 'discord-community.jpeg', 'url' => 'https://discord.gg/hp7CS6k'],
+                        ['title' => 'Donation Rewards', 'description' => 'Support the server & earn rewards', 'image' => 'donation-help.jpeg', 'url' => 'https://wiki.xilero.net/index.php?title=Donation'],
+                        ['title' => 'MVP System', 'description' => 'Boss hunting & rankings', 'image' => 'mvp-ranking.jpeg', 'url' => 'https://wiki.xilero.net/index.php?title=MVP'],
+                        ['title' => 'Random Weapons', 'description' => 'Unique randomized loot system', 'image' => 'randomized-weapon-loots.jpeg', 'url' => 'https://wiki.xilero.net/index.php?title=MVP'],
+                        ['title' => 'Wiki Database', 'description' => 'Complete knowledge base', 'image' => 'wikipedia-knowledge.jpeg', 'url' => 'https://wiki.xilero.net'],
+                    ];
+                @endphp
+
+                @foreach($guides as $guide)
+                    <a href="{{ $guide['url'] }}" target="_blank" rel="noopener" class="group card-glow-wrapper transition-all duration-300 hover:-translate-y-1 no-underline">
+                        <div class="card-glow-inner">
+                            {{-- Image --}}
+                            <div class="relative h-36 overflow-hidden">
+                                <img
+                                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                    src="{{ asset('assets/getting-started/' . $guide['image']) }}"
+                                    alt="{{ $guide['title'] }}"
+                                >
+                                <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent"></div>
                             </div>
-                            <h3 style="font-size: 1.5em" class="mt-2 half-border font-normal text-gray-100">Server<br> Information & Features</h3>
+
+                            {{-- Content --}}
+                            <div class="p-4">
+                                <h3 class="text-base font-semibold text-gray-100 mb-1 group-hover:text-amber-400 transition-colors">
+                                    {{ $guide['title'] }}
+                                </h3>
+                                <p class="text-gray-500 text-sm">
+                                    {{ $guide['description'] }}
+                                </p>
+                            </div>
                         </div>
                     </a>
-                </div>
-                <div class="col-span-4 md:col-span-2 lg:col-span-1 block-home hover:shadow-md hover:shadow-violet-500">
-                    <a title="Essential Starter Packages & Guides for New Players" target="_blank" rel="noopener" href="https://wiki.xilero.net/index.php?title=Newbie_Center">
-                        <div class="p-6 rounded-md hover:shadow-lg prose">
-                            <div class="mb-6 border border-gray-200 rounded">
-                                <img class="object-cover w-full rounded h-44" style="margin:0" src="{{ asset('assets/getting-started/starter-packages.jpeg') }}" alt="Starter Packages & Guids Image">
-                            </div>
-                            <h3 style="font-size: 1.5em" class="mt-2 half-border font-normal text-gray-100">Starter<br>Packages & <br>Guides</h3>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-span-4 md:col-span-2 lg:col-span-1 block-home hover:shadow-md hover:shadow-violet-500">
-                    <a title="Discover Best Leveling Areas & Progression Tips on XileRO Wiki" target="_blank" rel="noopener" href="https://wiki.xilero.net/index.php?title=Leveling_Spots">
-                        <div class="p-6 rounded-md hover:shadow-lg prose">
-                            <div class="mb-6 border border-gray-200 rounded">
-                                <img class="object-cover w-full rounded h-44" style="margin:0" src="{{ asset('assets/getting-started/leveling-areas.jpeg') }}" alt="Leveling Areas & Progression Image">
-                            </div>
-                            <h3 style="font-size: 1.5em" class="mt-2 half-border font-normal text-gray-100">Leveling<br>Areas & <br>Progression</h3>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-span-4 md:col-span-2 lg:col-span-1 block-home hover:shadow-md hover:shadow-violet-500">
-                    <a title="Join our Discord Community Discussions" target="_blank" rel="noopener" href="https://discord.gg/hp7CS6k">
-                        <div class="p-6 rounded-md hover:shadow-lg prose">
-                            <div class="mb-6 border border-gray-200 rounded">
-                                <img class="object-cover w-full rounded h-44" style="margin:0" src="{{ asset('assets/getting-started/discord-community.jpeg') }}" alt="Discord Community Discussions Image">
-                            </div>
-                            <h3 style="font-size: 1.5em" class="mt-2 half-border font-normal text-gray-100">Discord Community Discussions</h3>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-span-4 md:col-span-2 lg:col-span-1 block-home hover:shadow-md hover:shadow-violet-500">
-                    <a title="Learn about the Donation Help & Rewards on XileRO Wiki" target="_blank" rel="noopener" href="https://wiki.xilero.net/index.php?title=Donation">
-                        <div class="p-6 rounded-md hover:shadow-lg prose">
-                            <div class="mb-6 border border-gray-200 rounded">
-                                <img class="object-cover w-full rounded h-44" style="margin:0" src="{{ asset('assets/getting-started/donation-help.jpeg') }}" alt="Donation Help & Rewards">
-                            </div>
-                            <h3 style="font-size: 1.5em" class="mt-2 half-border font-normal text-gray-100">Donation<br> Help &<br> Rewards</h3>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-span-4 md:col-span-2 lg:col-span-1 block-home hover:shadow-md hover:shadow-violet-500">
-                    <a title="Explore the MVP Ranking System on XileRO Wiki" target="_blank" rel="noopener" href="https://wiki.xilero.net/index.php?title=MVP">
-                        <div class="p-6 rounded-md hover:shadow-lg prose">
-                            <div class="mb-6 border border-gray-200 rounded">
-                                <img class="object-cover w-full rounded h-44" style="margin:0" src="{{ asset('assets/getting-started/mvp-ranking.jpeg') }}" alt="MVP Ranking System Image">
-                            </div>
-                            <h3 style="font-size: 1.5em" class="mt-2 half-border font-normal text-gray-100">MVP <br> Ranking <br>  System</h3>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-span-4 md:col-span-2 lg:col-span-1 block-home hover:shadow-md hover:shadow-violet-500">
-                    <a title="Discover Randomised Weapons Loots on XileRO Wiki" target="_blank" rel="noopener" href="https://wiki.xilero.net/index.php?title=MVP">
-                        <div class="p-6 rounded-md hover:shadow-lg prose">
-                            <div class="mb-6 border border-gray-200 rounded">
-                                <img class="object-cover w-full rounded h-44" style="margin:0" src="{{ asset('assets/getting-started/randomized-weapon-loots.jpeg') }}" alt="Randomised Weapon Loot Image">
-                            </div>
-                            <h3 style="font-size: 1.5em" class="mt-2 half-border font-normal text-gray-100">Randomised <br> Weapons <br> Loots</h3>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-span-4 md:col-span-2 lg:col-span-1 block-home hover:shadow-md hover:shadow-violet-500">
-                    <a title="Explore the Wikipedia Knowledge Base on XileRO Wiki" target="_blank" rel="noopener" href="https://wiki.xilero.net/index.php?title=MVP">
-                        <div class="p-6 rounded-md hover:shadow-lg prose">
-                            <div class="mb-6 border border-gray-200 rounded">
-                                <img class="object-cover w-full rounded h-44" style="margin:0" src="{{ asset('assets/getting-started/wikipedia-knowledge.jpeg') }}" alt="Wikipedia Knowledge Base">
-                            </div>
-                            <h3 style="font-size: 1.5em" class="mt-2 half-border font-normal text-gray-100">Wikipedia <br> Knowledge <br> Base</h3>
-                        </div>
-                    </a>
-                </div>
+                @endforeach
+            </div>
+
+            {{-- Mobile Wiki Link --}}
+            <div class="mt-8 text-center md:hidden">
+                <a href="https://wiki.xilero.net" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-amber-500 hover:text-amber-400 font-medium transition-colors">
+                    Visit Wiki
+                    <i class="fas fa-external-link-alt text-sm"></i>
+                </a>
             </div>
         </div>
     </section>
@@ -405,123 +410,148 @@
 
     <div class="line"></div>
 
-    <section id="uber-store" class="bg-clash-bg mx-auto py-5 pt-8 pb-24">
+    <section id="uber-store" class="bg-clash-bg mx-auto py-12 md:px-24">
         <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
-            <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between">
+            {{-- Section Header --}}
+            <div class="flex items-end justify-between mb-10">
                 <div>
-                    <h2 class="mb-0">Uber Store</h2>
-                    <p class="mt-4 text-gray-300 leading-relaxed">Most popular items from our Uber Shop.</p>
+                    <h2 class="text-3xl font-bold text-gray-100 mb-2">Uber Store</h2>
+                    <p class="text-gray-400">Most popular items from the shop. Earn Ubers by donating or trading in-game.</p>
                 </div>
-                <a href="{{ route('donate-shop') }}" class="mt-4 sm:mt-0 inline-flex items-center gap-2 px-4 py-2 bg-amber-500 hover:bg-amber-400 text-gray-900 font-bold rounded-lg transition-colors">
-                    View All Items
-                    <i class="fas fa-arrow-right"></i>
+                <a href="{{ route('donate-shop') }}" class="hidden md:inline-flex items-center gap-2 text-amber-500 hover:text-amber-400 font-medium transition-colors">
+                    View all items
+                    <i class="fas fa-arrow-right text-sm"></i>
                 </a>
             </div>
-            <div class="mt-10 grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-                @foreach ($popularUberItems as $shopItem)
-                    <a href="{{ route('donate-shop') }}" class="block-home bg-gray-900 rounded-lg p-4 text-left hover:bg-gray-800/80 transition-colors">
-                        <div class="flex gap-4">
-                            {{-- Item Image --}}
-                            <div class="shrink-0 w-16 h-20 bg-gray-800 rounded-lg overflow-hidden flex items-center justify-center">
-                                @if ($shopItem->item)
-                                    <img
-                                        src="{{ $shopItem->item->collection() }}"
-                                        alt="{{ $shopItem->item->name }}"
-                                        class="max-h-full max-w-full object-contain"
-                                        onerror="this.onerror=null; this.src='{{ $shopItem->item->icon() }}';"
-                                        loading="lazy"
-                                    >
-                                @else
-                                    <i class="fas fa-box text-gray-600 text-2xl"></i>
-                                @endif
-                            </div>
 
-                            {{-- Item Info --}}
-                            <div class="flex-1 min-w-0">
-                                <div class="flex items-center gap-2">
-                                    <h3 class="font-semibold text-white truncate">{{ $shopItem->display_name }}</h3>
-                                    @if ($shopItem->exclusive_server)
-                                        <span class="shrink-0 text-[10px] font-medium px-1.5 py-0.5 rounded {{ $shopItem->is_xilero ? 'bg-blue-500/20 text-blue-400' : 'bg-purple-500/20 text-purple-400' }}">
-                                            {{ $shopItem->exclusive_server }}
-                                        </span>
+            {{-- Items Grid --}}
+            <div class="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+                @foreach ($popularUberItems as $shopItem)
+                    <a href="{{ route('donate-shop') }}" class="group card-glow-wrapper transition-all duration-300 hover:-translate-y-1 no-underline">
+                        <div class="card-glow-inner p-4">
+                            <div class="flex gap-4">
+                                {{-- Item Image --}}
+                                <div class="shrink-0 w-16 h-16 bg-gray-800/80 rounded-lg overflow-hidden flex items-center justify-center border border-gray-700/50 group-hover:border-amber-500/30 transition-colors">
+                                    @if ($shopItem->item)
+                                        <img
+                                            src="{{ $shopItem->item->collection() }}"
+                                            alt="{{ $shopItem->item->name }}"
+                                            class="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-110"
+                                            onerror="this.onerror=null; this.src='{{ $shopItem->item->icon() }}';"
+                                            loading="lazy"
+                                        >
+                                    @else
+                                        <i class="fas fa-box text-gray-600 text-xl"></i>
                                     @endif
                                 </div>
-                                @if ($shopItem->quantity > 1)
-                                    <span class="text-xs text-gray-500">x{{ $shopItem->quantity }}</span>
-                                @endif
 
-                                @if ($shopItem->item?->description)
-                                    <p class="text-xs text-gray-400 mt-1 line-clamp-2">{!! $shopItem->item->formattedDescription() !!}</p>
-                                @elseif ($shopItem->item?->type)
-                                    <p class="text-xs text-gray-500 mt-0.5">
-                                        {{ $shopItem->item->type }}{{ $shopItem->item->subtype ? ' / ' . $shopItem->item->subtype : '' }}
-                                    </p>
-                                @endif
-
-                                <div class="mt-2 flex items-center justify-between">
-                                    <span class="text-amber-400 font-bold">
-                                        {{ $shopItem->uber_cost }} {{ Str::plural('Uber', $shopItem->uber_cost) }}
-                                    </span>
-                                    @if ($shopItem->stock !== null)
-                                        @if ($shopItem->stock > 0)
-                                            <span class="text-xs text-green-400">{{ $shopItem->stock }} left</span>
-                                        @else
-                                            <span class="text-xs text-red-400">Sold Out</span>
+                                {{-- Item Info --}}
+                                <div class="flex-1 min-w-0">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <h3 class="font-semibold text-gray-100 truncate group-hover:text-amber-400 transition-colors">{{ $shopItem->display_name }}</h3>
+                                        @if ($shopItem->exclusive_server)
+                                            <span class="shrink-0 text-[10px] font-medium px-1.5 py-0.5 rounded border {{ $shopItem->is_xilero ? 'bg-amber-500/10 text-amber-400 border-amber-500/30' : 'bg-blue-500/10 text-blue-400 border-blue-500/30' }}">
+                                                {{ $shopItem->exclusive_server }}
+                                            </span>
                                         @endif
+                                    </div>
+
+                                    @if ($shopItem->item?->description)
+                                        <p class="text-xs text-gray-500 line-clamp-1">{!! $shopItem->item->formattedDescription() !!}</p>
+                                    @elseif ($shopItem->item?->type)
+                                        <p class="text-xs text-gray-500">
+                                            {{ $shopItem->item->type }}{{ $shopItem->item->subtype ? ' / ' . $shopItem->item->subtype : '' }}
+                                        </p>
                                     @endif
+
+                                    <div class="mt-2 flex items-center justify-between">
+                                        <span class="text-amber-400 font-bold text-sm">
+                                            {{ $shopItem->uber_cost }} {{ Str::plural('Uber', $shopItem->uber_cost) }}
+                                        </span>
+                                        @if ($shopItem->stock !== null)
+                                            @if ($shopItem->stock > 0)
+                                                <span class="text-xs text-green-400/80">{{ $shopItem->stock }} left</span>
+                                            @else
+                                                <span class="text-xs text-red-400">Sold Out</span>
+                                            @endif
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </a>
                 @endforeach
             </div>
+
+            {{-- Mobile View All --}}
+            <div class="mt-8 text-center md:hidden">
+                <a href="{{ route('donate-shop') }}" class="inline-flex items-center gap-2 text-amber-500 hover:text-amber-400 font-medium transition-colors">
+                    View all items
+                    <i class="fas fa-arrow-right text-sm"></i>
+                </a>
+            </div>
         </div>
     </section>
 
     <div class="line"></div>
 
-    <section id="prontera-castles" class="bg-clash-bg hidden lg:block relative overflow-hidden py-8 pb-24">
+    <section id="woe-times" class="bg-clash-bg hidden lg:block relative overflow-hidden py-12 pb-32 md:px-24">
         <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
-            <div class="container mx-auto rounded">
-                <div class="">
-                    <div class="text-gray-100 flex justify-between">
-                        <h2>Woe Times</h2>
-                    </div>
-                    <p class="mt-6 text-gray-300 leading-relaxed mb-8">Prepare for battle and mark your calendars! The War of Emperium on Xilero takes place across various timezones, ensuring that warriors from all corners of the world can join the fight. Find the schedule that fits your timezone below and rally your guild for the epic clashes in the specified castles.</p>
+            {{-- Section Header --}}
+            <div class="flex items-end justify-between mb-10">
+                <div>
+                    <h2 class="text-3xl font-bold text-gray-100 mb-2">War of Emperium</h2>
+                    <p class="text-gray-400 max-w-2xl">Battle schedules across all timezones. Rally your guild and conquer the castles.</p>
                 </div>
-                <div class="grid grid-cols-{{$castles->count()}} gap-5">
-                    @foreach ($castles as $castle)
-                        <div class="mb-4 block-home bg-opacity-70 rounded p-5">
-                            <h3 class="text-amber-200 text-2xl mb-8 half-border">{{ $castle->name }}</h3>
-                            @foreach(config('castles.timezones') as $timezone)
-                                <div class="text-white mb-8 flex rounded">
-                                    <div class="mr-3">
-                                        @if(!is_null($castle->guild) && $castle->guild->hasEmblem())
-                                            <div class="w-8 h-8 m-0 shadow" style="background: url('{{ $castle->guild->emblem }}'); background-size:contain;"></div>
-                                        @else
-                                            <img class="h-8 w-8 m-0" src="/assets/emblems/empty.bmp"/>
-                                        @endif
+                <a href="https://wiki.xilero.net/index.php?title=WoE" target="_blank" rel="noopener" class="hidden md:inline-flex items-center gap-2 text-amber-500 hover:text-amber-400 font-medium transition-colors">
+                    WoE Guide
+                    <i class="fas fa-external-link-alt text-sm"></i>
+                </a>
+            </div>
+
+            {{-- Castles Grid --}}
+            <div class="grid grid-cols-{{ $castles->count() }} gap-4">
+                @foreach ($castles as $castle)
+                    <div class="card-glow-wrapper group">
+                        <div class="card-glow-inner p-5">
+                            {{-- Castle Header --}}
+                            <div class="flex items-center justify-between mb-5">
+                                <h3 class="text-xl font-bold text-gray-100">{{ $castle->name }}</h3>
+                                @if(!is_null($castle->guild) && $castle->guild->hasEmblem())
+                                    <div class="w-8 h-8 rounded bg-gray-800 border border-gray-700" style="background: url('{{ $castle->guild->emblem }}') center/contain no-repeat;"></div>
+                                @endif
+                            </div>
+
+                            {{-- Timezone Schedule --}}
+                            <div class="space-y-3">
+                                @foreach(config('castles.timezones') as $timezone)
+                                    <div class="flex items-center gap-3 p-2.5 rounded-lg bg-gray-800/40 border border-gray-700/30">
+                                        <div class="w-8 h-8 rounded bg-gray-700/50 flex items-center justify-center shrink-0">
+                                            <i class="fas fa-globe text-gray-500 text-xs"></i>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-gray-300 text-sm font-medium truncate">{{ str_replace('_', ' ', basename($timezone)) }}</p>
+                                            @foreach(config("castles.prontera.{$castle->name}.day") as $day)
+                                                @php
+                                                    $date = new DateTime();
+                                                    $date->modify("next {$day}");
+                                                    $time = DateTime::createFromFormat("H:i", config("castles.prontera.{$castle->name}.time"));
+                                                    $date->setTime($time->format('H'), $time->format('i'))->modify(config('castles.modifier'));
+                                                @endphp
+                                                <p class="text-amber-500/80 text-xs">{{ $date->setTimezone(new DateTimeZone($timezone))->format("l, H:i A") }}</p>
+                                            @endforeach
+                                        </div>
                                     </div>
-                                    <div class="">
-                                        <h4 class="text-white font-bold mb-1">{{ $timezone }}</h4>
-                                        @foreach(config("castles.prontera.{$castle->name}.day") as $day)
-                                                <?php
-                                                $date = new DateTime();
-                                                $date->modify("next {$day}");
-                                                $time = DateTime::createFromFormat("H:i", config("castles.prontera.{$castle->name}.time"));
-                                                $date->setTime($time->format('H'), $time->format('i'))->modify(config('castles.modifier'));
-                                                ?>
-                                            <p class="mt-1 text-gray-400">{{ $date->setTimezone(new DateTimeZone($timezone))->format("l, H:i A") }}</p>
-                                        @endforeach
-                                    </div>
-                                </div>
-                            @endforeach
+                                @endforeach
+                            </div>
                         </div>
-                    @endforeach
-                </div>
+                    </div>
+                @endforeach
             </div>
         </div>
     </section>
+
+    <div class="line"></div>
 
     {{-- ANDOID SECTION REMOVED
         <section class="my-24 px-3 sm:px-0">
