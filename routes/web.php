@@ -158,7 +158,7 @@ Route::get('xilero/patch/list', function () {
 // Route::get('/wiki/{path}', [WikiController::class, 'show'])->where('path', '.*')->name('wiki.show');
 
 // Authentication routes (integrated with site design)
-Route::middleware('guest')->group(function () {
+Route::middleware(['guest', \App\Http\Middleware\AuthMaintenanceMiddleware::class])->group(function () {
     Route::get('/login', \App\Livewire\Auth\GameAccountLogin::class)->name('login');
     Route::get('/register', \App\Livewire\Auth\Register::class)->name('register');
 

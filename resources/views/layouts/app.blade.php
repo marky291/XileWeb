@@ -110,6 +110,23 @@
 
             @include('layouts.navigation')
 
+            {{-- Flash Messages --}}
+            @if (session('warning'))
+                <div class="fixed top-20 left-1/2 -translate-x-1/2 z-50 max-w-lg w-full mx-4" x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 8000)">
+                    <div class="bg-orange-500/20 border border-orange-500/40 backdrop-blur-md rounded-lg p-4 shadow-xl">
+                        <div class="flex items-start gap-3">
+                            <i class="fas fa-exclamation-triangle text-orange-400 mt-0.5"></i>
+                            <div class="flex-1">
+                                <p class="text-orange-200 text-sm">{{ session('warning') }}</p>
+                            </div>
+                            <button @click="show = false" class="text-orange-400 hover:text-orange-300 transition-colors">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
             <!-- Page Heading -->
             @if (isset($header))
                 <header class="bg-clash-foot shadow">

@@ -6,7 +6,7 @@ use App\Livewire\Auth\VerifyEmail;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('guest')->group(function () {
+Route::middleware(['guest', \App\Http\Middleware\AuthMaintenanceMiddleware::class])->group(function () {
     Route::get('forgot-password', ForgotPassword::class)
         ->name('password.request');
 

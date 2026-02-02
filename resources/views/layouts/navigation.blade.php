@@ -154,20 +154,27 @@
                                 </form>
                             </div>
                         @else
-                            <div class="flex items-center gap-2">
-                                <a href="{{ route('password.request') }}"
-                                   class="px-4 py-2 text-sm font-medium text-gray-400 hover:text-white rounded-lg hover:bg-white/5 transition-all duration-200">
-                                    Forgot Password
-                                </a>
-                                <a href="{{ route('login') }}"
-                                   class="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white rounded-lg hover:bg-white/5 transition-all duration-200">
-                                    Login
-                                </a>
-                                <a href="{{ route('register') }}"
-                                   class="px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 rounded-lg transition-all duration-200">
-                                    Register
-                                </a>
-                            </div>
+                            @if (config('xilero.auth.enabled'))
+                                <div class="flex items-center gap-2">
+                                    <a href="{{ route('password.request') }}"
+                                       class="px-4 py-2 text-sm font-medium text-gray-400 hover:text-white rounded-lg hover:bg-white/5 transition-all duration-200">
+                                        Forgot Password
+                                    </a>
+                                    <a href="{{ route('login') }}"
+                                       class="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white rounded-lg hover:bg-white/5 transition-all duration-200">
+                                        Login
+                                    </a>
+                                    <a href="{{ route('register') }}"
+                                       class="px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 rounded-lg transition-all duration-200">
+                                        Register
+                                    </a>
+                                </div>
+                            @else
+                                <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-orange-500/10 border border-orange-500/20">
+                                    <i class="fas fa-tools text-orange-400 text-sm"></i>
+                                    <span class="text-orange-300 text-sm font-medium">Server Migration</span>
+                                </div>
+                            @endif
                         @endauth
                     </div>
 
@@ -200,27 +207,34 @@
          @click.away="navIsOpen = false">
         <div class="max-w-7xl mx-auto px-4 py-4 space-y-1">
             @guest
-                <a href="{{ route('register') }}"
-                   class="flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-colors">
-                    <svg class="w-5 h-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
-                    </svg>
-                    Register
-                </a>
-                <a href="{{ route('login') }}"
-                   class="flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-colors">
-                    <svg class="w-5 h-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/>
-                    </svg>
-                    Login
-                </a>
-                <a href="{{ route('password.request') }}"
-                   class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-lg transition-colors">
-                    <svg class="w-5 h-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/>
-                    </svg>
-                    Forgot Password
-                </a>
+                @if (config('xilero.auth.enabled'))
+                    <a href="{{ route('register') }}"
+                       class="flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-colors">
+                        <svg class="w-5 h-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
+                        </svg>
+                        Register
+                    </a>
+                    <a href="{{ route('login') }}"
+                       class="flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-colors">
+                        <svg class="w-5 h-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/>
+                        </svg>
+                        Login
+                    </a>
+                    <a href="{{ route('password.request') }}"
+                       class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-lg transition-colors">
+                        <svg class="w-5 h-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/>
+                        </svg>
+                        Forgot Password
+                    </a>
+                @else
+                    <div class="flex items-center gap-3 px-4 py-3 bg-orange-500/10 border border-orange-500/20 rounded-lg">
+                        <i class="fas fa-tools text-orange-400"></i>
+                        <span class="text-orange-300 text-sm">Login temporarily disabled during server migration</span>
+                    </div>
+                @endif
             @else
                 <a href="{{ route('dashboard') }}"
                    class="flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-colors">

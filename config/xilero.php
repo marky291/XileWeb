@@ -35,4 +35,10 @@ return [
         // When false, only admin users can purchase from the Uber Shop
         'purchasing_enabled' => false,
     ],
+
+    'auth' => [
+        // When false, login and registration are disabled (e.g., during server migration)
+        'enabled' => false,
+        'maintenance_message' => 'Login and registration are temporarily disabled while we migrate to new servers. Please check back soon!',
+    ],
 ];
