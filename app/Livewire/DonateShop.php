@@ -439,25 +439,28 @@ class DonateShop extends Component
 
     /**
      * Check if a purchase is eligible for refund.
+     *
+     * NOTE: Refunds for claimed items are disabled. Feature coming later.
      */
     public function canRefund(UberShopPurchase $purchase): bool
     {
-        if ($purchase->status !== UberShopPurchase::STATUS_CLAIMED) {
-            return false;
-        }
-
-        if (! $purchase->claimed_at) {
-            return false;
-        }
-
-        return $purchase->claimed_at->addHours($this->refundHours())->isFuture();
+        // Refunds disabled - feature coming later
+        return false;
     }
 
     /**
      * Refund a claimed purchase by finding and removing the item from inventory.
+     *
+     * NOTE: Refunds for claimed items are disabled. Feature coming later.
      */
     public function refundPurchase(int $purchaseId): void
     {
+        // Refunds disabled - feature coming later
+        session()->flash('error', 'Refunds are not available at this time. This feature is coming soon.');
+
+        return;
+
+        // @codeCoverageIgnoreStart
         if (! auth()->check()) {
             return;
         }
@@ -551,6 +554,7 @@ class DonateShop extends Component
         } catch (Exception $e) {
             session()->flash('error', 'Failed to process refund: '.$e->getMessage());
         }
+        // @codeCoverageIgnoreEnd
     }
 
     /**
@@ -666,6 +670,7 @@ class DonateShop extends Component
                     'uber_cost' => $lockedItem->uber_cost,
                     'uber_balance_after' => $newBalance,
                     'status' => UberShopPurchase::STATUS_PENDING,
+                    'is_xileretro' => $gameAccount->server === 'xileretro',
                     'purchased_at' => now(),
                 ]);
 
