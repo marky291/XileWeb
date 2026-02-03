@@ -284,10 +284,27 @@
         <div class="max-w-screen-xl w-full mx-auto lg:px-0 px-5">
             @auth
                 {{-- Section Header --}}
-                <div class="flex items-end justify-between mb-10">
+                <div class="flex items-end justify-between mb-6">
                     <div>
                         <h2 class="text-3xl font-bold text-gray-100 mb-2">Download XileRetro</h2>
                         <p class="text-gray-400">Choose your platform and start playing.</p>
+                    </div>
+                </div>
+
+                {{-- Game Account Notice --}}
+                <div class="mb-8 p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-user-plus text-amber-400 mt-0.5"></i>
+                        <div>
+                            <p class="text-gray-200 font-medium">Create a Game Account</p>
+                            <p class="text-gray-400 text-sm mt-1">
+                                Before you can play, you need to create a game account.
+                                <a href="{{ route('dashboard') }}" class="text-amber-400 hover:text-amber-300 font-medium underline underline-offset-2">
+                                    Go to My Account
+                                </a>
+                                to set up your in-game credentials.
+                            </p>
+                        </div>
                     </div>
                 </div>
 

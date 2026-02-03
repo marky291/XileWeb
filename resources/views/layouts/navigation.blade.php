@@ -1,4 +1,4 @@
-<nav class="w-full absolute z-50" x-data="{ scrolled: false }" @scroll.window="scrolled = window.scrollY > 20">
+<nav class="w-full fixed top-0 left-0 z-50" x-data="{ scrolled: false }" @scroll.window="scrolled = window.scrollY > 20">
     <div class="transition-all duration-300"
          :class="scrolled ? 'bg-clash-foot/95 backdrop-blur-md shadow-lg shadow-black/20 border-b border-xilero-gold/10' : 'bg-black/50 backdrop-blur-sm'">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -108,13 +108,13 @@
                     <div class="hidden lg:block relative z-[60]" x-data="{ open: false }" @click.outside="open = false">
                         @auth
                             <button @click="open = !open"
-                                    class="flex items-center gap-2 px-3 py-1.5 rounded-full hover:bg-white/5 transition-all duration-200"
+                                    class="flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-white/5 border border-xilero-gold/30 hover:border-xilero-gold/60 hover:bg-white/10 transition-all duration-200"
                                     title="{{ auth()->user()->email }}">
-                                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center text-gray-900 font-bold text-sm">
+                                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center text-gray-900 font-bold text-sm ring-2 ring-amber-500/30">
                                     {{ strtoupper(substr(auth()->user()->email, 0, 1)) }}
                                 </div>
-                                <span class="text-sm font-medium text-gray-300">My Account</span>
-                                <svg class="w-4 h-4 text-gray-400 transition-transform" :class="{ 'rotate-180': open }" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <span class="text-sm font-medium text-white">My Account</span>
+                                <svg class="w-4 h-4 text-xilero-gold/70 transition-transform" :class="{ 'rotate-180': open }" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                                 </svg>
                             </button>
