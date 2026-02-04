@@ -307,7 +307,6 @@ class ImportGameAccountsSeed extends Command
     {
         $this->info('Syncing legacy uber balances from donation_ubers...');
 
-        // Step 1: Update legacy_uber_balance from XileRetro_DonationUbers for ALL accounts
         $uberRecords = XileRetro_DonationUbers::where(function ($q) {
             $q->where('current_ubers', '>', 0)
                 ->orWhere('pending_ubers', '>', 0);
@@ -317,11 +316,12 @@ class ImportGameAccountsSeed extends Command
 
         $updated = 0;
         $notFound = 0;
+        $skipped = 0;
+        $accountsToTransfer = [];
 
         foreach ($uberRecords as $uberRecord) {
             $totalUbers = $uberRecord->total_ubers;
 
-            // Find corresponding GameAccount
             $gameAccount = GameAccount::where('server', 'xileretro')
                 ->where('ragnarok_account_id', $uberRecord->account_id)
                 ->first();
@@ -332,45 +332,61 @@ class ImportGameAccountsSeed extends Command
                 continue;
             }
 
-            // Update legacy_uber_balance if changed
-            if ($gameAccount->legacy_uber_balance != $totalUbers) {
-                $gameAccount->update(['legacy_uber_balance' => $totalUbers]);
-                $updated++;
+            // Skip accounts that already transferred ubers (has user + legacy_uber_balance = 0)
+            if ($gameAccount->user_id && $gameAccount->legacy_uber_balance == 0) {
+                $skipped++;
+
+                continue;
             }
 
-            $this->output->write("\r  Updated legacy balances: {$updated} | Not found: {$notFound}");
+            // Update legacy_uber_balance for accounts without master
+            if (! $gameAccount->user_id) {
+                if ($gameAccount->legacy_uber_balance != $totalUbers) {
+                    $gameAccount->update(['legacy_uber_balance' => $totalUbers]);
+                    $updated++;
+                }
+            } else {
+                // Has master - track for transfer
+                $accountsToTransfer[$gameAccount->id] = [
+                    'gameAccount' => $gameAccount,
+                    'totalUbers' => $totalUbers,
+                ];
+            }
+
+            $this->output->write("\r  Updated: {$updated} | Skipped: {$skipped} | Not found: {$notFound}");
         }
 
         $this->newLine();
-        $this->info("Legacy balance sync: {$updated} updated, {$notFound} not found.");
+        $this->info("Legacy balance sync: {$updated} updated, {$skipped} already synced, {$notFound} not found.");
 
-        // Step 2: Transfer ALL legacy_uber_balance to master accounts and set to 0 (prevent exploit)
-        $this->newLine();
-        $this->info('Transferring legacy ubers to master accounts (setting legacy_uber_balance to 0)...');
+        // Transfer to master accounts and set legacy_uber_balance = 0
+        if (empty($accountsToTransfer)) {
+            $this->info('No new ubers to transfer to master accounts.');
+        } else {
+            $this->newLine();
+            $this->info('Transferring ubers to master accounts...');
 
-        $gameAccountsWithUbers = GameAccount::where('server', 'xileretro')
-            ->where('legacy_uber_balance', '>', 0)
-            ->whereNotNull('user_id')
-            ->get();
+            $transferred = 0;
+            $totalTransferred = 0;
 
-        $transferred = 0;
-        $totalTransferred = 0;
+            foreach ($accountsToTransfer as $data) {
+                $gameAccount = $data['gameAccount'];
+                $totalUbers = $data['totalUbers'];
+                $user = $gameAccount->user;
 
-        foreach ($gameAccountsWithUbers as $gameAccount) {
-            $user = $gameAccount->user;
-            if ($user) {
-                $amount = $gameAccount->legacy_uber_balance;
-                $user->increment('uber_balance', $amount);
-                $gameAccount->update(['legacy_uber_balance' => 0]); // Set to 0 to prevent exploit
-                $totalTransferred += $amount;
-                $transferred++;
+                if ($user) {
+                    $user->increment('uber_balance', $totalUbers);
+                    $gameAccount->update(['legacy_uber_balance' => 0]); // Set to 0 after transfer
+                    $totalTransferred += $totalUbers;
+                    $transferred++;
 
-                $this->output->write("\r  Transferred: {$transferred} accounts | Total ubers: {$totalTransferred}");
+                    $this->output->write("\r  Transferred: {$transferred} accounts | Total ubers: {$totalTransferred}");
+                }
             }
-        }
 
-        $this->newLine();
-        $this->info("Transfer complete: {$transferred} accounts, {$totalTransferred} ubers transferred to master accounts.");
+            $this->newLine();
+            $this->info("Transfer complete: {$transferred} accounts, {$totalTransferred} ubers transferred.");
+        }
 
         // Show remaining pending (unclaimed accounts)
         $pendingCount = GameAccount::where('server', 'xileretro')
@@ -440,6 +456,12 @@ class ImportGameAccountsSeed extends Command
             $gameAccount = $existingGameAccounts->get($uberRecord->account_id);
 
             if ($gameAccount) {
+                // Skip accounts that already transferred ubers to master (has user + legacy_uber_balance = 0)
+                // This prevents re-syncing accounts that have already been processed
+                if ($gameAccount->user_id && $gameAccount->legacy_uber_balance == 0) {
+                    continue;
+                }
+
                 // GameAccount exists - check if balance needs updating
                 if ($totalUbers != $gameAccount->legacy_uber_balance) {
                     $toUpdate[] = [
@@ -517,8 +539,9 @@ class ImportGameAccountsSeed extends Command
         $transferred = 0;
         $totalUbersTransferred = 0;
 
-        // Update existing GameAccounts
-        if (! empty($toUpdate) && $this->confirm('Update '.count($toUpdate).' existing game account uber balances?')) {
+        // Update existing GameAccounts (auto-confirm if non-interactive)
+        $shouldUpdate = ! empty($toUpdate) && (! $this->input->isInteractive() || $this->confirm('Update '.count($toUpdate).' existing game account uber balances?'));
+        if ($shouldUpdate) {
             $this->withProgressBar($toUpdate, function ($item) use (&$updated, &$transferred, &$totalUbersTransferred) {
                 $gameAccount = $item['game_account'];
                 $totalUbers = $item['total_ubers'];
@@ -534,9 +557,12 @@ class ImportGameAccountsSeed extends Command
                                 $totalUbersTransferred += $ubersToTransfer;
                                 $transferred++;
                             }
+                            // Set to 0 after transfer - prevents duplication if account is unlinked later
+                            // The skip logic above prevents re-syncing already-transferred accounts
                             $gameAccount->update(['legacy_uber_balance' => 0]);
                         }
                     } else {
+                        // No master account - store in legacy_uber_balance until claimed
                         $gameAccount->update(['legacy_uber_balance' => $totalUbers]);
                     }
                     $updated++;
@@ -545,8 +571,9 @@ class ImportGameAccountsSeed extends Command
             $this->newLine(2);
         }
 
-        // Import new accounts
-        if (! empty($toImport) && $this->confirm('Import '.count($toImport).' new accounts with legacy ubers?')) {
+        // Import new accounts (auto-confirm if non-interactive)
+        $shouldImport = ! empty($toImport) && (! $this->input->isInteractive() || $this->confirm('Import '.count($toImport).' new accounts with legacy ubers?'));
+        if ($shouldImport) {
             $loginClass = XileRetro_Login::class;
 
             $this->withProgressBar($toImport, function ($item) use ($loginClass, $server, &$imported) {
@@ -683,7 +710,7 @@ class ImportGameAccountsSeed extends Command
             // Only do this for newly created accounts
             if ($wasCreated && $user && $legacyUbers > 0) {
                 $user->increment('uber_balance', $legacyUbers);
-                $gameAccount->update(['legacy_uber_balance' => 0]);
+                $gameAccount->update(['legacy_uber_balance' => 0]); // Set to 0 after transfer
             }
 
             return [

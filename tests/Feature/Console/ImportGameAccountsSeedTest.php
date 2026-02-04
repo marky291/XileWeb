@@ -644,7 +644,8 @@ class ImportGameAccountsSeedTest extends TestCase
         $this->assertNotNull($user);
         $this->assertEquals(75, $user->uber_balance);
 
-        // Verify game account was created with legacy_uber_balance cleared
+        // Verify game account was created with legacy_uber_balance cleared after transfer
+        // (set to 0 to prevent duplication if account is unlinked later)
         $gameAccount = GameAccount::where('ragnarok_account_id', $login->account_id)->first();
         $this->assertEquals(0, $gameAccount->legacy_uber_balance);
     }
