@@ -33,7 +33,7 @@ return [
 
     'uber_shop' => [
         // When false, only admin users can purchase from the Uber Shop
-        'purchasing_enabled' => false,
+        'purchasing_enabled' => true,
     ],
 
     'auth' => [
