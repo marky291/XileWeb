@@ -13,12 +13,7 @@ jobs:
           - 6379:6379
         options: --entrypoint redis-server
 
-    strategy:
-      fail-fast: true
-      matrix:
-        stability: [prefer-lowest, prefer-stable]
-
-    name: PHP 8.4 - PHPUnit 12.5.0 - ${{ matrix.stability }}
+    name: PHP 8.4 - prefer-stable
 
     steps:
       - name: Checkout code
@@ -44,15 +39,15 @@ jobs:
         with:
           timeout_minutes: 5
           max_attempts: 5
-          command: composer update --${{ matrix.stability }} --prefer-dist --no-interaction --no-progress --with="phpunit/phpunit:~12.5.0"
+          command: composer update --prefer-stable --prefer-dist --no-interaction --no-progress
 
       - name: Execute tests
-        run: vendor/bin/phpunit --display-deprecation ${{ matrix.stability == 'prefer-stable' && '--fail-on-deprecation' || '' }} --no-coverage
+        run: vendor/bin/phpunit --display-deprecation --fail-on-deprecation --no-coverage
 
       - name: Store artifacts
         uses: actions/upload-artifact@v6
         with:
-          name: linux-logs-8.4-12.5.0-${{ matrix.stability }}
+          name: linux-logs-8.4-prefer-stable
           path: |
             vendor/orchestra/testbench-core/laravel/storage/logs
             !vendor/**/.gitignore
