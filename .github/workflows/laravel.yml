@@ -41,6 +41,11 @@ jobs:
           max_attempts: 5
           command: composer update --prefer-stable --prefer-dist --no-interaction --no-progress
 
+      - name: Prepare environment
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+
       - name: Execute tests
         run: vendor/bin/phpunit --display-deprecation --fail-on-deprecation --no-coverage
 
