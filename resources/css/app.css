@@ -225,33 +225,31 @@
     background: url('../assets/effects/yellow-light.png');
     width: 300px;
     height: 300px;
-
     animation: reverse-spin 2s linear infinite;
-
-    @keyframes spin {
-      from {
-        transform: rotate(360deg);
-      }
-      to {
-        transform: rotate(0deg);
-      }
-    }
   }
 
   .effect-light-blue-bang {
     background: url('../assets/effects/light-blue.png');
     width: 350px;
     height: 350px;
-
     animation: spin 15s linear infinite;
+  }
 
-    @keyframes spin {
-      from {
-        transform: rotate(0deg);
-      }
-      to {
-        transform: rotate(360deg);
-      }
+  @keyframes reverse-spin {
+    from {
+      transform: rotate(360deg);
+    }
+    to {
+      transform: rotate(0deg);
+    }
+  }
+
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
     }
   }
 

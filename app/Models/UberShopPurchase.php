@@ -25,6 +25,7 @@ use Illuminate\Support\Carbon;
  * @property int|null $claimed_by_char_id
  * @property string|null $claimed_by_char_name
  * @property bool $is_xileretro
+ * @property bool $is_bonus_reward
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property-read UberShopItem|null $shopItem
@@ -58,6 +59,7 @@ class UberShopPurchase extends Model
         'claimed_by_char_id',
         'claimed_by_char_name',
         'is_xileretro',
+        'is_bonus_reward',
     ];
 
     /**
@@ -69,6 +71,7 @@ class UberShopPurchase extends Model
             'purchased_at' => 'datetime',
             'claimed_at' => 'datetime',
             'is_xileretro' => 'boolean',
+            'is_bonus_reward' => 'boolean',
         ];
     }
 

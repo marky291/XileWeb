@@ -6,9 +6,13 @@ use App\Actions\CreateGameAccount;
 use App\Actions\ResetCharacterPosition;
 use App\Actions\ResetGameAccountPassword;
 use App\Actions\SyncGameAccountData;
+use App\Models\DonationRewardClaim;
 use App\Models\GameAccount;
 use App\Models\SyncedCharacter;
 use App\Notifications\GameAccountPasswordResetNotification;
+use App\Services\DonationRewardService;
+use Exception;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
@@ -34,6 +38,13 @@ class Dashboard extends Component
     public string $newPassword = '';
 
     public string $newPassword_confirmation = '';
+
+    // Donation reward claim properties
+    public ?int $rewardGameAccountId = null;
+
+    public ?int $claimingRewardId = null;
+
+    public bool $showClaimConfirm = false;
 
     /**
      * Sanitize showCreateForm input to prevent array injection attacks.
@@ -89,6 +100,58 @@ class Dashboard extends Component
     public function updatingNewPasswordConfirmation(mixed &$value): void
     {
         $value = is_string($value) ? $value : '';
+    }
+
+    /**
+     * Sanitize rewardGameAccountId input to prevent array injection attacks.
+     */
+    public function updatingRewardGameAccountId(mixed &$value): void
+    {
+        $value = is_numeric($value) ? (int) $value : null;
+    }
+
+    /**
+     * Sanitize claimingRewardId input to prevent array injection attacks.
+     */
+    public function updatingClaimingRewardId(mixed &$value): void
+    {
+        $value = is_numeric($value) ? (int) $value : null;
+    }
+
+    /**
+     * Sanitize showClaimConfirm input to prevent array injection attacks.
+     */
+    public function updatingShowClaimConfirm(mixed &$value): void
+    {
+        $value = filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) ?? false;
+    }
+
+    public function mount(): void
+    {
+        $firstAccount = auth()->user()->gameAccounts()->first();
+        if ($firstAccount) {
+            $this->rewardGameAccountId = $firstAccount->id;
+        }
+    }
+
+    /**
+     * Validate reward game account selection when updated.
+     */
+    public function updatedRewardGameAccountId(?int $value): void
+    {
+        if (! $value) {
+            $this->rewardGameAccountId = null;
+
+            return;
+        }
+
+        $account = auth()->user()->gameAccounts()->find($value);
+        if (! $account) {
+            $firstAccount = auth()->user()->gameAccounts()->first();
+            $this->rewardGameAccountId = $firstAccount?->id;
+        }
+
+        $this->cancelRewardClaim();
     }
 
     public function rules(): array
@@ -340,16 +403,213 @@ class Dashboard extends Component
         session()->flash('success', "Password has been reset for {$gameAccount->userid}.");
     }
 
+    // ========== Donation Reward Claim Methods ==========
+
+    /**
+     * Get the selected game account for reward claims.
+     */
+    public function rewardGameAccount(): ?GameAccount
+    {
+        if (! $this->rewardGameAccountId) {
+            return null;
+        }
+
+        return auth()->user()->gameAccounts()->find($this->rewardGameAccountId);
+    }
+
+    /**
+     * Get pending rewards for the current user, filtered by selected account's server.
+     *
+     * @return EloquentCollection<int, DonationRewardClaim>
+     */
+    public function pendingRewards(): EloquentCollection
+    {
+        $user = auth()->user();
+        $query = $user->donationRewardClaims()
+            ->pending()
+            ->notExpired()
+            ->with(['tier', 'item']);
+
+        $gameAccount = $this->rewardGameAccount();
+        if ($gameAccount) {
+            $isRetro = $gameAccount->server === GameAccount::SERVER_XILERETRO;
+            $query->forServer($isRetro);
+        }
+
+        return $query->orderBy('created_at', 'desc')->get();
+    }
+
+    /**
+     * Get claimed rewards history.
+     *
+     * @return EloquentCollection<int, DonationRewardClaim>
+     */
+    public function claimedRewards(): EloquentCollection
+    {
+        return auth()->user()->donationRewardClaims()
+            ->claimed()
+            ->with(['tier', 'item'])
+            ->orderBy('claimed_at', 'desc')
+            ->limit(10)
+            ->get();
+    }
+
+    /**
+     * Get the count of all pending rewards (regardless of server filter).
+     */
+    public function totalPendingRewardsCount(): int
+    {
+        return auth()->user()->donationRewardClaims()
+            ->pending()
+            ->notExpired()
+            ->count();
+    }
+
+    /**
+     * Get pending rewards grouped by server type.
+     *
+     * @return array{xilero: EloquentCollection<int, DonationRewardClaim>, xileretro: EloquentCollection<int, DonationRewardClaim>}
+     */
+    public function pendingRewardsByServer(): array
+    {
+        $allPending = auth()->user()->donationRewardClaims()
+            ->pending()
+            ->notExpired()
+            ->with(['tier', 'item'])
+            ->get();
+
+        return [
+            'xilero' => $allPending->filter(fn ($r) => $r->is_xilero),
+            'xileretro' => $allPending->filter(fn ($r) => $r->is_xileretro),
+        ];
+    }
+
+    /**
+     * Get game account IDs that have pending rewards claimable on them.
+     *
+     * @return array<int, bool>
+     */
+    public function accountsWithPendingRewards(): array
+    {
+        $pendingByServer = $this->pendingRewardsByServer();
+        $gameAccounts = auth()->user()->gameAccounts;
+        $result = [];
+
+        foreach ($gameAccounts as $account) {
+            $isRetro = $account->server === GameAccount::SERVER_XILERETRO;
+            $serverKey = $isRetro ? 'xileretro' : 'xilero';
+            $result[$account->id] = $pendingByServer[$serverKey]->isNotEmpty();
+        }
+
+        return $result;
+    }
+
+    /**
+     * Start the claim process for a reward.
+     */
+    public function startRewardClaim(int $rewardId): void
+    {
+        $this->claimingRewardId = $rewardId;
+        $this->showClaimConfirm = true;
+    }
+
+    /**
+     * Cancel the claim process.
+     */
+    public function cancelRewardClaim(): void
+    {
+        $this->claimingRewardId = null;
+        $this->showClaimConfirm = false;
+    }
+
+    /**
+     * Get the reward being claimed.
+     */
+    public function claimingReward(): ?DonationRewardClaim
+    {
+        if (! $this->claimingRewardId) {
+            return null;
+        }
+
+        return DonationRewardClaim::with(['tier', 'item'])->find($this->claimingRewardId);
+    }
+
+    /**
+     * Process the reward claim.
+     */
+    public function claimReward(): void
+    {
+        $gameAccount = $this->rewardGameAccount();
+        if (! $gameAccount) {
+            session()->flash('error', 'Please select a game account to receive the reward.');
+
+            return;
+        }
+
+        $reward = $this->claimingReward();
+        if (! $reward) {
+            session()->flash('error', 'Reward not found.');
+            $this->cancelRewardClaim();
+
+            return;
+        }
+
+        if ($reward->user_id !== auth()->id()) {
+            session()->flash('error', 'This reward does not belong to you.');
+            $this->cancelRewardClaim();
+
+            return;
+        }
+
+        if (! $reward->canBeClaimedBy($gameAccount)) {
+            session()->flash('error', 'This reward cannot be claimed on the selected account.');
+            $this->cancelRewardClaim();
+
+            return;
+        }
+
+        try {
+            $rewardService = app(DonationRewardService::class);
+            $rewardService->claimReward($reward, $gameAccount);
+
+            $itemName = $reward->item->name;
+            $quantity = $reward->quantity;
+            $refine = $reward->refine_level > 0 ? "+{$reward->refine_level} " : '';
+
+            session()->flash('success', "{$refine}{$itemName} x{$quantity} will be delivered to {$gameAccount->userid} on next login.");
+
+            $this->cancelRewardClaim();
+
+        } catch (Exception $e) {
+            session()->flash('error', 'Failed to claim reward: '.$e->getMessage());
+        }
+    }
+
     public function render()
     {
         $gameAccounts = auth()->user()->gameAccounts()
             ->with('syncedCharacters')
             ->get();
 
+        $pendingByServer = $this->pendingRewardsByServer();
+
+        // Calculate stats
+        $totalCharacters = $gameAccounts->sum(fn ($a) => $a->syncedCharacters->count());
+        $totalOnline = $gameAccounts->sum(fn ($a) => $a->syncedCharacters->where('online', true)->count());
+
         return view('livewire.auth.dashboard', [
             'user' => auth()->user(),
             'gameAccounts' => $gameAccounts,
             'canCreateMore' => auth()->user()->canCreateGameAccount(),
+            'pendingRewards' => $this->pendingRewards(),
+            'claimedRewards' => $this->claimedRewards(),
+            'totalPendingRewardsCount' => $this->totalPendingRewardsCount(),
+            'rewardGameAccount' => $this->rewardGameAccount(),
+            'claimingReward' => $this->claimingReward(),
+            'pendingRewardsByServer' => $pendingByServer,
+            'accountsWithPendingRewards' => $this->accountsWithPendingRewards(),
+            'totalCharacters' => $totalCharacters,
+            'totalOnline' => $totalOnline,
         ]);
     }
 }

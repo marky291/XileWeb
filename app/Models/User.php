@@ -68,6 +68,22 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
         return $this->hasMany(GameAccount::class);
     }
 
+    /**
+     * @return HasMany<DonationRewardClaim, $this>
+     */
+    public function donationRewardClaims(): HasMany
+    {
+        return $this->hasMany(DonationRewardClaim::class);
+    }
+
+    /**
+     * @return HasMany<DonationLog, $this>
+     */
+    public function donationLogs(): HasMany
+    {
+        return $this->hasMany(DonationLog::class);
+    }
+
     public function canCreateGameAccount(): bool
     {
         return $this->gameAccounts()->count() < $this->max_game_accounts;

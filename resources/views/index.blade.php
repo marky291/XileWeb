@@ -435,21 +435,21 @@
                 $featuredItems = $popularUberItems->take(3);
                 $regularItems = $popularUberItems->skip(3);
 
-                // Helper function to extract tier from description
-                function extractTier($description) {
+                // Helper closure to extract tier from description
+                $extractTier = function($description) {
                     if (!$description) return null;
                     if (preg_match('/\[(Godly|Ultimate|Legendary)\s+S-Tier/i', $description)) return 's';
                     if (preg_match('/\[Elite\s+A-Tier/i', $description)) return 'a';
                     if (preg_match('/\[Uber\s+B-Tier/i', $description)) return 'b';
                     return null;
-                }
+                };
             @endphp
 
             {{-- Featured Items (Top 3) --}}
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                 @foreach ($featuredItems as $index => $shopItem)
                     @php
-                        $tier = extractTier($shopItem->item?->description);
+                        $tier = $extractTier($shopItem->item?->description);
                     @endphp
                     <a href="{{ route('donate-shop') }}" class="group card-glow-wrapper transition-all duration-300 hover:-translate-y-1 no-underline">
                         <div class="card-glow-inner flex flex-col">
@@ -526,7 +526,7 @@
             <div class="grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
                 @foreach ($regularItems as $shopItem)
                     @php
-                        $tier = extractTier($shopItem->item?->description);
+                        $tier = $extractTier($shopItem->item?->description);
                     @endphp
                     <a href="{{ route('donate-shop') }}" class="group card-glow-wrapper transition-all duration-300 hover:-translate-y-0.5 no-underline">
                         <div class="card-glow-inner p-3 flex items-center gap-3">

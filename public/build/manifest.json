@@ -3,6 +3,14 @@
     "file": "assets/block-top-bg-DOZCqMwd.png",
     "src": "resources/assets/block-top-bg.png"
   },
+  "resources/assets/effects/light-blue.png": {
+    "file": "assets/light-blue-Coc-yJuf.png",
+    "src": "resources/assets/effects/light-blue.png"
+  },
+  "resources/assets/effects/yellow-light.png": {
+    "file": "assets/yellow-light-B4XJd_KA.png",
+    "src": "resources/assets/effects/yellow-light.png"
+  },
   "resources/assets/landing-sitting.jpeg": {
     "file": "assets/landing-sitting-Ch2ESB1R.jpeg",
     "src": "resources/assets/landing-sitting.jpeg"
@@ -16,12 +24,12 @@
     "src": "resources/assets/line.png"
   },
   "resources/css/app.css": {
-    "file": "assets/app-6jAyAfEN.css",
+    "file": "assets/app-Dfx7MKZR.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
   "resources/css/filament/admin.css": {
-    "file": "assets/admin-DVGm0CzG.css",
+    "file": "assets/admin-6gQq9KQ5.css",
     "src": "resources/css/filament/admin.css",
     "isEntry": true
   },

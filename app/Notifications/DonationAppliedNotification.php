@@ -11,11 +11,15 @@ class DonationAppliedNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
+    /**
+     * @param  array{xilero: array<int, array{item_name: string, item_id: int, quantity: int, refine_level: int, icon_url: string}>, xileretro: array<int, array{item_name: string, item_id: int, quantity: int, refine_level: int, icon_url: string}>}  $bonusRewards
+     */
     public function __construct(
         public float $amount,
         public int $totalUbers,
         public int $newBalance,
         public string $paymentMethod,
+        public array $bonusRewards = ['xilero' => [], 'xileretro' => []],
     ) {}
 
     /**
@@ -32,15 +36,16 @@ class DonationAppliedNotification extends Notification implements ShouldQueue
 
         return (new MailMessage)
             ->subject('Thank You for Your Donation!')
-            ->greeting("Hey {$notifiable->name}!")
-            ->line("Thank you so much for your generous donation of **\${$this->amount}**! Your support means the world to us and helps keep XileRO running strong.")
-            ->line("We've added **{$this->totalUbers} Ubers** to your account.")
-            ->line("**Your new Uber balance: {$this->newBalance} Ubers**")
-            ->line("Payment received via: {$paymentMethodName}")
-            ->action('Visit the Uber Shop', url('/donate'))
-            ->line('Ready to spend your Ubers? Head over to the Uber Shop to browse exclusive gear, costumes, and items!')
-            ->line('Thank you again for being an awesome part of our community. See you in-game!')
-            ->salutation('With gratitude, The XileRO Team');
+            ->markdown('emails.donation-applied', [
+                'notifiable' => $notifiable,
+                'amount' => $this->amount,
+                'totalUbers' => $this->totalUbers,
+                'newBalance' => $this->newBalance,
+                'paymentMethodName' => $paymentMethodName,
+                'bonusRewards' => $this->bonusRewards,
+                'claimUrl' => url('/dashboard'),
+                'shopUrl' => url('/donate'),
+            ]);
     }
 
     /**
@@ -53,6 +58,7 @@ class DonationAppliedNotification extends Notification implements ShouldQueue
             'total_ubers' => $this->totalUbers,
             'new_balance' => $this->newBalance,
             'payment_method' => $this->paymentMethod,
+            'bonus_rewards' => $this->bonusRewards,
         ];
     }
 }

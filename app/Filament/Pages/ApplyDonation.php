@@ -7,6 +7,7 @@ use App\Jobs\SendDonationAppliedEmail;
 use App\Models\DonationLog;
 use App\Models\User;
 use App\Services\DonationCalculator;
+use App\Services\DonationRewardService;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -232,6 +233,13 @@ class ApplyDonation extends Page implements HasForms
                             ->disabled()
                             ->dehydrated()
                             ->extraAttributes(['class' => 'text-xl font-bold']),
+                        ViewField::make('reward_preview')
+                            ->view('filament.pages.partials.donation-reward-preview')
+                            ->viewData([
+                                'getApplicableTiers' => fn () => $this->getApplicableRewardTiers(),
+                            ])
+                            ->visible(fn (Get $get): bool => $get('user_id') !== null && $get('amount') !== null)
+                            ->columnSpanFull(),
                     ])
                     ->columns(3),
             ])
@@ -251,6 +259,26 @@ class ApplyDonation extends Page implements HasForms
             ->orderBy('created_at', 'desc')
             ->limit(10)
             ->get();
+    }
+
+    public function getApplicableRewardTiers()
+    {
+        $userId = $this->data['user_id'] ?? null;
+        $amount = $this->data['amount'] ?? null;
+
+        if (! $userId || ! $amount) {
+            return collect();
+        }
+
+        $user = User::find($userId);
+
+        if (! $user) {
+            return collect();
+        }
+
+        $rewardService = app(DonationRewardService::class);
+
+        return $rewardService->getApplicableTiersPreview((float) $amount, $user);
     }
 
     protected function recalculateTotal(Get $get, Set $set): void
@@ -299,6 +327,34 @@ class ApplyDonation extends Page implements HasForms
         $user->increment('uber_balance', $totalUbers);
         $newBalance = $user->fresh()->uber_balance;
 
+        // Apply bonus reward items
+        $rewardService = app(DonationRewardService::class);
+        $rewardClaims = $rewardService->applyRewards($donationLog);
+        $rewardCount = $rewardClaims->count();
+
+        // Prepare bonus rewards data for email, grouped by server
+        $bonusRewards = [
+            'xilero' => [],
+            'xileretro' => [],
+        ];
+
+        foreach ($rewardClaims as $claim) {
+            $rewardData = [
+                'item_name' => $claim->item->name,
+                'item_id' => $claim->item->item_id,
+                'quantity' => $claim->quantity,
+                'refine_level' => $claim->refine_level,
+                'icon_url' => $claim->item->icon(),
+            ];
+
+            if ($claim->is_xilero) {
+                $bonusRewards['xilero'][] = $rewardData;
+            }
+            if ($claim->is_xileretro) {
+                $bonusRewards['xileretro'][] = $rewardData;
+            }
+        }
+
         // Schedule thank you email (delayed 10 minutes to allow admin to revert if needed)
         SendDonationAppliedEmail::dispatch(
             donationLog: $donationLog,
@@ -306,11 +362,20 @@ class ApplyDonation extends Page implements HasForms
             totalUbers: $totalUbers,
             newBalance: $newBalance,
             paymentMethod: $paymentMethod,
+            bonusRewards: $bonusRewards,
         )->delay(now()->addMinutes(10));
+
+        $message = "Added {$totalUbers} Ubers to {$user->email}. New balance: {$newBalance} Ubers.";
+
+        if ($rewardCount > 0) {
+            $message .= " {$rewardCount} bonus reward item(s) added to pending claims.";
+        }
+
+        $message .= ' Thank you email will be sent in 10 minutes.';
 
         Notification::make()
             ->title('Donation Applied Successfully!')
-            ->body("Added {$totalUbers} Ubers to {$user->email}. New balance: {$newBalance} Ubers. Thank you email will be sent in 10 minutes.")
+            ->body($message)
             ->success()
             ->send();
 

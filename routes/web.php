@@ -5,6 +5,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\WikiController;
 use App\Models\Patch;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
@@ -21,24 +22,35 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('index', [
-        'castles' => rescue(function () {
-            return App\XileRetro\XileRetro_GuildCastle::whereIn('castle_id', [28, 31, 15, 16])
-                ->with('guild', 'guild.members')
-                ->get()
-                ->sortBy(function ($castle, $key) {
-                    $order = ['28', '31', '15', '16'];
+        'castles' => Cache::remember('homepage:castles', now()->addMinutes(15), function () {
+            return rescue(function () {
+                return App\XileRetro\XileRetro_GuildCastle::whereIn('castle_id', [28, 31, 15, 16])
+                    ->with('guild')
+                    ->get()
+                    ->sortBy(function ($castle, $key) {
+                        $order = ['28', '31', '15', '16'];
 
-                    return array_search((string) $castle->castle_id, $order);
-                });
-        }, collect(), report: false),
-        'popularUberItems' => App\Models\UberShopItem::with('item')
-            ->where('enabled', true)
-            ->whereNotNull('item_id')
-            ->orderByDesc('views')
-            ->get()
-            ->unique(fn ($item) => $item->display_name)
-            ->values()
-            ->take(18),
+                        return array_search((string) $castle->castle_id, $order);
+                    });
+            }, collect(), report: false);
+        }),
+        'popularUberItems' => Cache::remember('homepage:popular-uber-items', now()->addHour(), function () {
+            $popularItemIds = DB::table(DB::raw(
+                '(SELECT id, views, ROW_NUMBER() OVER (PARTITION BY item_id, refine_level ORDER BY views DESC) as rn FROM uber_shop_items WHERE enabled = 1 AND item_id IS NOT NULL) as ranked'
+            ))
+                ->where('rn', 1)
+                ->orderByDesc('views')
+                ->limit(24)
+                ->pluck('id');
+
+            return App\Models\UberShopItem::with('item')
+                ->whereIn('id', $popularItemIds)
+                ->orderByDesc('views')
+                ->get()
+                ->unique(fn ($item) => $item->display_name)
+                ->values()
+                ->take(18);
+        }),
     ]);
 })->name('home');
 

@@ -26,8 +26,8 @@ class HomepageDownloadTest extends TestCase
         $response = $this->get('/');
 
         $response->assertStatus(200);
-        $response->assertSee('XileRO Download');
-        $response->assertSee('Account Required');
+        $response->assertSee('Download XileRetro');
+        $response->assertSee('Sign in to unlock');
         $response->assertDontSee('Test Full Client');
         $response->assertDontSee('Test Android APK');
     }

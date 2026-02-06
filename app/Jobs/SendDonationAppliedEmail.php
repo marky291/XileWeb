@@ -12,7 +12,7 @@ class SendDonationAppliedEmail implements ShouldQueue
     use Queueable;
 
     /**
-     * Create a new job instance.
+     * @param  array{xilero: array<int, array{item_name: string, item_id: int, quantity: int, refine_level: int, icon_url: string}>, xileretro: array<int, array{item_name: string, item_id: int, quantity: int, refine_level: int, icon_url: string}>}  $bonusRewards
      */
     public function __construct(
         public DonationLog $donationLog,
@@ -20,6 +20,7 @@ class SendDonationAppliedEmail implements ShouldQueue
         public int $totalUbers,
         public int $newBalance,
         public string $paymentMethod,
+        public array $bonusRewards = ['xilero' => [], 'xileretro' => []],
     ) {}
 
     /**
@@ -41,6 +42,7 @@ class SendDonationAppliedEmail implements ShouldQueue
             totalUbers: $this->totalUbers,
             newBalance: $this->newBalance,
             paymentMethod: $this->paymentMethod,
+            bonusRewards: $this->bonusRewards,
         ));
     }
 }

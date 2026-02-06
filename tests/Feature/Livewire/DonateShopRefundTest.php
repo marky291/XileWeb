@@ -9,7 +9,6 @@ use App\Models\UberShopItem;
 use App\Models\UberShopPurchase;
 use App\Models\User;
 use App\XileRO\XileRO_Char;
-use App\XileRO\XileRO_Inventory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
 use PHPUnit\Framework\Attributes\Test;
@@ -132,9 +131,9 @@ class DonateShopRefundTest extends TestCase
     // ============================================
 
     #[Test]
-    public function can_refund_checks_status(): void
+    public function can_refund_is_disabled(): void
     {
-        $component = new DonateShop();
+        $component = new DonateShop;
 
         $pendingPurchase = UberShopPurchase::factory()->make([
             'status' => UberShopPurchase::STATUS_PENDING,
@@ -147,23 +146,23 @@ class DonateShopRefundTest extends TestCase
             'claimed_at' => now(),
         ]);
 
-        $this->assertTrue($component->canRefund($claimedPurchase));
+        // Refunds are currently disabled
+        $this->assertFalse($component->canRefund($claimedPurchase));
     }
 
     #[Test]
-    public function can_refund_checks_time_limit(): void
+    public function can_refund_returns_false_regardless_of_time(): void
     {
-        $component = new DonateShop();
+        $component = new DonateShop;
 
-        // Purchase claimed 23 hours ago - should be refundable
+        // Refunds are disabled, so all return false regardless of time
         $recentPurchase = UberShopPurchase::factory()->make([
             'status' => UberShopPurchase::STATUS_CLAIMED,
             'claimed_at' => now()->subHours(23),
         ]);
 
-        $this->assertTrue($component->canRefund($recentPurchase));
+        $this->assertFalse($component->canRefund($recentPurchase));
 
-        // Purchase claimed 25 hours ago - should NOT be refundable
         $oldPurchase = UberShopPurchase::factory()->make([
             'status' => UberShopPurchase::STATUS_CLAIMED,
             'claimed_at' => now()->subHours(25),
@@ -175,7 +174,7 @@ class DonateShopRefundTest extends TestCase
     #[Test]
     public function can_refund_requires_claimed_at(): void
     {
-        $component = new DonateShop();
+        $component = new DonateShop;
 
         $purchaseWithoutClaimedAt = UberShopPurchase::factory()->make([
             'status' => UberShopPurchase::STATUS_CLAIMED,
@@ -188,7 +187,7 @@ class DonateShopRefundTest extends TestCase
     #[Test]
     public function refund_hours_is_24(): void
     {
-        $component = new DonateShop();
+        $component = new DonateShop;
         $this->assertEquals(24, $component->refundHours());
     }
 
@@ -360,7 +359,7 @@ class DonateShopRefundTest extends TestCase
     #[Test]
     public function donate_shop_has_input_sanitization_methods(): void
     {
-        $component = new DonateShop();
+        $component = new DonateShop;
 
         $this->assertTrue(method_exists($component, 'updatingCategory'));
         $this->assertTrue(method_exists($component, 'updatingSearch'));
@@ -375,7 +374,7 @@ class DonateShopRefundTest extends TestCase
     #[Test]
     public function category_sanitization_converts_array_to_null(): void
     {
-        $component = new DonateShop();
+        $component = new DonateShop;
 
         $value = ['malicious' => 'payload'];
         $component->updatingCategory($value);
@@ -385,7 +384,7 @@ class DonateShopRefundTest extends TestCase
     #[Test]
     public function search_sanitization_converts_array_to_empty_string(): void
     {
-        $component = new DonateShop();
+        $component = new DonateShop;
 
         $value = ['malicious' => 'payload'];
         $component->updatingSearch($value);
@@ -395,7 +394,7 @@ class DonateShopRefundTest extends TestCase
     #[Test]
     public function selected_item_id_sanitization_converts_array_to_null(): void
     {
-        $component = new DonateShop();
+        $component = new DonateShop;
 
         $value = ['malicious' => 'payload'];
         $component->updatingSelectedItemId($value);
@@ -409,7 +408,7 @@ class DonateShopRefundTest extends TestCase
     #[Test]
     public function show_purchase_confirm_sanitization_converts_array_to_false(): void
     {
-        $component = new DonateShop();
+        $component = new DonateShop;
 
         $value = ['malicious' => 'payload'];
         $component->updatingShowPurchaseConfirm($value);
@@ -442,7 +441,7 @@ class DonateShopRefundTest extends TestCase
     public function is_purchasing_restricted_reflects_config(): void
     {
         config(['xilero.uber_shop.purchasing_enabled' => true]);
-        $component = new DonateShop();
+        $component = new DonateShop;
         $this->assertFalse($component->isPurchasingRestricted());
 
         config(['xilero.uber_shop.purchasing_enabled' => false]);
@@ -456,14 +455,14 @@ class DonateShopRefundTest extends TestCase
     #[Test]
     public function pending_section_is_expanded_by_default(): void
     {
-        $component = new DonateShop();
+        $component = new DonateShop;
         $this->assertTrue($component->showPending);
     }
 
     #[Test]
     public function recent_section_is_collapsed_by_default(): void
     {
-        $component = new DonateShop();
+        $component = new DonateShop;
         $this->assertFalse($component->showRecent);
     }
 
@@ -502,7 +501,7 @@ class DonateShopRefundTest extends TestCase
     #[Test]
     public function recent_filter_defaults_to_refundable(): void
     {
-        $component = new DonateShop();
+        $component = new DonateShop;
         $this->assertEquals('refundable', $component->recentFilter);
     }
 
@@ -625,7 +624,7 @@ class DonateShopRefundTest extends TestCase
     #[Test]
     public function show_pending_sanitizes_to_boolean(): void
     {
-        $component = new DonateShop();
+        $component = new DonateShop;
 
         $value = ['malicious' => 'payload'];
         $component->updatingShowPending($value);
@@ -647,7 +646,7 @@ class DonateShopRefundTest extends TestCase
     #[Test]
     public function show_recent_sanitizes_to_boolean(): void
     {
-        $component = new DonateShop();
+        $component = new DonateShop;
 
         $value = ['malicious' => 'payload'];
         $component->updatingShowRecent($value);
@@ -669,7 +668,7 @@ class DonateShopRefundTest extends TestCase
     #[Test]
     public function recent_filter_sanitizes_invalid_values(): void
     {
-        $component = new DonateShop();
+        $component = new DonateShop;
 
         // Valid values should pass through
         $value = 'all';
@@ -701,7 +700,7 @@ class DonateShopRefundTest extends TestCase
     #[Test]
     public function selected_game_account_id_sanitizes_array_to_null(): void
     {
-        $component = new DonateShop();
+        $component = new DonateShop;
 
         $value = ['malicious' => 'payload'];
         $component->updatingSelectedGameAccountId($value);
@@ -899,7 +898,7 @@ class DonateShopRefundTest extends TestCase
     }
 
     #[Test]
-    public function refund_succeeds_when_item_in_inventory(): void
+    public function refund_is_disabled_even_when_item_in_inventory(): void
     {
         $user = User::factory()->create(['uber_balance' => 100]);
         $gameAccount = GameAccount::factory()->create([
@@ -923,40 +922,22 @@ class DonateShopRefundTest extends TestCase
             'claimed_at' => now()->subHours(1),
         ]);
 
-        $char = XileRO_Char::factory()->create([
-            'account_id' => $gameAccount->ragnarok_account_id,
-        ]);
-
-        $inventoryItem = XileRO_Inventory::factory()->create([
-            'char_id' => $char->char_id,
-            'nameid' => 1234,
-            'refine' => 0,
-            'card0' => 0,
-            'card1' => 0,
-            'card2' => 0,
-            'card3' => 0,
-            'amount' => 1,
-        ]);
-
         Livewire::actingAs($user)
             ->test(DonateShop::class)
             ->call('refundPurchase', $purchase->id);
 
-        // Balance should be refunded
-        $this->assertEquals(150, $user->fresh()->uber_balance);
+        // Refunds are disabled - balance should not change
+        $this->assertEquals(100, $user->fresh()->uber_balance);
 
-        // Purchase should be cancelled
-        $this->assertEquals(UberShopPurchase::STATUS_CANCELLED, $purchase->fresh()->status);
+        // Purchase should still be claimed
+        $this->assertEquals(UberShopPurchase::STATUS_CLAIMED, $purchase->fresh()->status);
 
-        // Stock should be restored
-        $this->assertEquals(6, $shopItem->fresh()->stock);
-
-        // Inventory item should be deleted (amount was 1)
-        $this->assertNull(XileRO_Inventory::find($inventoryItem->id));
+        // Stock should not change
+        $this->assertEquals(5, $shopItem->fresh()->stock);
     }
 
     #[Test]
-    public function refund_decrements_inventory_when_amount_greater_than_quantity(): void
+    public function refund_is_disabled_even_with_inventory_amount_greater_than_quantity(): void
     {
         $user = User::factory()->create(['uber_balance' => 100]);
         $gameAccount = GameAccount::factory()->create([
@@ -965,43 +946,23 @@ class DonateShopRefundTest extends TestCase
             'server' => GameAccount::SERVER_XILERO,
         ]);
 
-        $shopItem = UberShopItem::factory()->create();
-
         $purchase = UberShopPurchase::factory()->create([
             'account_id' => $gameAccount->ragnarok_account_id,
-            'shop_item_id' => $shopItem->id,
             'item_id' => 1234,
-            'refine_level' => 0,
-            'quantity' => 1,
             'uber_cost' => 50,
             'status' => UberShopPurchase::STATUS_CLAIMED,
             'claimed_at' => now()->subHours(1),
-        ]);
-
-        $char = XileRO_Char::factory()->create([
-            'account_id' => $gameAccount->ragnarok_account_id,
-        ]);
-
-        $inventoryItem = XileRO_Inventory::factory()->create([
-            'char_id' => $char->char_id,
-            'nameid' => 1234,
-            'refine' => 0,
-            'card0' => 0,
-            'card1' => 0,
-            'card2' => 0,
-            'card3' => 0,
-            'amount' => 5, // More than purchase quantity
         ]);
 
         Livewire::actingAs($user)
             ->test(DonateShop::class)
             ->call('refundPurchase', $purchase->id);
 
-        // Balance should be refunded
-        $this->assertEquals(150, $user->fresh()->uber_balance);
+        // Refunds are disabled - balance should not change
+        $this->assertEquals(100, $user->fresh()->uber_balance);
 
-        // Inventory item should be decremented, not deleted
-        $this->assertEquals(4, $inventoryItem->fresh()->amount);
+        // Purchase should still be claimed
+        $this->assertEquals(UberShopPurchase::STATUS_CLAIMED, $purchase->fresh()->status);
     }
 
     // ============================================

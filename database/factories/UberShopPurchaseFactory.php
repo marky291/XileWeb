@@ -34,6 +34,7 @@ class UberShopPurchaseFactory extends Factory
             'claimed_by_char_id' => null,
             'claimed_by_char_name' => null,
             'is_xileretro' => fake()->boolean(),
+            'is_bonus_reward' => false,
         ];
     }
 
@@ -42,6 +43,13 @@ class UberShopPurchaseFactory extends Factory
         return $this->state(fn (array $attributes) => [
             'status' => UberShopPurchase::STATUS_PENDING,
             'claimed_at' => null,
+        ]);
+    }
+
+    public function bonusReward(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'is_bonus_reward' => true,
         ]);
     }
 

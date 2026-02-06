@@ -14,7 +14,7 @@
 
         {{-- Posts Grid --}}
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            @foreach(\App\Models\Post::orderBy('created_at', 'desc')->take(3)->get() as $index => $post)
+            @foreach($posts as $index => $post)
                 <a href="{{ route('posts.show', $post) }}" class="group card-glow-wrapper transition-all duration-300 hover:-translate-y-1 no-underline">
                     <div class="card-glow-inner">
                         {{-- Image --}}

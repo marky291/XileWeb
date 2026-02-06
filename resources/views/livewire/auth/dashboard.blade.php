@@ -3,467 +3,284 @@
 @section('robots', 'noindex, nofollow')
 
 <section class="bg-clash-bg min-h-screen pt-28 pb-16 px-4">
-    {{-- Global Loading Bar --}}
+    {{-- Loading --}}
     <div wire:loading.delay class="fixed top-0 left-0 right-0 z-50">
         <div class="h-1 bg-amber-500 animate-pulse"></div>
     </div>
 
     <div class="max-w-4xl w-full mx-auto">
-        {{-- Header --}}
-        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
-            <div>
-                <h1 class="text-3xl font-bold text-white mb-1">My Account</h1>
-                <div class="flex items-center gap-3 flex-wrap">
-                    <p class="text-gray-400">{{ $user->email }}</p>
-                    @if($user->uber_balance > 0)
-                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-amber-500/20 text-amber-400 rounded-lg text-sm">
-                            <i class="fas fa-coins"></i>
-                            {{ number_format($user->uber_balance) }} {{ Str::plural('Uber', $user->uber_balance) }}
-                        </span>
-                    @endif
-                </div>
-            </div>
-            <div class="mt-4 sm:mt-0 flex flex-wrap gap-3">
-                <button
-                    wire:click="refreshData"
-                    wire:loading.attr="disabled"
-                    wire:target="refreshData"
-                    class="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors duration-200 flex items-center gap-2 disabled:opacity-50"
-                    title="Refresh character data from game server"
-                >
-                    <span wire:loading.remove wire:target="refreshData">
-                        <i class="fas fa-sync-alt"></i>
-                    </span>
-                    <span wire:loading wire:target="refreshData">
-                        <i class="fas fa-spinner fa-spin"></i>
-                    </span>
-                    Refresh
-                </button>
-                <a href="{{ url('/#steps2play') }}"
-                   class="px-4 py-2 bg-amber-500 hover:bg-amber-400 text-gray-900 font-bold rounded-lg transition-colors duration-200 flex items-center gap-2">
-                    <i class="fas fa-download"></i>
-                    Download Client
-                </a>
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button type="submit"
-                            class="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors duration-200 flex items-center gap-2">
-                        <i class="fas fa-sign-out-alt"></i>
-                        Logout
-                    </button>
-                </form>
-            </div>
-        </div>
-
         {{-- Flash Messages --}}
         @if (session()->has('success'))
-            <div class="mb-6 p-4 bg-green-900/50 border border-green-500 rounded-lg text-green-300">
+            <div class="mb-6 p-4 bg-green-900/50 border border-green-500/50 rounded-lg text-green-300 text-sm flex items-center gap-3">
+                <i class="fas fa-check-circle"></i>
                 {{ session('success') }}
             </div>
         @endif
 
         @if (session()->has('error'))
-            <div class="mb-6 p-4 bg-red-900/50 border border-red-500 rounded-lg text-red-300">
+            <div class="mb-6 p-4 bg-red-900/50 border border-red-500/50 rounded-lg text-red-300 text-sm flex items-center gap-3">
+                <i class="fas fa-exclamation-circle"></i>
                 {{ session('error') }}
             </div>
         @endif
 
-        {{-- Create Game Account Section --}}
-        @if($canCreateMore)
-            @if($gameAccounts->isEmpty() || $showCreateForm)
-                <div class="block-home bg-gray-900 p-6 rounded-lg mb-6">
-                    <div class="flex items-center justify-between mb-4">
-                        <h2 class="text-lg font-semibold text-gray-200">
-                            {{ $gameAccounts->isEmpty() ? 'Create Your First Game Account' : 'Create New Game Account' }}
-                        </h2>
-                        @if($gameAccounts->isNotEmpty())
-                            <button
-                                wire:click="$set('showCreateForm', false)"
-                                class="text-gray-400 hover:text-white transition-colors"
-                            >
-                                <i class="fas fa-times"></i>
-                            </button>
-                        @endif
+        {{-- Account Header Card --}}
+        <div class="card-glow-wrapper mb-8">
+            <div class="card-glow-inner p-6">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+                    {{-- User Info --}}
+                    <div class="flex items-center gap-4">
+                        <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-amber-500/20 to-amber-600/10 flex items-center justify-center border border-amber-500/20">
+                            <i class="fas fa-user text-xl text-amber-400"></i>
+                        </div>
+                        <div>
+                            <h1 class="text-xl font-bold text-gray-100">{{ $user->name }}</h1>
+                            <p class="text-sm text-gray-500">{{ $user->email }}</p>
+                        </div>
                     </div>
 
-                    @if($gameAccounts->isEmpty())
-                        <p class="text-gray-400 text-sm mb-6">
-                            Create your in-game login credentials to start playing. You can have up to {{ $user->max_game_accounts }} game accounts.
-                        </p>
-                    @endif
-
-                    <form wire:submit="createGameAccount" class="space-y-4">
-                        {{-- Server Selection --}}
-                        <div class="grid grid-cols-2 gap-3">
-                            <label class="relative cursor-pointer">
-                                <input type="radio" wire:model="gameServer" value="xilero" class="peer sr-only" />
-                                <div class="p-4 rounded-lg border-2 transition-all peer-checked:border-amber-500 peer-checked:bg-amber-500/10 border-gray-700 hover:border-gray-600">
-                                    <p class="font-semibold text-white">XileRO</p>
-                                    <p class="text-sm text-gray-400">MidRate Server</p>
-                                </div>
-                            </label>
-                            <label class="relative cursor-pointer">
-                                <input type="radio" wire:model="gameServer" value="xileretro" class="peer sr-only" />
-                                <div class="p-4 rounded-lg border-2 transition-all peer-checked:border-purple-500 peer-checked:bg-purple-500/10 border-gray-700 hover:border-gray-600">
-                                    <p class="font-semibold text-white">XileRetro</p>
-                                    <p class="text-sm text-gray-400">HighRate Server</p>
-                                </div>
-                            </label>
-                        </div>
-                        @error('gameServer')
-                            <p class="text-xs text-red-400">{{ $message }}</p>
-                        @enderror
-
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-300 mb-1">Username</label>
-                                <input
-                                    wire:model.live="gameUsername"
-                                    type="text"
-                                    placeholder="Choose a username"
-                                    class="w-full px-3 py-2.5 bg-gray-800/50 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-xilero-gold/50 focus:border-xilero-gold transition-colors"
-                                >
-                                <p class="mt-1 text-xs text-gray-500">4-23 characters, alphanumeric</p>
-                                @error('gameUsername')
-                                    <p class="mt-1 text-xs text-red-400">{{ $message }}</p>
-                                @enderror
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-300 mb-1">Password</label>
-                                <input
-                                    wire:model="gamePassword"
-                                    type="password"
-                                    placeholder="Choose a password"
-                                    class="w-full px-3 py-2.5 bg-gray-800/50 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-xilero-gold/50 focus:border-xilero-gold transition-colors"
-                                >
-                                <p class="mt-1 text-xs text-gray-500">6-31 characters</p>
-                                @error('gamePassword')
-                                    <p class="mt-1 text-xs text-red-400">{{ $message }}</p>
-                                @enderror
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-300 mb-1">Confirm Password</label>
-                                <input
-                                    wire:model="gamePassword_confirmation"
-                                    type="password"
-                                    placeholder="Confirm password"
-                                    class="w-full px-3 py-2.5 bg-gray-800/50 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-xilero-gold/50 focus:border-xilero-gold transition-colors"
-                                >
-                            </div>
+                    {{-- Uber Balance & Actions --}}
+                    <div class="flex items-center gap-4">
+                        {{-- Balance --}}
+                        <div class="text-right">
+                            <p class="text-xs text-gray-500 uppercase tracking-wide">Uber Balance</p>
+                            <p class="text-2xl font-bold text-amber-400">{{ number_format($user->uber_balance) }}</p>
                         </div>
 
-                        <button
-                            type="submit"
-                            class="px-6 py-3 bg-gradient-to-r from-xilero-gold to-amber-600 hover:from-amber-500 hover:to-amber-600 text-gray-900 font-bold rounded-lg shadow-md transition-all duration-200"
-                            wire:loading.attr="disabled"
-                            wire:loading.class="opacity-75 cursor-wait"
-                        >
-                            <span wire:loading.remove wire:target="createGameAccount">Create Game Account</span>
-                            <span wire:loading wire:target="createGameAccount">Creating...</span>
-                        </button>
-                    </form>
+                        {{-- Actions --}}
+                        <div class="flex items-center gap-2">
+                            @if($user->uber_balance < 500)
+                                <a href="{{ url('/donate') }}" class="px-4 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-gray-900 font-bold rounded-lg transition-all text-sm">
+                                    Top Up
+                                </a>
+                            @else
+                                <a href="{{ route('donate-shop') }}" class="px-4 py-2.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 font-medium rounded-lg transition-colors text-sm border border-amber-500/20">
+                                    Shop
+                                </a>
+                            @endif
+                            <a href="https://discord.gg/eAVAkE5FyT" target="_blank" rel="noopener noreferrer"
+                                class="p-2.5 bg-gray-800 hover:bg-indigo-900/50 text-gray-400 hover:text-indigo-400 rounded-lg transition-colors border border-gray-700" title="Discord">
+                                <i class="fab fa-discord"></i>
+                            </a>
+                            <button wire:click="refreshData" wire:loading.attr="disabled" wire:target="refreshData"
+                                class="p-2.5 bg-gray-800 hover:bg-gray-700 text-gray-400 rounded-lg transition-colors border border-gray-700" title="Sync characters">
+                                <i class="fas fa-sync-alt" wire:loading.class="fa-spin" wire:target="refreshData"></i>
+                            </button>
+                            <form method="POST" action="{{ route('logout') }}" class="inline">
+                                @csrf
+                                <button type="submit" class="p-2.5 bg-gray-800 hover:bg-red-900/50 text-gray-400 hover:text-red-400 rounded-lg transition-colors border border-gray-700" title="Logout">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-            @else
-                <button
-                    wire:click="$set('showCreateForm', true)"
-                    class="w-full mb-6 px-4 py-3 bg-gray-900 hover:bg-gray-800 border border-gray-700 hover:border-amber-500/50 text-gray-300 hover:text-amber-400 rounded-lg transition-all flex items-center justify-center gap-2"
-                >
-                    <i class="fas fa-plus"></i>
-                    Create New Game Account
-                    <span class="text-gray-500 text-sm">({{ $gameAccounts->count() }}/{{ $user->max_game_accounts }})</span>
-                </button>
-            @endif
-        @endif
+            </div>
+        </div>
 
-        {{-- Game Accounts List --}}
-        @if($gameAccounts->isNotEmpty())
-            <div class="space-y-4" wire:loading.class="opacity-50 pointer-events-none">
-                @foreach($gameAccounts as $account)
-                    @php
-                        $accountChars = $account->syncedCharacters;
-                        $isExpanded = $selectedGameAccountId === $account->id;
-                    @endphp
-                    <div wire:key="account-{{ $account->id }}" class="block-home bg-gray-900 rounded-lg overflow-hidden">
-                        {{-- Account Header --}}
-                        <div class="p-5 flex items-center justify-between">
-                            <button
-                                wire:click="selectGameAccount({{ $isExpanded ? 'null' : $account->id }})"
-                                class="flex-1 text-left flex items-center gap-4 hover:opacity-80 transition-opacity"
-                            >
-                                <div class="w-12 h-12 rounded-lg flex items-center justify-center {{ $account->server === 'xilero' ? 'bg-amber-500/20' : 'bg-purple-500/20' }}">
-                                    <i class="fas fa-user text-xl {{ $account->server === 'xilero' ? 'text-amber-400' : 'text-purple-400' }}"></i>
+        {{-- Game Accounts Section --}}
+        <div class="space-y-6">
+            {{-- Section Header --}}
+            <div class="flex items-center justify-between">
+                <h2 class="text-lg font-semibold text-gray-100">Game Accounts</h2>
+                @if($canCreateMore && $gameAccounts->isNotEmpty() && !$showCreateForm)
+                    <button wire:click="$set('showCreateForm', true)" class="text-sm text-amber-400 hover:text-amber-300 font-medium flex items-center gap-2">
+                        <i class="fas fa-plus"></i> Create Account
+                    </button>
+                @endif
+            </div>
+
+            {{-- Create Form --}}
+            @if($canCreateMore && ($gameAccounts->isEmpty() || $showCreateForm))
+                <div class="card-glow-wrapper">
+                    <div class="card-glow-inner p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-semibold text-gray-100">
+                                {{ $gameAccounts->isEmpty() ? 'Create Your First Game Account' : 'Create New Account' }}
+                            </h3>
+                            @if($gameAccounts->isNotEmpty())
+                                <button wire:click="$set('showCreateForm', false)" class="text-gray-400 hover:text-white"><i class="fas fa-times"></i></button>
+                            @endif
+                        </div>
+
+                        @if($gameAccounts->isEmpty())
+                            <p class="text-gray-400 text-sm mb-6">Create your in-game login credentials to start playing.</p>
+                        @endif
+
+                        <form wire:submit="createGameAccount" class="space-y-4">
+                            <div class="grid grid-cols-2 gap-3">
+                                <label class="cursor-pointer">
+                                    <input type="radio" wire:model="gameServer" value="xilero" class="peer sr-only" />
+                                    <div class="p-4 rounded-lg border-2 transition-all text-center peer-checked:border-amber-500 peer-checked:bg-amber-500/10 border-gray-700 hover:border-gray-600">
+                                        <p class="font-semibold text-white">XileRO</p>
+                                        <p class="text-sm text-gray-400">MidRate Server</p>
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" wire:model="gameServer" value="xileretro" class="peer sr-only" />
+                                    <div class="p-4 rounded-lg border-2 transition-all text-center peer-checked:border-purple-500 peer-checked:bg-purple-500/10 border-gray-700 hover:border-gray-600">
+                                        <p class="font-semibold text-white">XileRetro</p>
+                                        <p class="text-sm text-gray-400">HighRate Server</p>
+                                    </div>
+                                </label>
+                            </div>
+                            @error('gameServer')<p class="text-xs text-red-400">{{ $message }}</p>@enderror
+
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-300 mb-1">Username</label>
+                                    <input wire:model.live="gameUsername" type="text" placeholder="4-23 chars"
+                                        class="w-full px-4 py-2.5 bg-gray-800/50 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500">
+                                    @error('gameUsername')<p class="mt-1 text-xs text-red-400">{{ $message }}</p>@enderror
                                 </div>
                                 <div>
-                                    <div class="flex items-center gap-2">
-                                        <h3 class="text-lg font-semibold text-white">{{ $account->userid }}</h3>
-                                        <span class="text-xs px-2 py-0.5 rounded {{ $account->server === 'xilero' ? 'bg-amber-500/20 text-amber-400' : 'bg-purple-500/20 text-purple-400' }}">
-                                            {{ $account->server === 'xilero' ? 'MidRate' : 'HighRate' }}
-                                        </span>
-                                    </div>
-                                    <p class="text-sm text-gray-400">
-                                        {{ $accountChars->count() }} {{ Str::plural('character', $accountChars->count()) }}
-                                    </p>
+                                    <label class="block text-sm font-medium text-gray-300 mb-1">Password</label>
+                                    <input wire:model="gamePassword" type="password" placeholder="6-31 chars"
+                                        class="w-full px-4 py-2.5 bg-gray-800/50 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500">
+                                    @error('gamePassword')<p class="mt-1 text-xs text-red-400">{{ $message }}</p>@enderror
                                 </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-300 mb-1">Confirm</label>
+                                    <input wire:model="gamePassword_confirmation" type="password" placeholder="Confirm"
+                                        class="w-full px-4 py-2.5 bg-gray-800/50 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500">
+                                </div>
+                            </div>
+
+                            <button type="submit" class="px-6 py-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-gray-900 font-bold rounded-lg transition-all"
+                                wire:loading.attr="disabled" wire:loading.class="opacity-75">
+                                <span wire:loading.remove wire:target="createGameAccount">Create Account</span>
+                                <span wire:loading wire:target="createGameAccount"><i class="fas fa-spinner fa-spin mr-2"></i>Creating...</span>
                             </button>
-
-                            <div class="flex items-center gap-3">
-                                {{-- Reset Password Button --}}
-                                @php $hasOnlineChars = $accountChars->contains('online', true); @endphp
-                                <button
-                                    wire:click="showPasswordResetForm({{ $account->id }})"
-                                    wire:loading.attr="disabled"
-                                    wire:target="showPasswordResetForm({{ $account->id }})"
-                                    class="px-3 py-1.5 text-sm font-medium rounded-lg transition-colors disabled:opacity-50 {{ $hasOnlineChars ? 'bg-gray-800 text-gray-500 cursor-not-allowed' : 'bg-gray-700 hover:bg-amber-600 text-gray-300 hover:text-white' }}"
-                                    title="{{ $hasOnlineChars ? 'Log out of the game first to reset password' : 'Reset password for ' . $account->userid }}"
-                                    {{ $hasOnlineChars ? 'disabled' : '' }}
-                                >
-                                    <span wire:loading.remove wire:target="showPasswordResetForm({{ $account->id }})">
-                                        <i class="fas fa-key"></i>
-                                        <span class="hidden sm:inline ml-1.5">Reset Password</span>
-                                    </span>
-                                    <span wire:loading wire:target="showPasswordResetForm({{ $account->id }})">
-                                        <i class="fas fa-spinner fa-spin"></i>
-                                    </span>
-                                </button>
-
-                                {{-- Reset Security Button (Account-level action) --}}
-                                @if($account->has_security_code)
-                                    <button
-                                        wire:click="resetSecurity({{ $account->id }})"
-                                        @if(!$hasOnlineChars) wire:confirm="Reset @security code for {{ $account->userid }}? You will need to set a new one in-game." @endif
-                                        wire:loading.attr="disabled"
-                                        wire:target="resetSecurity({{ $account->id }})"
-                                        class="px-3 py-1.5 text-sm font-medium rounded-lg transition-colors disabled:opacity-50 {{ $hasOnlineChars ? 'bg-gray-800 text-gray-500 cursor-not-allowed' : 'bg-gray-700 hover:bg-red-600 text-gray-300 hover:text-white' }}"
-                                        title="{{ $hasOnlineChars ? 'Log out of the game first to reset security' : 'Reset @security code for ' . $account->userid }}"
-                                    >
-                                        <span wire:loading.remove wire:target="resetSecurity({{ $account->id }})">
-                                            <i class="fas fa-lock-open"></i>
-                                            <span class="hidden sm:inline ml-1.5">Reset Security</span>
-                                        </span>
-                                        <span wire:loading wire:target="resetSecurity({{ $account->id }})">
-                                            <i class="fas fa-spinner fa-spin"></i>
-                                        </span>
-                                    </button>
-                                @endif
-
-                                {{-- Expand/Collapse Button --}}
-                                <button
-                                    wire:click="selectGameAccount({{ $isExpanded ? 'null' : $account->id }})"
-                                    class="p-2 text-gray-400 hover:text-white transition-colors"
-                                >
-                                    <span wire:loading.remove wire:target="selectGameAccount">
-                                        <i class="fas fa-chevron-down transition-transform {{ $isExpanded ? 'rotate-180' : '' }}"></i>
-                                    </span>
-                                    <span wire:loading wire:target="selectGameAccount">
-                                        <i class="fas fa-spinner fa-spin text-amber-400"></i>
-                                    </span>
-                                </button>
-                            </div>
-                        </div>
-
-                        {{-- Characters List (Expanded) --}}
-                        @if($isExpanded)
-                            <div class="border-t border-gray-800">
-                                @forelse($accountChars as $character)
-                                    @php $isCharSelected = $selectedCharacterId === $character->char_id; @endphp
-                                    <div wire:key="char-{{ $character->char_id }}" class="border-b border-gray-800 last:border-b-0">
-                                        {{-- Character Row (Clickable) --}}
-                                        <button
-                                            wire:click="selectCharacter({{ $character->char_id }})"
-                                            class="w-full p-4 text-left flex items-center justify-between hover:bg-gray-800/30 transition-colors {{ $isCharSelected ? 'bg-gray-800/50' : '' }}"
-                                        >
-                                            <div class="flex items-center gap-4">
-                                                {{-- Online Status Indicator --}}
-                                                <div class="relative">
-                                                    <div class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center">
-                                                        <i class="fas fa-user-ninja text-gray-400"></i>
-                                                    </div>
-                                                    <span class="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full border-2 border-gray-900 {{ $character->online ? 'bg-green-500' : 'bg-gray-600' }}"></span>
-                                                </div>
-
-                                                <div>
-                                                    <div class="flex items-center gap-2">
-                                                        <h4 class="font-semibold text-white">{{ $character->name }}</h4>
-                                                        @if($character->guild_name)
-                                                            <span class="text-xs text-gray-500">
-                                                                <i class="fas fa-shield-alt mr-1"></i>{{ $character->guild_name }}
-                                                            </span>
-                                                        @endif
-                                                    </div>
-                                                    <p class="text-sm text-gray-400">
-                                                        {{ $character->class_name }}
-                                                        <span class="text-gray-500 mx-1">&middot;</span>
-                                                        Lv. {{ $character->base_level }}/{{ $character->job_level }}
-                                                    </p>
-                                                </div>
-                                            </div>
-
-                                            <div class="flex items-center gap-3">
-                                                @if($character->online)
-                                                    <span class="px-3 py-1.5 text-xs font-medium bg-green-900/30 text-green-400 rounded-lg">
-                                                        Online
-                                                    </span>
-                                                @endif
-                                                <span wire:loading.remove wire:target="selectCharacter({{ $character->char_id }})">
-                                                    <i class="fas fa-chevron-down text-gray-500 text-sm transition-transform {{ $isCharSelected ? 'rotate-180' : '' }}"></i>
-                                                </span>
-                                                <span wire:loading wire:target="selectCharacter({{ $character->char_id }})">
-                                                    <i class="fas fa-spinner fa-spin text-amber-400 text-sm"></i>
-                                                </span>
-                                            </div>
-                                        </button>
-
-                                        {{-- Character Details (Expanded) --}}
-                                        @if($isCharSelected)
-                                            <div class="px-4 pb-4 pt-1 bg-gray-800/30">
-                                                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-4">
-                                                    <div>
-                                                        <p class="text-xs text-gray-500 mb-1">Base Level</p>
-                                                        <p class="text-lg font-bold text-white">{{ $character->base_level }}</p>
-                                                    </div>
-                                                    <div>
-                                                        <p class="text-xs text-gray-500 mb-1">Job Level</p>
-                                                        <p class="text-lg font-bold text-white">{{ $character->job_level }}</p>
-                                                    </div>
-                                                    <div>
-                                                        <p class="text-xs text-gray-500 mb-1">Zeny</p>
-                                                        <p class="text-lg font-bold text-amber-400">{{ number_format($character->zeny) }}z</p>
-                                                    </div>
-                                                    <div>
-                                                        <p class="text-xs text-gray-500 mb-1">Location</p>
-                                                        <p class="text-sm text-gray-300">{{ $character->last_map }}</p>
-                                                    </div>
-                                                </div>
-
-                                                @if($character->guild_name)
-                                                    <div class="mb-4 p-3 bg-gray-900/50 rounded-lg">
-                                                        <p class="text-xs text-gray-500 mb-1">Guild</p>
-                                                        <p class="text-white font-medium">
-                                                            <i class="fas fa-shield-alt text-amber-400 mr-2"></i>{{ $character->guild_name }}
-                                                        </p>
-                                                    </div>
-                                                @endif
-
-                                                {{-- Actions --}}
-                                                @if(!$character->online)
-                                                    <button
-                                                        wire:click.stop="resetPosition({{ $character->char_id }})"
-                                                        wire:confirm="Reset {{ $character->name }}'s position to Prontera?"
-                                                        wire:loading.attr="disabled"
-                                                        wire:target="resetPosition({{ $character->char_id }})"
-                                                        class="px-4 py-2 text-sm font-medium bg-gray-700 hover:bg-amber-600 text-gray-300 hover:text-white rounded-lg transition-colors disabled:opacity-50"
-                                                    >
-                                                        <span wire:loading.remove wire:target="resetPosition({{ $character->char_id }})">
-                                                            <i class="fas fa-map-marker-alt mr-2"></i>
-                                                            Reset Position to Prontera
-                                                        </span>
-                                                        <span wire:loading wire:target="resetPosition({{ $character->char_id }})">
-                                                            <i class="fas fa-spinner fa-spin mr-2"></i>
-                                                            Resetting...
-                                                        </span>
-                                                    </button>
-                                                @endif
-                                            </div>
-                                        @endif
-                                    </div>
-                                @empty
-                                    <div class="p-8 text-center">
-                                        <i class="fas fa-user-plus text-3xl text-gray-600 mb-3"></i>
-                                        <p class="text-gray-400">No characters yet</p>
-                                        <p class="text-sm text-gray-500 mt-1">Create a character in-game to see it here</p>
-                                    </div>
-                                @endforelse
-                            </div>
-                        @endif
+                        </form>
                     </div>
-                @endforeach
-            </div>
-        @else
-            {{-- Empty State --}}
-            <div class="block-home bg-gray-900 p-12 rounded-lg text-center">
-                <i class="fas fa-gamepad text-5xl text-gray-600 mb-4"></i>
-                <h3 class="text-xl font-semibold text-gray-300 mb-2">No Game Accounts Yet</h3>
-                <p class="text-gray-500">Create a game account above to get started!</p>
-            </div>
-        @endif
+                </div>
+            @endif
 
-        {{-- Quick Links --}}
-        @if($gameAccounts->isNotEmpty())
-            <div class="mt-8 p-4 bg-gray-900/50 rounded-lg border border-gray-800">
-                <p class="text-gray-500 text-sm text-center">
-                    Need help?
-                    <a href="https://discord.gg/xilero" target="_blank" class="text-amber-400 hover:text-amber-300">Join our Discord</a>
-                    <span class="mx-2">&middot;</span>
-                    <a href="https://wiki.xilero.net" target="_blank" class="text-amber-400 hover:text-amber-300">Visit the Wiki</a>
+            {{-- Accounts List --}}
+            @if($gameAccounts->isNotEmpty())
+                @php
+                    $xileroAccounts = $gameAccounts->where('server', 'xilero');
+                    $xileretroAccounts = $gameAccounts->where('server', 'xileretro');
+                @endphp
+
+                {{-- XileRO --}}
+                @if($xileroAccounts->isNotEmpty())
+                    <div class="space-y-3">
+                        <h3 class="text-sm font-medium text-amber-400 uppercase tracking-wider flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+                            XileRO <span class="text-gray-500 font-normal normal-case">(MidRate)</span>
+                        </h3>
+                        @foreach($xileroAccounts as $account)
+                            @include('livewire.auth.partials.game-account-card', [
+                                'account' => $account,
+                                'pendingRewards' => $pendingRewardsByServer['xilero'] ?? collect(),
+                            ])
+                        @endforeach
+                    </div>
+                @endif
+
+                {{-- XileRetro --}}
+                @if($xileretroAccounts->isNotEmpty())
+                    <div class="space-y-3">
+                        <h3 class="text-sm font-medium text-purple-400 uppercase tracking-wider flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-purple-400"></span>
+                            XileRetro <span class="text-gray-500 font-normal normal-case">(HighRate)</span>
+                        </h3>
+                        @foreach($xileretroAccounts as $account)
+                            @include('livewire.auth.partials.game-account-card', [
+                                'account' => $account,
+                                'pendingRewards' => $pendingRewardsByServer['xileretro'] ?? collect(),
+                            ])
+                        @endforeach
+                    </div>
+                @endif
+            @else
+                <div class="card-glow-wrapper">
+                    <div class="card-glow-inner p-12 text-center">
+                        <i class="fas fa-gamepad text-4xl text-gray-600 mb-4"></i>
+                        <h3 class="text-lg font-semibold text-gray-300 mb-2">No Game Accounts Yet</h3>
+                        <p class="text-gray-500">Create your first account above to start playing!</p>
+                    </div>
+                </div>
+            @endif
+
+            {{-- Slots remaining --}}
+            @if($gameAccounts->isNotEmpty())
+                <p class="text-center text-sm text-gray-600">
+                    {{ $gameAccounts->count() }}/{{ $user->max_game_accounts }} account slots used
                 </p>
-            </div>
-        @endif
+            @endif
+        </div>
     </div>
 
     {{-- Password Reset Modal --}}
     @if($resettingPasswordFor)
         @php $resettingAccount = $gameAccounts->firstWhere('id', $resettingPasswordFor); @endphp
-        <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/70" wire:click.self="cancelPasswordReset">
-            <div class="bg-gray-900 rounded-lg shadow-xl border border-gray-700 w-full max-w-md mx-4">
-                <div class="p-6">
+        <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4" wire:click.self="cancelPasswordReset">
+            <div class="card-glow-wrapper max-w-md w-full">
+                <div class="card-glow-inner p-6">
                     <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-lg font-semibold text-white">
-                            Reset Password
-                        </h3>
-                        <button wire:click="cancelPasswordReset" class="text-gray-400 hover:text-white transition-colors">
-                            <i class="fas fa-times"></i>
-                        </button>
+                        <h3 class="text-lg font-semibold text-white">Reset Password</h3>
+                        <button wire:click="cancelPasswordReset" class="text-gray-400 hover:text-white"><i class="fas fa-times"></i></button>
                     </div>
-
-                    <p class="text-gray-400 text-sm mb-6">
-                        Enter a new password for <span class="text-amber-400 font-medium">{{ $resettingAccount?->userid }}</span>
-                    </p>
-
+                    <p class="text-gray-400 text-sm mb-6">Enter a new password for <span class="text-amber-400 font-medium">{{ $resettingAccount?->userid }}</span></p>
                     <form wire:submit="resetPassword" class="space-y-4">
                         <div>
-                            <label class="block text-sm font-medium text-gray-300 mb-1">New Password</label>
-                            <input
-                                wire:model="newPassword"
-                                type="password"
-                                placeholder="Enter new password"
-                                class="w-full px-3 py-2.5 bg-gray-800/50 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-xilero-gold/50 focus:border-xilero-gold transition-colors"
-                                autofocus
-                            >
-                            <p class="mt-1 text-xs text-gray-500">6-31 characters</p>
-                            @error('newPassword')
-                                <p class="mt-1 text-xs text-red-400">{{ $message }}</p>
-                            @enderror
+                            <input wire:model="newPassword" type="password" placeholder="New password (6-31 chars)" autofocus
+                                class="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500">
+                            @error('newPassword')<p class="mt-1 text-xs text-red-400">{{ $message }}</p>@enderror
                         </div>
-
                         <div>
-                            <label class="block text-sm font-medium text-gray-300 mb-1">Confirm Password</label>
-                            <input
-                                wire:model="newPassword_confirmation"
-                                type="password"
-                                placeholder="Confirm new password"
-                                class="w-full px-3 py-2.5 bg-gray-800/50 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-xilero-gold/50 focus:border-xilero-gold transition-colors"
-                            >
+                            <input wire:model="newPassword_confirmation" type="password" placeholder="Confirm password"
+                                class="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500">
                         </div>
-
-                        <div class="flex justify-end gap-3 pt-2">
-                            <button
-                                type="button"
-                                wire:click="cancelPasswordReset"
-                                class="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors"
-                            >
-                                Cancel
-                            </button>
-                            <button
-                                type="submit"
-                                wire:loading.attr="disabled"
-                                wire:target="resetPassword"
-                                class="px-4 py-2 bg-amber-500 hover:bg-amber-400 text-gray-900 font-bold rounded-lg transition-colors disabled:opacity-75"
-                            >
+                        <div class="flex gap-3">
+                            <button type="button" wire:click="cancelPasswordReset" class="flex-1 px-4 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors">Cancel</button>
+                            <button type="submit" wire:loading.attr="disabled" class="flex-1 px-4 py-3 bg-amber-500 hover:bg-amber-400 text-gray-900 font-bold rounded-lg transition-colors">
                                 <span wire:loading.remove wire:target="resetPassword">Reset Password</span>
                                 <span wire:loading wire:target="resetPassword">Resetting...</span>
                             </button>
                         </div>
                     </form>
+                </div>
+            </div>
+        </div>
+    @endif
+
+    {{-- Reward Claim Modal --}}
+    @if($showClaimConfirm && $claimingReward)
+        <div class="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4" x-data x-on:keydown.escape.window="$wire.cancelRewardClaim()">
+            <div class="card-glow-wrapper max-w-md w-full" x-on:click.away="$wire.cancelRewardClaim()">
+                <div class="card-glow-inner p-6">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-lg font-semibold text-white">Claim Reward</h3>
+                        <button wire:click="cancelRewardClaim" class="text-gray-400 hover:text-white"><i class="fas fa-times"></i></button>
+                    </div>
+
+                    {{-- Item Preview --}}
+                    <div class="flex items-center gap-4 p-4 bg-gray-800/50 rounded-lg mb-6">
+                        <div class="w-12 h-12 bg-gray-800 rounded-lg flex items-center justify-center overflow-hidden border border-gray-700">
+                            @if($claimingReward->item)
+                                <img src="{{ $claimingReward->item->icon() }}" alt="" class="max-h-full max-w-full object-contain">
+                            @endif
+                        </div>
+                        <div>
+                            <p class="text-gray-100 font-semibold">
+                                @if($claimingReward->refine_level > 0)<span class="text-amber-400">+{{ $claimingReward->refine_level }}</span> @endif{{ $claimingReward->item?->name ?? 'Unknown' }}
+                            </p>
+                            <p class="text-gray-400 text-sm">x{{ $claimingReward->quantity }} &bull; {{ $rewardGameAccount?->userid }}</p>
+                        </div>
+                    </div>
+
+                    <p class="text-sm text-gray-400 mb-6">Item will be delivered to your account storage on next login.</p>
+
+                    <div class="flex gap-3">
+                        <button wire:click="cancelRewardClaim" class="flex-1 px-4 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors">Cancel</button>
+                        <button wire:click="claimReward" wire:loading.attr="disabled" class="flex-1 px-4 py-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-gray-900 font-bold rounded-lg transition-all">
+                            <span wire:loading.remove wire:target="claimReward"><i class="fas fa-gift mr-2"></i>Claim</span>
+                            <span wire:loading wire:target="claimReward"><i class="fas fa-spinner fa-spin mr-2"></i>Claiming...</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

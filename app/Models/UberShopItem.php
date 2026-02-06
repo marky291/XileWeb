@@ -7,6 +7,7 @@ use Database\Factories\UberShopItemFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * @property int $id
@@ -33,6 +34,12 @@ class UberShopItem extends Model
 {
     /** @use HasFactory<UberShopItemFactory> */
     use HasFactory;
+
+    protected static function booted(): void
+    {
+        static::saved(fn () => Cache::forget('homepage:popular-uber-items'));
+        static::deleted(fn () => Cache::forget('homepage:popular-uber-items'));
+    }
 
     protected $fillable = [
         'category_id',

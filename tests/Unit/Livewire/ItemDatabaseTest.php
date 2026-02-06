@@ -4,6 +4,7 @@ namespace Tests\Unit\Livewire;
 
 use App\Livewire\ItemDatabase;
 use App\Models\Item;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
 use PHPUnit\Framework\Attributes\Test;
@@ -24,6 +25,8 @@ class ItemDatabaseTest extends TestCase
     #[Test]
     public function it_displays_items(): void
     {
+        $user = User::factory()->create();
+
         Item::factory()->create([
             'name' => 'Red Potion',
             'item_id' => 501,
@@ -31,7 +34,7 @@ class ItemDatabaseTest extends TestCase
             'is_xileretro' => false,
         ]);
 
-        Livewire::test(ItemDatabase::class)
+        Livewire::actingAs($user)->test(ItemDatabase::class)
             ->assertSee('Red Potion')
             ->assertSee('501');
     }
@@ -39,6 +42,8 @@ class ItemDatabaseTest extends TestCase
     #[Test]
     public function it_filters_items_by_type(): void
     {
+        $user = User::factory()->create();
+
         Item::factory()->create([
             'name' => 'Red Potion',
             'type' => 'Healing',
@@ -50,7 +55,7 @@ class ItemDatabaseTest extends TestCase
             'is_xileretro' => false,
         ]);
 
-        Livewire::test(ItemDatabase::class)
+        Livewire::actingAs($user)->test(ItemDatabase::class)
             ->assertSee('Red Potion')
             ->assertSee('Knife')
             ->call('selectType', 'Healing')
@@ -61,6 +66,8 @@ class ItemDatabaseTest extends TestCase
     #[Test]
     public function it_searches_items_by_name(): void
     {
+        $user = User::factory()->create();
+
         Item::factory()->create([
             'name' => 'Red Potion',
             'type' => 'Healing',
@@ -72,7 +79,7 @@ class ItemDatabaseTest extends TestCase
             'is_xileretro' => false,
         ]);
 
-        Livewire::test(ItemDatabase::class)
+        Livewire::actingAs($user)->test(ItemDatabase::class)
             ->assertSee('Red Potion')
             ->assertSee('Blue Potion')
             ->set('search', 'Red')
@@ -83,6 +90,8 @@ class ItemDatabaseTest extends TestCase
     #[Test]
     public function it_searches_items_by_item_id(): void
     {
+        $user = User::factory()->create();
+
         Item::factory()->create([
             'name' => 'Red Potion',
             'item_id' => 501,
@@ -94,7 +103,7 @@ class ItemDatabaseTest extends TestCase
             'is_xileretro' => false,
         ]);
 
-        Livewire::test(ItemDatabase::class)
+        Livewire::actingAs($user)->test(ItemDatabase::class)
             ->set('search', '501')
             ->assertSee('Red Potion')
             ->assertDontSee('Blue Potion');
@@ -136,6 +145,8 @@ class ItemDatabaseTest extends TestCase
     #[Test]
     public function it_clears_search_when_requested(): void
     {
+        $user = User::factory()->create();
+
         Item::factory()->create([
             'name' => 'Red Potion',
             'is_xileretro' => false,
@@ -145,7 +156,7 @@ class ItemDatabaseTest extends TestCase
             'is_xileretro' => false,
         ]);
 
-        Livewire::test(ItemDatabase::class)
+        Livewire::actingAs($user)->test(ItemDatabase::class)
             ->set('search', 'Red')
             ->assertDontSee('Blue Potion')
             ->call('clearSearch')
@@ -156,6 +167,8 @@ class ItemDatabaseTest extends TestCase
     #[Test]
     public function it_only_shows_xilero_items(): void
     {
+        $user = User::factory()->create();
+
         Item::factory()->create([
             'name' => 'XileRO Item',
             'is_xileretro' => false,
@@ -165,7 +178,7 @@ class ItemDatabaseTest extends TestCase
             'is_xileretro' => true,
         ]);
 
-        Livewire::test(ItemDatabase::class)
+        Livewire::actingAs($user)->test(ItemDatabase::class)
             ->assertSee('XileRO Item')
             ->assertDontSee('XileRetro Item');
     }
@@ -339,6 +352,8 @@ class ItemDatabaseTest extends TestCase
     #[Test]
     public function it_can_switch_to_xileretro_server(): void
     {
+        $user = User::factory()->create();
+
         Item::factory()->create([
             'name' => 'XileRO Item',
             'is_xileretro' => false,
@@ -348,7 +363,7 @@ class ItemDatabaseTest extends TestCase
             'is_xileretro' => true,
         ]);
 
-        Livewire::test(ItemDatabase::class)
+        Livewire::actingAs($user)->test(ItemDatabase::class)
             ->assertSee('XileRO Item')
             ->assertDontSee('XileRetro Item')
             ->set('server', 'xileretro')

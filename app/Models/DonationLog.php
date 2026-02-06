@@ -6,6 +6,7 @@ use Database\Factories\DonationLogFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class DonationLog extends Model
 {
@@ -70,5 +71,13 @@ class DonationLog extends Model
     public function paymentMethodName(): string
     {
         return config("donation.payment_methods.{$this->payment_method}.name", $this->payment_method);
+    }
+
+    /**
+     * @return HasMany<DonationRewardClaim, $this>
+     */
+    public function rewardClaims(): HasMany
+    {
+        return $this->hasMany(DonationRewardClaim::class);
     }
 }

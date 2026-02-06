@@ -6,12 +6,14 @@ use App\Filament\Resources\ApiTokenResource\Pages\CreateApiToken;
 use App\Filament\Resources\ApiTokenResource\Pages\ListApiTokens;
 use App\Filament\Resources\ApiTokenResource\Pages\ViewApiToken;
 use App\Models\PersonalAccessToken;
+use App\Models\User;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\ViewAction;
 use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
 use Filament\Schemas\Components\Section;
@@ -41,6 +43,13 @@ class ApiTokenResource extends Resource
                     ->description('Configure the API token settings')
                     ->icon('heroicon-o-key')
                     ->schema([
+                        Select::make('tokenable_id')
+                            ->label('User')
+                            ->options(fn () => User::pluck('email', 'id'))
+                            ->searchable()
+                            ->required()
+                            ->helperText('The user this token belongs to'),
+
                         TextInput::make('name')
                             ->required()
                             ->maxLength(255)

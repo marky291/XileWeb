@@ -58,7 +58,7 @@ class DonationAppliedNotificationTest extends TestCase
     }
 
     #[Test]
-    public function it_includes_donation_amount(): void
+    public function it_includes_donation_amount_in_view_data(): void
     {
         $notification = new DonationAppliedNotification(
             amount: 25.00,
@@ -70,12 +70,11 @@ class DonationAppliedNotificationTest extends TestCase
 
         $mailMessage = $notification->toMail($user);
 
-        $introText = implode(' ', $mailMessage->introLines);
-        $this->assertStringContainsString('25', $introText);
+        $this->assertEquals(25.00, $mailMessage->viewData['amount']);
     }
 
     #[Test]
-    public function it_includes_ubers_received(): void
+    public function it_includes_ubers_received_in_view_data(): void
     {
         $notification = new DonationAppliedNotification(
             amount: 25.00,
@@ -87,12 +86,11 @@ class DonationAppliedNotificationTest extends TestCase
 
         $mailMessage = $notification->toMail($user);
 
-        $introText = implode(' ', $mailMessage->introLines);
-        $this->assertStringContainsString('500', $introText);
+        $this->assertEquals(500, $mailMessage->viewData['totalUbers']);
     }
 
     #[Test]
-    public function it_includes_new_balance(): void
+    public function it_includes_new_balance_in_view_data(): void
     {
         $notification = new DonationAppliedNotification(
             amount: 25.00,
@@ -104,12 +102,11 @@ class DonationAppliedNotificationTest extends TestCase
 
         $mailMessage = $notification->toMail($user);
 
-        $introText = implode(' ', $mailMessage->introLines);
-        $this->assertStringContainsString('1500', $introText);
+        $this->assertEquals(1500, $mailMessage->viewData['newBalance']);
     }
 
     #[Test]
-    public function it_includes_user_name_in_greeting(): void
+    public function it_includes_user_in_view_data(): void
     {
         $notification = new DonationAppliedNotification(
             amount: 25.00,
@@ -121,11 +118,11 @@ class DonationAppliedNotificationTest extends TestCase
 
         $mailMessage = $notification->toMail($user);
 
-        $this->assertStringContainsString('TestDonor', $mailMessage->greeting);
+        $this->assertEquals('TestDonor', $mailMessage->viewData['notifiable']->name);
     }
 
     #[Test]
-    public function it_includes_uber_shop_action(): void
+    public function it_includes_shop_url_when_no_bonus_rewards(): void
     {
         $notification = new DonationAppliedNotification(
             amount: 25.00,
@@ -137,7 +134,29 @@ class DonationAppliedNotificationTest extends TestCase
 
         $mailMessage = $notification->toMail($user);
 
-        $this->assertEquals('Visit the Uber Shop', $mailMessage->actionText);
+        $this->assertStringContainsString('/donate', $mailMessage->viewData['shopUrl']);
+    }
+
+    #[Test]
+    public function it_includes_claim_url_in_view_data(): void
+    {
+        $notification = new DonationAppliedNotification(
+            amount: 25.00,
+            totalUbers: 500,
+            newBalance: 1500,
+            paymentMethod: 'paypal',
+            bonusRewards: [
+                'xilero' => [
+                    ['item_name' => 'Test Item', 'item_id' => 123, 'quantity' => 1, 'refine_level' => 0, 'icon_url' => 'http://example.com/icon.png'],
+                ],
+                'xileretro' => [],
+            ],
+        );
+        $user = User::factory()->make();
+
+        $mailMessage = $notification->toMail($user);
+
+        $this->assertStringContainsString('/dashboard', $mailMessage->viewData['claimUrl']);
     }
 
     #[Test]
@@ -173,5 +192,47 @@ class DonationAppliedNotificationTest extends TestCase
         $this->assertEquals(500, $array['total_ubers']);
         $this->assertEquals(1500, $array['new_balance']);
         $this->assertEquals('paypal', $array['payment_method']);
+    }
+
+    #[Test]
+    public function it_uses_markdown_view(): void
+    {
+        $notification = new DonationAppliedNotification(
+            amount: 25.00,
+            totalUbers: 500,
+            newBalance: 1500,
+            paymentMethod: 'paypal',
+        );
+        $user = User::factory()->make();
+
+        $mailMessage = $notification->toMail($user);
+
+        $this->assertEquals('emails.donation-applied', $mailMessage->markdown);
+    }
+
+    #[Test]
+    public function it_includes_bonus_rewards_in_view_data(): void
+    {
+        $bonusRewards = [
+            'xilero' => [
+                ['item_name' => 'XileRO Item', 'item_id' => 123, 'quantity' => 2, 'refine_level' => 5, 'icon_url' => 'http://example.com/icon1.png'],
+            ],
+            'xileretro' => [
+                ['item_name' => 'XileRetro Item', 'item_id' => 456, 'quantity' => 1, 'refine_level' => 0, 'icon_url' => 'http://example.com/icon2.png'],
+            ],
+        ];
+
+        $notification = new DonationAppliedNotification(
+            amount: 50.00,
+            totalUbers: 1000,
+            newBalance: 2000,
+            paymentMethod: 'paypal',
+            bonusRewards: $bonusRewards,
+        );
+        $user = User::factory()->make();
+
+        $mailMessage = $notification->toMail($user);
+
+        $this->assertEquals($bonusRewards, $mailMessage->viewData['bonusRewards']);
     }
 }
