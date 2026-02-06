@@ -1,40 +1,58 @@
-name: Laravel
-on:
-  push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+name: tests
+
+on: [push, pull_request]
+
 jobs:
-  laravel-tests:
-    runs-on: ubuntu-latest
+  linux_tests:
+    runs-on: ubuntu-24.04
+
     services:
-      mariadb:
-        image: mariadb:latest
-        env:
-          MARIADB_ROOT_PASSWORD: password
-          MARIADB_DATABASE: testing
+      redis:
+        image: redis:7.0
         ports:
-          - 3306:3306
-        options: --health-cmd="healthcheck.sh --connect --innodb_initialized" --health-interval=10s --health-timeout=5s --health-retries=3
+          - 6379:6379
+        options: --entrypoint redis-server
+
+    strategy:
+      fail-fast: true
+      matrix:
+        stability: [prefer-lowest, prefer-stable]
+
+    name: PHP 8.4 - PHPUnit 12.5.0 - ${{ matrix.stability }}
+
     steps:
-    - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
-      with:
-        php-version: '8.0'
-    - uses: actions/checkout@v4
-    - name: Copy .env
-      run: php -r "file_exists('.env') || copy('.env.example', '.env');"
-    - name: Install Dependencies
-      run: composer update -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-    - name: Generate key
-      run: php artisan key:generate
-    - name: Directory Permissions
-      run: chmod -R 777 storage bootstrap/cache
-    - name: Execute tests (Unit and Feature tests) via PHPUnit/Pest
-      env:
-        DB_CONNECTION: mysql
-        DB_HOST: 127.0.0.1
-        DB_PORT: 3306
-        DB_DATABASE: testing
-        DB_USERNAME: root
-        DB_PASSWORD: password
-      run: php artisan test
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.4
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, gd, redis, igbinary, msgpack, gmp, :php-psr
+          ini-values: error_reporting=E_ALL
+          tools: composer:v2
+          coverage: none
+        env:
+          REDIS_CONFIGURE_OPTS: --enable-redis --enable-redis-igbinary --enable-redis-msgpack --enable-redis-lzf --with-liblzf --enable-redis-zstd --with-libzstd --enable-redis-lz4 --with-liblz4
+          REDIS_LIBS: liblz4-dev, liblzf-dev, libzstd-dev
+
+      - name: Set Framework version
+        run: composer config version "12.x-dev"
+
+      - name: Install dependencies
+        uses: nick-fields/retry@v3
+        with:
+          timeout_minutes: 5
+          max_attempts: 5
+          command: composer update --${{ matrix.stability }} --prefer-dist --no-interaction --no-progress --with="phpunit/phpunit:~12.5.0"
+
+      - name: Execute tests
+        run: vendor/bin/phpunit --display-deprecation ${{ matrix.stability == 'prefer-stable' && '--fail-on-deprecation' || '' }} --no-coverage
+
+      - name: Store artifacts
+        uses: actions/upload-artifact@v6
+        with:
+          name: linux-logs-8.4-12.5.0-${{ matrix.stability }}
+          path: |
+            vendor/orchestra/testbench-core/laravel/storage/logs
+            !vendor/**/.gitignore
