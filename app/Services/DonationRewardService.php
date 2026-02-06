@@ -125,7 +125,11 @@ class DonationRewardService
 
         // For per-donation reset, check if already claimed for this specific donation
         // This prevents duplicates if applyRewards() is called twice for same donation
-        if ($tier->isPerDonationReset() && $donationLogId !== null) {
+        if ($tier->isPerDonationReset()) {
+            if ($donationLogId === null) {
+                return false;
+            }
+
             return $query->where('donation_log_id', $donationLogId)->exists();
         }
 

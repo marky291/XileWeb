@@ -1185,4 +1185,207 @@ class DonationRewardServiceTest extends TestCase
 
         $this->assertTrue($hasClaimed);
     }
+
+    #[Test]
+    public function it_identifies_per_donation_reset_tier(): void
+    {
+        $tier = DonationRewardTier::factory()->resetsPerDonation()->create();
+
+        $this->assertTrue($tier->isPerDonationReset());
+        $this->assertFalse($tier->isOneTime());
+        $this->assertTrue($tier->hasResetPeriod());
+    }
+
+    #[Test]
+    public function it_returns_null_period_start_for_per_donation_reset(): void
+    {
+        $tier = DonationRewardTier::factory()->resetsPerDonation()->create();
+
+        $this->assertNull($tier->getCurrentPeriodStart());
+    }
+
+    #[Test]
+    public function it_applies_per_donation_reset_tier_on_every_donation(): void
+    {
+        $user = User::factory()->create();
+        $admin = User::factory()->admin()->create();
+        $item = Item::factory()->create();
+
+        $tier = DonationRewardTier::factory()->perDonation()
+            ->resetsPerDonation()
+            ->minimumAmount(10.00)
+            ->create();
+        DonationRewardTierItem::create([
+            'donation_reward_tier_id' => $tier->id,
+            'item_id' => $item->id,
+            'quantity' => 1,
+            'refine_level' => 0,
+        ]);
+
+        // First donation creates a claim
+        $donation1 = DonationLog::factory()->forUser($user)->byAdmin($admin)->create([
+            'amount' => 20.00,
+        ]);
+        $claims1 = $this->service->applyRewards($donation1);
+        $this->assertCount(1, $claims1);
+
+        // Second donation also creates a claim (per-donation resets each time)
+        $donation2 = DonationLog::factory()->forUser($user)->byAdmin($admin)->create([
+            'amount' => 20.00,
+        ]);
+        $claims2 = $this->service->applyRewards($donation2);
+        $this->assertCount(1, $claims2);
+
+        // Third donation too
+        $donation3 = DonationLog::factory()->forUser($user)->byAdmin($admin)->create([
+            'amount' => 15.00,
+        ]);
+        $claims3 = $this->service->applyRewards($donation3);
+        $this->assertCount(1, $claims3);
+
+        // Total of 3 claims should exist
+        $this->assertEquals(3, DonationRewardClaim::where('user_id', $user->id)->count());
+    }
+
+    #[Test]
+    public function it_prevents_duplicate_per_donation_claims_for_same_donation(): void
+    {
+        $user = User::factory()->create();
+        $admin = User::factory()->admin()->create();
+        $item = Item::factory()->create();
+
+        $tier = DonationRewardTier::factory()->perDonation()
+            ->resetsPerDonation()
+            ->minimumAmount(10.00)
+            ->create();
+        DonationRewardTierItem::create([
+            'donation_reward_tier_id' => $tier->id,
+            'item_id' => $item->id,
+            'quantity' => 1,
+            'refine_level' => 0,
+        ]);
+
+        $donation = DonationLog::factory()->forUser($user)->byAdmin($admin)->create([
+            'amount' => 20.00,
+        ]);
+
+        // First call creates a claim
+        $claims1 = $this->service->applyRewards($donation);
+        $this->assertCount(1, $claims1);
+
+        // Calling again for the same donation should not duplicate the claim
+        $claims2 = $this->service->applyRewards($donation);
+        $this->assertCount(0, $claims2);
+
+        $this->assertEquals(1, DonationRewardClaim::where('donation_log_id', $donation->id)->count());
+    }
+
+    #[Test]
+    public function per_donation_reset_without_donation_log_id_returns_not_claimed(): void
+    {
+        $user = User::factory()->create();
+        $item = Item::factory()->create();
+
+        $tier = DonationRewardTier::factory()->perDonation()
+            ->resetsPerDonation()
+            ->minimumAmount(10.00)
+            ->create();
+
+        // Even if there are existing claims, calling without donationLogId should return false
+        DonationRewardClaim::factory()
+            ->forUser($user)
+            ->forItem($item)
+            ->pending()
+            ->create(['donation_reward_tier_id' => $tier->id]);
+
+        $result = $this->service->hasClaimedTierInCurrentPeriod($user, $tier, null);
+
+        $this->assertFalse($result);
+    }
+
+    #[Test]
+    public function preview_always_shows_per_donation_reset_tiers(): void
+    {
+        $user = User::factory()->create();
+        $admin = User::factory()->admin()->create();
+        $item = Item::factory()->create();
+
+        $tier = DonationRewardTier::factory()->perDonation()
+            ->resetsPerDonation()
+            ->minimumAmount(10.00)
+            ->create();
+        DonationRewardTierItem::create([
+            'donation_reward_tier_id' => $tier->id,
+            'item_id' => $item->id,
+            'quantity' => 1,
+            'refine_level' => 0,
+        ]);
+
+        // Create an existing claim for this tier
+        $donation = DonationLog::factory()->forUser($user)->byAdmin($admin)->create([
+            'amount' => 20.00,
+        ]);
+        DonationRewardClaim::factory()
+            ->forUser($user)
+            ->forItem($item)
+            ->claimed()
+            ->create([
+                'donation_reward_tier_id' => $tier->id,
+                'donation_log_id' => $donation->id,
+            ]);
+
+        // Per-donation tiers should always appear in preview regardless of past claims
+        $preview = $this->service->getApplicableTiersPreview(20.00, $user);
+
+        $this->assertCount(1, $preview);
+        $this->assertEquals($tier->id, $preview->first()->id);
+    }
+
+    #[Test]
+    public function preview_excludes_one_time_tier_but_shows_per_donation_reset_tier(): void
+    {
+        $user = User::factory()->create();
+        $admin = User::factory()->admin()->create();
+
+        $item1 = Item::factory()->create(['name' => 'One-time Item']);
+        $item2 = Item::factory()->create(['name' => 'Per-donation Item']);
+
+        // One-time cumulative tier (already claimed)
+        $oneTimeTier = DonationRewardTier::factory()->perDonation()->cumulative()
+            ->minimumAmount(10.00)
+            ->create(['claim_reset_period' => null]);
+        DonationRewardTierItem::create([
+            'donation_reward_tier_id' => $oneTimeTier->id,
+            'item_id' => $item1->id,
+            'quantity' => 1,
+            'refine_level' => 0,
+        ]);
+
+        // Per-donation cumulative tier (already claimed once)
+        $perDonationTier = DonationRewardTier::factory()->perDonation()->cumulative()
+            ->resetsPerDonation()
+            ->minimumAmount(10.00)
+            ->create();
+        DonationRewardTierItem::create([
+            'donation_reward_tier_id' => $perDonationTier->id,
+            'item_id' => $item2->id,
+            'quantity' => 1,
+            'refine_level' => 0,
+        ]);
+
+        // Create claims for both tiers
+        $donation = DonationLog::factory()->forUser($user)->byAdmin($admin)->create([
+            'amount' => 20.00,
+        ]);
+        DonationRewardClaim::factory()->forUser($user)->forItem($item1)->claimed()
+            ->create(['donation_reward_tier_id' => $oneTimeTier->id, 'donation_log_id' => $donation->id]);
+        DonationRewardClaim::factory()->forUser($user)->forItem($item2)->claimed()
+            ->create(['donation_reward_tier_id' => $perDonationTier->id, 'donation_log_id' => $donation->id]);
+
+        $preview = $this->service->getApplicableTiersPreview(20.00, $user);
+
+        // Only per-donation tier should show (one-time is already used)
+        $this->assertCount(1, $preview);
+        $this->assertEquals($perDonationTier->id, $preview->first()->id);
+    }
 }

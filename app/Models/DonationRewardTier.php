@@ -171,14 +171,14 @@ class DonationRewardTier extends Model
         return $this->claim_reset_period !== null;
     }
 
-    /**
-     * Get the start of the current reset period.
-     */
     public function isPerDonationReset(): bool
     {
         return $this->claim_reset_period === self::RESET_PER_DONATION;
     }
 
+    /**
+     * Get the start of the current reset period.
+     */
     public function getCurrentPeriodStart(): ?\Carbon\Carbon
     {
         if ($this->claim_reset_period === null) {

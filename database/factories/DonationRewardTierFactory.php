@@ -80,6 +80,13 @@ class DonationRewardTierFactory extends Factory
         ]);
     }
 
+    public function resetsPerDonation(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'claim_reset_period' => DonationRewardTier::RESET_PER_DONATION,
+        ]);
+    }
+
     public function resetsDaily(): static
     {
         return $this->state(fn (array $attributes) => [
