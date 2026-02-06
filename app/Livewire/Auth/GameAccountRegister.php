@@ -69,7 +69,7 @@ class GameAccountRegister extends Component
 
     public function rules(): array
     {
-        $database = $this->server === 'xileretro' ? 'xileretro_main' : 'xilero_main';
+        $loginModel = $this->server === 'xileretro' ? XileRetro_Login::class : XileRO_Login::class;
 
         return [
             'server' => [
@@ -82,14 +82,14 @@ class GameAccountRegister extends Component
                 'alpha_num',
                 'min:4',
                 'max:23',
-                "unique:{$database}.login,userid",
+                "unique:{$loginModel},userid",
             ],
             'email' => [
                 'required',
                 'string',
                 'email',
                 'max:39',
-                "unique:{$database}.login,email",
+                "unique:{$loginModel},email",
                 'not_in:a@a.com',
             ],
             'password' => [
@@ -147,6 +147,7 @@ class GameAccountRegister extends Component
     {
         if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
             RateLimiter::hit($this->throttleKey(), 3600); // 1 hour decay
+
             return;
         }
 

@@ -11,6 +11,8 @@ use App\Models\GameAccount;
 use App\Models\SyncedCharacter;
 use App\Notifications\GameAccountPasswordResetNotification;
 use App\Services\DonationRewardService;
+use App\XileRetro\XileRetro_Login;
+use App\XileRO\XileRO_Login;
 use Exception;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Livewire\Attributes\Layout;
@@ -156,7 +158,7 @@ class Dashboard extends Component
 
     public function rules(): array
     {
-        $loginTable = $this->gameServer === 'xileretro' ? 'xileretro_main.login' : 'xilero_main.login';
+        $loginModel = $this->gameServer === 'xileretro' ? XileRetro_Login::class : XileRO_Login::class;
 
         return [
             'gameServer' => [
@@ -171,7 +173,7 @@ class Dashboard extends Component
                 'min:4',
                 'max:23',
                 "unique:game_accounts,userid,NULL,id,server,{$this->gameServer}",
-                "unique:{$loginTable},userid",
+                "unique:{$loginModel},userid",
             ],
             'gamePassword' => [
                 'required',
