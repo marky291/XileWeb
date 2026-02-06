@@ -92,6 +92,7 @@ class DonationRewardTierResource extends Resource
                             ->label('Claim Reset Period')
                             ->options([
                                 '' => 'One-time only (never resets)',
+                                DonationRewardTier::RESET_PER_DONATION => 'Per Donation (resets with each donation)',
                                 DonationRewardTier::RESET_DAILY => 'Daily (resets at midnight UTC)',
                                 DonationRewardTier::RESET_WEEKLY => 'Weekly (resets Monday)',
                                 DonationRewardTier::RESET_MONTHLY => 'Monthly (resets 1st of month)',
@@ -258,7 +259,7 @@ class DonationRewardTierResource extends Resource
                 TextColumn::make('claim_reset_period')
                     ->label('Reset')
                     ->badge()
-                    ->formatStateUsing(fn (?string $state): string => $state ? ucfirst($state) : 'One-time')
+                    ->formatStateUsing(fn (?string $state): string => $state ? (DonationRewardTier::RESET_PERIODS[$state] ?? ucfirst($state)) : 'One-time')
                     ->color(fn (?string $state): string => $state ? 'warning' : 'gray'),
                 IconColumn::make('is_cumulative')
                     ->label('Cumul.')

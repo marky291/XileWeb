@@ -135,7 +135,7 @@
                                         </div>
                                     </div>
                                     <button
-                                        wire:click="$set('rewardGameAccountId', {{ $account->id }}); startRewardClaim({{ $reward->id }})"
+                                        wire:click="startRewardClaim({{ $reward->id }}, {{ $account->id }})"
                                         class="px-4 py-2 bg-amber-500 hover:bg-amber-400 text-gray-900 font-bold text-xs rounded-lg transition-colors"
                                     >
                                         Claim

@@ -6,7 +6,7 @@ class DonationCalculator
 {
     /**
      * Calculate Ubers for a given donation amount.
-     * Uses static tiers for $5-$75, and a progressive algorithm for amounts over $80.
+     * Uses CSV-based tiers with generous rates for higher donations.
      */
     public static function calculate(float $amount): int
     {
