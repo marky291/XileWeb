@@ -3,6 +3,7 @@
 namespace Tests\Feature\Livewire;
 
 use App\Livewire\Auth\Dashboard;
+use App\Models\DonationRewardClaim;
 use App\Models\GameAccount;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -161,5 +162,60 @@ class DashboardTest extends TestCase
             ->test(Dashboard::class)
             ->call('selectGameAccount', $gameAccount->id)
             ->assertSet('selectedGameAccountId', $gameAccount->id);
+    }
+
+    public function test_start_reward_claim_sets_claiming_state(): void
+    {
+        $user = User::factory()->create();
+        $claim = DonationRewardClaim::factory()->forUser($user)->pending()->create();
+
+        Livewire::actingAs($user)
+            ->test(Dashboard::class)
+            ->call('startRewardClaim', $claim->id)
+            ->assertSet('claimingRewardId', $claim->id)
+            ->assertSet('showClaimConfirm', true);
+    }
+
+    public function test_start_reward_claim_sets_game_account_id_when_provided(): void
+    {
+        $user = User::factory()->create();
+        $gameAccount = GameAccount::factory()->for($user)->create();
+        $claim = DonationRewardClaim::factory()->forUser($user)->pending()->create();
+
+        Livewire::actingAs($user)
+            ->test(Dashboard::class)
+            ->call('startRewardClaim', $claim->id, $gameAccount->id)
+            ->assertSet('claimingRewardId', $claim->id)
+            ->assertSet('rewardGameAccountId', $gameAccount->id)
+            ->assertSet('showClaimConfirm', true);
+    }
+
+    public function test_start_reward_claim_without_game_account_does_not_override_existing(): void
+    {
+        $user = User::factory()->create();
+        $gameAccount = GameAccount::factory()->for($user)->create();
+        $claim = DonationRewardClaim::factory()->forUser($user)->pending()->create();
+
+        Livewire::actingAs($user)
+            ->test(Dashboard::class)
+            ->set('rewardGameAccountId', $gameAccount->id)
+            ->call('startRewardClaim', $claim->id)
+            ->assertSet('rewardGameAccountId', $gameAccount->id)
+            ->assertSet('claimingRewardId', $claim->id)
+            ->assertSet('showClaimConfirm', true);
+    }
+
+    public function test_cancel_reward_claim_resets_claiming_state(): void
+    {
+        $user = User::factory()->create();
+        $claim = DonationRewardClaim::factory()->forUser($user)->pending()->create();
+
+        Livewire::actingAs($user)
+            ->test(Dashboard::class)
+            ->call('startRewardClaim', $claim->id)
+            ->assertSet('showClaimConfirm', true)
+            ->call('cancelRewardClaim')
+            ->assertSet('claimingRewardId', null)
+            ->assertSet('showClaimConfirm', false);
     }
 }

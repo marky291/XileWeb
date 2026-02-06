@@ -509,8 +509,11 @@ class Dashboard extends Component
     /**
      * Start the claim process for a reward.
      */
-    public function startRewardClaim(int $rewardId): void
+    public function startRewardClaim(int $rewardId, ?int $gameAccountId = null): void
     {
+        if ($gameAccountId !== null) {
+            $this->rewardGameAccountId = $gameAccountId;
+        }
         $this->claimingRewardId = $rewardId;
         $this->showClaimConfirm = true;
     }

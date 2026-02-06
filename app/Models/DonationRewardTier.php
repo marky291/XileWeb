@@ -36,6 +36,8 @@ class DonationRewardTier extends Model
 
     public const TRIGGER_LIFETIME = 'lifetime';
 
+    public const RESET_PER_DONATION = 'per_donation';
+
     public const RESET_DAILY = 'daily';
 
     public const RESET_WEEKLY = 'weekly';
@@ -45,6 +47,7 @@ class DonationRewardTier extends Model
     public const RESET_YEARLY = 'yearly';
 
     public const RESET_PERIODS = [
+        self::RESET_PER_DONATION => 'Per Donation (Unlimited)',
         self::RESET_DAILY => 'Daily',
         self::RESET_WEEKLY => 'Weekly',
         self::RESET_MONTHLY => 'Monthly',
@@ -168,6 +171,11 @@ class DonationRewardTier extends Model
         return $this->claim_reset_period !== null;
     }
 
+    public function isPerDonationReset(): bool
+    {
+        return $this->claim_reset_period === self::RESET_PER_DONATION;
+    }
+
     /**
      * Get the start of the current reset period.
      */
@@ -178,6 +186,7 @@ class DonationRewardTier extends Model
         }
 
         return match ($this->claim_reset_period) {
+            self::RESET_PER_DONATION => null, // No period for per-donation
             self::RESET_DAILY => now()->startOfDay(),
             self::RESET_WEEKLY => now()->startOfWeek(),
             self::RESET_MONTHLY => now()->startOfMonth(),

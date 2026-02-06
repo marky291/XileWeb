@@ -28,8 +28,8 @@ class DonationRewardService
         $perDonationTiers = $this->getApplicableTiersForDonation($amount);
 
         foreach ($perDonationTiers as $tier) {
-            // Skip if already claimed in current period
-            if ($this->hasClaimedTierInCurrentPeriod($user, $tier)) {
+            // Skip if already claimed in current period (pass donation log ID for per-donation check)
+            if ($this->hasClaimedTierInCurrentPeriod($user, $tier, $log->id)) {
                 continue;
             }
 
@@ -41,8 +41,8 @@ class DonationRewardService
         $lifetimeTiers = $this->getQualifyingLifetimeTiers($user);
 
         foreach ($lifetimeTiers as $tier) {
-            // Skip if already claimed in current period
-            if ($this->hasClaimedTierInCurrentPeriod($user, $tier)) {
+            // Skip if already claimed in current period (pass donation log ID for per-donation check)
+            if ($this->hasClaimedTierInCurrentPeriod($user, $tier, $log->id)) {
                 continue;
             }
 
@@ -115,12 +115,23 @@ class DonationRewardService
     /**
      * Check if user has claimed a tier in the current period.
      * For one-time tiers, checks if ever claimed.
+     * For per-donation tiers, checks if claimed for this specific donation.
      * For resetting tiers, checks if claimed since period start.
      */
-    public function hasClaimedTierInCurrentPeriod(User $user, DonationRewardTier $tier): bool
+    public function hasClaimedTierInCurrentPeriod(User $user, DonationRewardTier $tier, ?int $donationLogId = null): bool
     {
         $query = $user->donationRewardClaims()
             ->where('donation_reward_tier_id', $tier->id);
+
+        // For per-donation reset, check if already claimed for this specific donation
+        // This prevents duplicates if applyRewards() is called twice for same donation
+        if ($tier->isPerDonationReset()) {
+            if ($donationLogId === null) {
+                return false;
+            }
+
+            return $query->where('donation_log_id', $donationLogId)->exists();
+        }
 
         // For one-time tiers, any claim means it's been used
         if ($tier->isOneTime()) {
@@ -146,7 +157,14 @@ class DonationRewardService
     public function getApplicableTiersPreview(float $amount, User $user): Collection
     {
         $perDonation = $this->getApplicableTiersForDonation($amount)
-            ->filter(fn ($tier) => ! $this->hasClaimedTierInCurrentPeriod($user, $tier));
+            ->filter(function ($tier) use ($user) {
+                // Per-donation tiers are always available for preview
+                if ($tier->isPerDonationReset()) {
+                    return true;
+                }
+
+                return ! $this->hasClaimedTierInCurrentPeriod($user, $tier);
+            });
 
         $currentTotal = $this->getLifetimeDonationTotal($user);
         $newTotal = $currentTotal + $amount;
@@ -158,7 +176,14 @@ class DonationRewardService
             ->ordered()
             ->with('items')
             ->get()
-            ->filter(fn ($tier) => ! $this->hasClaimedTierInCurrentPeriod($user, $tier));
+            ->filter(function ($tier) use ($user) {
+                // Per-donation tiers are always available for preview
+                if ($tier->isPerDonationReset()) {
+                    return true;
+                }
+
+                return ! $this->hasClaimedTierInCurrentPeriod($user, $tier);
+            });
 
         return $perDonation->merge($lifetime)->values();
     }

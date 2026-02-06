@@ -8,6 +8,9 @@ return [
     |--------------------------------------------------------------------------
     |
     | Configure the donation amounts and their corresponding Uber rewards.
+    | These anchor tiers define key points on the rate curve. The calculator
+    | interpolates between them and extrapolates above the highest tier,
+    | matching XileRetro rates for any donation amount $5-$2000+.
     |
     */
     'tiers' => [
@@ -16,6 +19,11 @@ return [
         ['amount' => 20, 'ubers' => 18],
         ['amount' => 40, 'ubers' => 42],
         ['amount' => 75, 'ubers' => 88],
+        ['amount' => 100, 'ubers' => 129],
+        ['amount' => 200, 'ubers' => 269],
+        ['amount' => 300, 'ubers' => 422],
+        ['amount' => 500, 'ubers' => 733],
+        ['amount' => 1000, 'ubers' => 1525],
     ],
 
     /*
@@ -26,6 +34,7 @@ return [
     | Settings for calculating Ubers for custom donation amounts.
     | The algorithm interpolates between tiers and extrapolates above the
     | highest tier, with higher amounts getting progressively better rates.
+    | Tuned to match XileRetro rates across the full $5-$2000+ range.
     |
     */
     'calculator' => [
@@ -33,17 +42,17 @@ return [
         'minimum_amount' => 5,
 
         // Base rate for amounts below the first tier (Ubers per dollar)
-        'base_rate' => 0.5,
+        'base_rate' => 0.6,
 
         // Growth factor for extrapolating above highest tier (higher = more generous)
-        // This adds extra value as amounts increase beyond $75
-        'extrapolation_growth' => 0.08,
+        // This adds extra value as amounts increase beyond $1000
+        'extrapolation_growth' => 0.025,
 
         // Maximum rate cap (Ubers per dollar) to prevent excessive rewards
-        'max_rate' => 1.8,
+        'max_rate' => 1.584,
 
-        // Round calculated ubers down to nearest integer
-        'round_down' => true,
+        // Round calculated ubers to nearest integer (false) or floor (true)
+        'round_down' => false,
     ],
 
     /*

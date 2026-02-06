@@ -517,6 +517,57 @@ class DonationRewardTierResourceTest extends TestCase
     }
 
     #[Test]
+    public function admin_can_create_tier_with_per_donation_reset(): void
+    {
+        Filament::setCurrentPanel(Filament::getPanel('admin'));
+
+        $admin = User::factory()->admin()->create();
+
+        Livewire::actingAs($admin)
+            ->test(CreateDonationRewardTier::class)
+            ->fillForm([
+                'name' => 'Per Donation Bonus',
+                'minimum_amount' => 10.00,
+                'trigger_type' => DonationRewardTier::TRIGGER_PER_DONATION,
+                'claim_reset_period' => DonationRewardTier::RESET_PER_DONATION,
+                'is_xilero' => true,
+                'is_xileretro' => true,
+                'enabled' => true,
+            ])
+            ->call('create')
+            ->assertHasNoFormErrors();
+
+        $this->assertDatabaseHas('donation_reward_tiers', [
+            'name' => 'Per Donation Bonus',
+            'claim_reset_period' => 'per_donation',
+        ]);
+    }
+
+    #[Test]
+    public function admin_can_update_tier_to_per_donation_reset(): void
+    {
+        Filament::setCurrentPanel(Filament::getPanel('admin'));
+
+        $admin = User::factory()->admin()->create();
+        $tier = DonationRewardTier::factory()->create([
+            'claim_reset_period' => DonationRewardTier::RESET_DAILY,
+        ]);
+
+        Livewire::actingAs($admin)
+            ->test(EditDonationRewardTier::class, ['record' => $tier->id])
+            ->fillForm([
+                'claim_reset_period' => DonationRewardTier::RESET_PER_DONATION,
+            ])
+            ->call('save')
+            ->assertHasNoFormErrors();
+
+        $this->assertDatabaseHas('donation_reward_tiers', [
+            'id' => $tier->id,
+            'claim_reset_period' => 'per_donation',
+        ]);
+    }
+
+    #[Test]
     public function table_can_search_tiers_by_name(): void
     {
         Filament::setCurrentPanel(Filament::getPanel('admin'));
