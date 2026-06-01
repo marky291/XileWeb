@@ -2,7 +2,8 @@
 
 The app runs on a single self-managed server (`forge@xilero.net`,
 `root@100.118.64.49`): Ubuntu 22.04, nginx, PHP 8.4-FPM, MySQL, and Horizon
-under supervisor. Laravel Forge is no longer used to deploy or manage SSL.
+under supervisor. Laravel Forge is no longer used to deploy. SSL is handled by
+Cloudflare (see the SSL section).
 
 ## Deploying
 
@@ -28,44 +29,36 @@ vendor/bin/envoy run deploy
 
 Dry-run without connecting: `vendor/bin/envoy run deploy --pretend`.
 
-## SSL — migrate from Forge to certbot (DO THIS BEFORE CANCELLING FORGE)
+## SSL — handled by Cloudflare
 
-SSL certs currently renew via Forge's microservice
-(`/home/forge/.letsencrypt-renew/*` cron calling
-`https://forge-certificates.laravel.com/le/...`). Cancelling Forge stops
-renewal and HTTPS breaks within ~90 days. Replace it with certbot:
+**Decision:** SSL is handled by Cloudflare; we do not run certbot or manage
+Let's Encrypt renewal on the origin. Forge's renewal cron in
+`/home/forge/.letsencrypt-renew/*` (which calls
+`https://forge-certificates.laravel.com/le/...`) becomes inert once Forge is
+cancelled, and that is acceptable for the **proxied** apex.
 
-1. Install certbot:
-   ```bash
-   ssh root@100.118.64.49 'apt-get update && apt-get install -y certbot python3-certbot-nginx'
-   ```
-2. Issue certs (webroot avoids editing nginx mid-flight; webroot is
-   `/home/forge/xilero.net/public`):
-   ```bash
-   ssh root@100.118.64.49 'certbot certonly --webroot -w /home/forge/xilero.net/public -d xilero.net -d www.xilero.net'
-   ```
-   Certs land in `/etc/letsencrypt/live/xilero.net/`.
-3. Repoint nginx. In `/etc/nginx/sites-available/xilero.net` (and the www
-   redirect server block), change:
-   ```
-   ssl_certificate     /etc/nginx/ssl/xilero.net/3038984/server.crt;
-   ssl_certificate_key /etc/nginx/ssl/xilero.net/3038984/server.key;
-   ```
-   to:
-   ```
-   ssl_certificate     /etc/letsencrypt/live/xilero.net/fullchain.pem;
-   ssl_certificate_key /etc/letsencrypt/live/xilero.net/privkey.pem;
-   ```
-   Then: `nginx -t && systemctl reload nginx`.
-4. Confirm the renewal timer is active and dry-run renewal:
-   ```bash
-   ssh root@100.118.64.49 'systemctl status certbot.timer --no-pager; certbot renew --dry-run'
-   ```
-   Expected: timer `active`; dry-run reports success for `xilero.net`.
-5. Remove Forge's renewal cron once certbot renewal is verified:
-   ```bash
-   ssh root@100.118.64.49 'crontab -u forge -l | grep -v letsencrypt-renew | crontab -u forge -'
-   ```
+DNS layout (verified 2026-06-01):
+
+- `xilero.net` (apex) → **proxied through Cloudflare** (resolves to `2606:4700::`
+  Cloudflare IPs). Browsers get Cloudflare's edge cert; TLS terminates at
+  Cloudflare, so the origin cert expiring does not break the apex.
+- `www.xilero.net` → **direct to origin** (`52.76.254.40`, not proxied).
+  Browsers hitting `www` get the **origin's** Let's Encrypt cert directly.
+
+> ⚠️ **Residual risk on `www`.** The origin Let's Encrypt cert
+> (`/etc/nginx/ssl/xilero.net/3038984/`, covers `xilero.net` + `www.xilero.net`)
+> currently expires **2026-06-21** and is renewed only by Forge. Once Forge is
+> cancelled, nothing renews it, so **`https://www.xilero.net` will fail** when
+> it expires, even though the proxied apex keeps working. To remove this risk
+> without depending on Forge or certbot, do one of:
+>
+> 1. **Proxy `www` through Cloudflare too** (orange-cloud the `www` DNS record),
+>    so Cloudflare terminates TLS for it as well. Simplest.
+> 2. **Install a Cloudflare Origin CA certificate** on nginx (valid 15 years, no
+>    renewal) and set the zone SSL mode to Full (strict).
+>
+> Both leave Let's Encrypt/certbot out entirely. Until one is done, treat the
+> 2026-06-21 expiry as a hard deadline for `www`.
 
 ## Horizon (queue worker)
 
@@ -95,17 +88,24 @@ If scheduled tasks are added later, install:
 
 ## nginx
 
-The live config is `/etc/nginx/sites-available/xilero.net` (symlinked from
-`sites-enabled`). It includes `forge-conf/xilero.net/*` files, which remain as
-static files on disk and keep working after Forge is removed. A reference copy
-lives in `forge/nginx.conf` in this repo. Always run `nginx -t` before reload.
+The live config is `/etc/nginx/sites-enabled/xilero.net` — note this is a
+**regular file, not a symlink**, and it diverges from
+`/etc/nginx/sites-available/xilero.net` (the enabled file has the current
+HTTP/patch + ACME-challenge layout). Edit the **enabled** file. It includes
+`forge-conf/xilero.net/*` files, which remain as static files on disk and keep
+working after Forge is removed. A reference copy of an older revision lives in
+`forge/nginx.conf` in this repo. Always run `nginx -t` before reload.
+
+The HTTP server block already serves ACME challenges via
+`location /.well-known/acme-challenge { alias /home/forge/.letsencrypt; }` — left
+in place in case Cloudflare/origin cert handling changes later.
 
 ## Decommission Forge — ordered checklist
 
 1. [ ] `vendor/bin/envoy run deploy` works end-to-end.
-2. [ ] certbot issues certs and `certbot renew --dry-run` succeeds (SSL section).
-3. [ ] nginx points at `/etc/letsencrypt/live/...` and serves HTTPS.
-4. [ ] Forge `.letsencrypt-renew` cron removed.
-5. [ ] forge `horizon:terminate` cron uses `php8.4`.
-6. [ ] Horizon supervisor daemon confirmed running (`supervisorctl status`).
-7. [ ] Only now: cancel the Forge subscription / remove the server from Forge.
+2. [x] forge `horizon:terminate` cron uses `php8.4` (fixed 2026-06-01).
+3. [ ] SSL decision understood: apex is Cloudflare-proxied (safe); resolve the
+       `www` origin-cert risk (proxy `www` or install a Cloudflare Origin CA cert
+       on nginx) — see the SSL section. Hard deadline: cert expiry 2026-06-21.
+4. [ ] Horizon supervisor daemon confirmed running (`supervisorctl status`).
+5. [ ] Only now: cancel the Forge subscription / remove the server from Forge.
