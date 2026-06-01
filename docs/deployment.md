@@ -14,18 +14,12 @@ vendor/bin/envoy run deploy
 ```
 
 This runs `Envoy.blade.php`'s `deploy` story: `git pull` → `composer install`
-→ reload PHP-FPM → `migrate --force` → `horizon:terminate` → `optimize`.
+→ `npm ci && npm run build` → reload PHP-FPM → `migrate --force` →
+`horizon:terminate` → `optimize`.
 
-**Front-end assets are committed to git** (`public/build/`). When you change
-assets, build and commit them locally *before* deploying:
-
-```bash
-npm run build
-git add public/build
-git commit -m "Rebuild assets"
-git push
-vendor/bin/envoy run deploy
-```
+**Front-end assets are built on the server during deploy** (`npm ci` +
+`npm run build`), so you do not need to build or commit `public/build/` locally.
+`package-lock.json` is committed, which is what makes `npm ci` reproducible.
 
 Dry-run without connecting: `vendor/bin/envoy run deploy --pretend`.
 

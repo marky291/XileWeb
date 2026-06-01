@@ -59,6 +59,11 @@ This project has domain-specific skills available. You MUST activate the relevan
 
 - Be concise in your explanations - focus on what's important rather than explaining obvious details.
 
+## Deployment
+
+- Deploys are manual via Laravel Envoy: `vendor/bin/envoy run deploy` (see `docs/deployment.md`). Laravel Forge is being decommissioned — do not assume Forge.
+- The deploy builds front-end assets on the server (`npm ci && npm run build`); `package-lock.json` is committed, so `npm ci` is required (not `npm install`).
+
 === boost rules ===
 
 # Laravel Boost

@@ -8,6 +8,7 @@
 @story('deploy')
     update-code
     install-dependencies
+    build-assets
     reload-fpm
     migrate
     restart-horizon
@@ -22,6 +23,12 @@
 @task('install-dependencies', ['on' => 'web'])
     cd {{ $repository }}
     composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
+@endtask
+
+@task('build-assets', ['on' => 'web'])
+    cd {{ $repository }}
+    npm ci
+    npm run build
 @endtask
 
 @task('reload-fpm', ['on' => 'web'])
