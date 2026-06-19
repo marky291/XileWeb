@@ -75,19 +75,35 @@ class PatchResource extends Resource
                                     ->default(Patch::CLIENT_XILERO)
                                     ->helperText('Select which client this patch is for')
                                     ->live()
-                                    ->afterStateUpdated(function ($state, $set) {
+                                    ->afterStateUpdated(function ($state, Get $get, $set) {
                                         $client = $state ?: Patch::CLIENT_XILERO;
-                                        $maxNumber = Patch::where('client', $client)->max('number');
-                                        $nextNumber = $maxNumber ? $maxNumber + 1 : 1;
-                                        $set('number', $nextNumber);
+                                        $patcher = $get('patcher') ?: Patch::PATCHER_RPATCHUR;
+                                        $maxNumber = Patch::where('client', $client)->where('patcher', $patcher)->max('number');
+                                        $set('number', $maxNumber ? $maxNumber + 1 : 1);
                                     })
                                     ->required(),
                             ]),
+                        Select::make('patcher')
+                            ->label('Patcher')
+                            ->options(Patch::PATCHERS)
+                            ->native(false)
+                            ->selectablePlaceholder(false)
+                            ->default(Patch::PATCHER_RPATCHUR)
+                            ->helperText('rpatchur serves .thor/.grf to the new launcher; Legacy serves .gpf to the old Thor patcher')
+                            ->live()
+                            ->afterStateUpdated(function ($state, Get $get, $set) {
+                                $client = $get('client') ?: Patch::CLIENT_XILERO;
+                                $patcher = $state ?: Patch::PATCHER_RPATCHUR;
+                                $maxNumber = Patch::where('client', $client)->where('patcher', $patcher)->max('number');
+                                $set('number', $maxNumber ? $maxNumber + 1 : 1);
+                            })
+                            ->required(),
                         TextInput::make('number')
                             ->label('Patch Number')
                             ->default(function (Get $get) {
                                 $client = $get('client') ?: Patch::CLIENT_XILERO;
-                                $maxNumber = Patch::where('client', $client)->max('number');
+                                $patcher = $get('patcher') ?: Patch::PATCHER_RPATCHUR;
+                                $maxNumber = Patch::where('client', $client)->where('patcher', $patcher)->max('number');
 
                                 return $maxNumber ? $maxNumber + 1 : 1;
                             })
@@ -98,25 +114,19 @@ class PatchResource extends Resource
                     ]),
 
                 Section::make('Upload Patch File')
-                    ->description('Select the .gpf patch file to upload')
+                    ->description('rpatchur: upload a .thor (or .grf) built with mkpatch. Legacy: upload a .gpf.')
                     ->icon('heroicon-o-arrow-up-tray')
                     ->schema([
                         FileUpload::make('file')
                             ->label('Patch File')
                             ->required(fn (string $context): bool => $context === 'create')
-                            ->disk(function (Get $get): string {
-                                $client = $get('client') ?? 'xilero';
-
-                                return match ($client) {
-                                    'retro' => 'retro_patch',
-                                    'xilero' => 'xilero_patch',
-                                    default => 'xilero_patch'
-                                };
-                            })
+                            ->disk(fn (Get $get): string => self::diskFor($get('client'), $get('patcher')))
                             ->directory('')
                             ->maxSize(102400)
                             ->downloadable()
-                            ->helperText('Upload a .gpf patch file (max 100MB)')
+                            ->helperText(fn (Get $get): string => $get('patcher') === Patch::PATCHER_LEGACY
+                                ? 'Upload a .gpf patch file (max 100MB)'
+                                : 'Upload a .thor or .grf patch file built with mkpatch (max 100MB)')
                             ->preserveFilenames()
                             ->storeFileNamesIn('patch_name'),
 
@@ -359,15 +369,8 @@ class PatchResource extends Resource
                         if (! $record->file) {
                             return '#';
                         }
-                        $client = $record->client ?? 'xilero';
-                        $disk = match ($client) {
-                            'retro' => 'retro_patch',
-                            'xilero' => 'xilero_patch',
-                            default => 'xilero_patch'
-                        };
 
-                        // Use Storage facade to get the proper URL
-                        return Storage::disk($disk)->url($record->file);
+                        return Storage::disk($record->diskName())->url($record->file);
                     })
                     ->openUrlInNewTab()
                     ->visible(fn (Patch $record): bool => ! empty($record->file)),
@@ -404,5 +407,20 @@ class PatchResource extends Resource
             'create' => CreatePatch::route('/create'),
             'edit' => EditPatch::route('/{record}/edit'),
         ];
+    }
+
+    /**
+     * Resolve the storage disk for a patch's client + patcher combination.
+     */
+    public static function diskFor(?string $client, ?string $patcher): string
+    {
+        $client ??= Patch::CLIENT_XILERO;
+        $patcher ??= Patch::PATCHER_RPATCHUR;
+
+        if ($patcher === Patch::PATCHER_RPATCHUR) {
+            return $client === Patch::CLIENT_RETRO ? 'retro_rpatchur' : 'xilero_rpatchur';
+        }
+
+        return $client === Patch::CLIENT_RETRO ? 'retro_patch' : 'xilero_patch';
     }
 }

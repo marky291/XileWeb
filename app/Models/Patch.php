@@ -20,10 +20,20 @@ class Patch extends Model
         self::CLIENT_XILERO => 'XileRO',
     ];
 
+    const PATCHER_LEGACY = 'legacy';
+
+    const PATCHER_RPATCHUR = 'rpatchur';
+
+    const PATCHERS = [
+        self::PATCHER_LEGACY => 'Legacy (Thor / .gpf)',
+        self::PATCHER_RPATCHUR => 'rpatchur (.thor / .grf)',
+    ];
+
     protected $fillable = [
         'number',
         'type',
         'client',
+        'patcher',
         'patch_name',
         'file',
         'comments',
@@ -31,6 +41,18 @@ class Patch extends Model
         'is_compiling',
         'compiled_at',
     ];
+
+    /**
+     * Storage disk that holds this patch's uploaded file.
+     */
+    public function diskName(): string
+    {
+        if ($this->patcher === self::PATCHER_RPATCHUR) {
+            return $this->client === self::CLIENT_RETRO ? 'retro_rpatchur' : 'xilero_rpatchur';
+        }
+
+        return $this->client === self::CLIENT_RETRO ? 'retro_patch' : 'xilero_patch';
+    }
 
     protected function casts(): array
     {

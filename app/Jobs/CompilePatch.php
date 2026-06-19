@@ -36,7 +36,7 @@ class CompilePatch implements ShouldQueue
         ItemInfoParser $itemInfoParser,
         GrfImageExtractor $imageExtractor
     ): void {
-        $disk = $this->getDiskForClient($this->patch->client);
+        $disk = $this->patch->diskName();
         $filePath = $this->patch->file;
 
         if (! $filePath || ! Storage::disk($disk)->exists($filePath)) {
