@@ -12,6 +12,7 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Select;
@@ -54,8 +55,28 @@ class PatchResource extends Resource
                     ->description('Configure the basic settings for your patch')
                     ->icon('heroicon-o-information-circle')
                     ->schema([
+                        // Patcher is derived from the client (XileRO => rpatchur, XileRetro => legacy),
+                        // so it is carried as hidden state rather than shown as a redundant field.
+                        Hidden::make('patcher')
+                            ->default(Patch::PATCHER_RPATCHUR),
                         Grid::make(2)
                             ->schema([
+                                Select::make('client')
+                                    ->label('Client')
+                                    ->options(Patch::CLIENTS)
+                                    ->native(false)
+                                    ->selectablePlaceholder(false)
+                                    ->default(Patch::CLIENT_XILERO)
+                                    ->helperText('XileRO uses rpatchur, XileRetro uses neoncube (legacy)')
+                                    ->live()
+                                    ->afterStateUpdated(function ($state, Get $get, $set) {
+                                        $client = $state ?: Patch::CLIENT_XILERO;
+                                        $patcher = Patch::patcherForClient($client);
+                                        $set('patcher', $patcher);
+                                        $maxNumber = Patch::where('client', $client)->where('patcher', $patcher)->max('number');
+                                        $set('number', $maxNumber ? $maxNumber + 1 : 1);
+                                    })
+                                    ->required(),
                                 Select::make('type')
                                     ->label('Patch Type')
                                     ->options([
@@ -67,27 +88,13 @@ class PatchResource extends Resource
                                     ->default('FLD')
                                     ->helperText('FLD patches to the Root folder, GRF patches to the GRF file')
                                     ->required(),
-                                Select::make('client')
-                                    ->label('Client')
-                                    ->options(Patch::CLIENTS)
-                                    ->native(false)
-                                    ->selectablePlaceholder(false)
-                                    ->default(Patch::CLIENT_XILERO)
-                                    ->helperText('Select which client this patch is for')
-                                    ->live()
-                                    ->afterStateUpdated(function ($state, $set) {
-                                        $client = $state ?: Patch::CLIENT_XILERO;
-                                        $maxNumber = Patch::where('client', $client)->max('number');
-                                        $nextNumber = $maxNumber ? $maxNumber + 1 : 1;
-                                        $set('number', $nextNumber);
-                                    })
-                                    ->required(),
                             ]),
                         TextInput::make('number')
                             ->label('Patch Number')
                             ->default(function (Get $get) {
                                 $client = $get('client') ?: Patch::CLIENT_XILERO;
-                                $maxNumber = Patch::where('client', $client)->max('number');
+                                $patcher = Patch::patcherForClient($client);
+                                $maxNumber = Patch::where('client', $client)->where('patcher', $patcher)->max('number');
 
                                 return $maxNumber ? $maxNumber + 1 : 1;
                             })
@@ -98,25 +105,24 @@ class PatchResource extends Resource
                     ]),
 
                 Section::make('Upload Patch File')
-                    ->description('Select the .gpf patch file to upload')
+                    ->description('rpatchur: upload a .thor (or .grf) built with mkpatch. Legacy: upload a .gpf.')
                     ->icon('heroicon-o-arrow-up-tray')
                     ->schema([
                         FileUpload::make('file')
                             ->label('Patch File')
                             ->required(fn (string $context): bool => $context === 'create')
-                            ->disk(function (Get $get): string {
-                                $client = $get('client') ?? 'xilero';
-
-                                return match ($client) {
-                                    'retro' => 'retro_patch',
-                                    'xilero' => 'xilero_patch',
-                                    default => 'xilero_patch'
-                                };
-                            })
+                            ->disk(fn (Get $get): string => self::diskFor($get('client'), $get('patcher')))
                             ->directory('')
+                            ->rules(fn (Get $get): array => [
+                                $get('patcher') === Patch::PATCHER_LEGACY
+                                    ? 'extensions:gpf'
+                                    : 'extensions:thor,grf',
+                            ])
                             ->maxSize(102400)
                             ->downloadable()
-                            ->helperText('Upload a .gpf patch file (max 100MB)')
+                            ->helperText(fn (Get $get): string => $get('patcher') === Patch::PATCHER_LEGACY
+                                ? 'Upload a .gpf patch file (max 100MB)'
+                                : 'Upload a .thor or .grf patch file built with mkpatch (max 100MB)')
                             ->preserveFilenames()
                             ->storeFileNamesIn('patch_name'),
 
@@ -152,7 +158,8 @@ class PatchResource extends Resource
                                     ->label('Post Title')
                                     ->placeholder(function (Get $get) {
                                         $client = $get('client') ?: Patch::CLIENT_XILERO;
-                                        $maxNumber = Patch::where('client', $client)->max('number');
+                                        $patcher = $get('patcher') ?: Patch::PATCHER_LEGACY;
+                                        $maxNumber = Patch::where('client', $client)->where('patcher', $patcher)->max('number');
                                         $next_number = $maxNumber ? $maxNumber + 1 : 1;
 
                                         return 'e.g., Patch #'.$next_number.' - Halloween Update';
@@ -200,7 +207,8 @@ class PatchResource extends Resource
                             ->label('')
                             ->content(function (Get $get) {
                                 $client = $get('client') ?: Patch::CLIENT_XILERO;
-                                $recent_patches = Patch::where('client', $client)->latest('number')->take(5)->get();
+                                $patcher = $get('patcher') ?: Patch::PATCHER_LEGACY;
+                                $recent_patches = Patch::where('client', $client)->where('patcher', $patcher)->latest('number')->take(5)->get();
 
                                 if ($recent_patches->isEmpty()) {
                                     return new HtmlString('<p class="text-sm text-gray-500">No patches found for '.($client === 'retro' ? 'Retro' : 'XileRO').'</p>');
@@ -359,15 +367,8 @@ class PatchResource extends Resource
                         if (! $record->file) {
                             return '#';
                         }
-                        $client = $record->client ?? 'xilero';
-                        $disk = match ($client) {
-                            'retro' => 'retro_patch',
-                            'xilero' => 'xilero_patch',
-                            default => 'xilero_patch'
-                        };
 
-                        // Use Storage facade to get the proper URL
-                        return Storage::disk($disk)->url($record->file);
+                        return Storage::disk($record->diskName())->url($record->file);
                     })
                     ->openUrlInNewTab()
                     ->visible(fn (Patch $record): bool => ! empty($record->file)),
@@ -404,5 +405,20 @@ class PatchResource extends Resource
             'create' => CreatePatch::route('/create'),
             'edit' => EditPatch::route('/{record}/edit'),
         ];
+    }
+
+    /**
+     * Resolve the storage disk for a patch's client + patcher combination.
+     */
+    public static function diskFor(?string $client, ?string $patcher): string
+    {
+        $client ??= Patch::CLIENT_XILERO;
+        $patcher ??= Patch::PATCHER_RPATCHUR;
+
+        if ($patcher === Patch::PATCHER_RPATCHUR) {
+            return 'xilero_rpatchur';
+        }
+
+        return $client === Patch::CLIENT_RETRO ? 'retro_patch' : 'xilero_patch';
     }
 }

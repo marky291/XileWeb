@@ -64,6 +64,16 @@ return [
             'throw' => false,
         ],
 
+        // THOR/GRF patches served to the modern rpatchur launcher (xilero client).
+        // Kept separate from the legacy .gpf `xilero_patch` disk.
+        'xilero_rpatchur' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/xilero/rpatchur'),
+            'url' => env('APP_URL').'/storage/xilero/rpatchur',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
         'retro_patch' => [
             'driver' => 'local',
             'root' => storage_path('app/public/retro/patch'),
@@ -96,6 +106,7 @@ return [
     'links' => [
         public_path('storage') => storage_path('app/public'),
         public_path('xilero/patch') => storage_path('app/public/xilero/patch'),
+        public_path('xilero/rpatchur') => storage_path('app/public/xilero/rpatchur'),
         public_path('retro/patch') => storage_path('app/public/retro/patch'),
         public_path('storage/android/apk') => storage_path('app/public/android/apk'),
     ],

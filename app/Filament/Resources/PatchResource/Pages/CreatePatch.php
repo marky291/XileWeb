@@ -16,9 +16,13 @@ class CreatePatch extends CreateRecord
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
-        // Calculate the correct patch number for the selected client
+        // Patcher is derived from the client (XileRO => rpatchur, XileRetro => legacy).
         $client = $data['client'];
-        $maxNumber = Patch::where('client', $client)->max('number');
+        $patcher = Patch::patcherForClient($client);
+        $data['patcher'] = $patcher;
+
+        // Calculate the correct patch number for this client + patcher.
+        $maxNumber = Patch::where('client', $client)->where('patcher', $patcher)->max('number');
         $data['number'] = $maxNumber ? $maxNumber + 1 : 1;
 
         // Mark as compiling immediately since we'll auto-compile

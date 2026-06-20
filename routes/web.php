@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\DiscordController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\WikiController;
 use App\Models\Patch;
+use App\Models\Post;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -61,8 +62,23 @@ Route::view('/forums', 'forums');
 
 Route::resource('posts', PostController::class)->only(['index', 'show']);
 
-Route::view('retro/rpatchur', 'rpatchur');
-Route::view('xilero/rpatchur', 'rpatchur');
+// The rpatchur webview is Internet Explorer (MSHTML) on Windows, which cannot
+// parse Debugbar's injected jQuery/PhpDebugBar scripts (causes IE "Syntax error"
+// / "jQuery is undefined" dialogs). Disable Debugbar for the patcher page.
+// XileRetro uses neoncube (legacy patcher) and has no rpatchur route.
+Route::get('xilero/rpatchur', function () {
+    if (app()->bound('debugbar')) {
+        app('debugbar')->disable();
+    }
+
+    $posts = Post::query()
+        ->where('client', Post::CLIENT_XILERO)
+        ->latest()
+        ->take(5)
+        ->get();
+
+    return view('rpatchur', compact('posts'));
+});
 
 Route::get('retro/patch/notice', function () {
     $rawPosts = DB::table('posts')
@@ -100,7 +116,7 @@ Route::get('xilero/patch/notice', function () {
 });
 
 Route::get('retro/patch/list', function () {
-    $patches = Patch::where('client', 'retro')->orderBy('number')->get();
+    $patches = Patch::where('client', 'retro')->where('patcher', Patch::PATCHER_LEGACY)->orderBy('number')->get();
 
     $formattedPatches = array_map(function ($patch) {
         $base = sprintf(
@@ -133,7 +149,7 @@ Route::get('retro/patch/list', function () {
 });
 
 Route::get('xilero/patch/list', function () {
-    $patches = Patch::where('client', 'xilero')->orderBy('number')->get();
+    $patches = Patch::where('client', 'xilero')->where('patcher', Patch::PATCHER_LEGACY)->orderBy('number')->get();
 
     $formattedPatches = array_map(function ($patch) {
         $base = sprintf(
@@ -160,6 +176,40 @@ Route::get('xilero/patch/list', function () {
         ->header('Content-Type', 'text/plain; charset=UTF-8')
         ->header('Content-Disposition', 'inline; filename="patchlist.txt"')
         ->header('Content-Length', strlen($content))
+        ->header('Cache-Control', 'no-cache, must-revalidate')
+        ->header('Last-Modified', $lastModified->toRfc7231String())
+        ->header('X-Content-Type-Options', 'nosniff');
+});
+
+// rpatchur patch list (XileRO client). rpatchur parses each line as
+// "<index> <filename>" (it reads words[0]=index, words[1]=file), so we emit
+// exactly that — NO type token — and rely on the .thor file itself to carry the
+// GRF-merge target. Trailing " // comment" is ignored by rpatchur. Only patches
+// flagged patcher='rpatchur' are listed (legacy .gpf entries are excluded).
+Route::get('xilero/rpatchur/list', function () {
+    $patches = Patch::query()
+        ->where('client', Patch::CLIENT_XILERO)
+        ->where('patcher', Patch::PATCHER_RPATCHUR)
+        ->orderBy('number')
+        ->get();
+
+    $lines = $patches->map(function (Patch $patch): string {
+        $line = sprintf('%03d %s', $patch->number, $patch->patch_name);
+
+        if (! empty($patch->comments)) {
+            $line .= ' // '.$patch->comments;
+        }
+
+        return $line;
+    });
+
+    $content = $lines->implode("\r\n");
+    $lastModified = $patches->max('updated_at') ?: now();
+
+    return response($content, 200)
+        ->header('Content-Type', 'text/plain; charset=UTF-8')
+        ->header('Content-Disposition', 'inline; filename="plist.txt"')
+        ->header('Content-Length', (string) strlen($content))
         ->header('Cache-Control', 'no-cache, must-revalidate')
         ->header('Last-Modified', $lastModified->toRfc7231String())
         ->header('X-Content-Type-Options', 'nosniff');

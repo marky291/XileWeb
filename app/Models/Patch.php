@@ -20,10 +20,20 @@ class Patch extends Model
         self::CLIENT_XILERO => 'XileRO',
     ];
 
+    const PATCHER_LEGACY = 'legacy';
+
+    const PATCHER_RPATCHUR = 'rpatchur';
+
+    const PATCHERS = [
+        self::PATCHER_LEGACY => 'Legacy (Thor / .gpf)',
+        self::PATCHER_RPATCHUR => 'rpatchur (.thor / .grf)',
+    ];
+
     protected $fillable = [
         'number',
         'type',
         'client',
+        'patcher',
         'patch_name',
         'file',
         'comments',
@@ -31,6 +41,26 @@ class Patch extends Model
         'is_compiling',
         'compiled_at',
     ];
+
+    /**
+     * The patcher a client serves with: XileRO uses rpatchur, XileRetro uses neoncube (legacy).
+     */
+    public static function patcherForClient(string $client): string
+    {
+        return $client === self::CLIENT_RETRO ? self::PATCHER_LEGACY : self::PATCHER_RPATCHUR;
+    }
+
+    /**
+     * Storage disk that holds this patch's uploaded file.
+     */
+    public function diskName(): string
+    {
+        if ($this->patcher === self::PATCHER_RPATCHUR) {
+            return 'xilero_rpatchur';
+        }
+
+        return $this->client === self::CLIENT_RETRO ? 'retro_patch' : 'xilero_patch';
+    }
 
     protected function casts(): array
     {

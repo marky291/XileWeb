@@ -36,7 +36,7 @@ class CompilePatch implements ShouldQueue
         ItemInfoParser $itemInfoParser,
         GrfImageExtractor $imageExtractor
     ): void {
-        $disk = $this->getDiskForClient($this->patch->client);
+        $disk = $this->patch->diskName();
         $filePath = $this->patch->file;
 
         if (! $filePath || ! Storage::disk($disk)->exists($filePath)) {
@@ -148,17 +148,5 @@ class CompilePatch implements ShouldQueue
                 Log::warning("  - {$error}");
             }
         }
-    }
-
-    /**
-     * Get the storage disk name for the given client.
-     */
-    private function getDiskForClient(string $client): string
-    {
-        return match ($client) {
-            Patch::CLIENT_RETRO => 'retro_patch',
-            Patch::CLIENT_XILERO => 'xilero_patch',
-            default => 'xilero_patch',
-        };
     }
 }
