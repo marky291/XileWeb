@@ -56,18 +56,6 @@ class PatchResource extends Resource
                     ->schema([
                         Grid::make(2)
                             ->schema([
-                                Select::make('type')
-                                    ->label('Patch Type')
-                                    ->options([
-                                        'FLD' => 'FLD - Root Folder Patch',
-                                        'GRF' => 'GRF - GRF File Patch',
-                                    ])
-                                    ->native(false)
-                                    ->selectablePlaceholder(false)
-                                    ->default('FLD')
-                                    ->helperText('FLD patches to the Root folder, GRF patches to the GRF file')
-                                    ->required()
-                                    ->visible(fn (Get $get): bool => $get('patcher') !== Patch::PATCHER_RPATCHUR),
                                 Select::make('client')
                                     ->label('Client')
                                     ->options(Patch::CLIENTS)
@@ -87,26 +75,38 @@ class PatchResource extends Resource
                                         $set('number', $maxNumber ? $maxNumber + 1 : 1);
                                     })
                                     ->required(),
+                                Select::make('patcher')
+                                    ->label('Patcher')
+                                    ->options(fn (Get $get): array => $get('client') === Patch::CLIENT_RETRO
+                                        ? [Patch::PATCHER_LEGACY => Patch::PATCHERS[Patch::PATCHER_LEGACY]]
+                                        : Patch::PATCHERS)
+                                    ->disabled(fn (Get $get): bool => $get('client') === Patch::CLIENT_RETRO)
+                                    ->dehydrated()
+                                    ->native(false)
+                                    ->selectablePlaceholder(false)
+                                    ->default(Patch::PATCHER_RPATCHUR)
+                                    ->helperText('rpatchur serves .thor/.grf to the new launcher; Legacy serves .gpf to the old Thor patcher')
+                                    ->live()
+                                    ->afterStateUpdated(function ($state, Get $get, $set) {
+                                        $client = $get('client') ?: Patch::CLIENT_XILERO;
+                                        $patcher = $state ?: Patch::PATCHER_RPATCHUR;
+                                        $maxNumber = Patch::where('client', $client)->where('patcher', $patcher)->max('number');
+                                        $set('number', $maxNumber ? $maxNumber + 1 : 1);
+                                    })
+                                    ->required(),
                             ]),
-                        Select::make('patcher')
-                            ->label('Patcher')
-                            ->options(fn (Get $get): array => $get('client') === Patch::CLIENT_RETRO
-                                ? [Patch::PATCHER_LEGACY => Patch::PATCHERS[Patch::PATCHER_LEGACY]]
-                                : Patch::PATCHERS)
-                            ->disabled(fn (Get $get): bool => $get('client') === Patch::CLIENT_RETRO)
-                            ->dehydrated()
+                        Select::make('type')
+                            ->label('Patch Type')
+                            ->options([
+                                'FLD' => 'FLD - Root Folder Patch',
+                                'GRF' => 'GRF - GRF File Patch',
+                            ])
                             ->native(false)
                             ->selectablePlaceholder(false)
-                            ->default(Patch::PATCHER_RPATCHUR)
-                            ->helperText('rpatchur serves .thor/.grf to the new launcher; Legacy serves .gpf to the old Thor patcher')
-                            ->live()
-                            ->afterStateUpdated(function ($state, Get $get, $set) {
-                                $client = $get('client') ?: Patch::CLIENT_XILERO;
-                                $patcher = $state ?: Patch::PATCHER_RPATCHUR;
-                                $maxNumber = Patch::where('client', $client)->where('patcher', $patcher)->max('number');
-                                $set('number', $maxNumber ? $maxNumber + 1 : 1);
-                            })
-                            ->required(),
+                            ->default('FLD')
+                            ->helperText('FLD patches to the Root folder, GRF patches to the GRF file')
+                            ->required()
+                            ->visible(fn (Get $get): bool => $get('patcher') !== Patch::PATCHER_RPATCHUR),
                         TextInput::make('number')
                             ->label('Patch Number')
                             ->default(function (Get $get) {
