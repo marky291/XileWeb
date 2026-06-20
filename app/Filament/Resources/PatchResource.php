@@ -418,7 +418,7 @@ class PatchResource extends Resource
         $patcher ??= Patch::PATCHER_RPATCHUR;
 
         if ($patcher === Patch::PATCHER_RPATCHUR) {
-            return $client === Patch::CLIENT_RETRO ? 'retro_rpatchur' : 'xilero_rpatchur';
+            return 'xilero_rpatchur';
         }
 
         return $client === Patch::CLIENT_RETRO ? 'retro_patch' : 'xilero_patch';

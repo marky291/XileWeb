@@ -166,27 +166,21 @@
                 <div class="feed-sub">News, patches &amp; announcements</div>
             </div>
             <div class="xr-feed">
-                @php
-                    $news = $news ?? [
-                        ['tag' => 'pinned', 'label' => 'PINNED', 'date' => 'Always',
-                         'title' => 'Always run your Patcher! ♥',
-                         'body'  => 'Keep the launcher open until patching finishes — it pulls the latest client files so you never fall behind on events.'],
-                        ['tag' => 'update', 'label' => 'UPDATE', 'date' => '4 weeks ago',
-                         'title' => 'New Systems, New Content & Major Changes Ahead',
-                         'body'  => 'We’re testing a few more things and making final adjustments — expect a big content drop for XileRetro very soon.'],
-                        ['tag' => 'event', 'label' => 'EVENT', 'date' => 'April 2026',
-                         'title' => 'Cherry Blossom Bloom',
-                         'body'  => 'Spring has arrived in Rune-Midgard with seasonal quests, blossom drops and limited-time gear.'],
-                    ];
-                @endphp
-                @foreach ($news as $i => $post)
-                    <div class="post {{ $i === 0 ? 'sel' : '' }}" onclick="selectPost(this)">
-                        <span class="tag {{ $post['tag'] }}">{{ $post['label'] }}</span>
-                        <span class="date">{{ $post['date'] }}</span>
-                        <div class="title">{{ $post['title'] }}</div>
-                        <div class="body">{{ $post['body'] }}</div>
+                @forelse ($posts as $post)
+                    <div class="post {{ $loop->first ? ‘sel’ : ‘’ }}" onclick="selectPost(this)">
+                        <span class="tag update">UPDATE</span>
+                        <span class="date">{{ $post->created_at->format(‘M j, Y’) }}</span>
+                        <div class="title">{{ $post->title }}</div>
+                        <div class="body">{{ Str::limit($post->patcher_notice ?: strip_tags($post->article_content), 120) }}</div>
                     </div>
-                @endforeach
+                @empty
+                    <div class="post sel">
+                        <span class="tag update">UPDATE</span>
+                        <span class="date">Always</span>
+                        <div class="title">Always run your Patcher!</div>
+                        <div class="body">Keep the launcher open until patching finishes — it pulls the latest client files so you never fall behind on events.</div>
+                    </div>
+                @endforelse
             </div>
         </div>
 
@@ -195,9 +189,14 @@
             <div class="hero-dots"></div>
             <div class="hero-planet"></div>
             <div class="hero-cap">
-                <div class="hero-badge">&#9733; FEATURED EVENT</div>
-                <div class="hero-title">Cherry Blossom Bloom</div>
-                <div class="hero-sub">Spring quests &amp; seasonal gear &middot; April 2026</div>
+                <div class="hero-badge">&#9733; LATEST UPDATE</div>
+                @if ($posts->isNotEmpty())
+                    <div class="hero-title">{{ $posts->first()->title }}</div>
+                    <div class="hero-sub">{{ $posts->first()->created_at->format('F Y') }}</div>
+                @else
+                    <div class="hero-title">Welcome to XileRO</div>
+                    <div class="hero-sub">Classic Ragnarok Online Private Server</div>
+                @endif
             </div>
         </div>
     </div>

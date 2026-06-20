@@ -48,7 +48,7 @@ class Patch extends Model
     public function diskName(): string
     {
         if ($this->patcher === self::PATCHER_RPATCHUR) {
-            return $this->client === self::CLIENT_RETRO ? 'retro_rpatchur' : 'xilero_rpatchur';
+            return 'xilero_rpatchur';
         }
 
         return $this->client === self::CLIENT_RETRO ? 'retro_patch' : 'xilero_patch';

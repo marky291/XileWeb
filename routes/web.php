@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\DiscordController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\WikiController;
 use App\Models\Patch;
+use App\Models\Post;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -63,16 +64,21 @@ Route::resource('posts', PostController::class)->only(['index', 'show']);
 
 // The rpatchur webview is Internet Explorer (MSHTML) on Windows, which cannot
 // parse Debugbar's injected jQuery/PhpDebugBar scripts (causes IE "Syntax error"
-// / "jQuery is undefined" dialogs). Disable Debugbar for the patcher pages.
-$rpatchur = function () {
+// / "jQuery is undefined" dialogs). Disable Debugbar for the patcher page.
+// XileRetro uses neoncube (legacy patcher) and has no rpatchur route.
+Route::get('xilero/rpatchur', function () {
     if (app()->bound('debugbar')) {
         app('debugbar')->disable();
     }
 
-    return view('rpatchur');
-};
-Route::get('retro/rpatchur', $rpatchur);
-Route::get('xilero/rpatchur', $rpatchur);
+    $posts = Post::query()
+        ->where('client', Post::CLIENT_XILERO)
+        ->latest()
+        ->take(5)
+        ->get();
+
+    return view('rpatchur', compact('posts'));
+});
 
 Route::get('retro/patch/notice', function () {
     $rawPosts = DB::table('posts')
