@@ -227,9 +227,19 @@
 
     function el(id) { return document.getElementById(id); }
 
+    /* rpatchur injects window.external.invoke into its webview; it is absent in a
+       normal browser, so fall back to native behaviour for local testing. */
+    function hasBridge() { return typeof external !== 'undefined' && external.invoke; }
+
     /* Plain-string commands. Only login/open_url use the JSON form in rpatchur. */
-    function rpc(cmd) { external.invoke(cmd); }
-    function openUrl(u) { external.invoke(JSON.stringify({ function: 'open_url', parameters: { url: u } })); }
+    function rpc(cmd) {
+        if (hasBridge()) { external.invoke(cmd); }
+        else { console.warn('rpatchur bridge unavailable for command: ' + cmd); }
+    }
+    function openUrl(u) {
+        if (hasBridge()) { external.invoke(JSON.stringify({ function: 'open_url', parameters: { url: u } })); }
+        else { window.open(u, '_blank'); }
+    }
 
     function selectPost(node) {
         var posts = document.getElementsByClassName('post');
