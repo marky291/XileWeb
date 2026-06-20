@@ -93,6 +93,8 @@
         border-radius:50%; border-top:1.5px solid rgba(178,226,255,.42);
         background:radial-gradient(circle at 50% 26%, rgba(124,188,248,.32), rgba(24,42,96,.4) 52%, transparent 70%);
         box-shadow:inset 0 12px 50px rgba(150,210,255,.32), 0 -2px 46px rgba(120,200,255,.22); }
+    .hero-img { position:absolute; top:0; left:0; right:0; bottom:0;
+        background-position:center; background-repeat:no-repeat; background-size:cover; }
     .hero-cap { position:absolute; left:0; right:0; bottom:0; padding:18px 16px 16px;
         background:linear-gradient(180deg, transparent, rgba(9,8,22,.9) 58%); }
     .hero-badge { display:inline-block; font-size:10px; font-weight:800; letter-spacing:.6px; color:#fff;
@@ -188,6 +190,9 @@
             <div class="hero-bg"></div>
             <div class="hero-dots"></div>
             <div class="hero-planet"></div>
+            @if ($posts->isNotEmpty() && $posts->first()->image)
+                <div class="hero-img" style="background-image:url('{{ Storage::disk('public')->url($posts->first()->image) }}')"></div>
+            @endif
             <div class="hero-cap">
                 <div class="hero-badge">&#9733; LATEST UPDATE</div>
                 @if ($posts->isNotEmpty())

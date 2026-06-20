@@ -26,6 +26,21 @@ class RpatchurPatchListTest extends TestCase
     }
 
     #[Test]
+    public function the_hero_shows_the_latest_post_image(): void
+    {
+        Post::factory()->create([
+            'client' => Post::CLIENT_XILERO,
+            'title' => 'June Update',
+            'image' => 'post-images/june.jpg',
+        ]);
+
+        $this->get('/xilero/rpatchur')
+            ->assertOk()
+            ->assertSee('hero-img')
+            ->assertSee('post-images/june.jpg');
+    }
+
+    #[Test]
     public function it_lists_only_xilero_rpatchur_patches_in_rpatchur_format(): void
     {
         Patch::factory()->create([
