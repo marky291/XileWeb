@@ -78,7 +78,11 @@ class PatchResource extends Resource
                                     ->live()
                                     ->afterStateUpdated(function ($state, Get $get, $set) {
                                         $client = $state ?: Patch::CLIENT_XILERO;
-                                        $patcher = $get('patcher') ?: Patch::PATCHER_RPATCHUR;
+                                        // Retro is legacy-only (neoncube); XileRO keeps its rpatchur selection.
+                                        $patcher = $client === Patch::CLIENT_RETRO
+                                            ? Patch::PATCHER_LEGACY
+                                            : ($get('patcher') ?: Patch::PATCHER_RPATCHUR);
+                                        $set('patcher', $patcher);
                                         $maxNumber = Patch::where('client', $client)->where('patcher', $patcher)->max('number');
                                         $set('number', $maxNumber ? $maxNumber + 1 : 1);
                                     })
@@ -86,7 +90,11 @@ class PatchResource extends Resource
                             ]),
                         Select::make('patcher')
                             ->label('Patcher')
-                            ->options(Patch::PATCHERS)
+                            ->options(fn (Get $get): array => $get('client') === Patch::CLIENT_RETRO
+                                ? [Patch::PATCHER_LEGACY => Patch::PATCHERS[Patch::PATCHER_LEGACY]]
+                                : Patch::PATCHERS)
+                            ->disabled(fn (Get $get): bool => $get('client') === Patch::CLIENT_RETRO)
+                            ->dehydrated()
                             ->native(false)
                             ->selectablePlaceholder(false)
                             ->default(Patch::PATCHER_RPATCHUR)

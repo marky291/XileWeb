@@ -142,6 +142,25 @@ class PatchResourceTest extends TestCase
     }
 
     #[Test]
+    public function retro_client_rejects_the_rpatchur_patcher(): void
+    {
+        Filament::setCurrentPanel(Filament::getPanel('admin'));
+
+        $admin = User::factory()->admin()->create();
+
+        Livewire::actingAs($admin)
+            ->test(CreatePatch::class)
+            ->fillForm([
+                'client' => Patch::CLIENT_RETRO,
+                'patcher' => Patch::PATCHER_RPATCHUR,
+                'type' => 'FLD',
+                'patch_name' => 'retro.gpf',
+            ])
+            ->call('create')
+            ->assertHasFormErrors(['patcher']);
+    }
+
+    #[Test]
     public function admin_can_filter_patches_by_type(): void
     {
         Filament::setCurrentPanel(Filament::getPanel('admin'));
