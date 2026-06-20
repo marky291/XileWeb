@@ -167,9 +167,9 @@
             </div>
             <div class="xr-feed">
                 @forelse ($posts as $post)
-                    <div class="post {{ $loop->first ? ‘sel’ : ‘’ }}" onclick="selectPost(this)">
+                    <div class="post {{ $loop->first ? 'sel' : '' }}" onclick="selectPost(this)">
                         <span class="tag update">UPDATE</span>
-                        <span class="date">{{ $post->created_at->format(‘M j, Y’) }}</span>
+                        <span class="date">{{ $post->created_at->format('M j, Y') }}</span>
                         <div class="title">{{ $post->title }}</div>
                         <div class="body">{{ Str::limit($post->patcher_notice ?: strip_tags($post->article_content), 120) }}</div>
                     </div>

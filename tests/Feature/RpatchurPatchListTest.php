@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Patch;
+use App\Models\Post;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
@@ -10,6 +11,19 @@ use Tests\TestCase;
 class RpatchurPatchListTest extends TestCase
 {
     use RefreshDatabase;
+
+    #[Test]
+    public function the_rpatchur_launcher_page_renders(): void
+    {
+        $post = Post::factory()->create([
+            'client' => Post::CLIENT_XILERO,
+            'title' => 'June Update',
+        ]);
+
+        $this->get('/xilero/rpatchur')
+            ->assertOk()
+            ->assertSee($post->title);
+    }
 
     #[Test]
     public function it_lists_only_xilero_rpatchur_patches_in_rpatchur_format(): void
