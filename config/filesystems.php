@@ -106,6 +106,7 @@ return [
     'links' => [
         public_path('storage') => storage_path('app/public'),
         public_path('xilero/patch') => storage_path('app/public/xilero/patch'),
+        public_path('xilero/rpatchur') => storage_path('app/public/xilero/rpatchur'),
         public_path('retro/patch') => storage_path('app/public/retro/patch'),
         public_path('storage/android/apk') => storage_path('app/public/android/apk'),
     ],

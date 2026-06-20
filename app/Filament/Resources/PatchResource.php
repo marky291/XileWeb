@@ -210,7 +210,8 @@ class PatchResource extends Resource
                             ->label('')
                             ->content(function (Get $get) {
                                 $client = $get('client') ?: Patch::CLIENT_XILERO;
-                                $recent_patches = Patch::where('client', $client)->latest('number')->take(5)->get();
+                                $patcher = $get('patcher') ?: Patch::PATCHER_LEGACY;
+                                $recent_patches = Patch::where('client', $client)->where('patcher', $patcher)->latest('number')->take(5)->get();
 
                                 if ($recent_patches->isEmpty()) {
                                     return new HtmlString('<p class="text-sm text-gray-500">No patches found for '.($client === 'retro' ? 'Retro' : 'XileRO').'</p>');

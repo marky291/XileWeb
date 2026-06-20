@@ -6,7 +6,7 @@ use App\Models\Patch;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Patch>
+ * @extends Factory<Patch>
  */
 class PatchFactory extends Factory
 {
@@ -19,6 +19,7 @@ class PatchFactory extends Factory
     {
         return [
             'number' => fake()->unique()->numberBetween(1, 10000),
+            'patcher' => Patch::PATCHER_LEGACY,
             'type' => fake()->randomElement(['FLD', 'GRF']),
             'client' => fake()->randomElement([Patch::CLIENT_XILERO, Patch::CLIENT_RETRO]),
             'patch_name' => fake()->sentence(3),

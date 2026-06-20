@@ -149,16 +149,4 @@ class CompilePatch implements ShouldQueue
             }
         }
     }
-
-    /**
-     * Get the storage disk name for the given client.
-     */
-    private function getDiskForClient(string $client): string
-    {
-        return match ($client) {
-            Patch::CLIENT_RETRO => 'retro_patch',
-            Patch::CLIENT_XILERO => 'xilero_patch',
-            default => 'xilero_patch',
-        };
-    }
 }

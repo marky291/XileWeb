@@ -78,4 +78,28 @@ class RpatchurPatchListTest extends TestCase
         $response->assertSee('old.gpf');
         $response->assertDontSee('new.thor');
     }
+
+    #[Test]
+    public function the_retro_legacy_list_excludes_rpatchur_patches(): void
+    {
+        Patch::factory()->create([
+            'client' => Patch::CLIENT_RETRO,
+            'patcher' => Patch::PATCHER_LEGACY,
+            'number' => 1,
+            'type' => 'FLD',
+            'patch_name' => 'retro.gpf',
+        ]);
+        Patch::factory()->create([
+            'client' => Patch::CLIENT_RETRO,
+            'patcher' => Patch::PATCHER_RPATCHUR,
+            'number' => 2,
+            'patch_name' => 'never.thor',
+        ]);
+
+        $response = $this->get('/retro/patch/list');
+
+        $response->assertOk();
+        $response->assertSee('retro.gpf');
+        $response->assertDontSee('never.thor');
+    }
 }
