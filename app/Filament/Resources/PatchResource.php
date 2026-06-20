@@ -105,8 +105,7 @@ class PatchResource extends Resource
                             ->selectablePlaceholder(false)
                             ->default('FLD')
                             ->helperText('FLD patches to the Root folder, GRF patches to the GRF file')
-                            ->required()
-                            ->visible(fn (Get $get): bool => $get('patcher') !== Patch::PATCHER_RPATCHUR),
+                            ->required(),
                         TextInput::make('number')
                             ->label('Patch Number')
                             ->default(function (Get $get) {
