@@ -168,7 +168,8 @@ class PatchResource extends Resource
                                     ->label('Post Title')
                                     ->placeholder(function (Get $get) {
                                         $client = $get('client') ?: Patch::CLIENT_XILERO;
-                                        $maxNumber = Patch::where('client', $client)->max('number');
+                                        $patcher = $get('patcher') ?: Patch::PATCHER_LEGACY;
+                                        $maxNumber = Patch::where('client', $client)->where('patcher', $patcher)->max('number');
                                         $next_number = $maxNumber ? $maxNumber + 1 : 1;
 
                                         return 'e.g., Patch #'.$next_number.' - Halloween Update';
