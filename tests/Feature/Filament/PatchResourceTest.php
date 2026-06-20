@@ -10,6 +10,7 @@ use App\Models\Patch;
 use App\Models\User;
 use Filament\Facades\Filament;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Livewire;
@@ -26,6 +27,7 @@ class PatchResourceTest extends TestCase
 
         Storage::fake('xilero_patch');
         Storage::fake('retro_patch');
+        Storage::fake('xilero_rpatchur');
     }
 
     #[Test]
@@ -85,11 +87,58 @@ class PatchResourceTest extends TestCase
         Livewire::actingAs($admin)
             ->test(CreatePatch::class)
             ->fillForm([
+                'patcher' => Patch::PATCHER_LEGACY,
                 'type' => '',
                 'client' => '',
             ])
             ->call('create')
             ->assertHasFormErrors(['type', 'client']);
+    }
+
+    #[Test]
+    public function rpatchur_patch_rejects_a_legacy_gpf_upload(): void
+    {
+        Filament::setCurrentPanel(Filament::getPanel('admin'));
+
+        $admin = User::factory()->admin()->create();
+
+        Livewire::actingAs($admin)
+            ->test(CreatePatch::class)
+            ->fillForm([
+                'patcher' => Patch::PATCHER_RPATCHUR,
+                'client' => Patch::CLIENT_XILERO,
+                'patch_name' => 'wrong-format',
+                'file' => UploadedFile::fake()->create('patch.gpf', 100),
+            ])
+            ->call('create')
+            ->assertHasFormErrors(['file']);
+    }
+
+    #[Test]
+    public function rpatchur_patch_accepts_a_thor_upload_without_a_type(): void
+    {
+        Filament::setCurrentPanel(Filament::getPanel('admin'));
+
+        Queue::fake();
+
+        $admin = User::factory()->admin()->create();
+
+        Livewire::actingAs($admin)
+            ->test(CreatePatch::class)
+            ->fillForm([
+                'patcher' => Patch::PATCHER_RPATCHUR,
+                'client' => Patch::CLIENT_XILERO,
+                'patch_name' => 'first.thor',
+                'file' => UploadedFile::fake()->create('first.thor', 100),
+            ])
+            ->call('create')
+            ->assertHasNoFormErrors();
+
+        $this->assertDatabaseHas(Patch::class, [
+            'patcher' => Patch::PATCHER_RPATCHUR,
+            'patch_name' => 'first.thor',
+            'type' => 'FLD',
+        ]);
     }
 
     #[Test]

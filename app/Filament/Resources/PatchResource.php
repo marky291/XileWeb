@@ -66,7 +66,8 @@ class PatchResource extends Resource
                                     ->selectablePlaceholder(false)
                                     ->default('FLD')
                                     ->helperText('FLD patches to the Root folder, GRF patches to the GRF file')
-                                    ->required(),
+                                    ->required()
+                                    ->visible(fn (Get $get): bool => $get('patcher') !== Patch::PATCHER_RPATCHUR),
                                 Select::make('client')
                                     ->label('Client')
                                     ->options(Patch::CLIENTS)
@@ -122,6 +123,11 @@ class PatchResource extends Resource
                             ->required(fn (string $context): bool => $context === 'create')
                             ->disk(fn (Get $get): string => self::diskFor($get('client'), $get('patcher')))
                             ->directory('')
+                            ->rules(fn (Get $get): array => [
+                                $get('patcher') === Patch::PATCHER_LEGACY
+                                    ? 'extensions:gpf'
+                                    : 'extensions:thor,grf',
+                            ])
                             ->maxSize(102400)
                             ->downloadable()
                             ->helperText(fn (Get $get): string => $get('patcher') === Patch::PATCHER_LEGACY
