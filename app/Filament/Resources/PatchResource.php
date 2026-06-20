@@ -12,6 +12,7 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Select;
@@ -54,6 +55,10 @@ class PatchResource extends Resource
                     ->description('Configure the basic settings for your patch')
                     ->icon('heroicon-o-information-circle')
                     ->schema([
+                        // Patcher is derived from the client (XileRO => rpatchur, XileRetro => legacy),
+                        // so it is carried as hidden state rather than shown as a redundant field.
+                        Hidden::make('patcher')
+                            ->default(Patch::PATCHER_RPATCHUR),
                         Grid::make(2)
                             ->schema([
                                 Select::make('client')
@@ -62,55 +67,33 @@ class PatchResource extends Resource
                                     ->native(false)
                                     ->selectablePlaceholder(false)
                                     ->default(Patch::CLIENT_XILERO)
-                                    ->helperText('Select which client this patch is for')
+                                    ->helperText('XileRO uses rpatchur, XileRetro uses neoncube (legacy)')
                                     ->live()
                                     ->afterStateUpdated(function ($state, Get $get, $set) {
                                         $client = $state ?: Patch::CLIENT_XILERO;
-                                        // Retro is legacy-only (neoncube); XileRO keeps its rpatchur selection.
-                                        $patcher = $client === Patch::CLIENT_RETRO
-                                            ? Patch::PATCHER_LEGACY
-                                            : ($get('patcher') ?: Patch::PATCHER_RPATCHUR);
+                                        $patcher = Patch::patcherForClient($client);
                                         $set('patcher', $patcher);
                                         $maxNumber = Patch::where('client', $client)->where('patcher', $patcher)->max('number');
                                         $set('number', $maxNumber ? $maxNumber + 1 : 1);
                                     })
                                     ->required(),
-                                Select::make('patcher')
-                                    ->label('Patcher')
-                                    ->options(fn (Get $get): array => $get('client') === Patch::CLIENT_RETRO
-                                        ? [Patch::PATCHER_LEGACY => Patch::PATCHERS[Patch::PATCHER_LEGACY]]
-                                        : Patch::PATCHERS)
-                                    ->disabled(fn (Get $get): bool => $get('client') === Patch::CLIENT_RETRO)
-                                    ->dehydrated()
+                                Select::make('type')
+                                    ->label('Patch Type')
+                                    ->options([
+                                        'FLD' => 'FLD - Root Folder Patch',
+                                        'GRF' => 'GRF - GRF File Patch',
+                                    ])
                                     ->native(false)
                                     ->selectablePlaceholder(false)
-                                    ->default(Patch::PATCHER_RPATCHUR)
-                                    ->helperText('rpatchur serves .thor/.grf to the new launcher; Legacy serves .gpf to the old Thor patcher')
-                                    ->live()
-                                    ->afterStateUpdated(function ($state, Get $get, $set) {
-                                        $client = $get('client') ?: Patch::CLIENT_XILERO;
-                                        $patcher = $state ?: Patch::PATCHER_RPATCHUR;
-                                        $maxNumber = Patch::where('client', $client)->where('patcher', $patcher)->max('number');
-                                        $set('number', $maxNumber ? $maxNumber + 1 : 1);
-                                    })
+                                    ->default('FLD')
+                                    ->helperText('FLD patches to the Root folder, GRF patches to the GRF file')
                                     ->required(),
                             ]),
-                        Select::make('type')
-                            ->label('Patch Type')
-                            ->options([
-                                'FLD' => 'FLD - Root Folder Patch',
-                                'GRF' => 'GRF - GRF File Patch',
-                            ])
-                            ->native(false)
-                            ->selectablePlaceholder(false)
-                            ->default('FLD')
-                            ->helperText('FLD patches to the Root folder, GRF patches to the GRF file')
-                            ->required(),
                         TextInput::make('number')
                             ->label('Patch Number')
                             ->default(function (Get $get) {
                                 $client = $get('client') ?: Patch::CLIENT_XILERO;
-                                $patcher = $get('patcher') ?: Patch::PATCHER_RPATCHUR;
+                                $patcher = Patch::patcherForClient($client);
                                 $maxNumber = Patch::where('client', $client)->where('patcher', $patcher)->max('number');
 
                                 return $maxNumber ? $maxNumber + 1 : 1;

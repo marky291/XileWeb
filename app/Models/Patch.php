@@ -43,6 +43,14 @@ class Patch extends Model
     ];
 
     /**
+     * The patcher a client serves with: XileRO uses rpatchur, XileRetro uses neoncube (legacy).
+     */
+    public static function patcherForClient(string $client): string
+    {
+        return $client === self::CLIENT_RETRO ? self::PATCHER_LEGACY : self::PATCHER_RPATCHUR;
+    }
+
+    /**
      * Storage disk that holds this patch's uploaded file.
      */
     public function diskName(): string

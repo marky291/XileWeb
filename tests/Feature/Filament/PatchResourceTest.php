@@ -142,8 +142,10 @@ class PatchResourceTest extends TestCase
     }
 
     #[Test]
-    public function retro_client_rejects_the_rpatchur_patcher(): void
+    public function retro_client_derives_the_legacy_patcher(): void
     {
+        Queue::fake();
+
         Filament::setCurrentPanel(Filament::getPanel('admin'));
 
         $admin = User::factory()->admin()->create();
@@ -152,12 +154,18 @@ class PatchResourceTest extends TestCase
             ->test(CreatePatch::class)
             ->fillForm([
                 'client' => Patch::CLIENT_RETRO,
-                'patcher' => Patch::PATCHER_RPATCHUR,
                 'type' => 'FLD',
                 'patch_name' => 'retro.gpf',
+                'file' => UploadedFile::fake()->create('retro.gpf', 100),
             ])
             ->call('create')
-            ->assertHasFormErrors(['patcher']);
+            ->assertHasNoFormErrors();
+
+        $this->assertDatabaseHas(Patch::class, [
+            'client' => Patch::CLIENT_RETRO,
+            'patcher' => Patch::PATCHER_LEGACY,
+            'patch_name' => 'retro.gpf',
+        ]);
     }
 
     #[Test]
