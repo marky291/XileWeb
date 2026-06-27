@@ -404,3 +404,12 @@ Authenticate before testing panel functionality. Filament uses Livewire, so use 
 - File visibility is `private` by default. Use `->visibility('public')` for public access.
 - `Grid`, `Section`, and `Fieldset` no longer span all columns by default.
 </laravel-boost-guidelines>
+
+## Local Environment
+
+- The local working copy has no `vendor/` and `php` is not on PATH — `php`/`artisan`/`phpunit`/`pint` cannot run via the Bash tool. Run them through Herd, or over SSH on the server.
+
+## Patches Domain
+
+- `client=retro` (XileRetro) patches are LIVE production data — never modify or delete them. `client=xilero` patches use the `rpatchur` patcher; `retro` uses `legacy`.
+- Patch `number` is allocated per `(client, patcher)`, but the DB unique index is only `(client, number)` — mixing patchers on one client can collide.
