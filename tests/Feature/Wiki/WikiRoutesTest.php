@@ -46,6 +46,7 @@ class WikiRoutesTest extends TestCase
 
     public function test_unavailable_server_shows_coming_soon_not_500(): void
     {
+        config(['wiki.servers.xileretro.path' => null]); // force unavailable
         $this->get('/wiki/xileretro')->assertOk()->assertSee('coming soon', false);
     }
 

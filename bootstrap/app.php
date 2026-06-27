@@ -17,6 +17,8 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->trustProxies(at: '*');
+        // Webhooks are signature-verified, not session/CSRF based.
+        $middleware->validateCsrfTokens(except: ['webhooks/*']);
         $middleware->alias([
             'abilities' => CheckAbilities::class,
             'ability' => CheckForAnyAbility::class,

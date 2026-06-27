@@ -35,9 +35,10 @@ class WikiRepositoryTest extends TestCase
 
     public function test_unknown_or_unavailable_server(): void
     {
+        config(['wiki.servers.xileretro.path' => null]); // force "configured but no path"
         $repo = $this->repo();
         $this->assertFalse($repo->hasServer('nope'));
-        $this->assertFalse($repo->isAvailable('xileretro')); // configured, no path
+        $this->assertFalse($repo->isAvailable('xileretro'));
     }
 
     public function test_resolves_allowed_asset_only(): void

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\DiscordController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\WikiController;
+use App\Http\Controllers\WikiWebhookController;
 use App\Models\Patch;
 use App\Models\Post;
 use Carbon\Carbon;
@@ -224,6 +225,12 @@ Route::get('/wiki/{server}/assets/{file}', [WikiController::class, 'asset'])
 Route::get('/wiki/{server}/{path?}', [WikiController::class, 'show'])
     ->where(['server' => '[a-z0-9_-]+', 'path' => '.*'])
     ->name('wiki.show');
+
+// GitHub push webhook → pull that server's content repo + rebuild search index.
+// CSRF-exempt (signature-verified) — see bootstrap/app.php webhooks/* exception.
+Route::post('/webhooks/wiki/{server}', [WikiWebhookController::class, 'handle'])
+    ->where('server', '[a-z0-9_-]+')
+    ->name('wiki.webhook');
 
 // Authentication routes (integrated with site design)
 Route::middleware(['guest', \App\Http\Middleware\AuthMaintenanceMiddleware::class])->group(function () {
