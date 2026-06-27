@@ -47,6 +47,35 @@ This project has domain-specific skills available. You MUST activate the relevan
 - Stick to existing directory structure; don't create new base folders without approval.
 - Do not change the application's dependencies without approval.
 
+## Wiki Engine (dual-server, GitBook-style)
+
+Self-hosted replacement for the paid GitBook. Renders each game server's GitBook
+markdown **in place** (not stored in this repo) as a GitBook-faithful site.
+
+- **Servers / routes:** `xilero` (amber accent, mid-rate) + `xileretro` (purple,
+  high-rate). `GET /wiki`, `/wiki/{server}`, `/wiki/{server}/{path?}`,
+  `/wiki/{server}/assets/{file}`. Engine is generic over the slug.
+- **Code:** `app/Services/Wiki/` (`WikiRepository` path-safety, `SummaryParser`,
+  `FrontmatterParser`, `WikiMarkdownRenderer`, `WikiSearchIndex`, `emoji-shortcodes.php`);
+  `WikiController` + `WikiWebhookController`; views in `resources/views/wiki/**`
+  and `resources/views/layouts/partials/wiki-search.blade.php`. Self-contained CSS
+  (no Tailwind build needed). Rendering handles GitBook `{% hint %}`, `<figure>`,
+  `<details>`, footnote hover-tooltips, `:emoji:` shortcodes, GFM tables.
+- **Config:** `config/wiki.php`, env-driven per server — `WIKI_<SLUG>_PATH` (the
+  `gitbook/` dir rendered), `WIKI_<SLUG>_REPO` (git clone root for webhook pulls),
+  `WIKI_<SLUG>_BRANCH` (XileRO=`stable`, XileRetro=`master`), `WIKI_WEBHOOK_SECRET`.
+- **Content sources (cloned OUTSIDE the web root on prod, `/home/forge/wiki-content/`):**
+  XileRO = game repo `marky291/XileRO` `rathena/gitbook` (sparse, `stable`);
+  XileRetro = `achenxu/XileRetro-Wiki` (`master`). Both private — box auth via `gh`
+  (forge user). See `two-wikis` memory + `docs/superpowers/specs/2026-06-27-xileweb-wiki-engine-design.md`.
+- **Search:** `/wiki/search-index.json` (cached; rebuilt on `cache:clear` or webhook).
+- **Auto-update:** `POST /webhooks/wiki/{server}` — verifies `X-Hub-Signature-256`,
+  pulls only on push to the configured branch, rebuilds the index. CSRF-exempt
+  (see `bootstrap/app.php` `webhooks/*`). GitHub webhook content type MUST be
+  `application/json`.
+- **After content/env changes (prod caches config):** `php artisan config:cache`
+  then `php artisan cache:clear`. Tests: `php artisan test --filter=Wiki`.
+
 ## Frontend Bundling
 
 - If the user doesn't see a frontend change reflected in the UI, it could mean they need to run `npm run build`, `npm run dev`, or `composer run dev`. Ask them.
