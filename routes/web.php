@@ -215,9 +215,15 @@ Route::get('xilero/rpatchur/list', function () {
         ->header('X-Content-Type-Options', 'nosniff');
 });
 
-// Wiki routes
-// Route::get('/wiki', [WikiController::class, 'show'])->name('wiki.home');
-// Route::get('/wiki/{path}', [WikiController::class, 'show'])->where('path', '.*')->name('wiki.show');
+// Wiki routes (file-based, dual-server — see docs/superpowers/specs/2026-06-27-xileweb-wiki-engine-design.md)
+Route::get('/wiki', [WikiController::class, 'home'])->name('wiki.home');
+Route::get('/wiki/search-index.json', [WikiController::class, 'searchIndex'])->name('wiki.search-index');
+Route::get('/wiki/{server}/assets/{file}', [WikiController::class, 'asset'])
+    ->where(['server' => '[a-z0-9_-]+', 'file' => '.*'])
+    ->name('wiki.asset');
+Route::get('/wiki/{server}/{path?}', [WikiController::class, 'show'])
+    ->where(['server' => '[a-z0-9_-]+', 'path' => '.*'])
+    ->name('wiki.show');
 
 // Authentication routes (integrated with site design)
 Route::middleware(['guest', \App\Http\Middleware\AuthMaintenanceMiddleware::class])->group(function () {
