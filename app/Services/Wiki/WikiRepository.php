@@ -64,7 +64,11 @@ class WikiRepository
             return null;
         }
 
-        $full = $this->safePath($base, '.gitbook/assets/' . $file);
+        $assetsBase = realpath($base . DIRECTORY_SEPARATOR . '.gitbook' . DIRECTORY_SEPARATOR . 'assets');
+        if ($assetsBase === false) {
+            return null;
+        }
+        $full = $this->safePath($assetsBase, $file);
 
         return ($full !== null && is_file($full)) ? $full : null;
     }

@@ -58,4 +58,25 @@ class WikiRepositoryTest extends TestCase
         $this->assertNull($repo->readPage('xilero', '../../../etc/passwd'));
         $this->assertNull($repo->resolveAsset('xilero', '../../README.md'));
     }
+
+    public function test_resolve_asset_blocks_image_traversal_outside_assets(): void
+    {
+        $base = $this->makeWikiFixture('xilero');
+        $repo = $this->repo();
+
+        // Place a real PNG at the gitbook root (outside .gitbook/assets/)
+        file_put_contents(
+            $base . '/outside.png',
+            base64_decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=')
+        );
+
+        // Traversal with an image extension must be blocked (outside assets/)
+        $this->assertNull($repo->resolveAsset('xilero', '../outside.png'));
+
+        // Legitimate asset inside .gitbook/assets/ must still resolve (regression guard)
+        $this->assertSame(
+            realpath($base . '/.gitbook/assets/pic.png'),
+            $repo->resolveAsset('xilero', 'pic.png')
+        );
+    }
 }
