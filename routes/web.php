@@ -217,6 +217,7 @@ Route::get('xilero/rpatchur/list', function () {
 
 // Wiki routes (file-based, dual-server — see docs/superpowers/specs/2026-06-27-xileweb-wiki-engine-design.md)
 Route::get('/wiki', [WikiController::class, 'home'])->name('wiki.home');
+Route::get('/wiki/search-index.json', [WikiController::class, 'searchIndex'])->name('wiki.search-index');
 Route::get('/wiki/{server}/assets/{file}', [WikiController::class, 'asset'])
     ->where(['server' => '[a-z0-9_-]+', 'file' => '.*'])
     ->name('wiki.asset');

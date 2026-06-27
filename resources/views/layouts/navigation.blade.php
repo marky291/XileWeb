@@ -1,6 +1,11 @@
+<style>
+    /* Glassmorphism on the main site header (matches the wiki bar) */
+    .site-nav-glass { background:rgba(13,17,23,.62) !important; -webkit-backdrop-filter:blur(14px) saturate(160%) !important; backdrop-filter:blur(14px) saturate(160%) !important; border-bottom:1px solid rgba(255,255,255,.09); }
+    .site-nav-glass.is-scrolled { background:rgba(10,13,18,.78) !important; box-shadow:0 6px 24px rgba(0,0,0,.35); }
+</style>
 <nav class="w-full fixed top-0 left-0 z-50" x-data="{ scrolled: false }" @scroll.window="scrolled = window.scrollY > 20">
-    <div class="transition-all duration-300"
-         :class="scrolled ? 'bg-clash-foot/95 backdrop-blur-md shadow-lg shadow-black/20 border-b border-xilero-gold/10' : 'bg-black/50 backdrop-blur-sm'">
+    <div class="transition-all duration-300 site-nav-glass"
+         :class="scrolled ? 'is-scrolled' : ''">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="relative flex items-center justify-between h-16 lg:h-20">
 

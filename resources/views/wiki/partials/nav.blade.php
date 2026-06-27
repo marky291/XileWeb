@@ -1,16 +1,22 @@
-{{-- resources/views/wiki/partials/nav.blade.php --}}
-{{-- expects: $items (array of ['label','url','children']), $currentUrl --}}
-<ul class="space-y-1">
+{{-- resources/views/wiki/partials/nav.blade.php
+     Recursive SUMMARY nav with collapsible groups. expects: $items, $currentUrl --}}
+<ul class="wiki-nav-list">
     @foreach ($items as $item)
-        @php $active = ($item['url'] === $currentUrl); @endphp
-        <li>
-            <a href="{{ $item['url'] }}"
-               class="block px-3 py-1.5 rounded text-sm transition-colors
-                      {{ $active ? 'bg-amber-600/20 text-amber-400 font-semibold' : 'text-gray-300 hover:text-amber-400 hover:bg-white/5' }}">
-                {{ $item['label'] }}
-            </a>
-            @if (! empty($item['children']))
-                <div class="ml-3 mt-1 border-l border-gray-800 pl-2">
+        @php $hasChildren = ! empty($item['children']); @endphp
+        <li class="{{ $hasChildren ? 'wiki-nav-item has-children' : 'wiki-nav-item' }}">
+            <div class="wiki-nav-row">
+                <a href="{{ $item['url'] }}"
+                   class="wiki-nav-link{{ $item['url'] === $currentUrl ? ' is-active' : '' }}">
+                    {{ $item['label'] }}
+                </a>
+                @if ($hasChildren)
+                    <button type="button" class="wiki-nav-toggle" aria-label="Toggle section" aria-expanded="true">
+                        <svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 5l5 5-5 5z"/></svg>
+                    </button>
+                @endif
+            </div>
+            @if ($hasChildren)
+                <div class="wiki-nav-children">
                     @include('wiki.partials.nav', ['items' => $item['children'], 'currentUrl' => $currentUrl])
                 </div>
             @endif

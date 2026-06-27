@@ -15,3 +15,5 @@ yarn-error.log
 public/assets/emblems/*
 # Claude Code personal/local context (not shared)
 .claude.local.md
+
+.superpowers/

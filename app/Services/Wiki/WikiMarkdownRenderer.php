@@ -3,10 +3,16 @@
 
 namespace App\Services\Wiki;
 
+use League\CommonMark\Extension\Autolink\AutolinkExtension;
+use League\CommonMark\Extension\Strikethrough\StrikethroughExtension;
+use League\CommonMark\Extension\Table\TableExtension;
+use League\CommonMark\Extension\TaskList\TaskListExtension;
 use Spatie\LaravelMarkdown\MarkdownRenderer;
 
 class WikiMarkdownRenderer
 {
+    private ?MarkdownRenderer $configured = null;
+
     /** Inline SVG icons per hint style. */
     private const ICONS = [
         'info'    => '<svg viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5"><path d="M18 10A8 8 0 11 2 10a8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"/></svg>',
@@ -21,18 +27,140 @@ class WikiMarkdownRenderer
 
     public function toHtml(string $markdown, string $server): string
     {
+        // GitHub-style emoji shortcodes (:coin: :heart: …) → unicode, like GitBook.
+        $markdown = $this->emojify($markdown);
+
+        // Pull <figure> blocks out before parsing: GitBook's exported
+        // <figure><img><figcaption></figure> markup confuses CommonMark's
+        // block scanner and prevents following GFM tables from parsing. We
+        // restore them verbatim into the final HTML afterwards.
+        [$markdown, $figures] = $this->protectFigures($markdown);
+
+        // Pull GitBook footnote definitions ([^N]: ...) out of the body; they
+        // become hover tooltips on the matching <a data-footnote-ref> links
+        // (GitBook's item-info-on-hover behavior) instead of a footnote list.
+        [$markdown, $footnotes] = $this->extractFootnotes($markdown);
+
         $markdown = $this->renderHints($markdown);
         $html = $this->renderer()->toHtml($markdown);
+        $html = $this->restoreFigures($html, $figures);
+        $html = $this->applyFootnoteTooltips($html, $footnotes);
 
         return $this->rewriteAssetUrls($html, $server);
     }
 
+    /**
+     * Extract `[^N]: definition` lines and remove them from the body.
+     *
+     * @return array{0: string, 1: array<string, string>}
+     */
+    private function extractFootnotes(string $markdown): array
+    {
+        $defs = [];
+
+        $markdown = preg_replace_callback(
+            '/^\[\^([0-9]+)\]:[ \t]*(.+)$/m',
+            function (array $m) use (&$defs): string {
+                $defs[$m[1]] = trim($m[2]);
+
+                return '';
+            },
+            $markdown
+        );
+
+        return [$markdown, $defs];
+    }
+
+    /**
+     * Turn each <a data-footnote-ref href="#user-content-fn-N">label</a> into a
+     * hover tooltip carrying footnote N's rendered definition.
+     *
+     * @param array<string, string> $defs
+     */
+    private function applyFootnoteTooltips(string $html, array $defs): string
+    {
+        if ($defs === []) {
+            return $html;
+        }
+
+        return preg_replace_callback(
+            '/<a\b([^>]*\bdata-footnote-ref\b[^>]*)>(.*?)<\/a>/is',
+            function (array $m) use ($defs): string {
+                $label = $m[2];
+                if (! preg_match('/#user-content-fn-([0-9]+)/', $m[1], $idMatch)) {
+                    return $label;
+                }
+
+                $id = $idMatch[1];
+                if (! isset($defs[$id])) {
+                    return $label;
+                }
+
+                // Render the definition (markdown + <br>) and unwrap the <p>.
+                $pop = trim($this->renderer()->toHtml($defs[$id]));
+                $pop = preg_replace('#^<p>(.*)</p>$#is', '$1', $pop);
+
+                return '<span class="wiki-fn">'
+                    . '<a class="wiki-fn-ref" tabindex="0">' . $label . '</a>'
+                    . '<span class="wiki-fn-pop" role="tooltip">' . $pop . '</span>'
+                    . '</span>';
+            },
+            $html
+        );
+    }
+
+    /**
+     * Replace each <figure>…</figure> with a placeholder HTML-block div and
+     * return the captured originals keyed by index.
+     *
+     * @return array{0: string, 1: array<int, string>}
+     */
+    private function protectFigures(string $markdown): array
+    {
+        $figures = [];
+
+        $markdown = preg_replace_callback(
+            '/<figure>.*?<\/figure>/is',
+            function (array $m) use (&$figures): string {
+                $i = count($figures);
+                $figures[] = $m[0];
+
+                return "\n\n<div data-wiki-figure=\"{$i}\"></div>\n\n";
+            },
+            $markdown
+        );
+
+        return [$markdown, $figures];
+    }
+
+    private function restoreFigures(string $html, array $figures): string
+    {
+        foreach ($figures as $i => $original) {
+            $html = str_replace("<div data-wiki-figure=\"{$i}\"></div>", $original, $html);
+        }
+
+        return $html;
+    }
+
     private function renderer(): MarkdownRenderer
     {
-        return $this->markdown->commonmarkOptions([
-            'html_input' => 'allow',
-            'allow_unsafe_links' => false,
-        ]);
+        if ($this->configured !== null) {
+            return $this->configured;
+        }
+
+        // GitHub-flavored extensions to match GitBook: tables, ~~strikethrough~~,
+        // bare-URL autolinks, and - [ ] task lists. (spatie already supplies
+        // heading anchors/ids and Shiki code highlighting.) Configured once so
+        // the per-hint render calls don't re-add extensions.
+        return $this->configured = $this->markdown
+            ->commonmarkOptions([
+                'html_input' => 'allow',
+                'allow_unsafe_links' => false,
+            ])
+            ->addExtension(new TableExtension())
+            ->addExtension(new StrikethroughExtension())
+            ->addExtension(new AutolinkExtension())
+            ->addExtension(new TaskListExtension());
     }
 
     /**
@@ -57,6 +185,19 @@ class WikiMarkdownRenderer
                     . "<div class=\"wiki-hint-body\">{$inner}</div>"
                     . "</div>\n\n";
             },
+            $markdown
+        );
+    }
+
+    /** Replace :shortcode: with the mapped emoji; leave unknown names untouched. */
+    private function emojify(string $markdown): string
+    {
+        static $map;
+        $map ??= require __DIR__ . '/emoji-shortcodes.php';
+
+        return preg_replace_callback(
+            '/:([a-z0-9_+-]+):/',
+            fn (array $m) => $map[$m[1]] ?? $m[0],
             $markdown
         );
     }
