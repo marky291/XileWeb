@@ -7,41 +7,62 @@ class SummaryParser
 {
     public function parse(string $summary, string $server): array
     {
-        $sections = [];
-        $current = null;          // current section (by reference index)
-        $stack = [];              // [depth => &items array] for nesting
+        $sections     = [];
+        $currentIndex = null;
+        $currentFlat  = [];
 
         foreach (preg_split('/\R/', $summary) as $line) {
             // Section heading: ## Title
             if (preg_match('/^##\s+(.+?)\s*$/', $line, $m)) {
-                $sections[] = ['title' => $m[1], 'items' => []];
-                $current = array_key_last($sections);
-                $stack = [];
+                if ($currentIndex !== null) {
+                    $sections[$currentIndex]['items'] = $this->buildTree($currentFlat);
+                }
+                $sections[]   = ['title' => $m[1], 'items' => []];
+                $currentIndex = array_key_last($sections);
+                $currentFlat  = [];
                 continue;
             }
 
             // List item: optional indent, * or -, [label](href)
-            if ($current !== null && preg_match('/^(\s*)[\*\-]\s+\[(.+?)\]\((.+?)\)/', $line, $m)) {
-                $depth = (int) floor(strlen($m[1]) / 2);
-                $item = ['label' => $m[2], 'url' => $this->url($server, $m[3]), 'children' => []];
-
-                if ($depth === 0) {
-                    $sections[$current]['items'][] = $item;
-                    $stack = [0 => &$sections[$current]['items']];
-                    $last = array_key_last($sections[$current]['items']);
-                    $stack[1] = &$sections[$current]['items'][$last]['children'];
-                } else {
-                    $parent = $stack[$depth] ?? $stack[array_key_last($stack)];
-                    $parent[] = $item;
-                    $lastKey = array_key_last($parent);
-                    $stack[$depth + 1] = &$parent[$lastKey]['children'];
-                    // reassign back (PHP arrays are value types)
-                    $this->writeBack($sections, $stack, $depth, $parent);
-                }
+            if ($currentIndex !== null && preg_match('/^(\s*)[\*\-]\s+\[(.+?)\]\((.+?)\)/', $line, $m)) {
+                $currentFlat[] = [
+                    'label'    => $m[2],
+                    'url'      => $this->url($server, $m[3]),
+                    'depth'    => (int) floor(strlen($m[1]) / 2),
+                    'children' => [],
+                ];
             }
         }
 
+        if ($currentIndex !== null) {
+            $sections[$currentIndex]['items'] = $this->buildTree($currentFlat);
+        }
+
         return $sections;
+    }
+
+    /**
+     * Fold a flat list (each item has a 'depth' key) into a nested tree.
+     *
+     * $childrenRefs[$d] is a reference to the children array at depth $d.
+     * Appending to $childrenRefs[$d] goes directly into the tree, then we
+     * advance $childrenRefs[$d+1] to point at the new item's children array,
+     * ready for the next deeper item.
+     */
+    private function buildTree(array $flat): array
+    {
+        $tree         = [];
+        $childrenRefs = [0 => &$tree];
+
+        foreach ($flat as $it) {
+            $d = $it['depth'];
+            unset($it['depth']);
+            $childrenRefs[$d][] = $it;
+            $lastKey             = array_key_last($childrenRefs[$d]);
+            $childrenRefs[$d + 1] = &$childrenRefs[$d][$lastKey]['children'];
+        }
+
+        return $tree;
     }
 
     private function url(string $server, string $href): string
@@ -51,14 +72,5 @@ class SummaryParser
         $slug = trim($slug, '/');
 
         return $slug === '' ? "/wiki/{$server}" : "/wiki/{$server}/{$slug}";
-    }
-
-    /**
-     * PHP arrays are copied by value; nested children appended via a temp
-     * reference must be written back into the section tree.
-     */
-    private function writeBack(array &$sections, array &$stack, int $depth, array $parent): void
-    {
-        $stack[$depth] = $parent;
     }
 }

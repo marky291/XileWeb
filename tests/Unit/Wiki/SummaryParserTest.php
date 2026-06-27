@@ -34,4 +34,33 @@ class SummaryParserTest extends TestCase
         $this->assertSame('Nested', $sections[1]['items'][0]['children'][0]['label']);
         $this->assertSame('/wiki/xilero/guide/nested', $sections[1]['items'][0]['children'][0]['url']);
     }
+
+    public function test_parses_depth_two_nesting(): void
+    {
+        $summary = <<<MD
+        ## Deep
+
+        * [Parent](parent.md)
+          * [Child](child.md)
+            * [Grandchild](grandchild.md)
+        MD;
+
+        $sections = (new SummaryParser())->parse($summary, 'xilero');
+
+        $this->assertCount(1, $sections);
+
+        $parent     = $sections[0]['items'][0];
+        $child      = $parent['children'][0];
+        $grandchild = $child['children'][0];
+
+        $this->assertSame('Parent', $parent['label']);
+        $this->assertSame('/wiki/xilero/parent', $parent['url']);
+
+        $this->assertSame('Child', $child['label']);
+        $this->assertSame('/wiki/xilero/child', $child['url']);
+        $this->assertSame([], $child['children'][0]['children']);
+
+        $this->assertSame('Grandchild', $grandchild['label']);
+        $this->assertSame('/wiki/xilero/grandchild', $grandchild['url']);
+    }
 }
