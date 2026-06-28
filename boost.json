@@ -2,15 +2,21 @@
     "agents": [
         "claude_code"
     ],
+    "cloud": false,
     "guidelines": true,
-    "herd_mcp": true,
     "mcp": true,
+    "nightwatch": false,
     "packages": [
-        "filament/filament"
+        "filament/filament",
+        "lorisleiva/laravel-actions"
     ],
     "sail": false,
     "skills": [
+        "laravel-best-practices",
+        "configuring-horizon",
+        "socialite-development",
         "livewire-development",
-        "tailwindcss-development"
+        "tailwindcss-development",
+        "laravel-actions"
     ]
 }
