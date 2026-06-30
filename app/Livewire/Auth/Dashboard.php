@@ -48,6 +48,8 @@ class Dashboard extends Component
 
     public bool $showClaimConfirm = false;
 
+    public array $selectedRewardIds = [];
+
     /**
      * Sanitize showCreateForm input to prevent array injection attacks.
      */
@@ -587,6 +589,103 @@ class Dashboard extends Component
 
         } catch (Exception $e) {
             session()->flash('error', 'Failed to claim reward: '.$e->getMessage());
+        }
+    }
+
+    /**
+     * Toggle select/deselect all rewards for a game account.
+     */
+    public function toggleSelectAll(int $gameAccountId): void
+    {
+        $gameAccount = GameAccount::where('id', $gameAccountId)
+            ->where('user_id', auth()->id())
+            ->first();
+
+        if (! $gameAccount) {
+            return;
+        }
+
+        $isXileRetro = $gameAccount->server === GameAccount::SERVER_XILERETRO;
+        $rewardService = app(DonationRewardService::class);
+        $pendingRewards = $rewardService->getUserPendingRewards(auth()->user())
+            ->filter(function ($reward) use ($isXileRetro) {
+                return $isXileRetro ? $reward->is_xileretro : $reward->is_xilero;
+            });
+
+        $allRewardIds = $pendingRewards->pluck('id')->toArray();
+
+        // If all are selected, deselect all. Otherwise, select all.
+        $allSelected = ! empty($allRewardIds) && count(array_intersect($this->selectedRewardIds, $allRewardIds)) === count($allRewardIds);
+
+        if ($allSelected) {
+            // Deselect all
+            $this->selectedRewardIds = array_values(array_diff($this->selectedRewardIds, $allRewardIds));
+        } else {
+            // Select all
+            $this->selectedRewardIds = array_values(array_unique(array_merge($this->selectedRewardIds, $allRewardIds)));
+        }
+    }
+
+    /**
+     * Claim multiple selected rewards at once.
+     */
+    public function claimSelectedRewards(int $gameAccountId): void
+    {
+        if (empty($this->selectedRewardIds)) {
+            session()->flash('error', 'Please select at least one reward to claim.');
+
+            return;
+        }
+
+        $gameAccount = GameAccount::where('id', $gameAccountId)
+            ->where('user_id', auth()->id())
+            ->first();
+
+        if (! $gameAccount) {
+            session()->flash('error', 'Game account not found.');
+
+            return;
+        }
+
+        $rewards = DonationRewardClaim::with(['tier', 'item'])
+            ->whereIn('id', $this->selectedRewardIds)
+            ->where('user_id', auth()->id())
+            ->get();
+
+        if ($rewards->isEmpty()) {
+            session()->flash('error', 'No valid rewards found.');
+            $this->selectedRewardIds = [];
+
+            return;
+        }
+
+        $rewardService = app(DonationRewardService::class);
+        $successCount = 0;
+        $errors = [];
+
+        foreach ($rewards as $reward) {
+            if (! $reward->canBeClaimedBy($gameAccount)) {
+                $errors[] = "{$reward->item->name} cannot be claimed on this account.";
+
+                continue;
+            }
+
+            try {
+                $rewardService->claimReward($reward, $gameAccount);
+                $successCount++;
+            } catch (Exception $e) {
+                $errors[] = "Failed to claim {$reward->item->name}: {$e->getMessage()}";
+            }
+        }
+
+        $this->selectedRewardIds = [];
+
+        if ($successCount > 0) {
+            session()->flash('success', "Successfully claimed {$successCount} reward(s)! Items will be delivered to {$gameAccount->userid} on next login.");
+        }
+
+        if (! empty($errors)) {
+            session()->flash('error', implode(' ', $errors));
         }
     }
 

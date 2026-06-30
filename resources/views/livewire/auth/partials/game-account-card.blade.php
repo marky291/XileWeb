@@ -115,18 +115,58 @@
                 {{-- Pending Rewards --}}
                 @if($hasPendingRewards)
                     <div class="py-4 border-t border-gray-800/50">
-                        <p class="text-xs font-medium text-gray-500 uppercase tracking-wider mb-3">Pending Rewards</p>
+                        <div class="flex items-center justify-between mb-3">
+                            <p class="text-xs font-medium text-gray-500 uppercase tracking-wider">Pending Rewards</p>
+                            <div class="flex items-center gap-2">
+                                {{-- Select/Deselect All Button --}}
+                                <button
+                                    wire:click="toggleSelectAll({{ $account->id }})"
+                                    class="px-3 py-1.5 bg-gray-700 hover:bg-gray-600 text-gray-300 font-medium text-xs rounded-lg transition-colors flex items-center gap-1.5"
+                                >
+                                    <i class="fas fa-check-double text-xs"></i>
+                                    @php
+                                        $accountRewardIds = $pendingRewards->pluck('id')->toArray();
+                                        $allSelected = !empty($accountRewardIds) && count(array_intersect($this->selectedRewardIds ?? [], $accountRewardIds)) === count($accountRewardIds);
+                                    @endphp
+                                    {{ $allSelected ? 'Deselect All' : 'Select All' }}
+                                </button>
+
+                                {{-- Claim Selected Button --}}
+                                @if($this->selectedRewardIds && count($this->selectedRewardIds) > 0)
+                                    <button
+                                        wire:click="claimSelectedRewards({{ $account->id }})"
+                                        wire:loading.attr="disabled"
+                                        class="group px-4 py-2 bg-gradient-to-r from-purple-600 via-purple-500 to-blue-600 hover:from-purple-500 hover:via-purple-400 hover:to-blue-500 text-white font-bold text-xs rounded-lg transition-all duration-300 flex items-center gap-2 shadow-lg shadow-purple-500/20 hover:shadow-purple-500/40 hover:-translate-y-0.5"
+                                    >
+                                        <i class="fas fa-gifts transition-transform group-hover:scale-110"></i>
+                                        <span wire:loading.remove wire:target="claimSelectedRewards">Claim {{ count($this->selectedRewardIds) }} Selected</span>
+                                        <span wire:loading wire:target="claimSelectedRewards"><i class="fas fa-spinner fa-spin"></i> Claiming...</span>
+                                    </button>
+                                @endif
+                            </div>
+                        </div>
                         <div class="space-y-2">
                             @foreach($pendingRewards as $reward)
-                                <div class="flex items-center justify-between p-3 bg-amber-500/5 rounded-lg border border-amber-500/20">
-                                    <div class="flex items-center gap-3">
-                                        <div class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center overflow-hidden border border-gray-700">
+                                <label class="flex items-center justify-between p-3 bg-amber-500/5 rounded-lg border border-amber-500/20 cursor-pointer hover:bg-amber-500/10 transition-colors group">
+                                    <div class="flex items-center gap-3 flex-1">
+                                        {{-- Checkbox --}}
+                                        <input
+                                            type="checkbox"
+                                            wire:model.live="selectedRewardIds"
+                                            value="{{ $reward->id }}"
+                                            class="w-5 h-5 rounded border-2 border-gray-600 bg-gray-800/50 text-amber-500 focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 focus:ring-offset-gray-900 cursor-pointer transition-all checked:border-amber-500 checked:bg-amber-500"
+                                        >
+
+                                        {{-- Item Icon --}}
+                                        <div class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center overflow-hidden border border-gray-700 group-hover:border-amber-500/30 transition-colors">
                                             @if($reward->item)
                                                 <img src="{{ $reward->item->icon() }}" alt="" class="max-h-full max-w-full object-contain">
                                             @else
                                                 <i class="fas fa-box text-gray-500"></i>
                                             @endif
                                         </div>
+
+                                        {{-- Item Details --}}
                                         <div>
                                             <p class="text-gray-100 text-sm font-medium">
                                                 @if($reward->refine_level > 0)<span class="text-amber-400">+{{ $reward->refine_level }}</span> @endif{{ $reward->item?->name ?? 'Unknown' }}
@@ -134,13 +174,16 @@
                                             <p class="text-xs text-gray-500">x{{ $reward->quantity }} &bull; {{ $reward->tier?->name ?? 'Bonus' }}</p>
                                         </div>
                                     </div>
+
+                                    {{-- Individual Claim Button --}}
                                     <button
-                                        wire:click="startRewardClaim({{ $reward->id }}, {{ $account->id }})"
+                                        type="button"
+                                        wire:click.stop="startRewardClaim({{ $reward->id }}, {{ $account->id }})"
                                         class="px-4 py-2 bg-amber-500 hover:bg-amber-400 text-gray-900 font-bold text-xs rounded-lg transition-colors"
                                     >
                                         Claim
                                     </button>
-                                </div>
+                                </label>
                             @endforeach
                         </div>
                     </div>

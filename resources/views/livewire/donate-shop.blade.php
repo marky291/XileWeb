@@ -540,6 +540,61 @@
                                 </p>
                             @endif
 
+                            {{-- Quantity Selector --}}
+                            @if ($selectedItem->is_available && $canPurchase)
+                                <div class="mb-4">
+                                    <label class="block text-sm font-medium text-gray-400 mb-2">Quantity</label>
+                                    <div class="flex items-center gap-3">
+                                        <button
+                                            wire:click="decrementQuantity"
+                                            type="button"
+                                            class="w-10 h-10 bg-gray-700 hover:bg-gray-600 text-gray-300 rounded-lg transition-all duration-300 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+                                            {{ $purchaseQuantity <= 1 ? 'disabled' : '' }}
+                                        >
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+
+                                        <div class="flex-1 relative">
+                                            <input
+                                                type="number"
+                                                wire:model.live="purchaseQuantity"
+                                                min="1"
+                                                max="{{ $selectedItem->stock ?? 999 }}"
+                                                class="w-full px-4 py-2.5 bg-gray-800/50 border-2 border-gray-700 text-gray-100 text-center font-semibold rounded-lg focus:outline-none focus:border-amber-500 transition-colors"
+                                            >
+                                            @if ($selectedItem->stock !== null)
+                                                <span class="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-gray-500">
+                                                    / {{ $selectedItem->stock }}
+                                                </span>
+                                            @endif
+                                        </div>
+
+                                        <button
+                                            wire:click="incrementQuantity"
+                                            type="button"
+                                            class="w-10 h-10 bg-gray-700 hover:bg-gray-600 text-gray-300 rounded-lg transition-all duration-300 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+                                            {{ ($selectedItem->stock !== null && $purchaseQuantity >= $selectedItem->stock) ? 'disabled' : '' }}
+                                        >
+                                            <i class="fas fa-plus"></i>
+                                        </button>
+                                    </div>
+
+                                    {{-- Total Cost Display --}}
+                                    @if ($purchaseQuantity > 1)
+                                        <div class="mt-3 p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg">
+                                            <div class="flex items-center justify-between text-sm">
+                                                <span class="text-gray-400">
+                                                    {{ $selectedItem->uber_cost }} Ubers × {{ $purchaseQuantity }}
+                                                </span>
+                                                <span class="text-amber-400 font-bold">
+                                                    = {{ $selectedItem->uber_cost * $purchaseQuantity }} Ubers
+                                                </span>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
+                            @endif
+
                             @if ($isPurchasingRestricted && ! $canPurchase)
                                 <div class="mb-4 p-3 bg-yellow-900/50 border border-yellow-500 rounded-lg">
                                     <p class="text-yellow-300 text-sm">
@@ -553,10 +608,10 @@
                                 <button class="w-full px-4 py-2.5 bg-gray-700 text-gray-500 font-bold rounded-lg cursor-not-allowed" disabled>
                                     Currently Unavailable
                                 </button>
-                            @elseif ($userBalance < $selectedItem->uber_cost)
+                            @elseif ($userBalance < ($selectedItem->uber_cost * $purchaseQuantity))
                                 <div class="mb-4 p-3 bg-red-900/50 border border-red-500 rounded-lg">
                                     <p class="text-red-300 text-sm">
-                                        <i class="fas fa-exclamation-circle mr-2"></i>You need {{ $selectedItem->uber_cost - $userBalance }} more Ubers.
+                                        <i class="fas fa-exclamation-circle mr-2"></i>You need {{ ($selectedItem->uber_cost * $purchaseQuantity) - $userBalance }} more Ubers.
                                     </p>
                                 </div>
                                 <button class="w-full px-4 py-2.5 bg-gray-700 text-gray-500 font-bold rounded-lg cursor-not-allowed" disabled>
@@ -567,7 +622,8 @@
                                     <p class="text-amber-200 font-semibold mb-1">Confirm your purchase</p>
                                     <p class="text-gray-400 text-sm">
                                         Purchase <span class="text-white">{{ $selectedItem->display_name }}</span>
-                                        for <span class="text-amber-400 font-semibold">{{ $selectedItem->uber_cost }} {{ Str::plural('Uber', $selectedItem->uber_cost) }}</span>?
+                                        @if ($purchaseQuantity > 1)<span class="text-amber-400"> ×{{ $purchaseQuantity }}</span>@endif
+                                        for <span class="text-amber-400 font-semibold">{{ $selectedItem->uber_cost * $purchaseQuantity }} {{ Str::plural('Uber', $selectedItem->uber_cost * $purchaseQuantity) }}</span>?
                                     </p>
                                 </div>
                                 <div class="flex gap-3">
@@ -591,10 +647,10 @@
                                     wire:click="confirmPurchase"
                                     class="w-full px-4 py-2.5 bg-amber-500 hover:bg-amber-400 text-gray-900 font-bold rounded-lg transition-colors"
                                 >
-                                    <i class="fas fa-shopping-cart mr-2"></i>Purchase for {{ $selectedItem->uber_cost }} {{ Str::plural('Uber', $selectedItem->uber_cost) }}
+                                    <i class="fas fa-shopping-cart mr-2"></i>Purchase for {{ $selectedItem->uber_cost * $purchaseQuantity }} {{ Str::plural('Uber', $selectedItem->uber_cost * $purchaseQuantity) }}
                                 </button>
                                 <p class="text-center text-sm text-gray-500 mt-3">
-                                    Balance after: <span class="text-amber-400">{{ number_format($userBalance - $selectedItem->uber_cost) }} Ubers</span>
+                                    Balance after: <span class="text-amber-400">{{ number_format($userBalance - ($selectedItem->uber_cost * $purchaseQuantity)) }} Ubers</span>
                                 </p>
                             @endif
                         @else

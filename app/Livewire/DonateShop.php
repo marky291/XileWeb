@@ -45,6 +45,8 @@ class DonateShop extends Component
 
     public bool $showPurchaseConfirm = false;
 
+    public int $purchaseQuantity = 1;
+
     /**
      * Sanitize category input to prevent array injection attacks.
      */
@@ -232,9 +234,38 @@ class DonateShop extends Component
     {
         $this->selectedItemId = $itemId;
         $this->showPurchaseConfirm = false;
+        $this->purchaseQuantity = 1; // Reset quantity when selecting new item
 
         if ($itemId) {
             UberShopItem::where('id', $itemId)->increment('views');
+        }
+    }
+
+    /**
+     * Increment purchase quantity.
+     */
+    public function incrementQuantity(): void
+    {
+        $item = $this->selectedItem();
+        if (! $item) {
+            return;
+        }
+
+        // If item has stock limit, don't exceed it
+        if ($item->stock !== null && $this->purchaseQuantity >= $item->stock) {
+            return;
+        }
+
+        $this->purchaseQuantity++;
+    }
+
+    /**
+     * Decrement purchase quantity.
+     */
+    public function decrementQuantity(): void
+    {
+        if ($this->purchaseQuantity > 1) {
+            $this->purchaseQuantity--;
         }
     }
 
@@ -629,15 +660,18 @@ class DonateShop extends Component
         $user->refresh();
         $currentBalance = $user->uber_balance;
 
+        // Calculate total cost based on quantity
+        $totalCost = $item->uber_cost * $this->purchaseQuantity;
+
         // Validate sufficient balance
-        if ($currentBalance < $item->uber_cost) {
-            session()->flash('error', 'Insufficient Ubers. You need '.($item->uber_cost - $currentBalance).' more.');
+        if ($currentBalance < $totalCost) {
+            session()->flash('error', 'Insufficient Ubers. You need '.($totalCost - $currentBalance).' more.');
 
             return;
         }
 
         try {
-            DB::transaction(function () use ($user, $gameAccount, $item, $currentBalance) {
+            DB::transaction(function () use ($user, $gameAccount, $item, $currentBalance, $totalCost) {
                 // Lock the item row to prevent race conditions with stock
                 $lockedItem = UberShopItem::with('item')->where('id', $item->id)->lockForUpdate()->first();
 
@@ -646,8 +680,13 @@ class DonateShop extends Component
                     throw new Exception('Item is no longer available.');
                 }
 
+                // Re-check stock for the requested quantity
+                if ($lockedItem->stock !== null && $lockedItem->stock < $this->purchaseQuantity) {
+                    throw new Exception('Insufficient stock. Only '.$lockedItem->stock.' available.');
+                }
+
                 // Calculate new balance
-                $newBalance = $currentBalance - $lockedItem->uber_cost;
+                $newBalance = $currentBalance - $totalCost;
 
                 // Deduct ubers from user's balance
                 $user->uber_balance = $newBalance;
@@ -655,38 +694,44 @@ class DonateShop extends Component
 
                 // Decrement stock if item has limited stock
                 if ($lockedItem->stock !== null) {
-                    $lockedItem->decrement('stock');
+                    $lockedItem->decrement('stock', $this->purchaseQuantity);
                 }
 
-                // Create purchase record
-                $purchase = UberShopPurchase::create([
-                    'account_id' => $gameAccount->ragnarok_account_id,
-                    'account_name' => $gameAccount->userid,
-                    'shop_item_id' => $lockedItem->id,
-                    'item_id' => $lockedItem->item->item_id,
-                    'item_name' => $lockedItem->item->name,
-                    'refine_level' => $lockedItem->refine_level,
-                    'quantity' => $lockedItem->quantity,
-                    'uber_cost' => $lockedItem->uber_cost,
-                    'uber_balance_after' => $newBalance,
-                    'status' => UberShopPurchase::STATUS_PENDING,
-                    'is_xileretro' => $gameAccount->server === 'xileretro',
-                    'purchased_at' => now(),
-                ]);
+                // Create purchase records (one for each quantity)
+                for ($i = 0; $i < $this->purchaseQuantity; $i++) {
+                    $purchase = UberShopPurchase::create([
+                        'account_id' => $gameAccount->ragnarok_account_id,
+                        'account_name' => $gameAccount->userid,
+                        'shop_item_id' => $lockedItem->id,
+                        'item_id' => $lockedItem->item->item_id,
+                        'item_name' => $lockedItem->item->name,
+                        'refine_level' => $lockedItem->refine_level,
+                        'quantity' => $lockedItem->quantity,
+                        'uber_cost' => $lockedItem->uber_cost,
+                        'uber_balance_after' => $newBalance,
+                        'status' => UberShopPurchase::STATUS_PENDING,
+                        'is_xileretro' => $gameAccount->server === 'xileretro',
+                        'purchased_at' => now(),
+                    ]);
 
-                // Send purchase confirmation email
-                $user->notify(new UberShopPurchaseNotification(
-                    $purchase,
-                    $gameAccount->userid,
-                    $gameAccount->serverName()
-                ));
+                    // Send purchase confirmation email for first purchase only
+                    if ($i === 0) {
+                        $user->notify(new UberShopPurchaseNotification(
+                            $purchase,
+                            $gameAccount->userid,
+                            $gameAccount->serverName()
+                        ));
+                    }
+                }
             });
 
-            session()->flash('success', "Successfully purchased {$item->display_name} for {$item->uber_cost} Ubers! The item will be delivered to {$gameAccount->userid} on next login.");
+            $quantityText = $this->purchaseQuantity > 1 ? " (x{$this->purchaseQuantity})" : '';
+            session()->flash('success', "Successfully purchased {$item->display_name}{$quantityText} for {$totalCost} Ubers! The item will be delivered to {$gameAccount->userid} on next login.");
 
             // Reset state
             $this->selectedItemId = null;
             $this->showPurchaseConfirm = false;
+            $this->purchaseQuantity = 1;
 
         } catch (Exception $e) {
             session()->flash('error', 'Purchase failed: '.$e->getMessage());
